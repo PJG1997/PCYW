@@ -32,14 +32,28 @@
     	<div class="easyui-accordion" data-options="border:false,fit:true"> 
         	<div title="用户信息" data-options="iconCls:'icon-group'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="admin.html" iframe="0">管理员管理</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" 
-                    	data-icon="icon-user-group" data-link="user.html" iframe="0">会员管理</a></li>
+    				<li iconCls="icon-user-brown"><a href="javascript:void(0)" data-icon="icon-user-brown" data-link="admin.html" iframe="0">管理员信息</a></li>
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="admin.html" iframe="0">管理用户</a></li>
                 </ul>
             </div>
             
+            <div title="物流信息" data-options="iconCls:'icon-car'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="route.html" iframe="0">管理路线</a></li>
+                     <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="dispoint.html" iframe="0">管理配送点</a></li>
+                      <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="driver.html" iframe="0">管理司机</a></li>
+                      <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="order.html" iframe="0">订单管理</a></li>
+                      <li iconCls="icon-lorry"><a href="javascript:void(0)" data-icon="icon-lorry" data-link="cars.html" iframe="0">车辆管理</a></li>
+                      <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="transfer.html" iframe="0">交接单管理</a></li>
+                </ul>
+            </div>
 	    
-	   
+	   		<div title="报表管理" data-options="iconCls:'icon-group'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+    				<li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="admin.html" iframe="0">年收入汇总表</a></li>
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="admin.html" iframe="0">配送点年收入汇总表</a></li>
+                </ul>
+            </div>
             
             <div title="系统设置" data-options="iconCls:'icon-wrench'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
