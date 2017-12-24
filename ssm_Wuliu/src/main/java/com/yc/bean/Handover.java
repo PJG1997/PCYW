@@ -21,7 +21,7 @@ public class Handover  implements Serializable {		//交接表
 	
 	private Car car;
 	private Driver driver;
-	private Order order;
+	private Order1 order;
 	private Route route;
 	public Integer getHid() {
 		return hid;
@@ -36,7 +36,7 @@ public class Handover  implements Serializable {		//交接表
 	}
 
 	//由交接单维护关联
-	public Order getOrder() {
+	public Order1 getOrder() {
 		return order;
 	}
 	
@@ -64,7 +64,7 @@ public class Handover  implements Serializable {		//交接表
 		this.driver = driver;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(Order1 order) {
 		this.order = order;
 	}
 

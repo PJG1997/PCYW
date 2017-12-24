@@ -73,7 +73,7 @@ create table handover(
 	
 )
 
-create table order(
+create table order1(
 	osid int primary key auto_increment,
 	osendName varchar(50),
 	osendTel varchar(50),

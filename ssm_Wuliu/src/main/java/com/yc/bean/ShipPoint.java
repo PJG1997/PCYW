@@ -26,7 +26,7 @@ public class ShipPoint implements Serializable{
 	
 	private List<Car> cars = new ArrayList<Car>();
 	private List<Driver> drivers = new ArrayList<Driver>();
-	private List<Order> orders = new ArrayList<Order>();
+	private List<Order1> orders = new ArrayList<Order1>();
 	private List<Proxy> proxy=new ArrayList<Proxy>();
 
 	
@@ -43,7 +43,7 @@ public class ShipPoint implements Serializable{
 		return drivers;
 	}
 	
-	public List<Order> getOrders() {
+	public List<Order1> getOrders() {
 		return orders;
 	}
 	public List<Proxy> getProxy() {
@@ -54,7 +54,7 @@ public class ShipPoint implements Serializable{
 		this.proxy = proxy;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<Order1> orders) {
 		this.orders = orders;
 	}
 
