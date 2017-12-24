@@ -21,9 +21,8 @@ public class Users implements Serializable {
 	private String utel;//7.	电话
 	private String uemail;//8.	邮箱
 	
-	private List<Order> orders = new ArrayList<Order>();
+	private List<Order1> orders = new ArrayList<Order1>();
 	
-	private Role role;
 	
 //	private String u1;
 //	private String u2;
@@ -34,19 +33,13 @@ public class Users implements Serializable {
 		return usId;
 	}
 	
-	public List<Order> getOrders() {
+	public List<Order1> getOrders() {
 		return orders;
 	}
 	
 	//用户角色
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<Order1> orders) {
 		this.orders = orders;
 	}
 	

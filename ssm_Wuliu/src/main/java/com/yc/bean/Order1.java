@@ -7,7 +7,7 @@ import java.util.List;
 
 
 
-public class Order implements Serializable {
+public class Order1 implements Serializable {
 	
 	/**
 	 * 
@@ -211,7 +211,7 @@ public class Order implements Serializable {
 		this.orecSpname = orecSpname;
 	}
 
-	public Order() {
+	public Order1() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -230,7 +230,7 @@ public class Order implements Serializable {
 				+ shipPoint + ", user=" + user + "]";
 	}
 
-	public Order(String osendName, String orecName, String orecTel,
+	public Order1(String osendName, String orecName, String orecTel,
 			String orecAddress, String orecCode, String orecPhone, Date otime,
 			Double oprice, Double oinsurePrice, Integer otype, Integer ostatus,
 			Date ostartTime, Date oendTime, String orecSpname, String oremark) {
@@ -298,7 +298,7 @@ public class Order implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		Order1 other = (Order1) obj;
 		if (goodss == null) {
 			if (other.goodss != null)
 				return false;
