@@ -2,6 +2,7 @@ create database wuliu;
 
 create table car(
 	cid int primary key auto_increment,
+	spid int,    /*   这个字段加外键   */
 	cnumber varchar(3000),
 	ctype varchar(3000),
 	cbuyDay date,
@@ -20,6 +21,7 @@ create table car(
 
 create table driver(
 	did int  primary key auto_increment,
+	spid int,    /*   这个字段加外键   */
 	dname varchar(50),
 	dnumber varchar(50),
 	dphone varchar(50),
@@ -51,12 +53,15 @@ create table goods(
 
 create table handover(
 	hid int primary key auto_increment,
+	cid int ,/*   这个字段加外键   */
+	did  int,/*   这个字段加外键   */
+	osid int,/*   这个字段加外键   */
+	rid int,/*   这个字段加外键   */
 	hfromSpname varchar(50),
 	htoSpname varchar(50),
 	hstartTime date,
 	hendTime date,
 	hstatus int,
-	did  int,
 	hremark varchar(3000),
 	remark1 varchar(3000),
 	remark2 varchar(3000),
@@ -67,8 +72,21 @@ create table handover(
 	
 )
 
+create table orderHandover(
+	ohid int primary key auto_increment,
+	hid int,/*   这个字段加外键   */
+	osid int,/*   这个字段加外键   */
+	remark1 varchar(3000),
+	remark2 varchar(3000),
+	remark3 varchar(3000),
+	remark4 varchar(3000),
+	remark5 varchar(3000)
+)
+
 create table order1(
 	osid int primary key auto_increment,
+	usid int,/*   这个字段加外键   */
+	spid int,/*   这个字段加外键   */
 	osendName varchar(50),
 	osendTel varchar(50),
 	osendAddress varchar(50),
@@ -92,7 +110,18 @@ create table order1(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 )
-
+create table orderInfo(
+	oiid int primary key auto_increment,
+	osid int,/*   这个字段加外键   */
+	gname varchar(50),
+	gprice double,
+	gcount int,
+	remark1 varchar(3000),
+	remark2 varchar(3000),
+	remark3 varchar(3000),
+	remark4 varchar(3000),
+	remark5 varchar(3000)
+)
 create table price(
 	pid int primary key auto_increment,
 	pfrom varchar(50),
@@ -114,6 +143,7 @@ create table proxy(
 	prname varchar(50),
 	prtime varchar(50),
 	prprice double,
+	spid int,/*   这个字段加外键   */
 	prremark varchar(3000),
 	remark1 varchar(3000),
 	remark2 varchar(3000),
