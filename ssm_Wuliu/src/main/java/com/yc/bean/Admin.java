@@ -30,5 +30,4 @@ public class Admin implements Serializable{
 		this.apwd = apwd;
 	}
 	
-	
 }
