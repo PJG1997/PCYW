@@ -23,7 +23,6 @@ public class Users implements Serializable {
 	
 	private List<Order1> orders = new ArrayList<Order1>();
 	
-	private Role role;
 	
 //	private String u1;
 //	private String u2;
@@ -39,12 +38,6 @@ public class Users implements Serializable {
 	}
 	
 	//用户角色
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public void setOrders(List<Order1> orders) {
 		this.orders = orders;

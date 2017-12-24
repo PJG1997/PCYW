@@ -1,12 +1,5 @@
 create database wuliu;
 
-create table admin(
-	aid int primary key auto_increment, 
-	aname varchar(3000) not null unique,			
-	pwd varchar(3000)	not null			
-	
-);
-
 create table car(
 	cid int primary key auto_increment,
 	cnumber varchar(3000),
@@ -63,6 +56,7 @@ create table handover(
 	hstartTime date,
 	hendTime date,
 	hstatus int,
+	did  int,
 	hremark varchar(3000),
 	remark1 varchar(3000),
 	remark2 varchar(3000),
@@ -127,7 +121,7 @@ create table proxy(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 )
-
+/*
 create table role(
 	roleid int primary key auto_increment,
 	rolename varchar(50),
@@ -137,7 +131,7 @@ create table role(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+)*/
 
 create table route(
 	rid int primary key auto_increment,
@@ -171,7 +165,6 @@ create table shippoint(
 
 create table users(
 	usid int primary key auto_increment,
-	roleid int,
 	uname varchar(50),
 	upwd varchar(50),
 	urealName varchar(50),
@@ -179,10 +172,10 @@ create table users(
 	uphone varchar(50),
 	utel varchar(50),
 	uemail varchar(50),
+	status int,
 	remark1 varchar(3000),
 	remark2 varchar(3000),
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-	
 )
