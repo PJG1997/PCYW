@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="price" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Price" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pfrom" property="pfrom" jdbcType="VARCHAR" />
+    <result column="pto" property="pto" jdbcType="VARCHAR" />
+    <result column="pfirstwei" property="pfirstwei" jdbcType="DOUBLE" />
+    <result column="prestwei" property="prestwei" jdbcType="DOUBLE" />
+    <result column="pfirstvol" property="pfirstvol" jdbcType="DOUBLE" />
+    <result column="prestvol" property="prestvol" jdbcType="DOUBLE" />
+    <result column="pretime" property="pretime" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+    <result column="remark4" property="remark4" jdbcType="VARCHAR" />
+    <result column="remark5" property="remark5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, remark1, remark2, 
+    remark3, remark4, remark5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from price
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from price
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Price" >
+    insert into price (pid, pfrom, pto, 
+      pfirstwei, prestwei, pfirstvol, 
+      prestvol, pretime, remark1, 
+      remark2, remark3, remark4, 
+      remark5)
+    values (#{pid,jdbcType=INTEGER}, #{pfrom,jdbcType=VARCHAR}, #{pto,jdbcType=VARCHAR}, 
+      #{pfirstwei,jdbcType=DOUBLE}, #{prestwei,jdbcType=DOUBLE}, #{pfirstvol,jdbcType=DOUBLE}, 
+      #{prestvol,jdbcType=DOUBLE}, #{pretime,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
+      #{remark5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Price" >
+    insert into price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pfrom != null" >
+        pfrom,
+      </if>
+      <if test="pto != null" >
+        pto,
+      </if>
+      <if test="pfirstwei != null" >
+        pfirstwei,
+      </if>
+      <if test="prestwei != null" >
+        prestwei,
+      </if>
+      <if test="pfirstvol != null" >
+        pfirstvol,
+      </if>
+      <if test="prestvol != null" >
+        prestvol,
+      </if>
+      <if test="pretime != null" >
+        pretime,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+      <if test="remark4 != null" >
+        remark4,
+      </if>
+      <if test="remark5 != null" >
+        remark5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pfrom != null" >
+        #{pfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="pto != null" >
+        #{pto,jdbcType=VARCHAR},
+      </if>
+      <if test="pfirstwei != null" >
+        #{pfirstwei,jdbcType=DOUBLE},
+      </if>
+      <if test="prestwei != null" >
+        #{prestwei,jdbcType=DOUBLE},
+      </if>
+      <if test="pfirstvol != null" >
+        #{pfirstvol,jdbcType=DOUBLE},
+      </if>
+      <if test="prestvol != null" >
+        #{prestvol,jdbcType=DOUBLE},
+      </if>
+      <if test="pretime != null" >
+        #{pretime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark5 != null" >
+        #{remark5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Price" >
+    update price
+    <set >
+      <if test="pfrom != null" >
+        pfrom = #{pfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="pto != null" >
+        pto = #{pto,jdbcType=VARCHAR},
+      </if>
+      <if test="pfirstwei != null" >
+        pfirstwei = #{pfirstwei,jdbcType=DOUBLE},
+      </if>
+      <if test="prestwei != null" >
+        prestwei = #{prestwei,jdbcType=DOUBLE},
+      </if>
+      <if test="pfirstvol != null" >
+        pfirstvol = #{pfirstvol,jdbcType=DOUBLE},
+      </if>
+      <if test="prestvol != null" >
+        prestvol = #{prestvol,jdbcType=DOUBLE},
+      </if>
+      <if test="pretime != null" >
+        pretime = #{pretime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        remark4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark5 != null" >
+        remark5 = #{remark5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Price" >
+    update price
+    set pfrom = #{pfrom,jdbcType=VARCHAR},
+      pto = #{pto,jdbcType=VARCHAR},
+      pfirstwei = #{pfirstwei,jdbcType=DOUBLE},
+      prestwei = #{prestwei,jdbcType=DOUBLE},
+      pfirstvol = #{pfirstvol,jdbcType=DOUBLE},
+      prestvol = #{prestvol,jdbcType=DOUBLE},
+      pretime = #{pretime,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR},
+      remark4 = #{remark4,jdbcType=VARCHAR},
+      remark5 = #{remark5,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

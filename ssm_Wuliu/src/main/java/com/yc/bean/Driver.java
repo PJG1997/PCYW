@@ -1,126 +1,133 @@
 package com.yc.bean;
 
-import java.io.Serializable;
+public class Driver {
+    private Integer did;
 
+    private Integer spid;
 
+    private String dname;
 
-public class Driver implements Serializable {
+    private String dnumber;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3453764343626256016L;
-	private Integer did;//1.	司机ID
-	private String dname;//2.	司机名称、
-	private String dnumber;//3.	驾驶证号、
-	private String dphone;//4.	联系电话、
-	private String didCard;//5.	身份证、
-	private Integer ddage;//6.	驾龄
-	private Integer dstatus = 0;//7.	司机状态（0空闲，1在忙）。默认0
+    private String dphone;
 
-	private ShipPoint shipPoint;
+    private String didcard;
 
-	public Integer getDid() {
-		return did;
-	}
-	
-	public ShipPoint getShipPoint() {
-		return shipPoint;
-	}
-	
+    private Integer ddage;
 
-	public void setDid(Integer did) {
-		this.did = did;
-	}
+    private Integer dstatus;
 
-	public String getDname() {
-		return dname;
-	}
+    private String remark1;
 
-	public void setDname(String dname) {
-		this.dname = dname;
-	}
+    private String remark2;
 
-	public String getDnumber() {
-		return dnumber;
-	}
+    private String remark3;
 
-	public void setDnumber(String dnumber) {
-		this.dnumber = dnumber;
-	}
+    private String remark4;
 
-	public String getDphone() {
-		return dphone;
-	}
+    private String remark5;
 
-	public void setDphone(String dphone) {
-		this.dphone = dphone;
-	}
+    public Integer getDid() {
+        return did;
+    }
 
-	public String getDidCard() {
-		return didCard;
-	}
+    public void setDid(Integer did) {
+        this.did = did;
+    }
 
-	public void setDidCard(String didCard) {
-		this.didCard = didCard;
-	}
+    public Integer getSpid() {
+        return spid;
+    }
 
-	public Integer getDdage() {
-		return ddage;
-	}
+    public void setSpid(Integer spid) {
+        this.spid = spid;
+    }
 
-	public void setDdage(Integer ddage) {
-		this.ddage = ddage;
-	}
+    public String getDname() {
+        return dname;
+    }
 
+    public void setDname(String dname) {
+        this.dname = dname == null ? null : dname.trim();
+    }
 
-	public void setShipPoint(ShipPoint shipPoint) {
-		this.shipPoint = shipPoint;
-	}
+    public String getDnumber() {
+        return dnumber;
+    }
 
-	public Driver() {
-		super();
-	}
+    public void setDnumber(String dnumber) {
+        this.dnumber = dnumber == null ? null : dnumber.trim();
+    }
 
-	public Driver(String dname, String dnumber, String dphone, String didCard,
-		Integer ddage, Integer dstatus) {
-	super();
-	this.dname = dname;
-	this.dnumber = dnumber;
-	this.dphone = dphone;
-	this.didCard = didCard;
-	this.ddage = ddage;
-	this.dstatus = dstatus;
-}
+    public String getDphone() {
+        return dphone;
+    }
 
-	
-	@Override
-	public String toString() {
-		return "Driver [ddage=" + ddage + ", did=" + did + ", didCard="
-				+ didCard + ", dname=" + dname + ", dnumber=" + dnumber
-				+ ", dphone=" + dphone + ", dstatus=" + dstatus + "]";
-	}
+    public void setDphone(String dphone) {
+        this.dphone = dphone == null ? null : dphone.trim();
+    }
 
-	public Driver(Integer did) {
-		super();
-		this.did = did;
-	}
+    public String getDidcard() {
+        return didcard;
+    }
 
-	public Integer getDstatus() {
-		return dstatus;
-	}
+    public void setDidcard(String didcard) {
+        this.didcard = didcard == null ? null : didcard.trim();
+    }
 
-	public void setDstatus(Integer dstatus) {
-		this.dstatus = dstatus;
-	}
+    public Integer getDdage() {
+        return ddage;
+    }
 
-	
-//	private String d1;
-//	private String d2;
-//	private String d3;
-//	private String d4;
-	
-	
-	
+    public void setDdage(Integer ddage) {
+        this.ddage = ddage;
+    }
 
+    public Integer getDstatus() {
+        return dstatus;
+    }
+
+    public void setDstatus(Integer dstatus) {
+        this.dstatus = dstatus;
+    }
+
+    public String getRemark1() {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1 == null ? null : remark1.trim();
+    }
+
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2 == null ? null : remark2.trim();
+    }
+
+    public String getRemark3() {
+        return remark3;
+    }
+
+    public void setRemark3(String remark3) {
+        this.remark3 = remark3 == null ? null : remark3.trim();
+    }
+
+    public String getRemark4() {
+        return remark4;
+    }
+
+    public void setRemark4(String remark4) {
+        this.remark4 = remark4 == null ? null : remark4.trim();
+    }
+
+    public String getRemark5() {
+        return remark5;
+    }
+
+    public void setRemark5(String remark5) {
+        this.remark5 = remark5 == null ? null : remark5.trim();
+    }
 }

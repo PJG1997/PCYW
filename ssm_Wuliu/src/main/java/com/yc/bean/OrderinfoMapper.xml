@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderinfo" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Orderinfo" >
+    <id column="oiid" property="oiid" jdbcType="INTEGER" />
+    <result column="osid" property="osid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="gprice" property="gprice" jdbcType="DOUBLE" />
+    <result column="gcount" property="gcount" jdbcType="INTEGER" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+    <result column="remark4" property="remark4" jdbcType="VARCHAR" />
+    <result column="remark5" property="remark5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oiid, osid, gname, gprice, gcount, remark1, remark2, remark3, remark4, remark5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderinfo
+    where oiid = #{oiid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderinfo
+    where oiid = #{oiid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Orderinfo" >
+    insert into orderinfo (oiid, osid, gname, 
+      gprice, gcount, remark1, 
+      remark2, remark3, remark4, 
+      remark5)
+    values (#{oiid,jdbcType=INTEGER}, #{osid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, 
+      #{gprice,jdbcType=DOUBLE}, #{gcount,jdbcType=INTEGER}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
+      #{remark5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Orderinfo" >
+    insert into orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oiid != null" >
+        oiid,
+      </if>
+      <if test="osid != null" >
+        osid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="gprice != null" >
+        gprice,
+      </if>
+      <if test="gcount != null" >
+        gcount,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+      <if test="remark4 != null" >
+        remark4,
+      </if>
+      <if test="remark5 != null" >
+        remark5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oiid != null" >
+        #{oiid,jdbcType=INTEGER},
+      </if>
+      <if test="osid != null" >
+        #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="gcount != null" >
+        #{gcount,jdbcType=INTEGER},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark5 != null" >
+        #{remark5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Orderinfo" >
+    update orderinfo
+    <set >
+      <if test="osid != null" >
+        osid = #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        gprice = #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="gcount != null" >
+        gcount = #{gcount,jdbcType=INTEGER},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        remark4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark5 != null" >
+        remark5 = #{remark5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oiid = #{oiid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Orderinfo" >
+    update orderinfo
+    set osid = #{osid,jdbcType=INTEGER},
+      gname = #{gname,jdbcType=VARCHAR},
+      gprice = #{gprice,jdbcType=DOUBLE},
+      gcount = #{gcount,jdbcType=INTEGER},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR},
+      remark4 = #{remark4,jdbcType=VARCHAR},
+      remark5 = #{remark5,jdbcType=VARCHAR}
+    where oiid = #{oiid,jdbcType=INTEGER}
+  </update>
+</mapper>

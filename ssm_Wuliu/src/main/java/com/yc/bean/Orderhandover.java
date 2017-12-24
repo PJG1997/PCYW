@@ -1,11 +1,11 @@
 package com.yc.bean;
 
-public class Route {
-    private Integer rid;
+public class Orderhandover {
+    private Integer ohid;
 
-    private String rname;
+    private Integer hid;
 
-    private String rvia;
+    private Integer osid;
 
     private String remark1;
 
@@ -17,28 +17,28 @@ public class Route {
 
     private String remark5;
 
-    public Integer getRid() {
-        return rid;
+    public Integer getOhid() {
+        return ohid;
     }
 
-    public void setRid(Integer rid) {
-        this.rid = rid;
+    public void setOhid(Integer ohid) {
+        this.ohid = ohid;
     }
 
-    public String getRname() {
-        return rname;
+    public Integer getHid() {
+        return hid;
     }
 
-    public void setRname(String rname) {
-        this.rname = rname == null ? null : rname.trim();
+    public void setHid(Integer hid) {
+        this.hid = hid;
     }
 
-    public String getRvia() {
-        return rvia;
+    public Integer getOsid() {
+        return osid;
     }
 
-    public void setRvia(String rvia) {
-        this.rvia = rvia == null ? null : rvia.trim();
+    public void setOsid(Integer osid) {
+        this.osid = osid;
     }
 
     public String getRemark1() {

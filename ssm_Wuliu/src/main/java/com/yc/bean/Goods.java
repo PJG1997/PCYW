@@ -1,144 +1,133 @@
 package com.yc.bean;
 
-import java.io.Serializable;
+public class Goods {
+    private Integer gid;
 
+    private String gname;
 
+    private String gcount;
 
-public class Goods implements Serializable {
+    private Double gprice;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7871679087920040707L;
-	private Integer gid;// 1. 货物编码
-	private String gname;// 2. 货物名称
-	private Integer gcount;// 3. 货物数量
-	private String gunit;// 4. 单位
-	private Double gprice;// 5. 货品价值
-	private Double gweight;// 6. 货物重量(kg)
-	private Double gvolume;// 7. 货物体积(m^3)
-	private String gtype;// 8. 货物类别
-	private String gremark;// 9. 备注
+    private Double gweight;
 
-//	private Order order;
+    private Double gvolume;
 
-	public Integer getGid() {
-		return gid;
-	}
+    private String gtype;
 
-//	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })	// 双向
-//	@JoinColumn(name = "osId")
-//	public Order getOrder() {
-//		return order;
-//	}
+    private String gremark;
 
-	public Goods(Integer gid) {
-		super();
-		this.gid = gid;
-	}
+    private String remark1;
 
-	public Goods(String gname, Integer gcount, String gunit, Double gprice,
-			Double gweight, Double gvolume, String gtype, String gremark) {
-		super();
-		this.gname = gname;
-		this.gcount = gcount;
-		this.gunit = gunit;
-		this.gprice = gprice;
-		this.gweight = gweight;
-		this.gvolume = gvolume;
-		this.gtype = gtype;
-		this.gremark = gremark;
-	}
+    private String remark2;
 
-	public Goods() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    private String remark3;
 
-	public String getGname() {
-		return gname;
-	}
+    private String remark4;
 
-	public void setGname(String gname) {
-		this.gname = gname;
-	}
+    private String remark5;
 
-	public Integer getGcount() {
-		return gcount;
-	}
+    public Integer getGid() {
+        return gid;
+    }
 
-	public void setGcount(Integer gcount) {
-		this.gcount = gcount;
-	}
+    public void setGid(Integer gid) {
+        this.gid = gid;
+    }
 
-	public String getGunit() {
-		return gunit;
-	}
+    public String getGname() {
+        return gname;
+    }
 
-	public void setGunit(String gunit) {
-		this.gunit = gunit;
-	}
+    public void setGname(String gname) {
+        this.gname = gname == null ? null : gname.trim();
+    }
 
-	public Double getGprice() {
-		return gprice;
-	}
+    public String getGcount() {
+        return gcount;
+    }
 
-	public void setGprice(Double gprice) {
-		this.gprice = gprice;
-	}
+    public void setGcount(String gcount) {
+        this.gcount = gcount == null ? null : gcount.trim();
+    }
 
-	public Double getGweight() {
-		return gweight;
-	}
+    public Double getGprice() {
+        return gprice;
+    }
 
-	public void setGweight(Double gweight) {
-		this.gweight = gweight;
-	}
+    public void setGprice(Double gprice) {
+        this.gprice = gprice;
+    }
 
-	public Double getGvolume() {
-		return gvolume;
-	}
+    public Double getGweight() {
+        return gweight;
+    }
 
-	public void setGvolume(Double gvolume) {
-		this.gvolume = gvolume;
-	}
+    public void setGweight(Double gweight) {
+        this.gweight = gweight;
+    }
 
-	@Override
-	public String toString() {
-		return "Goods [gid=" + gid + ", gname=" + gname + ", gcount=" + gcount
-				+ ", gunit=" + gunit + ", gprice=" + gprice + ", gweight="
-				+ gweight + ", gvolume=" + gvolume + ", gtype=" + gtype
-				+ ", gremark=" + gremark + "]";
-	}
+    public Double getGvolume() {
+        return gvolume;
+    }
 
-	public String getGtype() {
-		return gtype;
-	}
+    public void setGvolume(Double gvolume) {
+        this.gvolume = gvolume;
+    }
 
-	public void setGtype(String gtype) {
-		this.gtype = gtype;
-	}
+    public String getGtype() {
+        return gtype;
+    }
 
-	public String getGremark() {
-		return gremark;
-	}
+    public void setGtype(String gtype) {
+        this.gtype = gtype == null ? null : gtype.trim();
+    }
 
-	public void setGremark(String gremark) {
-		this.gremark = gremark;
-	}
+    public String getGremark() {
+        return gremark;
+    }
 
-	public void setGid(Integer gid) {
-		this.gid = gid;
-	}
+    public void setGremark(String gremark) {
+        this.gremark = gremark == null ? null : gremark.trim();
+    }
 
-//	public void setOrder(Order order) {
-//		this.order = order;
-//	}
+    public String getRemark1() {
+        return remark1;
+    }
 
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1 == null ? null : remark1.trim();
+    }
 
-	// private String g1;
-	// private String g2;
-	// private String g3;
-	// private String g4;
+    public String getRemark2() {
+        return remark2;
+    }
 
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2 == null ? null : remark2.trim();
+    }
+
+    public String getRemark3() {
+        return remark3;
+    }
+
+    public void setRemark3(String remark3) {
+        this.remark3 = remark3 == null ? null : remark3.trim();
+    }
+
+    public String getRemark4() {
+        return remark4;
+    }
+
+    public void setRemark4(String remark4) {
+        this.remark4 = remark4 == null ? null : remark4.trim();
+    }
+
+    public String getRemark5() {
+        return remark5;
+    }
+
+    public void setRemark5(String remark5) {
+        this.remark5 = remark5 == null ? null : remark5.trim();
+    }
 }

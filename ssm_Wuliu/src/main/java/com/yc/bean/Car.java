@@ -1,153 +1,165 @@
 package com.yc.bean;
 
-import java.io.Serializable;
 import java.util.Date;
 
+public class Car {
+    private Integer cid;
 
+    private Integer spid;
 
-public class Car implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3964367260336633207L;
-	private Integer cid ;		//1.	车辆编号
-	private String cnumber ;	//2.	车牌号、
-	private String ctype ;		//3.	车型、
-	private Date cbuyDay ;	//4.	购买日期、
-	private String crunNum ;	//5.	营运证号、
-	private Double cvolume ;	//6.	容积(m^3)、
-	private Double cton ;		//7.	吨位，
-	private Integer cstatus ;	//9.	车辆状态(0空闲，1在途中)
-	private Integer cisBox ;	//10.	是否箱式(0是 ，1不是)
-	private String cremark ;	//11.	备注
-	
-	private ShipPoint shipPoint;		//8.	所属单位
-	
-	public Integer getCid() {
-		return cid;
-	}
+    private String cnumber;
 
-	public ShipPoint getShipPoint() {
-		return shipPoint;
-	}
+    private String ctype;
 
-	public void setCid(Integer cid) {
-		this.cid = cid;
-	}
+    private Date cbuyday;
 
-	public String getCnumber() {
-		return cnumber;
-	}
+    private String crunnum;
 
-	public void setCnumber(String cnumber) {
-		this.cnumber = cnumber;
-	}
+    private Double cvolume;
 
-	public String getCtype() {
-		return ctype;
-	}
+    private Double cton;
 
-	public void setCtype(String ctype) {
-		this.ctype = ctype;
-	}
+    private Integer cstatus;
 
-	public Date getCbuyDay() {
-		return cbuyDay;
-	}
+    private Integer cisbox;
 
-	public void setCbuyDay(Date cbuyDay) {
-		this.cbuyDay = cbuyDay;
-	}
+    private String cremake;
 
-	public String getCrunNum() {
-		return crunNum;
-	}
+    private String remark1;
 
-	public void setCrunNum(String crunNum) {
-		this.crunNum = crunNum;
-	}
+    private String remark2;
 
-	public Double getCvolume() {
-		return cvolume;
-	}
+    private String remark3;
 
-	public void setCvolume(Double cvolume) {
-		this.cvolume = cvolume;
-	}
+    private String remark4;
 
-	public Double getCton() {
-		return cton;
-	}
+    private String remark5;
 
-	public void setCton(Double cton) {
-		this.cton = cton;
-	}
+    public Integer getCid() {
+        return cid;
+    }
 
-	public Integer getCstatus() {
-		return cstatus;
-	}
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
 
-	public void setCstatus(Integer cstatus) {
-		this.cstatus = cstatus;
-	}
+    public Integer getSpid() {
+        return spid;
+    }
 
-	public Integer getCisBox() {
-		return cisBox;
-	}
+    public void setSpid(Integer spid) {
+        this.spid = spid;
+    }
 
-	public void setCisBox(Integer cisBox) {
-		this.cisBox = cisBox;
-	}
+    public String getCnumber() {
+        return cnumber;
+    }
 
-	public String getCremark() {
-		return cremark;
-	}
+    public void setCnumber(String cnumber) {
+        this.cnumber = cnumber == null ? null : cnumber.trim();
+    }
 
-	public void setCremark(String cremark) {
-		this.cremark = cremark;
-	}
+    public String getCtype() {
+        return ctype;
+    }
 
-	public void setShipPoint(ShipPoint shipPoint) {
-		this.shipPoint = shipPoint;
-	}
+    public void setCtype(String ctype) {
+        this.ctype = ctype == null ? null : ctype.trim();
+    }
 
-	public Car() {
-		super();
-	}
+    public Date getCbuyday() {
+        return cbuyday;
+    }
 
-	public Car(String cnumber, String ctype, Date cbuyDay, String crunNum,
-			Double cvolume, Double cton, Integer cstatus, Integer cisBox,
-			String cremark) {
-		super();
-		this.cnumber = cnumber;
-		this.ctype = ctype;
-		this.cbuyDay = cbuyDay;
-		this.crunNum = crunNum;
-		this.cvolume = cvolume;
-		this.cton = cton;
-		this.cstatus = cstatus;
-		this.cisBox = cisBox;
-		this.cremark = cremark;
-	}
+    public void setCbuyday(Date cbuyday) {
+        this.cbuyday = cbuyday;
+    }
 
-	@Override
-	public String toString() {
-		return "Car [cid=" + cid + ", cnumber=" + cnumber + ", ctype=" + ctype
-				+ ", cbuyDay=" + cbuyDay + ", crunNum=" + crunNum
-				+ ", cvolume=" + cvolume + ", cton=" + cton + ", cstatus="
-				+ cstatus + ", cisBox=" + cisBox + ", cremark=" + cremark + "]";
-	}
+    public String getCrunnum() {
+        return crunnum;
+    }
 
-	public Car(Integer cid) {
-		super();
-		this.cid = cid;
-	}
+    public void setCrunnum(String crunnum) {
+        this.crunnum = crunnum == null ? null : crunnum.trim();
+    }
 
-	
-	
-	
+    public Double getCvolume() {
+        return cvolume;
+    }
 
-	
+    public void setCvolume(Double cvolume) {
+        this.cvolume = cvolume;
+    }
 
+    public Double getCton() {
+        return cton;
+    }
+
+    public void setCton(Double cton) {
+        this.cton = cton;
+    }
+
+    public Integer getCstatus() {
+        return cstatus;
+    }
+
+    public void setCstatus(Integer cstatus) {
+        this.cstatus = cstatus;
+    }
+
+    public Integer getCisbox() {
+        return cisbox;
+    }
+
+    public void setCisbox(Integer cisbox) {
+        this.cisbox = cisbox;
+    }
+
+    public String getCremake() {
+        return cremake;
+    }
+
+    public void setCremake(String cremake) {
+        this.cremake = cremake == null ? null : cremake.trim();
+    }
+
+    public String getRemark1() {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1 == null ? null : remark1.trim();
+    }
+
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2 == null ? null : remark2.trim();
+    }
+
+    public String getRemark3() {
+        return remark3;
+    }
+
+    public void setRemark3(String remark3) {
+        this.remark3 = remark3 == null ? null : remark3.trim();
+    }
+
+    public String getRemark4() {
+        return remark4;
+    }
+
+    public void setRemark4(String remark4) {
+        this.remark4 = remark4 == null ? null : remark4.trim();
+    }
+
+    public String getRemark5() {
+        return remark5;
+    }
+
+    public void setRemark5(String remark5) {
+        this.remark5 = remark5 == null ? null : remark5.trim();
+    }
 }

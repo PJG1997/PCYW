@@ -1,116 +1,143 @@
 package com.yc.bean;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+public class Users {
+    private Integer usid;
 
+    private String uname;
 
+    private String upwd;
 
-public class Users implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7275069496683180382L;
-	private Integer usId;//1.	用户ID
-	private String uname;//2.	用户账号
-	private String upwd;//3.	用户密码
-	private String urealName;//4.真实姓名
-	private String uaddress;//5.地址
-	private String uphone;//6.	手机
-	private String utel;//7.	电话
-	private String uemail;//8.	邮箱
-	
-	private List<Order1> orders = new ArrayList<Order1>();
-	
-	
-//	private String u1;
-//	private String u2;
-//	private String u3;
-//	private String u4;
-	
-	public Integer getUsId() {
-		return usId;
-	}
-	
-	public List<Order1> getOrders() {
-		return orders;
-	}
-	
-	//用户角色
+    private String urealname;
 
-	public void setOrders(List<Order1> orders) {
-		this.orders = orders;
-	}
-	
-	public void setUsId(Integer usId) {
-		this.usId = usId;
-	}
-	public String getUname() {
-		return uname;
-	}
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-	public String getUpwd() {
-		return upwd;
-	}
-	public void setUpwd(String upwd) {
-		this.upwd = upwd;
-	}
-	public String getUrealName() {
-		return urealName;
-	}
-	public void setUrealName(String urealName) {
-		this.urealName = urealName;
-	}
-	public String getUaddress() {
-		return uaddress;
-	}
-	public void setUaddress(String uaddress) {
-		this.uaddress = uaddress;
-	}
-	public String getUphone() {
-		return uphone;
-	}
-	public void setUphone(String uphone) {
-		this.uphone = uphone;
-	}
-	public String getUtel() {
-		return utel;
-	}
-	public void setUtel(String utel) {
-		this.utel = utel;
-	}
-	public String getUemail() {
-		return uemail;
-	}
-	public void setUemail(String uemail) {
-		this.uemail = uemail;
-	}
-	public Users() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Users(String uname, String upwd, String urealName, String uaddress,
-			String uphone, String utel, String uemail) {
-		super();
-		this.uname = uname;
-		this.upwd = upwd;
-		this.urealName = urealName;
-		this.uaddress = uaddress;
-		this.uphone = uphone;
-		this.utel = utel;
-		this.uemail = uemail;
-	}
+    private String uaddress;
 
-	@Override
-	public String toString() {
-		return "Users [usId=" + usId + ", uname=" + uname + ", upwd=" + upwd
-				+ ", urealName=" + urealName + ", uaddress=" + uaddress
-				+ ", uphone=" + uphone + ", utel=" + utel + ", uemail="
-				+ uemail + "]";
-	}
-	
+    private String uphone;
 
+    private String utel;
+
+    private String uemail;
+
+    private Integer status;
+
+    private String remark1;
+
+    private String remark2;
+
+    private String remark3;
+
+    private String remark4;
+
+    private String remark5;
+
+    public Integer getUsid() {
+        return usid;
+    }
+
+    public void setUsid(Integer usid) {
+        this.usid = usid;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname == null ? null : uname.trim();
+    }
+
+    public String getUpwd() {
+        return upwd;
+    }
+
+    public void setUpwd(String upwd) {
+        this.upwd = upwd == null ? null : upwd.trim();
+    }
+
+    public String getUrealname() {
+        return urealname;
+    }
+
+    public void setUrealname(String urealname) {
+        this.urealname = urealname == null ? null : urealname.trim();
+    }
+
+    public String getUaddress() {
+        return uaddress;
+    }
+
+    public void setUaddress(String uaddress) {
+        this.uaddress = uaddress == null ? null : uaddress.trim();
+    }
+
+    public String getUphone() {
+        return uphone;
+    }
+
+    public void setUphone(String uphone) {
+        this.uphone = uphone == null ? null : uphone.trim();
+    }
+
+    public String getUtel() {
+        return utel;
+    }
+
+    public void setUtel(String utel) {
+        this.utel = utel == null ? null : utel.trim();
+    }
+
+    public String getUemail() {
+        return uemail;
+    }
+
+    public void setUemail(String uemail) {
+        this.uemail = uemail == null ? null : uemail.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getRemark1() {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1 == null ? null : remark1.trim();
+    }
+
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2 == null ? null : remark2.trim();
+    }
+
+    public String getRemark3() {
+        return remark3;
+    }
+
+    public void setRemark3(String remark3) {
+        this.remark3 = remark3 == null ? null : remark3.trim();
+    }
+
+    public String getRemark4() {
+        return remark4;
+    }
+
+    public void setRemark4(String remark4) {
+        this.remark4 = remark4 == null ? null : remark4.trim();
+    }
+
+    public String getRemark5() {
+        return remark5;
+    }
+
+    public void setRemark5(String remark5) {
+        this.remark5 = remark5 == null ? null : remark5.trim();
+    }
 }

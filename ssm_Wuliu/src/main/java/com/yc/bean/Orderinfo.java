@@ -1,11 +1,15 @@
 package com.yc.bean;
 
-public class Route {
-    private Integer rid;
+public class Orderinfo {
+    private Integer oiid;
 
-    private String rname;
+    private Integer osid;
 
-    private String rvia;
+    private String gname;
+
+    private Double gprice;
+
+    private Integer gcount;
 
     private String remark1;
 
@@ -17,28 +21,44 @@ public class Route {
 
     private String remark5;
 
-    public Integer getRid() {
-        return rid;
+    public Integer getOiid() {
+        return oiid;
     }
 
-    public void setRid(Integer rid) {
-        this.rid = rid;
+    public void setOiid(Integer oiid) {
+        this.oiid = oiid;
     }
 
-    public String getRname() {
-        return rname;
+    public Integer getOsid() {
+        return osid;
     }
 
-    public void setRname(String rname) {
-        this.rname = rname == null ? null : rname.trim();
+    public void setOsid(Integer osid) {
+        this.osid = osid;
     }
 
-    public String getRvia() {
-        return rvia;
+    public String getGname() {
+        return gname;
     }
 
-    public void setRvia(String rvia) {
-        this.rvia = rvia == null ? null : rvia.trim();
+    public void setGname(String gname) {
+        this.gname = gname == null ? null : gname.trim();
+    }
+
+    public Double getGprice() {
+        return gprice;
+    }
+
+    public void setGprice(Double gprice) {
+        this.gprice = gprice;
+    }
+
+    public Integer getGcount() {
+        return gcount;
+    }
+
+    public void setGcount(Integer gcount) {
+        this.gcount = gcount;
     }
 
     public String getRemark1() {

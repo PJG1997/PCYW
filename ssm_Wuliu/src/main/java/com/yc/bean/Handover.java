@@ -1,229 +1,165 @@
 package com.yc.bean;
 
-import java.io.Serializable;
 import java.util.Date;
 
+public class Handover {
+    private Integer hid;
 
+    private Integer cid;
 
-public class Handover  implements Serializable {		//交接表
+    private Integer did;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2545682752390473818L;
-	private Integer hid;
-	private String hfromSpname;	//起始配送点名称
-	private String htoSpname;	//到达配送点名称
-	private Date hstartTime;     //起始时间
-	private Date hendTime;   	//到达时间
-	private Integer hstatus;	//交接单状态（默认状态0）。0未发车，1已发车，2已完成
-	private String hremark;//备注
-	
-	private Car car;
-	private Driver driver;
-	private Order1 order;
-	private Route route;
-	public Integer getHid() {
-		return hid;
-	}
-	
-	public Car getCar() {
-		return car;
-	}
-	
-	public Driver getDriver() {
-		return driver;
-	}
+    private Integer osid;
 
-	//由交接单维护关联
-	public Order1 getOrder() {
-		return order;
-	}
-	
-	public Route getRoute() {
-		return route;
-	}
-	
-	public void setHid(Integer hid) {
-		this.hid = hid;
-	}
+    private Integer rid;
 
-	public String getHremark() {
-		return hremark;
-	}
+    private String hfromspname;
 
-	public void setHremark(String hremark) {
-		this.hremark = hremark;
-	}
+    private String htospname;
 
-	public void setCar(Car car) {
-		this.car = car;
-	}
+    private Date hstarttime;
 
-	public void setDriver(Driver driver) {
-		this.driver = driver;
-	}
+    private Date hendtime;
 
-	public void setOrder(Order1 order) {
-		this.order = order;
-	}
+    private Integer hstatus;
 
-	public Handover() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    private String hremark;
 
-	public String getHfromSpname() {
-		return hfromSpname;
-	}
+    private String remark1;
 
-	public void setHfromSpname(String hfromSpname) {
-		this.hfromSpname = hfromSpname;
-	}
+    private String remark2;
 
-	public String getHtoSpname() {
-		return htoSpname;
-	}
+    private String remark3;
 
-	public void setHtoSpname(String htoSpname) {
-		this.htoSpname = htoSpname;
-	}
+    private String remark4;
 
-	public Date getHstartTime() {
-		return hstartTime;
-	}
+    private String remark5;
 
-	public void setHstartTime(Date hstartTime) {
-		this.hstartTime = hstartTime;
-	}
+    public Integer getHid() {
+        return hid;
+    }
 
-	public Date getHendTime() {
-		return hendTime;
-	}
+    public void setHid(Integer hid) {
+        this.hid = hid;
+    }
 
-	public void setHendTime(Date hendTime) {
-		this.hendTime = hendTime;
-	}
-	
-	public Integer getHstatus() {
-		return hstatus;
-	}
+    public Integer getCid() {
+        return cid;
+    }
 
-	public void setHstatus(Integer hstatus) {
-		this.hstatus = hstatus;
-	}
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
 
-	public Handover(String hfromSpname, String htoSpname, Date hstartTime,
-			Date hendTime, Integer hstatus, String hremark) {
-		super();
-		this.hfromSpname = hfromSpname;
-		this.htoSpname = htoSpname;
-		this.hstartTime = hstartTime;
-		this.hendTime = hendTime;
-		this.hstatus = hstatus;
-		this.hremark = hremark;
-	}
+    public Integer getDid() {
+        return did;
+    }
 
-	@Override
-	public String toString() {
-		return "Handover [hendTime=" + hendTime + ", hfromSpname="
-				+ hfromSpname + ", hid=" + hid + ", hremark=" + hremark
-				+ ", hstartTime=" + hstartTime + ", hstatus=" + hstatus
-				+ ", htoSpname=" + htoSpname + "]";
-	}
-	public void setRoute(Route route) {
-		this.route = route;
-	}
+    public void setDid(Integer did) {
+        this.did = did;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((car == null) ? 0 : car.hashCode());
-		result = prime * result + ((driver == null) ? 0 : driver.hashCode());
-		result = prime * result
-				+ ((hendTime == null) ? 0 : hendTime.hashCode());
-		result = prime * result
-				+ ((hfromSpname == null) ? 0 : hfromSpname.hashCode());
-		result = prime * result + ((hid == null) ? 0 : hid.hashCode());
-		result = prime * result + ((hremark == null) ? 0 : hremark.hashCode());
-		result = prime * result
-				+ ((hstartTime == null) ? 0 : hstartTime.hashCode());
-		result = prime * result + ((hstatus == null) ? 0 : hstatus.hashCode());
-		result = prime * result
-				+ ((htoSpname == null) ? 0 : htoSpname.hashCode());
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + ((route == null) ? 0 : route.hashCode());
-		return result;
-	}
+    public Integer getOsid() {
+        return osid;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Handover other = (Handover) obj;
-		if (car == null) {
-			if (other.car != null)
-				return false;
-		} else if (!car.equals(other.car))
-			return false;
-		if (driver == null) {
-			if (other.driver != null)
-				return false;
-		} else if (!driver.equals(other.driver))
-			return false;
-		if (hendTime == null) {
-			if (other.hendTime != null)
-				return false;
-		} else if (!hendTime.equals(other.hendTime))
-			return false;
-		if (hfromSpname == null) {
-			if (other.hfromSpname != null)
-				return false;
-		} else if (!hfromSpname.equals(other.hfromSpname))
-			return false;
-		if (hid == null) {
-			if (other.hid != null)
-				return false;
-		} else if (!hid.equals(other.hid))
-			return false;
-		if (hremark == null) {
-			if (other.hremark != null)
-				return false;
-		} else if (!hremark.equals(other.hremark))
-			return false;
-		if (hstartTime == null) {
-			if (other.hstartTime != null)
-				return false;
-		} else if (!hstartTime.equals(other.hstartTime))
-			return false;
-		if (hstatus == null) {
-			if (other.hstatus != null)
-				return false;
-		} else if (!hstatus.equals(other.hstatus))
-			return false;
-		if (htoSpname == null) {
-			if (other.htoSpname != null)
-				return false;
-		} else if (!htoSpname.equals(other.htoSpname))
-			return false;
-		if (order == null) {
-			if (other.order != null)
-				return false;
-		} else if (!order.equals(other.order))
-			return false;
-		if (route == null) {
-			if (other.route != null)
-				return false;
-		} else if (!route.equals(other.route))
-			return false;
-		return true;
-	}
+    public void setOsid(Integer osid) {
+        this.osid = osid;
+    }
 
-	
-	
+    public Integer getRid() {
+        return rid;
+    }
+
+    public void setRid(Integer rid) {
+        this.rid = rid;
+    }
+
+    public String getHfromspname() {
+        return hfromspname;
+    }
+
+    public void setHfromspname(String hfromspname) {
+        this.hfromspname = hfromspname == null ? null : hfromspname.trim();
+    }
+
+    public String getHtospname() {
+        return htospname;
+    }
+
+    public void setHtospname(String htospname) {
+        this.htospname = htospname == null ? null : htospname.trim();
+    }
+
+    public Date getHstarttime() {
+        return hstarttime;
+    }
+
+    public void setHstarttime(Date hstarttime) {
+        this.hstarttime = hstarttime;
+    }
+
+    public Date getHendtime() {
+        return hendtime;
+    }
+
+    public void setHendtime(Date hendtime) {
+        this.hendtime = hendtime;
+    }
+
+    public Integer getHstatus() {
+        return hstatus;
+    }
+
+    public void setHstatus(Integer hstatus) {
+        this.hstatus = hstatus;
+    }
+
+    public String getHremark() {
+        return hremark;
+    }
+
+    public void setHremark(String hremark) {
+        this.hremark = hremark == null ? null : hremark.trim();
+    }
+
+    public String getRemark1() {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1 == null ? null : remark1.trim();
+    }
+
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2 == null ? null : remark2.trim();
+    }
+
+    public String getRemark3() {
+        return remark3;
+    }
+
+    public void setRemark3(String remark3) {
+        this.remark3 = remark3 == null ? null : remark3.trim();
+    }
+
+    public String getRemark4() {
+        return remark4;
+    }
+
+    public void setRemark4(String remark4) {
+        this.remark4 = remark4 == null ? null : remark4.trim();
+    }
+
+    public String getRemark5() {
+        return remark5;
+    }
+
+    public void setRemark5(String remark5) {
+        this.remark5 = remark5 == null ? null : remark5.trim();
+    }
 }
