@@ -14,5 +14,12 @@
  	<select id="getAdminByLogin" resultType="Admin" parameterType="Admin">
  		select * from admin where aname=#{aname} and apwd=#{apwd}
  	</select>
-
+ 	
+ 	
+ 	<!-- 查询所有管理员 -->
+	<select id="searchAllAdmin0" resultType="Admin" parameterType="map">
+		select * from users where status=1
+	</select>
+	
+	
 </mapper>

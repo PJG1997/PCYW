@@ -33,7 +33,7 @@ create table driver(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 
 create table goods(
 	gid int primary key auto_increment,
@@ -49,7 +49,7 @@ create table goods(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 
 create table handover(
 	hid int primary key auto_increment,
@@ -70,7 +70,7 @@ create table handover(
 	remark5 varchar(3000)
 	
 	
-)
+);
 
 create table orderHandover(
 	ohid int primary key auto_increment,
@@ -81,7 +81,7 @@ create table orderHandover(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 
 create table order1(
 	osid int primary key auto_increment,
@@ -109,7 +109,9 @@ create table order1(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
+
+
 create table orderInfo(
 	oiid int primary key auto_increment,
 	osid int,/*   这个字段加外键   */
@@ -121,7 +123,7 @@ create table orderInfo(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 create table price(
 	pid int primary key auto_increment,
 	pfrom varchar(50),
@@ -136,7 +138,7 @@ create table price(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-	)
+	);
 	
 create table proxy(
 	prid int primary key auto_increment,
@@ -150,7 +152,7 @@ create table proxy(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 /*
 create table role(
 	roleid int primary key auto_increment,
@@ -172,7 +174,7 @@ create table route(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 
 create table shippoint(
 	spid int primary key auto_increment,
@@ -191,7 +193,7 @@ create table shippoint(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);
 
 create table users(
 	usid int primary key auto_increment,
@@ -202,10 +204,10 @@ create table users(
 	uphone varchar(50),
 	utel varchar(50),
 	uemail varchar(50),
-	status int,
+	status int, /* 0代表用户封禁，删除状态  1.代表管理员权限,2.代表普通用户权限 */
 	remark1 varchar(3000),
 	remark2 varchar(3000),
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-)
+);

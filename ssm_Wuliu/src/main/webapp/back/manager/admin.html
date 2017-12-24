@@ -6,8 +6,8 @@ var adminOp;
 var adminflag;
 
 var adminObject=$('#admin_data').datagrid({
-	url:'../../adminServlet',
-	queryParams:{op:"find"},
+	url:'findAllAdmin.action',
+	//queryParams:{op:"find"},
 	fitColumns:true,
 	striped:true,
 	loadMsg:'数据加载中。。。。',
@@ -20,9 +20,15 @@ var adminObject=$('#admin_data').datagrid({
 	remoteSort:false,
 	columns:[[   
 	          {field:"deptnos",checkbox:true},
-	          {field:'aid',title:'管理员编号',width:80,align:'center',sortable:true},   
-	          {field:'aname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
-	          {field:'pwd',title:'管理员密码',width:80,align:'center',editor:{type:"text",options:{required:true}}}   
+	          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
+	          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'upwd',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'urealName',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'uaddress',title:'住址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'uphone',title:'管理员手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'utel',title:'管理员住宅电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'uemail',title:'管理员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+
 	]],
 	      
 	toolbar:[{

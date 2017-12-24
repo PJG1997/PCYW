@@ -1,5 +1,8 @@
 package com.yc.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +22,7 @@ import com.yc.biz.AdminBiz;
 public class AdminController {
 	@Resource(name="adminBizImpl")
 	private AdminBiz adminBiz;
-	private JsonModel jsonModel=new JsonModel();
+	private JsonModel<Admin> jsonModel=new JsonModel<Admin>();
 	
 	@RequestMapping(value="adminLogin.action")
 	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Admin admin){
@@ -38,5 +41,17 @@ public class AdminController {
 			jsonModel.setCode(0);
 		}
 		return jsonModel;
+	}
+	
+	@RequestMapping(value="findAllAdmin.action")
+	@ResponseBody
+	public JsonModel findAllAdminInfo(HttpSession session,HttpServletRequest request,Admin admin){
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("Admin",admin);
+		
+		
+		return jsonModel;
+		
 	}
 }
