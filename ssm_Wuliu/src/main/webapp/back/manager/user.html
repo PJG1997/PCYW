@@ -1,0 +1,99 @@
+<table id="user_data" data-options="fit:true"></table>
+<div id="user_search">
+	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>用户ID:</label>
+	<input type="text" name="sname" id="user_search_usid" class="song_input">
+	<label>用户姓名</label>
+	<input type="text" name="sname" id="user_search_uname" class="song_input">
+	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
+
+<script type="text/javascript">
+var userEditRow=undefined;
+var userOp;
+var userflag;
+
+var userObject=$('#user_data').datagrid({
+	url:'../../userServlet',
+	queryParams:{op:"find"},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中...',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'usid',
+	remoteSort:false,
+	columns:[[
+	          
+			  {field:"usids",checkbox:true},
+	          {field:'photo',title:'会员图片',width:100,align:'center',formatter:function(val,row,index){
+	        	  if(val=="" || val==null || val=="null"){
+	        		  return "<img src='../../images/zanwu.jpg' width='50px' height='50px' />";
+	        	  }else{
+	        		  return "<img src='../../"+val+"' width='100px' height='50px'>";
+	        	  }
+	          }},
+	          {field:'usid',title:'会员编号',width:80,align:'center',sortable:true},   
+	          {field:'uname',title:'会员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'email',title:'会员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'tel',title:'会员电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'sex',title:'会员姓别',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+	          
+	             
+	]],
+	      
+	toolbar:"#user_search"
+		
+});
+
+function user_deleteUser(){
+	var rows = userObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var usids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					usids+=rows[i].usid+",";
+				}
+				usids+=rows[i].usid;
+				
+				$.post("../../userServlet",{op:"delUser",usid:usids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'用户信息删除成功...',timeout:2000,showType:'slide'});
+    					userObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','用户信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+	
+}
+
+
+function user_searchUser(){
+	
+	var usid = $.trim($("#user_search_usid").val());
+	
+	$('#user_data').datagrid({
+		url:"../../userServlet",
+		queryParams:{op:"findByid",usid:usid}
+	});
+	
+	
+}
+
+
+
+
+</script>

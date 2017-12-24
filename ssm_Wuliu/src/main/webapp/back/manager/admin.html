@@ -1,0 +1,136 @@
+<table id="admin_data" data-options="fit:true"></table>
+
+<script type="text/javascript">
+var adminEditRow=undefined;
+var adminOp;
+var adminflag;
+
+var adminObject=$('#admin_data').datagrid({
+	url:'../../adminServlet',
+	queryParams:{op:"find"},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'deptno',
+	remoteSort:false,
+	columns:[[   
+	          {field:"deptnos",checkbox:true},
+	          {field:'aid',title:'管理员编号',width:80,align:'center',sortable:true},   
+	          {field:'aname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'pwd',title:'管理员密码',width:80,align:'center',editor:{type:"text",options:{required:true}}}   
+	]],
+	      
+	toolbar:[{
+    	text:"添加",	
+    	iconCls: 'icon-user-add',
+    	
+    	handler: function(){
+    		if(adminEditRow==undefined){
+    			
+    			adminObject.datagrid('insertRow',{index:0,row:{}});
+        		adminObject.datagrid('beginEdit',0);
+    			adminEditRow=0;//记录当前正在别编辑的行的索引
+    			adminOp="addAdmin";
+    			adminflag="添加";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"修改",
+    	iconCls: 'icon-user-edit',
+    	handler: function(){
+    		if(adminEditRow!=undefined){
+    			adminObject.datagrid("rejectChanges");
+    			adminEditRow=undefined;
+    		}
+    		var row = adminObject.datagrid("getChecked")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			adminEditRow = adminObject.datagrid("getRowIndex",row);
+    			adminObject.datagrid('beginEdit',adminEditRow);
+    			adminOp="updateAdmin";
+    			adminflag="修改";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"删除",
+    	iconCls: 'icon-user-delete',
+    	handler: function(){
+    		var rows = adminObject.datagrid("getChecked");
+    		if(rows.length<0){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+    				if(r){
+    					var aids="";
+    					for(var i=0,len=rows.length;i<len-1;i++){
+    						aids+=rows[i].aid+",";
+    					}
+    					aids+=rows[i].aid;
+    					
+    					$.post("../../adminServlet",{op:"delAdmin",aid:aids},function(data){
+    	    				data=parseInt($.trim(data));
+    	    				if(data>0){
+    	    					$.messager.show({title:'温馨提示',msg:'管理员信息删除成功...',timeout:2000,showType:'slide'});
+    	    	    			adminObject.datagrid("reload");
+    	    				}else{
+    	    					$.messager.alert('失败提示','管理员信息删除失败。。。。','error');
+    	    				}
+    	    			},"text");
+    				}else{
+    					return;
+    				}
+    			});
+    		}
+    	}
+    },'-',{
+    	
+    	text:"保存",
+    	iconCls: 'icon-user-tick',
+    	handler: function(){
+    		if(adminEditRow!=undefined){//说明正在被编辑的行
+    			adminObject.datagrid("endEdit",adminEditRow);
+    			adminEditRow=undefined;
+    		}
+    		var row = adminObject.datagrid("getChanges")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+adminflag+'的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			row["op"]=adminOp;
+    			$.post("../../adminServlet",row,function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'管理员信息'+adminflag+'成功...',timeout:2000,showType:'slide'});
+    	    			adminObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','管理员信息'+adminflag+'失败。。。。','error');
+    				}
+    			},"text");
+    		}
+    	}
+    	
+	},'-',{
+    	
+    	text:"撤销",
+    	iconCls: 'icon-undo',
+    	handler: function(){
+    		adminObject.datagrid("rejectChanges");
+			adminEditRow=undefined;
+    	}	
+	
+	}]
+		
+});
+
+
+
+</script>
