@@ -35,7 +35,7 @@
 		
 		<!-- 如果不读取mybatis-config.xml文件，那typeAliases,mapper的配置都要单独配置 -->
 		<property name="typeAliasesPackage" value="com/yc/bean" />
-		<property name="mapperLocations" value="classpath:com/yc/dao/*.xml" />
+		<property name="mapperLocations" value="classpath:com/yc/bean/*.xml" />
 	</bean>
 
 	<!-- mybatis sqlSession -->
