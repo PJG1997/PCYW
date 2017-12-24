@@ -12,7 +12,7 @@ public class JsonModel<T> implements Serializable{
 	private Object obj;
 	private String errmsg;
 	
-	private List<Admin> users; //记录管理员数量
+	private List<Users> users; //记录管理员数量
 	
 	
 	public Integer getCode() {
@@ -33,13 +33,12 @@ public class JsonModel<T> implements Serializable{
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
 	}
-	public List<Admin> getUsers() {
+	public List<Users> getUsers() {
 		return users;
 	}
-	public void setUsers(List<Admin> users) {
+	public void setUsers(List<Users> users) {
 		this.users = users;
 	}
-	
 	
 	
 	

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yc.bean.Admin;
 import com.yc.bean.JsonModel;
+import com.yc.bean.Users;
 import com.yc.biz.AdminBiz;
 
 @Controller
@@ -22,35 +22,24 @@ import com.yc.biz.AdminBiz;
 public class AdminController {
 	@Resource(name="adminBizImpl")
 	private AdminBiz adminBiz;
-	private JsonModel<Admin> jsonModel=new JsonModel<Admin>();
+	private JsonModel<Users> jsonModel=new JsonModel<Users>();
 	
-	@RequestMapping(value="adminLogin.action")
-	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Admin admin){
-		String code = request.getParameter("code");
-		String codes=String.valueOf(session.getAttribute("rand"));
 	
-		if(code.equals(codes)){
-			jsonModel.setCode(1);
-			Admin u=adminBiz.login(admin);
-			if(u!=null){
-				jsonModel.setCode(2);
-			}else{
-				jsonModel.setCode(3);
-			}
-		}else{
-			jsonModel.setCode(0);
-		}
-		return jsonModel;
-	}
 	
 	@RequestMapping(value="findAllAdmin.action")
 	@ResponseBody
-	public JsonModel findAllAdminInfo(HttpSession session,HttpServletRequest request,Admin admin){
+	public JsonModel findAllAdminInfo(HttpSession session,HttpServletRequest request,Users users){
 		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("Admin",admin);
-		
-		
+		try {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("Admin",users);
+			jsonModel=adminBiz.searchAllUsers(map);
+			session.setAttribute("listAdmin", jsonModel.getUsers());
+			jsonModel.setCode(1);
+		} catch (Exception e) {
+			jsonModel.setCode(0);
+			e.printStackTrace();
+		}
 		return jsonModel;
 		
 	}

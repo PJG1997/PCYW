@@ -3,227 +3,128 @@ package com.yc.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-
-
-public class Handover  implements Serializable {		//交接表
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2545682752390473818L;
-	private Integer hid;
-	private String hfromSpname;	//起始配送点名称
-	private String htoSpname;	//到达配送点名称
-	private Date hstartTime;     //起始时间
-	private Date hendTime;   	//到达时间
-	private Integer hstatus;	//交接单状态（默认状态0）。0未发车，1已发车，2已完成
-	private String hremark;//备注
+public class Handover implements Serializable{
+	private static final long serialVersionUID = 1286352651445904050L;
 	
-	private Car car;
-	private Driver driver;
-	private Order1 order;
-	private Route route;
+	private Integer hid;	//交接ID
+    private Car car;		//汽车对象
+    private Driver driver;	//司机对象
+    private Order1 order1;	//订单对象
+    private Integer rid;	//路线对象
+    private String hfromspname;		//起始配送点名称
+    private String htospname;		//到达配送点名称
+    private Date hstarttime;		//起始时间
+    private Date hendtime;			//到达时间
+    private Integer hstatus;		//交接单状态（默认状态0）。0未发车，1已发车，2已完成
+    private String hremark;			//备注
+    private String remark1;			//备用字段1
+    private String remark2;			//备用字段2
+    private String remark3;			//备用字段3
+    private String remark4;			//备用字段4
+    private String remark5;			//备用字段5
 	public Integer getHid() {
 		return hid;
 	}
-	
-	public Car getCar() {
-		return car;
-	}
-	
-	public Driver getDriver() {
-		return driver;
-	}
-
-	//由交接单维护关联
-	public Order1 getOrder() {
-		return order;
-	}
-	
-	public Route getRoute() {
-		return route;
-	}
-	
 	public void setHid(Integer hid) {
 		this.hid = hid;
 	}
-
-	public String getHremark() {
-		return hremark;
+	public Car getCar() {
+		return car;
 	}
-
-	public void setHremark(String hremark) {
-		this.hremark = hremark;
-	}
-
 	public void setCar(Car car) {
 		this.car = car;
 	}
-
+	public Driver getDriver() {
+		return driver;
+	}
 	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
-
-	public void setOrder(Order1 order) {
-		this.order = order;
+	public Order1 getOrder1() {
+		return order1;
 	}
-
-	public Handover() {
-		super();
-		// TODO Auto-generated constructor stub
+	public void setOrder1(Order1 order1) {
+		this.order1 = order1;
 	}
-
-	public String getHfromSpname() {
-		return hfromSpname;
+	public Integer getRid() {
+		return rid;
 	}
-
-	public void setHfromSpname(String hfromSpname) {
-		this.hfromSpname = hfromSpname;
+	public void setRid(Integer rid) {
+		this.rid = rid;
 	}
-
-	public String getHtoSpname() {
-		return htoSpname;
+	public String getHfromspname() {
+		return hfromspname;
 	}
-
-	public void setHtoSpname(String htoSpname) {
-		this.htoSpname = htoSpname;
+	public void setHfromspname(String hfromspname) {
+		this.hfromspname = hfromspname;
 	}
-
-	public Date getHstartTime() {
-		return hstartTime;
+	public String getHtospname() {
+		return htospname;
 	}
-
-	public void setHstartTime(Date hstartTime) {
-		this.hstartTime = hstartTime;
+	public void setHtospname(String htospname) {
+		this.htospname = htospname;
 	}
-
-	public Date getHendTime() {
-		return hendTime;
+	public Date getHstarttime() {
+		return hstarttime;
 	}
-
-	public void setHendTime(Date hendTime) {
-		this.hendTime = hendTime;
+	public void setHstarttime(Date hstarttime) {
+		this.hstarttime = hstarttime;
 	}
-	
+	public Date getHendtime() {
+		return hendtime;
+	}
+	public void setHendtime(Date hendtime) {
+		this.hendtime = hendtime;
+	}
 	public Integer getHstatus() {
 		return hstatus;
 	}
-
 	public void setHstatus(Integer hstatus) {
 		this.hstatus = hstatus;
 	}
-
-	public Handover(String hfromSpname, String htoSpname, Date hstartTime,
-			Date hendTime, Integer hstatus, String hremark) {
-		super();
-		this.hfromSpname = hfromSpname;
-		this.htoSpname = htoSpname;
-		this.hstartTime = hstartTime;
-		this.hendTime = hendTime;
-		this.hstatus = hstatus;
+	public String getHremark() {
+		return hremark;
+	}
+	public void setHremark(String hremark) {
 		this.hremark = hremark;
 	}
-
+	public String getRemark1() {
+		return remark1;
+	}
+	public void setRemark1(String remark1) {
+		this.remark1 = remark1;
+	}
+	public String getRemark2() {
+		return remark2;
+	}
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
+	}
+	public String getRemark3() {
+		return remark3;
+	}
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
+	public String getRemark4() {
+		return remark4;
+	}
+	public void setRemark4(String remark4) {
+		this.remark4 = remark4;
+	}
+	public String getRemark5() {
+		return remark5;
+	}
+	public void setRemark5(String remark5) {
+		this.remark5 = remark5;
+	}
 	@Override
 	public String toString() {
-		return "Handover [hendTime=" + hendTime + ", hfromSpname="
-				+ hfromSpname + ", hid=" + hid + ", hremark=" + hremark
-				+ ", hstartTime=" + hstartTime + ", hstatus=" + hstatus
-				+ ", htoSpname=" + htoSpname + "]";
+		return "Handover [hid=" + hid + ", car=" + car + ", driver=" + driver + ", order1=" + order1 + ", rid=" + rid
+				+ ", hfromspname=" + hfromspname + ", htospname=" + htospname + ", hstarttime=" + hstarttime
+				+ ", hendtime=" + hendtime + ", hstatus=" + hstatus + ", hremark=" + hremark + ", remark1=" + remark1
+				+ ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5
+				+ "]";
 	}
-	public void setRoute(Route route) {
-		this.route = route;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((car == null) ? 0 : car.hashCode());
-		result = prime * result + ((driver == null) ? 0 : driver.hashCode());
-		result = prime * result
-				+ ((hendTime == null) ? 0 : hendTime.hashCode());
-		result = prime * result
-				+ ((hfromSpname == null) ? 0 : hfromSpname.hashCode());
-		result = prime * result + ((hid == null) ? 0 : hid.hashCode());
-		result = prime * result + ((hremark == null) ? 0 : hremark.hashCode());
-		result = prime * result
-				+ ((hstartTime == null) ? 0 : hstartTime.hashCode());
-		result = prime * result + ((hstatus == null) ? 0 : hstatus.hashCode());
-		result = prime * result
-				+ ((htoSpname == null) ? 0 : htoSpname.hashCode());
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + ((route == null) ? 0 : route.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Handover other = (Handover) obj;
-		if (car == null) {
-			if (other.car != null)
-				return false;
-		} else if (!car.equals(other.car))
-			return false;
-		if (driver == null) {
-			if (other.driver != null)
-				return false;
-		} else if (!driver.equals(other.driver))
-			return false;
-		if (hendTime == null) {
-			if (other.hendTime != null)
-				return false;
-		} else if (!hendTime.equals(other.hendTime))
-			return false;
-		if (hfromSpname == null) {
-			if (other.hfromSpname != null)
-				return false;
-		} else if (!hfromSpname.equals(other.hfromSpname))
-			return false;
-		if (hid == null) {
-			if (other.hid != null)
-				return false;
-		} else if (!hid.equals(other.hid))
-			return false;
-		if (hremark == null) {
-			if (other.hremark != null)
-				return false;
-		} else if (!hremark.equals(other.hremark))
-			return false;
-		if (hstartTime == null) {
-			if (other.hstartTime != null)
-				return false;
-		} else if (!hstartTime.equals(other.hstartTime))
-			return false;
-		if (hstatus == null) {
-			if (other.hstatus != null)
-				return false;
-		} else if (!hstatus.equals(other.hstatus))
-			return false;
-		if (htoSpname == null) {
-			if (other.htoSpname != null)
-				return false;
-		} else if (!htoSpname.equals(other.htoSpname))
-			return false;
-		if (order == null) {
-			if (other.order != null)
-				return false;
-		} else if (!order.equals(other.order))
-			return false;
-		if (route == null) {
-			if (other.route != null)
-				return false;
-		} else if (!route.equals(other.route))
-			return false;
-		return true;
-	}
-
-	
-	
+    
 }

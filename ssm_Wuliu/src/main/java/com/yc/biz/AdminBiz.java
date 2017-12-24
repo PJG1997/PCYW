@@ -2,12 +2,11 @@ package com.yc.biz;
 
 import java.util.Map;
 
-import com.yc.bean.Admin;
 import com.yc.bean.JsonModel;
+import com.yc.bean.Users;
 
 public interface AdminBiz {
-	public Admin login(Admin admin);
 	
-	public JsonModel<Admin> searchAllUsers(Map<String,Object> map);
+	public JsonModel<Users> searchAllUsers(Map<String,Object> map);
 	
 }

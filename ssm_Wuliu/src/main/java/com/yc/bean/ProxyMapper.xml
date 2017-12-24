@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="proxy" >
+  <resultMap id="BaseResultMap" type="com.yc.bean.Proxy" >
+    <id column="prid" property="prid" jdbcType="INTEGER" />
+    <result column="prname" property="prname" jdbcType="VARCHAR" />
+    <result column="prtime" property="prtime" jdbcType="VARCHAR" />
+    <result column="prprice" property="prprice" jdbcType="DOUBLE" />
+    <result column="spid" property="spid" jdbcType="INTEGER" />
+    <result column="prremark" property="prremark" jdbcType="VARCHAR" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+    <result column="remark4" property="remark4" jdbcType="VARCHAR" />
+    <result column="remark5" property="remark5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    prid, prname, prtime, prprice, spid, prremark, remark1, remark2, remark3, remark4, 
+    remark5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from proxy
+    where prid = #{prid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from proxy
+    where prid = #{prid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yc.bean.Proxy" >
+    insert into proxy (prid, prname, prtime, 
+      prprice, spid, prremark, 
+      remark1, remark2, remark3, 
+      remark4, remark5)
+    values (#{prid,jdbcType=INTEGER}, #{prname,jdbcType=VARCHAR}, #{prtime,jdbcType=VARCHAR}, 
+      #{prprice,jdbcType=DOUBLE}, #{spid,jdbcType=INTEGER}, #{prremark,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
+      #{remark4,jdbcType=VARCHAR}, #{remark5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yc.bean.Proxy" >
+    insert into proxy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prid != null" >
+        prid,
+      </if>
+      <if test="prname != null" >
+        prname,
+      </if>
+      <if test="prtime != null" >
+        prtime,
+      </if>
+      <if test="prprice != null" >
+        prprice,
+      </if>
+      <if test="spid != null" >
+        spid,
+      </if>
+      <if test="prremark != null" >
+        prremark,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+      <if test="remark4 != null" >
+        remark4,
+      </if>
+      <if test="remark5 != null" >
+        remark5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prid != null" >
+        #{prid,jdbcType=INTEGER},
+      </if>
+      <if test="prname != null" >
+        #{prname,jdbcType=VARCHAR},
+      </if>
+      <if test="prtime != null" >
+        #{prtime,jdbcType=VARCHAR},
+      </if>
+      <if test="prprice != null" >
+        #{prprice,jdbcType=DOUBLE},
+      </if>
+      <if test="spid != null" >
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="prremark != null" >
+        #{prremark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark5 != null" >
+        #{remark5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Proxy" >
+    update proxy
+    <set >
+      <if test="prname != null" >
+        prname = #{prname,jdbcType=VARCHAR},
+      </if>
+      <if test="prtime != null" >
+        prtime = #{prtime,jdbcType=VARCHAR},
+      </if>
+      <if test="prprice != null" >
+        prprice = #{prprice,jdbcType=DOUBLE},
+      </if>
+      <if test="spid != null" >
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="prremark != null" >
+        prremark = #{prremark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="remark4 != null" >
+        remark4 = #{remark4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark5 != null" >
+        remark5 = #{remark5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where prid = #{prid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Proxy" >
+    update proxy
+    set prname = #{prname,jdbcType=VARCHAR},
+      prtime = #{prtime,jdbcType=VARCHAR},
+      prprice = #{prprice,jdbcType=DOUBLE},
+      spid = #{spid,jdbcType=INTEGER},
+      prremark = #{prremark,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR},
+      remark4 = #{remark4,jdbcType=VARCHAR},
+      remark5 = #{remark5,jdbcType=VARCHAR}
+    where prid = #{prid,jdbcType=INTEGER}
+  </update>
+</mapper>

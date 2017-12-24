@@ -2,125 +2,106 @@ package com.yc.bean;
 
 import java.io.Serializable;
 
-
-
-public class Driver implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3453764343626256016L;
-	private Integer did;//1.	司机ID
-	private String dname;//2.	司机名称、
-	private String dnumber;//3.	驾驶证号、
-	private String dphone;//4.	联系电话、
-	private String didCard;//5.	身份证、
-	private Integer ddage;//6.	驾龄
-	private Integer dstatus = 0;//7.	司机状态（0空闲，1在忙）。默认0
-
-	private ShipPoint shipPoint;
-
+public class Driver implements Serializable{
+	private static final long serialVersionUID = -2939412317386360377L;
+	
+	private Integer did;		//司机ID
+    private Shippoint shipPoint;	//配送点的对象
+    private String dname;		//司机名称、
+    private String dnumber;		//驾驶证号
+    private String dphone;		//联系电话、
+    private String didcard;		//身份证、
+    private Integer ddage;		//驾龄
+    private Integer dstatus;	//司机状态（0空闲，1在忙）。默认0
+    private String remark1;		//备用字段1
+    private String remark2;		//备用字段2
+    private String remark3;		//备用字段3
+    private String remark4;		//备用字段4
+    private String remark5;		//备用字段5
 	public Integer getDid() {
 		return did;
 	}
-	
-	public ShipPoint getShipPoint() {
-		return shipPoint;
-	}
-	
-
 	public void setDid(Integer did) {
 		this.did = did;
 	}
-
+	public Shippoint getShipPoint() {
+		return shipPoint;
+	}
+	public void setShipPoint(Shippoint shipPoint) {
+		this.shipPoint = shipPoint;
+	}
 	public String getDname() {
 		return dname;
 	}
-
 	public void setDname(String dname) {
 		this.dname = dname;
 	}
-
 	public String getDnumber() {
 		return dnumber;
 	}
-
 	public void setDnumber(String dnumber) {
 		this.dnumber = dnumber;
 	}
-
 	public String getDphone() {
 		return dphone;
 	}
-
 	public void setDphone(String dphone) {
 		this.dphone = dphone;
 	}
-
-	public String getDidCard() {
-		return didCard;
+	public String getDidcard() {
+		return didcard;
 	}
-
-	public void setDidCard(String didCard) {
-		this.didCard = didCard;
+	public void setDidcard(String didcard) {
+		this.didcard = didcard;
 	}
-
 	public Integer getDdage() {
 		return ddage;
 	}
-
 	public void setDdage(Integer ddage) {
 		this.ddage = ddage;
 	}
-
-
-	public void setShipPoint(ShipPoint shipPoint) {
-		this.shipPoint = shipPoint;
-	}
-
-	public Driver() {
-		super();
-	}
-
-	public Driver(String dname, String dnumber, String dphone, String didCard,
-		Integer ddage, Integer dstatus) {
-	super();
-	this.dname = dname;
-	this.dnumber = dnumber;
-	this.dphone = dphone;
-	this.didCard = didCard;
-	this.ddage = ddage;
-	this.dstatus = dstatus;
-}
-
-	
-	@Override
-	public String toString() {
-		return "Driver [ddage=" + ddage + ", did=" + did + ", didCard="
-				+ didCard + ", dname=" + dname + ", dnumber=" + dnumber
-				+ ", dphone=" + dphone + ", dstatus=" + dstatus + "]";
-	}
-
-	public Driver(Integer did) {
-		super();
-		this.did = did;
-	}
-
 	public Integer getDstatus() {
 		return dstatus;
 	}
-
 	public void setDstatus(Integer dstatus) {
 		this.dstatus = dstatus;
 	}
-
-	
-//	private String d1;
-//	private String d2;
-//	private String d3;
-//	private String d4;
-	
-	
-	
-
+	public String getRemark1() {
+		return remark1;
+	}
+	public void setRemark1(String remark1) {
+		this.remark1 = remark1;
+	}
+	public String getRemark2() {
+		return remark2;
+	}
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
+	}
+	public String getRemark3() {
+		return remark3;
+	}
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
+	public String getRemark4() {
+		return remark4;
+	}
+	public void setRemark4(String remark4) {
+		this.remark4 = remark4;
+	}
+	public String getRemark5() {
+		return remark5;
+	}
+	public void setRemark5(String remark5) {
+		this.remark5 = remark5;
+	}
+	@Override
+	public String toString() {
+		return "Driver [did=" + did + ", shipPoint=" + shipPoint + ", dname=" + dname + ", dnumber=" + dnumber
+				+ ", dphone=" + dphone + ", didcard=" + didcard + ", ddage=" + ddage + ", dstatus=" + dstatus
+				+ ", remark1=" + remark1 + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4
+				+ ", remark5=" + remark5 + "]";
+	}
+    
 }

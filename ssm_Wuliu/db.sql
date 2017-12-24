@@ -11,17 +11,17 @@ create table car(
 	cton double,
 	cstatus int,
 	cisBox int,
-	cremake varchar(3000),
-	remark1 varchar(3000),
-	remark2 varchar(3000),
-	remark3 varchar(3000),
-	remark4 varchar(3000),
-	remark5 varchar(3000)
+	cremake varchar(2000),
+	remark1 varchar(2000),
+	remark2 varchar(2000),
+	remark3 varchar(2000),
+	remark4 varchar(2000),
+	remark5 varchar(2000)
 );
 
 create table driver(
 	did int  primary key auto_increment,
-	spid int,    /*   这个字段加外键   */
+	spid int,    
 	dname varchar(50),
 	dnumber varchar(50),
 	dphone varchar(50),
@@ -68,9 +68,8 @@ create table handover(
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
-	
-	
 );
+
 
 create table orderHandover(
 	ohid int primary key auto_increment,

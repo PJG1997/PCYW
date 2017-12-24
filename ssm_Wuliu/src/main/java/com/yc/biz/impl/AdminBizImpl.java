@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yc.bean.Admin;
 import com.yc.bean.JsonModel;
+import com.yc.bean.Users;
 import com.yc.biz.AdminBiz;
 import com.yc.dao.AdminDao;
 @Service
@@ -16,14 +16,13 @@ import com.yc.dao.AdminDao;
 public class AdminBizImpl implements AdminBiz{
 	@Resource(name="adminDaoImpl")
 	private AdminDao adminDao;
-	@Override
-	public Admin login(Admin admin) {
-		return adminDao.login(admin);
-	}
+	
 	
 	
 	@Override
-	public JsonModel<Admin> searchAllUsers(Map<String, Object> map) {
+	public JsonModel<Users> searchAllUsers(Map<String, Object> map) {
+		
+		
 		return adminDao.searchAllUsers(map);
 	}
 

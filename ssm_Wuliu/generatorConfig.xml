@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- classPathEntry:数据库的JDBC驱动的jar包地址 -->
+	<classPathEntry location="D:\MavenRepository\com\yc\drivers\mysql\5\mysql-5.jar" />
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<!-- 抑制警告 -->
+			<property name="suppressTypeWarnings" value="true" />
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true" />
+			<!-- 是否生成注释代时间戳 -->
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+
+		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost/wuliu" userId="root" password="a">
+		</jdbcConnection>
+
+		<javaModelGenerator targetPackage="com.yc.bean"
+			targetProject="ssm_Wuliu\src\main\java">
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
+			
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="com.yc.bean"
+			targetProject="ssm_Wuliu\src\main\java">
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+
+		
+
+		
+		<table schema="wuliu" tableName="users" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false">
+			<property name="modelOnly" value="true"/>
+		</table>
+		<table schema="wuliu" tableName="car" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+		<table schema="wuliu" tableName="driver" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="goods" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="handover" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+   		<table schema="wuliu" tableName="order1" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="orderhandover" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+   		<table schema="wuliu" tableName="orderinfo" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="price" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="proxy" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="route" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+    	<table schema="wuliu" tableName="shippoint" enableCountByExample="false" enableUpdateByExample="false"  
+    enableDeleteByExample="false" enableSelectByExample="false"  
+    selectByExampleQueryId="false"></table>
+	</context>
+</generatorConfiguration>

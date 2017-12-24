@@ -6,7 +6,7 @@ var adminOp;
 var adminflag;
 
 var adminObject=$('#admin_data').datagrid({
-	url:'findAllAdmin.action',
+	url:'../../findAllAdmin.action',
 	//queryParams:{op:"find"},
 	fitColumns:true,
 	striped:true,
@@ -16,10 +16,10 @@ var adminObject=$('#admin_data').datagrid({
 	pageNumber:1,
 	pageSize:5,
 	pageList:[5,10,20,30,50],
-	sortName:'deptno',
+	sortName:'users',
 	remoteSort:false,
 	columns:[[   
-	          {field:"deptnos",checkbox:true},
+	          {field:"users",checkbox:true},
 	          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
 	          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
 	          {field:'upwd',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},

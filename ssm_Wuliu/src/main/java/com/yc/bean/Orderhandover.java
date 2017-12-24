@@ -2,38 +2,37 @@ package com.yc.bean;
 
 import java.io.Serializable;
 
-public class Route implements Serializable{
-	
+public class Orderhandover implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 8032440985733757540L;
-	
-	private Integer rid;		//线路ID
-    private String rname;		//线路名称、
-    private String rvia;		//配送路线顺序
+	private static final long serialVersionUID = -5535999907557184226L;
+
+	private Integer ohid;		//订单与交接表的关联ID
+    private Integer hid;		//交接表ID
+    private Integer osid;		//订单ID
     private String remark1;		//备用字段1
     private String remark2;		//备用字段2
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4
     private String remark5;		//备用字段5
-	public Integer getRid() {
-		return rid;
+	public Integer getOhid() {
+		return ohid;
 	}
-	public void setRid(Integer rid) {
-		this.rid = rid;
+	public void setOhid(Integer ohid) {
+		this.ohid = ohid;
 	}
-	public String getRname() {
-		return rname;
+	public Integer getHid() {
+		return hid;
 	}
-	public void setRname(String rname) {
-		this.rname = rname;
+	public void setHid(Integer hid) {
+		this.hid = hid;
 	}
-	public String getRvia() {
-		return rvia;
+	public Integer getOsid() {
+		return osid;
 	}
-	public void setRvia(String rvia) {
-		this.rvia = rvia;
+	public void setOsid(Integer osid) {
+		this.osid = osid;
 	}
 	public String getRemark1() {
 		return remark1;
@@ -67,8 +66,8 @@ public class Route implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Route [rid=" + rid + ", rname=" + rname + ", rvia=" + rvia + ", remark1=" + remark1 + ", remark2="
+		return "Orderhandover [ohid=" + ohid + ", hid=" + hid + ", osid=" + osid + ", remark1=" + remark1 + ", remark2="
 				+ remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + "]";
 	}
-    
+
 }
