@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../css/login.css">
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<title>物流-后台登陆</title>
+<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#sub_btn").click(function() {
+		var aname=$.trim($("#aname").val());
+		var pwd=$.trim($("#pwd").val());
+		var code=$.trim($("#code").val());
+		if(aname==""||pwd==""||code==""){
+			alert("您输入的信息不完整。。。");
+			return;
+		}
+		$.ajax({
+			url :"adminLogin.action",
+			data : {aname:aname,
+					apwd:apwd,
+					code:code
+			},
+			dataType : "JSON",
+			method:"POST",
+			success : function(data) {
+				if(data.code==2){
+					alert("登录成功");
+				}else if(data.code==3){
+					alert("用户名或密码失败");
+				}else if(data.code==0){
+					alert("验证码错误")
+				}else{
+					alert("登录失败")
+				}
+			}
+		});
+	});
+		
+})
+	
+</script>
+</head>
+<body>
+	<div id="login_top">
+		<div id="welcome">欢迎使用物流后台管理系统</div>
+		<div id="back">
+			<a href="#">返回首页</a>&nbsp;&nbsp; | &nbsp;&nbsp; <a href="#">帮助</a>
+		</div>
+	</div>
+	<div id="login_center">
+		<div id="login_area">
+			<div id="login_form">
+				<form id="myform" name="myform">
+					<div id="login_tip">管理员登录&nbsp;&nbsp;ManagerLogin</div>
+					<div>
+						<input type="text" id="aname" class="username">
+					</div>
+					<div>
+						<input type="password" id="pwd" class="pwd">
+					</div>
+					<div id="btn_area">
+						<input type="button" name="submit" id="sub_btn"
+							value="登&nbsp;&nbsp;录" onclick="adminLogin()"> <input
+							type="text" id="code" class="verify"> <img
+							src="valiCodeImg.jsp"
+							onclick="this.src='valiCodeImg.jsp?d='+new Date().getTime()"
+							border="0" title="点击图片刷新验证码" size="10" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="login_bottom">版权所有</div>
+</body>
+</html>
