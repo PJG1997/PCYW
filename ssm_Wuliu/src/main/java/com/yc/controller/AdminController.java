@@ -25,7 +25,7 @@ public class AdminController {
 	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Admin admin){
 		String code = request.getParameter("code");
 		String codes=String.valueOf(session.getAttribute("rand"));
-		
+	
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
 			Admin u=adminBiz.login(admin);
