@@ -10,7 +10,6 @@
   <!-- 车子的整个元素   -->
   <resultMap id="carMap" type="Car" >
     <id column="cid" property="cid" jdbcType="INTEGER" />
-    <result column="spid" property="spid" jdbcType="INTEGER" />
     <result column="cnumber" property="cnumber" jdbcType="VARCHAR" />
     <result column="ctype" property="ctype" jdbcType="VARCHAR" />
     <result column="cbuyDay" property="cbuyday" jdbcType="DATE" />
@@ -26,7 +25,7 @@
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
     <!--  他所属公司的元素  没有包括公司的备注   和5个备份 -->
-    <collection property="shippoint" ofType="Shippoint">
+    <collection property="shipPoint" ofType="shipPoint">
     	<id property="spid" column="spid"/>
     	<result property="spname" column="spname"></result>
     	<result property="spperson" column="spperson"></result>
@@ -42,10 +41,10 @@
   <!-- 获得这个车子的全部信息 以及它所属公司的信息      没有包括这两个表的备份 -->
   <select id="getCarInfo" resultMap="carMap">
   	select cid,car.spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,
-  			shippoint.spid,spname,spperson,sptel,spemail,spaddress,sptype,sppersontel,spfax,sparea
+  			shipPoint.spid,spname,spperson,sptel,spemail,spaddress,sptype,sppersontel,spfax,sparea
   	from car
-  	left join shippoint
-  	on 	car.spid=shippoint.spid
+  	left join shipPoint
+  	on 	car.spid=shipPoint.spid
   	where car.cid=#{car.cid}
   </select>
   <!-- 添加车子的信息 -->
@@ -53,7 +52,7 @@
  		keyColumn="cid" keyProperty="cid">
  		insert into car(
  			spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake
- 		) values(#{shippoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},#{cstatus},#{cisbox},#{cremake})
+ 		) values(#{shipPoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},#{cstatus},#{cisbox},#{cremake})
   </insert>
   <!--   修改整个车子的信息   （全部的信息） -->
   <update id="updateCarInfo" parameterType="Car">
@@ -66,6 +65,6 @@
   </update>
   <!-- 删除车子 -->
   <delete id="delCar" parameterType="Car">
-  	delete car where cid=#{cid}
+  	delete from car where cid=#{cid}
   </delete>
 </mapper>

@@ -32,13 +32,13 @@ public class CarBizImpl implements CarBiz {
 	@Override
 	public void updateCarInfo(Car c) {
 
-		this.updateCarInfo(c);
+		this.carDao.updateCarInfo(c);
 	}
 
 	@Override
 	public void updateCarStatus(Car c) {
 
-		this.updateCarStatus(c);
+		this.carDao.updateCarStatus(c);
 	}
 
 	@Override
