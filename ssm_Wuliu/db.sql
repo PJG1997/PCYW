@@ -177,7 +177,7 @@ create table route(
 
 create table shippoint(
 	spid int primary key auto_increment,
-	spanme varchar(50),
+	spname varchar(50),
 	spperson varchar(50),
 	sptel varchar(50),
 	spemail varchar(50),
