@@ -198,8 +198,13 @@
   </update>
   
   <!-- 查询所有管理员 -->
-	<select id="searchAllAdmin" resultType="Users" parameterType="map">
+	<select id="searchAllAdmin" resultType="Users">
 		select * from users where status=1
+	</select>
+	
+	<!-- 查询总记录数 -->
+	<select id="getTotal" resultType="int">
+		select count(usid) total from users where status=1;
 	</select>
   
 </mapper>

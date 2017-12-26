@@ -2,6 +2,7 @@ package com.yc.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public class JsonModel<T> implements Serializable{
 	
@@ -12,8 +13,8 @@ public class JsonModel<T> implements Serializable{
 	private Object obj;
 	private String errmsg;
 	
-	private List<Users> users; //记录管理员数量
-	
+	//private List<Users> users; //记录管理员数量
+	private Map<String,Object> userMap;
 	
 	public Integer getCode() {
 		return code;
@@ -33,12 +34,13 @@ public class JsonModel<T> implements Serializable{
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
 	}
-	public List<Users> getUsers() {
-		return users;
+	public Map<String, Object> getUserMap() {
+		return userMap;
 	}
-	public void setUsers(List<Users> users) {
-		this.users = users;
+	public void setUserMap(Map<String, Object> ump) {
+		this.userMap = ump;
 	}
+	
 	
 	
 	

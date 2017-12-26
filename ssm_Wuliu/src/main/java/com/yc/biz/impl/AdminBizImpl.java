@@ -1,5 +1,7 @@
 package com.yc.biz.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,10 +22,14 @@ public class AdminBizImpl implements AdminBiz{
 	
 	
 	@Override
-	public JsonModel<Users> searchAllUsers(Map<String, Object> map) {
+	public Map<String, Object> searchAllUsers() {
+		List<Users> ls = adminDao.searchAllUsers();
+		Map<String,Object> maps = new HashMap<String,Object>();
+		int result = adminDao.total();
+		maps.put("total", result);
+		maps.put("rows", ls);
 		
-		
-		return adminDao.searchAllUsers(map);
+		return maps;
 	}
 
 	

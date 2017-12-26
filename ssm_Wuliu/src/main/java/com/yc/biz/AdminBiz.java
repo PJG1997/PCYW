@@ -7,6 +7,6 @@ import com.yc.bean.Users;
 
 public interface AdminBiz {
 	
-	public JsonModel<Users> searchAllUsers(Map<String,Object> map);
+	public Map<String,Object> searchAllUsers();
 	
 }
