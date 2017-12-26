@@ -21,7 +21,7 @@ var adminObject=$('#admin_data').datagrid({
 	          {field:"usids",checkbox:true},
 	          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
 	          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
-	          {field:'upwd',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'upwd',title:'管理员密码',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'urealname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uaddress',title:'住址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uphone',title:'管理员手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
@@ -40,7 +40,7 @@ var adminObject=$('#admin_data').datagrid({
     			adminObject.datagrid('insertRow',{index:0,row:{}});
         		adminObject.datagrid('beginEdit',0);
     			adminEditRow=0;//记录当前正在别编辑的行的索引
-    			adminOp="addAdmin";
+    			adminOp="addAdmin.action";
     			adminflag="添加";
     		}
     	}
@@ -110,8 +110,9 @@ var adminObject=$('#admin_data').datagrid({
     			$.messager.show({title:'温馨提示',msg:'请编辑你要'+adminflag+'的数据...',timeout:2000,showType:'slide'});
     			
     		}else{
-    			row["op"]=adminOp;
-    			$.post("../../adminServlet",row,function(data){
+    			
+    			var action = "../../"+adminOp;
+    			/*$.post("../../adminServlet",row,function(data){
     				data=parseInt($.trim(data));
     				if(data>0){
     					$.messager.show({title:'温馨提示',msg:'管理员信息'+adminflag+'成功...',timeout:2000,showType:'slide'});
@@ -119,7 +120,25 @@ var adminObject=$('#admin_data').datagrid({
     				}else{
     					$.messager.alert('失败提示','管理员信息'+adminflag+'失败。。。。','error');
     				}
-    			},"text");
+    			},"text");*/
+    			
+    			$.ajax({
+    				url:action,
+    				data:row,
+    				dataType:"JSON",
+    				method:"POST",
+    				success:function(data){
+    					if(data.code==1){
+    						$.messager.show({title:'温馨提示',msg:'管理员信息'+adminflag+'成功...',timeout:2000,showType:'slide'});
+        	    			adminObject.datagrid("reload");
+    					}else{
+        					$.messager.alert('失败提示','管理员信息'+adminflag+'失败。。。。','error');
+    					}
+    				}
+    				
+    			});
+    			
+    			
     		}
     	}
     	

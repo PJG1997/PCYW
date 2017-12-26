@@ -42,4 +42,13 @@ public class AdminDaoImpl implements AdminDao{
 		return sqlSession.selectOne("users.getTotal");
 	}
 	
+	/**
+	 * 添加管理员
+	 */
+	@Override
+	public int addAdmin(Users u) {
+		
+		return sqlSession.insert("users.insert",u);
+	}
+	
 }

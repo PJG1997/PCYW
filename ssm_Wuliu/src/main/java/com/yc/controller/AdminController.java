@@ -42,4 +42,32 @@ public class AdminController {
 		return maps;
 		
 	}
+	
+	@RequestMapping(value="addAdmin.action")
+	@ResponseBody
+	public JsonModel addAdmin(HttpSession session,HttpServletRequest request){
+		
+		try {
+			Users u = new Users();
+			u.setUsid(1);
+			u.setUname(request.getParameter("uname"));
+			u.setUpwd(request.getParameter("upwd"));
+			u.setUrealname(request.getParameter("urealname"));
+			u.setUaddress(request.getParameter("uaddress"));
+			u.setUphone(request.getParameter("uphone"));
+			u.setUtel(request.getParameter("utel"));
+			u.setUemail(request.getParameter("uemail"));
+			u.setStatus(1);
+			
+			int result=adminBiz.addAdmin(u);
+			jsonModel.setCode(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			jsonModel.setCode(0);
+			
+		}
+		return jsonModel;
+		
+	}
 }

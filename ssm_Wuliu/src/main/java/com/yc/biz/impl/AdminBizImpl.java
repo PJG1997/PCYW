@@ -32,6 +32,14 @@ public class AdminBizImpl implements AdminBiz{
 		return maps;
 	}
 
+
+
+	@Override
+	public int addAdmin(Users u) {
+		
+		return adminDao.addAdmin(u);
+	}
+
 	
 	
 }

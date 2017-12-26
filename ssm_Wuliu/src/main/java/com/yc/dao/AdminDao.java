@@ -22,5 +22,11 @@ public interface AdminDao {
 	 */
 	public int total();
 	
+	/**
+	 * 添加管理员
+	 * @return
+	 */
+	public int addAdmin(Users u);
+	
 	
 }

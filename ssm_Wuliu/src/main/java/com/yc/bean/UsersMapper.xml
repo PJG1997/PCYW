@@ -206,5 +206,9 @@
 	<select id="getTotal" resultType="int">
 		select count(usid) total from users where status=1;
 	</select>
+	<!-- 添加管理员 -->
+	<insert id="addAdmin" parameterType="Users">
+		insert into users values(#{usid},#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},#{status},null,null,null,null,null);
+	</insert>
   
 </mapper>
