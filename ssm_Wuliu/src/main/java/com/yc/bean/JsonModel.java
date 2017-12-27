@@ -4,17 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class JsonModel<T> implements Serializable{
-	
-	private static final long serialVersionUID = -2141546735354453318L;
-	
+public class JsonModel implements Serializable{
+
+	private static final long serialVersionUID = 9106902882602433353L;
 	
 	private Integer code;
 	private Object obj;
 	private String errmsg;
-	
-	//private List<Users> users; //记录管理员数量
-	private Map<String,Object> userMap;
 	
 	public Integer getCode() {
 		return code;
@@ -33,12 +29,6 @@ public class JsonModel<T> implements Serializable{
 	}
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
-	}
-	public Map<String, Object> getUserMap() {
-		return userMap;
-	}
-	public void setUserMap(Map<String, Object> ump) {
-		this.userMap = ump;
 	}
 	
 	

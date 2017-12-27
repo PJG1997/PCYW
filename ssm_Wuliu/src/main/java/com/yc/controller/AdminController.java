@@ -22,9 +22,7 @@ import com.yc.biz.AdminBiz;
 public class AdminController {
 	@Resource(name="adminBizImpl")
 	private AdminBiz adminBiz;
-	private JsonModel<Users> jsonModel=new JsonModel<Users>();
-	
-	
+	private JsonModel jsonModel=new JsonModel();
 	
 	@RequestMapping(value="findAllAdmin.action")
 	@ResponseBody
@@ -45,8 +43,9 @@ public class AdminController {
 	
 	@RequestMapping(value="addAdmin.action")
 	@ResponseBody
-	public JsonModel addAdmin(HttpSession session,HttpServletRequest request){
+	public Map<String,Object> addAdmin(HttpSession session,HttpServletRequest request){
 		
+		Map<String,Object> objMap=new HashMap<String,Object>();
 		try {
 			Users u = new Users();
 			u.setUsid(1);
@@ -60,14 +59,18 @@ public class AdminController {
 			u.setStatus(1);
 			
 			int result=adminBiz.addAdmin(u);
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("Admin",u);
+			objMap.put("total", 1);
+			objMap.put("rows", adminBiz.searchAllUsers(map));
 			jsonModel.setCode(1);
+			jsonModel.setObj(objMap);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			jsonModel.setCode(0);
 			
 		}
-		return jsonModel;
-		
+		return objMap;
 	}
 }

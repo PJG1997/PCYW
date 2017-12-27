@@ -28,5 +28,6 @@ public interface AdminDao {
 	 */
 	public int addAdmin(Users u);
 	
+	public List<Users> searchAllUsers(Map<String,Object> map); //查询所有管理员信息
 	
 }
