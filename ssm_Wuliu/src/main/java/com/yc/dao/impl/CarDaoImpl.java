@@ -11,7 +11,7 @@ import com.yc.bean.Car;
 import com.yc.dao.CarDao;
 
 @Repository
-public class CarDaoMybatisImpl implements CarDao {
+public class CarDaoImpl implements CarDao {
 	
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;

@@ -9,7 +9,7 @@ public class Shippoint implements Serializable{
 	private static final long serialVersionUID = 8413773576260310885L;
 	
 	private Integer spid;		//	配送ID
-    private String spanme;		//	配送点名称
+    private String spname;		//	配送点名称
     private String spperson;	//	联系人
     private String sptel;		//	配送点电话、
     private String spemail;		//	联系EMail、
@@ -30,11 +30,11 @@ public class Shippoint implements Serializable{
 	public void setSpid(Integer spid) {
 		this.spid = spid;
 	}
-	public String getSpanme() {
-		return spanme;
+	public String getspname() {
+		return spname;
 	}
-	public void setSpanme(String spanme) {
-		this.spanme = spanme;
+	public void setspname(String spname) {
+		this.spname = spname;
 	}
 	public String getSpperson() {
 		return spperson;
@@ -122,7 +122,7 @@ public class Shippoint implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Shippoint [spid=" + spid + ", spanme=" + spanme + ", spperson=" + spperson + ", sptel=" + sptel
+		return "Shippoint [spid=" + spid + ", spname=" + spname + ", spperson=" + spperson + ", sptel=" + sptel
 				+ ", spemail=" + spemail + ", spaddress=" + spaddress + ", sptype=" + sptype + ", sppersontel="
 				+ sppersontel + ", spfax=" + spfax + ", sparea=" + sparea + ", spremark=" + spremark + ", remark1="
 				+ remark1 + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5="
