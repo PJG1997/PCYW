@@ -33,7 +33,7 @@
         	<div title="用户信息" data-options="iconCls:'icon-group'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
     				<li iconCls="icon-user-brown"><a href="javascript:void(0)" data-icon="icon-user-brown" data-link="admin.html" iframe="0">管理员信息</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="admin.html" iframe="0">管理用户</a></li>
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="user.html" iframe="0">管理用户</a></li>
                 </ul>
             </div>
             
