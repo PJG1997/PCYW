@@ -1,4 +1,4 @@
-package com.yc.controller;
+/*package com.yc.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,3 +44,4 @@ public class AdminController {
 		
 	}
 }
+*/

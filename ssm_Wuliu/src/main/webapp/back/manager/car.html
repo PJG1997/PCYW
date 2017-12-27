@@ -1,0 +1,145 @@
+<table id="car_data" data-options="fit:true"></table>
+
+<script type="text/javascript">
+var carEditRow=undefined;
+var carOp;
+var carflag;
+
+var carObject=$('#car_data').datagrid({
+	url:'../../findAllcar.action',
+	//queryParams:{op:"find"},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'car',
+	remoteSort:false,
+	columns:[[   
+	          {field:"car",checkbox:true},
+	          {field:'cid',title:'车子编号',width:80,align:'center',sortable:true},   
+	          {field:'spname',title:'所属公司名',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
+	          {field:'cname',title:'车辆名',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
+	          {field:'cnumber',title:'车牌号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'ctype',title:'汽车类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'cbuyday',title:'购买日期',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'crunnum',title:'营运证号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'cvolume',title:'容积',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'cton',title:'吨位',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'cstatus',title:'车辆状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'cisbox',title:'是否箱式',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'cremake',title:'备注',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+	]],
+	      
+	toolbar:[{
+    	text:"添加",	
+    	iconCls: 'icon-car-add',
+    	
+    	handler: function(){
+    		if(carEditRow==undefined){
+    			
+    			carObject.datagrid('insertRow',{index:0,row:{}});
+        		carObject.datagrid('beginEdit',0);
+    			carEditRow=0;//记录当前正在别编辑的行的索引
+    			carOp="addcar";
+    			carflag="添加";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"修改",
+    	iconCls: 'icon-car-edit',
+    	handler: function(){
+    		if(carEditRow!=undefined){
+    			carObject.datagrid("rejectChanges");
+    			carEditRow=undefined;
+    		}
+    		var row = carObject.datagrid("getChecked")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			carEditRow = carObject.datagrid("getRowIndex",row);
+    			carObject.datagrid('beginEdit',carEditRow);
+    			carOp="updatecar";
+    			carflag="修改";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"删除",
+    	iconCls: 'icon-car-delete',
+    	handler: function(){
+    		var rows = carObject.datagrid("getChecked");
+    		if(rows.length<0){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+    				if(r){
+    					var aids="";
+    					for(var i=0,len=rows.length;i<len-1;i++){
+    						aids+=rows[i].aid+",";
+    					}
+    					aids+=rows[i].aid;
+    					
+    					$.post("../../carServlet",{op:"delcar",aid:aids},function(data){
+    	    				data=parseInt($.trim(data));
+    	    				if(data>0){
+    	    					$.messager.show({title:'温馨提示',msg:'管理员信息删除成功...',timeout:2000,showType:'slide'});
+    	    	    			carObject.datagrid("reload");
+    	    				}else{
+    	    					$.messager.alert('失败提示','管理员信息删除失败。。。。','error');
+    	    				}
+    	    			},"text");
+    				}else{
+    					return;
+    				}
+    			});
+    		}
+    	}
+    },'-',{
+    	
+    	text:"保存",
+    	iconCls: 'icon-user-tick',
+    	handler: function(){
+    		if(carEditRow!=undefined){//说明正在被编辑的行
+    			carObject.datagrid("endEdit",carEditRow);
+    			carEditRow=undefined;
+    		}
+    		var row = carObject.datagrid("getChanges")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+carflag+'的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			row["op"]=carOp;
+    			$.post("../../carServlet",row,function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'管理员信息'+carflag+'成功...',timeout:2000,showType:'slide'});
+    	    			carObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','管理员信息'+carflag+'失败。。。。','error');
+    				}
+    			},"text");
+    		}
+    	}
+    	
+	},'-',{
+    	
+    	text:"撤销",
+    	iconCls: 'icon-undo',
+    	handler: function(){
+    		carObject.datagrid("rejectChanges");
+			carEditRow=undefined;
+    	}	
+	
+	}]
+		
+});
+
+
+
+</script>

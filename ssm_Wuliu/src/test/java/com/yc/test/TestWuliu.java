@@ -47,12 +47,6 @@ public class TestWuliu {
 		c.setCremake(" ");
 		this.carBiz.addCar(c);
 	}
-	//根据id查询车子信息测试
-	@Test
-	public void test2(){
-		Car c=this.carBiz.getCarInfo(2);
-		System.out.println(c);
-	}
 	//更新车子的状态测试
 	@Test
 	public void test3(){
@@ -62,11 +56,4 @@ public class TestWuliu {
 		this.carBiz.updateCarStatus(c);
 	}
 	
-	//删除车子测试
-	@Test
-	public void test4(){
-		Car c =new Car();
-		c.setCid(2);
-		this.carBiz.delCar(c);
-	}
 }

@@ -1,5 +1,7 @@
 package com.yc.biz.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -19,8 +21,8 @@ public class CarBizImpl implements CarBiz {
 	private CarDao carDao;
 
 	@Transactional(readOnly=true)
-	public Car getCarInfo(Integer id) {
-		return carDao.getCarInfo(id);
+	public List<Car> getCarInfo(Car c) {
+		return carDao.getCarInfo(c);
 	}
 
 	@Override
@@ -41,10 +43,11 @@ public class CarBizImpl implements CarBiz {
 		this.carDao.updateCarStatus(c);
 	}
 
+
 	@Override
-	public void delCar(Car c) {
-		// TODO Auto-generated method stub
-		this.carDao.delCar(c);
+	public void delmanyCar(List<Car> list) {
+		this.carDao.delmanyCar(list);
 	}
+
 
 }

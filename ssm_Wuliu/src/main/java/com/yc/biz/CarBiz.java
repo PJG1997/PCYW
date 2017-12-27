@@ -1,11 +1,13 @@
 package com.yc.biz;
 
+import java.util.List;
+
 import com.yc.bean.Car;
 
 public interface CarBiz {
 	/*
 	 * 根据车子的编号查车子的信息*/
-	public Car getCarInfo(Integer id);
+	public List<Car> getCarInfo(Car c);
 	
 	/*
 	 * 添加车子的信息*/
@@ -19,7 +21,7 @@ public interface CarBiz {
 	 * 更新车子的空闲状态*/
 	public void updateCarStatus(Car c);
 	
-	/*
-	 * 根据车子的id删除车子*/
-	public void delCar(Car c);
+	
+	/*根据车子id批量删除*/
+	public void delmanyCar(List<Car> list);
 }

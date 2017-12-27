@@ -23,6 +23,11 @@ public class Car implements Serializable{
     private String remark3;			//备用字段3
     private String remark4;			//备用字段4
     private String remark5;			//备用字段5
+    
+    private Double mincvolume;     //最小容量
+    private Double maxcvolume;     //最大容量
+    private Double mincton;        //最小吨位
+    private Double maxcton;        //最大吨位
 	public Integer getCid() {
 		return cid;
 	}
@@ -119,14 +124,42 @@ public class Car implements Serializable{
 	public void setRemark5(String remark5) {
 		this.remark5 = remark5;
 	}
-	
+	public Double getMincvolume() {
+		return mincvolume;
+	}
+	public void setMincvolume(Double mincvolume) {
+		this.mincvolume = mincvolume;
+	}
+	public Double getMaxcvolume() {
+		return maxcvolume;
+	}
+	public void setMaxcvolume(Double maxcvolume) {
+		this.maxcvolume = maxcvolume;
+	}
+	public Double getMincton() {
+		return mincton;
+	}
+	public void setMincton(Double mincton) {
+		this.mincton = mincton;
+	}
+	public Double getMaxcton() {
+		return maxcton;
+	}
+	public void setMaxcton(Double maxcton) {
+		this.maxcton = maxcton;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		return "Car [cid=" + cid + ", shipPoint=" + shipPoint + ", cnumber=" + cnumber + ", ctype=" + ctype
 				+ ", cbuyday=" + cbuyday + ", crunnum=" + crunnum + ", cvolume=" + cvolume + ", cton=" + cton
 				+ ", cstatus=" + cstatus + ", cisbox=" + cisbox + ", cremake=" + cremake + ", remark1=" + remark1
 				+ ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5
-				+ "]";
+				+ ", mincvolume=" + mincvolume + ", maxcvolume=" + maxcvolume + ", mincton=" + mincton + ", maxcton="
+				+ maxcton + "]";
 	}
+	
 	
 }

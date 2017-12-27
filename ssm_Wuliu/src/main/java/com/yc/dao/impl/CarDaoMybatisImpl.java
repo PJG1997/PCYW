@@ -1,5 +1,7 @@
 package com.yc.dao.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,9 +16,16 @@ public class CarDaoMybatisImpl implements CarDao {
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
+	
+	
+	
+	public void setSqlSession(SqlSessionTemplate sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
 	@Override
-	public Car getCarInfo(Integer cid) {
-		return this.sqlSession.selectOne("com.yc.bean.CarMapper.getCarInfo", cid);
+	public List<Car> getCarInfo(Car c) {
+		return this.sqlSession.selectOne("com.yc.bean.CarMapper.getCarInfo", c);
 	}
 
 	@Override
@@ -37,10 +46,11 @@ public class CarDaoMybatisImpl implements CarDao {
 		this.sqlSession.update("com.yc.bean.CarMapper.updateCarStatus", c);
 	}
 
-	@Override
-	public void delCar(Car c) {
 
-		this.sqlSession.delete("com.yc.bean.CarMapper.delCar", c);
+	@Override
+	public void delmanyCar(List<Car> list) {
+
+		this.sqlSession.delete("com.yc.bean.CarMapper.delmanyCar", list);
 	}
 
 }

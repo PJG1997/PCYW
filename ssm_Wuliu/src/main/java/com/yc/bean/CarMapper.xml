@@ -45,14 +45,36 @@
   	from car
   	left join shipPoint
   	on 	car.spid=shipPoint.spid
-  	where car.cid=#{car.cid}
+  	where remark3=1
+  		<if test="cid!=null and cid!=''">
+  			and cid=#{cid}
+  		</if>
+  		<if test="spname!=null and spname!=''">
+  			and spname like '%${shipPoint.spname}'
+  		</if>
+  		<if test="ctype!=null and ctype!=''">
+  			and ctype like '%${ctype}'
+  		</if>
+  		<if test="mincvolume!=null and mincvolume!='' and maxcvolume=!'' and maxcvolume!=null">
+  			and cvolume between ${mincvolume} and ${maxcvolume}
+  		</if>
+  		<if test="mincton!=null and mincton!='' and maxcton=!'' and maxcton!=null">
+  			and cton between ${mincton} and ${maxcton}
+  		</if>
+  		<if test="cstatus!=null and cstatus!=''">
+  			and cstatus=#{cstatus}
+  		</if>
+  		<if test="cisbox!=null and cisbox!=''">
+  			and cisbox=#{cisbox}
+  		</if>
   </select>
+  
   <!-- 添加车子的信息 -->
   <insert id="addCar" parameterType="Car" useGeneratedKeys="true" 
  		keyColumn="cid" keyProperty="cid">
  		insert into car(
- 			spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake
- 		) values(#{shipPoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},#{cstatus},#{cisbox},#{cremake})
+ 			spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,remark3
+ 		) values(#{shipPoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},#{cstatus},#{cisbox},#{cremake},1)
   </insert>
   <!--   修改整个车子的信息   （全部的信息） -->
   <update id="updateCarInfo" parameterType="Car">
@@ -64,7 +86,15 @@
   	update car set cstatus=#{cstatus} where cid=#{cid}
   </update>
   <!-- 删除车子 -->
-  <delete id="delCar" parameterType="Car">
-  	delete from car where cid=#{cid}
-  </delete>
+  <update id="delCar" parameterType="Car">
+  	update car set remark3=0 where cid=#{cid}
+  </update>
+  
+  <!-- 批量删除多辆车子 -->
+  <update id="delmanyCar" parameterType="java.util.List">
+  	update car set remark3=0 where cid in
+  	<foreach collection="List" index="index"  item="item"  open="("  close=")" separator=",">
+  	#{cid}
+  	</foreach>
+  </update>
 </mapper>
