@@ -1,1 +1,28 @@
 <!-- 配送点 -->
+<table id="dispoint_data">
+
+	<div id="dispoint_search">
+		<a href="javascript:route_showAddDispoint()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-cdr-add',plain:true" style="float: left">添加</a>
+		<div class="datagrid-btn-separator"></div>
+		<a href="javascript:dispoint_showUpdateDispoint()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-cdr-edit',plain:true" style="float: left">修改</a>
+		<div class="datagrid-btn-separator"></div>
+		<a href="javascript:dispoint_deleteDispoint()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-cdr-delete',plain:true"
+			style="float: left">删除</a>
+		<div class="datagrid-btn-separator"></div>
+
+		<label>配送点编号:</label> <input type="text" name="spid"
+			id="route_search_rid" class="song_input"> <label>路线名:</label>
+		<input type="text" name="rname" id="route_search_rname"
+			class="song_input"> <a href="javascript:route_searchRoute()"
+			class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+	</div> 
+
+</table>
+
+
+<script type="text/javascript">
+	
+</script>

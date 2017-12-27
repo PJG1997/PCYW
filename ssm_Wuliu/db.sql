@@ -167,14 +167,14 @@ create table role(
 create table route(
 	rid int primary key auto_increment,
 	rname varchar(50),
-	rvia varchar(50),
+	rvia varchar(50),--配送路线顺序
 	remark1 varchar(3000),
 	remark2 varchar(3000),
 	remark3 varchar(3000),
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
-
+--配送点
 create table shippoint(
 	spid int primary key auto_increment,
 	spname varchar(50),
