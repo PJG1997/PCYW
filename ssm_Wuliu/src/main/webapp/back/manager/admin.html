@@ -16,21 +16,19 @@ var adminObject=$('#admin_data').datagrid({
 	pageNumber:1,
 	pageSize:5,
 	pageList:[5,10,20,30,50],
-	sortName:'users',
+	sortName:'usid',
 	remoteSort:false,
 	columns:[[   
 	          {field:"users",checkbox:true},
 	          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
 	          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
 	          {field:'upwd',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'urealName',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'urealname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uaddress',title:'住址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uphone',title:'管理员手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'utel',title:'管理员住宅电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uemail',title:'管理员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}}
-
 	]],
-	      
 	toolbar:[{
     	text:"添加",	
     	iconCls: 'icon-user-add',

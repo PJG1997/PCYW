@@ -1,5 +1,6 @@
 package com.yc.biz.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ public class AdminBizImpl implements AdminBiz{
 	
 	
 	@Override
-	public JsonModel<Users> searchAllUsers(Map<String, Object> map) {
+	public List<Users> searchAllUsers(Map<String, Object> map) {
 		
 		
 		return adminDao.searchAllUsers(map);

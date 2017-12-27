@@ -17,17 +17,10 @@ public class AdminDaoImpl implements AdminDao{
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
-	
-	
 	@Override
-	public JsonModel searchAllUsers(Map<String, Object> map) {
-		JsonModel<Users> jsonModel = new JsonModel<Users>();
-		
+	public List<Users> searchAllUsers(Map<String, Object> map) {
 		List<Users> ls = sqlSession.selectList("users.searchAllAdmin",map);
-		
-		jsonModel.setUsers(ls);
-		
-		return jsonModel;
+		return ls;
 	}
 	
 }

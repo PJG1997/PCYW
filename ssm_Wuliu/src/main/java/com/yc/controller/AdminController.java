@@ -22,25 +22,23 @@ import com.yc.biz.AdminBiz;
 public class AdminController {
 	@Resource(name="adminBizImpl")
 	private AdminBiz adminBiz;
-	private JsonModel<Users> jsonModel=new JsonModel<Users>();
-	
-	
+	private JsonModel jsonModel=new JsonModel();
 	
 	@RequestMapping(value="findAllAdmin.action")
 	@ResponseBody
-	public JsonModel findAllAdminInfo(HttpSession session,HttpServletRequest request,Users users){
-		
+	public Map<String,Object> findAllAdminInfo(HttpSession session,HttpServletRequest request,Users users){
+		Map<String,Object> objMap=new HashMap<String,Object>();
 		try {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("Admin",users);
-			jsonModel=adminBiz.searchAllUsers(map);
-			session.setAttribute("listAdmin", jsonModel.getUsers());
+			objMap.put("total", 1);
+			objMap.put("rows", adminBiz.searchAllUsers(map));
 			jsonModel.setCode(1);
+			jsonModel.setObj(objMap);
 		} catch (Exception e) {
 			jsonModel.setCode(0);
 			e.printStackTrace();
 		}
-		return jsonModel;
-		
+		return objMap;
 	}
 }
