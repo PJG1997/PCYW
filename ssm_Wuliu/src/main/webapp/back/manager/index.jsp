@@ -22,8 +22,8 @@
         	<h1>物流后台管理</h1>
         </div>
         <div class="wu-header-right">
-        	<p><strong class="easyui-tooltip" title="2条未读消息">admin</strong>，欢迎您！</p>
-            <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
+        	<p><strong class="easyui-tooltip" title="2条未读消息"><%=session.getAttribute("uname") %></strong>，欢迎您！</p>
+            <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="../login.html" >安全退出</a></p>
         </div>
     </div>
     <!-- end of header -->
@@ -33,17 +33,18 @@
         	<div title="用户信息" data-options="iconCls:'icon-group'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
     				<li iconCls="icon-user-brown"><a href="javascript:void(0)" data-icon="icon-user-brown" data-link="admin.html" iframe="0">管理员信息</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="admin.html" iframe="0">管理用户</a></li>
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="user.html" iframe="0">管理用户</a></li>
                 </ul>
             </div>
             
             <div title="物流信息" data-options="iconCls:'icon-car'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-map"><a href="javascript:void(0)" data-icon="icon-map" data-link="route.html" iframe="0">管理路线</a></li>
-                     <li iconCls="icon-lorry-go"><a href="javascript:void(0)" data-icon="icon-lorry-go" data-link="dispoint.html" iframe="0">管理配送点</a></li>
-                      <li iconCls="icon-user-go"><a href="javascript:void(0)" data-icon="icon-user-go" data-link="driver.html" iframe="0">管理司机</a></li>
-                      <li iconCls="icon-table"><a href="javascript:void(0)" data-icon="icon-table" data-link="order.html" iframe="0">订单管理</a></li>
-                      <li iconCls="icon-table-link"><a href="javascript:void(0)" data-icon="icon-table-link" data-link="transfer.html" iframe="0">交接单管理</a></li>
+                    <li iconCls="icon-lorry-go"><a href="javascript:void(0)" data-icon="icon-lorry-go" data-link="dispoint.html" iframe="0">管理配送点</a></li>
+                    <li iconCls="icon-user-go"><a href="javascript:void(0)" data-icon="icon-user-go" data-link="driver.html" iframe="0">管理司机</a></li>
+                    <li iconCls="icon-table"><a href="javascript:void(0)" data-icon="icon-table" data-link="order.html" iframe="0">订单管理</a></li>
+                    <li iconCls="icon-table-link"><a href="javascript:void(0)" data-icon="icon-table-link" data-link="transfer.html" iframe="0">交接单管理</a></li>
+                    <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="goods.html" iframe="0">商品管理</a></li>
                 </ul>
             </div>
             

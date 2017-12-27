@@ -27,21 +27,24 @@
     from users
     where usid = #{usid,jdbcType=INTEGER}
   </select>
+  <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
+    select 
+    *
+    from users
+    where uname=#{uname} and upwd=#{upwd} and status=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from users
     where usid = #{usid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.yc.bean.Users" >
-    insert into users (usid, uname, upwd, 
+  <insert id="insert" parameterType="Users" useGeneratedKeys="true" 
+ 		keyColumn="usid" keyProperty="usid" >
+    insert into users ( uname, upwd, 
       urealName, uaddress, uphone, 
-      utel, uemail, status, 
-      remark1, remark2, remark3, 
-      remark4, remark5)
-    values (#{usid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{upwd,jdbcType=VARCHAR}, 
-      #{urealname,jdbcType=VARCHAR}, #{uaddress,jdbcType=VARCHAR}, #{uphone,jdbcType=VARCHAR}, 
-      #{utel,jdbcType=VARCHAR}, #{uemail,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
-      #{remark4,jdbcType=VARCHAR}, #{remark5,jdbcType=VARCHAR})
+      utel, uemail, status)
+    values ( #{uname}, #{upwd}, 
+      #{urealname}, #{uaddress}, #{uphone}, 
+      #{utel}, #{uemail}, #{status})
   </insert>
   <insert id="insertSelective" parameterType="com.yc.bean.Users" >
     insert into users
@@ -198,8 +201,17 @@
   </update>
   
   <!-- 查询所有管理员 -->
-	<select id="searchAllAdmin" resultType="Users" parameterType="map">
+	<select id="searchAllAdmin" resultType="Users">
 		select * from users where status=1
 	</select>
+	
+	<!-- 查询总记录数 -->
+	<select id="getTotal" resultType="int">
+		select count(usid) total from users where status=1;
+	</select>
+	<!-- 添加管理员 -->
+	<insert id="addAdmin" parameterType="Users">
+		insert into users values(#{usid},#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},#{status},null,null,null,null,null);
+	</insert>
   
 </mapper>

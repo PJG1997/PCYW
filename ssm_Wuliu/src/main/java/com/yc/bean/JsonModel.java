@@ -2,18 +2,15 @@ package com.yc.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
-public class JsonModel<T> implements Serializable{
-	
-	private static final long serialVersionUID = -2141546735354453318L;
-	
+public class JsonModel implements Serializable{
+
+	private static final long serialVersionUID = 9106902882602433353L;
 	
 	private Integer code;
 	private Object obj;
 	private String errmsg;
-	
-	private List<Users> users; //记录管理员数量
-	
 	
 	public Integer getCode() {
 		return code;
@@ -33,12 +30,7 @@ public class JsonModel<T> implements Serializable{
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
 	}
-	public List<Users> getUsers() {
-		return users;
-	}
-	public void setUsers(List<Users> users) {
-		this.users = users;
-	}
+	
 	
 	
 	

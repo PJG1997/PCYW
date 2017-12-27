@@ -1,6 +1,7 @@
 package com.yc.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,17 +18,39 @@ public class AdminDaoImpl implements AdminDao{
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
-	
-	
+	/**
+	 * 查询所有管理员
+	 */
+	public List<Users> searchAllUsers() {
+		
+		
+		
+		List<Users> ls = sqlSession.selectList("users.searchAllAdmin");
+		
+		
+		return ls;
+	}
+
+	/**
+	 * 查询总记录
+	 */
 	@Override
-	public JsonModel searchAllUsers(Map<String, Object> map) {
-		JsonModel<Users> jsonModel = new JsonModel<Users>();
+	public int total() {
 		
+		return sqlSession.selectOne("users.getTotal");
+	}
+	
+	/**
+	 * 添加管理员
+	 */
+	@Override
+	public int addAdmin(Users u) {
+		return sqlSession.insert("users.insert",u);
+	}
+	
+	public List<Users> searchAllUsers(Map<String, Object> map) {
 		List<Users> ls = sqlSession.selectList("users.searchAllAdmin",map);
-		
-		jsonModel.setUsers(ls);
-		
-		return jsonModel;
+		return ls;
 	}
 	
 }

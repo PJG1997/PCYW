@@ -19,6 +19,51 @@ public class Goods implements Serializable{
     private String remark4;		//备用字段4
     private String remark5;		//备用字段5
     
+    private Double mingprice;
+    private Double maxgprice;
+    private Double mingweight;
+    private Double maxgweight;
+    private Double mingvolume;
+    private Double maxgvolume;
+    
+    
+    
+	public Double getMingprice() {
+		return mingprice;
+	}
+	public void setMingprice(Double mingprice) {
+		this.mingprice = mingprice;
+	}
+	public Double getMaxgprice() {
+		return maxgprice;
+	}
+	public void setMaxgprice(Double maxgprice) {
+		this.maxgprice = maxgprice;
+	}
+	public Double getMingweight() {
+		return mingweight;
+	}
+	public void setMingweight(Double mingweight) {
+		this.mingweight = mingweight;
+	}
+	public Double getMaxgweight() {
+		return maxgweight;
+	}
+	public void setMaxgweight(Double maxgweight) {
+		this.maxgweight = maxgweight;
+	}
+	public Double getMingvolume() {
+		return mingvolume;
+	}
+	public void setMingvolume(Double mingvolume) {
+		this.mingvolume = mingvolume;
+	}
+	public Double getMaxgvolume() {
+		return maxgvolume;
+	}
+	public void setMaxgvolume(Double maxgvolume) {
+		this.maxgvolume = maxgvolume;
+	}
 	public Integer getGid() {
 		return gid;
 	}
@@ -102,7 +147,10 @@ public class Goods implements Serializable{
 		return "Goods [gid=" + gid + ", gname=" + gname + ", gcount=" + gcount + ", gprice=" + gprice + ", gweight="
 				+ gweight + ", gvolume=" + gvolume + ", gtype=" + gtype + ", gremark=" + gremark + ", remark1="
 				+ remark1 + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5="
-				+ remark5 + "]";
+				+ remark5 + ", mingprice=" + mingprice + ", maxgprice=" + maxgprice + ", mingweight=" + mingweight
+				+ ", maxgweight=" + maxgweight + ", mingvolume=" + mingvolume + ", maxgvolume=" + maxgvolume + "]";
 	}
+	
+	
 
 }
