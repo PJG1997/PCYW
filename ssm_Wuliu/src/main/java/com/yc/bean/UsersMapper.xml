@@ -27,6 +27,12 @@
     from users
     where usid = #{usid,jdbcType=INTEGER}
   </select>
+  <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
+    select 
+    *
+    from users
+    where uname=#{uname} and upwd=#{upwd} and status=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from users
     where usid = #{usid,jdbcType=INTEGER}
@@ -40,8 +46,7 @@
     values (#{usid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{upwd,jdbcType=VARCHAR}, 
       #{urealname,jdbcType=VARCHAR}, #{uaddress,jdbcType=VARCHAR}, #{uphone,jdbcType=VARCHAR}, 
       #{utel,jdbcType=VARCHAR}, #{uemail,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
-      #{remark4,jdbcType=VARCHAR}, #{remark5,jdbcType=VARCHAR})
+     0,0, 0, 0,0)
   </insert>
   <insert id="insertSelective" parameterType="com.yc.bean.Users" >
     insert into users

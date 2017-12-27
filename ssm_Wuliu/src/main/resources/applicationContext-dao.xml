@@ -35,7 +35,7 @@
 		
 		<!-- 如果不读取mybatis-config.xml文件，那typeAliases,mapper的配置都要单独配置 -->
 		<property name="typeAliasesPackage" value="com/yc/bean" />
-		<property name="mapperLocations" value="classpath:com/yc/dao/*.xml" />
+		<property name="mapperLocations" value="classpath:com/yc/bean/*.xml" />
 	</bean>
 
 	<!-- mybatis sqlSession -->
@@ -51,7 +51,7 @@
 	
 	<!-- 内部资源视图解析器,转发方式跳转到另一个界面  -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="prefix" value="WEB-INF/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
