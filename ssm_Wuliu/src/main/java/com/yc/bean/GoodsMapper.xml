@@ -20,154 +20,80 @@
     gid, gname, gcount, gprice, gweight, gvolume, gtype, gremark, remark1, remark2, remark3, 
     remark4, remark5
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!-- 查询 -->
+  <select id="select" resultMap="BaseResultMap" parameterType="Goods" >
     select 
-    <include refid="Base_Column_List" />
+    gname, gcount, gprice, gweight, gvolume, gtype, gremark
     from goods
-    where gid = #{gid,jdbcType=INTEGER}
+    <where>
+    	<if test="gid!=null and gid!=''">
+    		gid=#{gid}
+    	</if>
+    	<if test="gname!=null and gname!=''">
+    		and gname=%${gname}%
+    	</if>
+    	<if test="gcount!=null and gcount!=''">
+    		and gcount=#{gcount}
+    	</if>
+    	<if test="mingprice!=null and minsprice!='' and maxgprice=null and maxsprice!=''">
+    		and gprice between ${minsprice} and ${maxsprice}
+    	</if>
+    	<if test="mingweight!=null and mingweight!='' and maxgweight!=null and maxsprice!=''">
+    		and gweight between ${minsprice} and ${maxsprice}
+    	</if>
+    	<if test="mingvolume!=null and mingvolume!='' and maxgvolume!=null and maxgvolum!=''">
+    		and gvolume between ${mingvolume} and ${maxgvolume}
+    	</if>
+    	<if test="gtype!=null and gtype!=''">
+    		and gtype=#{gtype}
+    	</if>
+    </where>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  
+  
+  <!-- 删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="Goods" >
     delete from goods
-    where gid = #{gid,jdbcType=INTEGER}
+    where gid = #{gid}
   </delete>
-  <insert id="insert" parameterType="com.yc.bean.Goods" >
-    insert into goods (gid, gname, gcount, 
+  <!-- 添加货物 -->
+  <insert id="insert"  parameterType="Goods" useGeneratedKeys="true" 
+ 		keyColumn="gid" keyProperty="gid" >
+    insert into goods ( gname, gcount, 
       gprice, gweight, gvolume, 
-      gtype, gremark, remark1, 
-      remark2, remark3, remark4, 
-      remark5)
-    values (#{gid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, #{gcount,jdbcType=VARCHAR}, 
-      #{gprice,jdbcType=DOUBLE}, #{gweight,jdbcType=DOUBLE}, #{gvolume,jdbcType=DOUBLE}, 
-      #{gtype,jdbcType=VARCHAR}, #{gremark,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
-      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
-      #{remark5,jdbcType=VARCHAR})
+      gtype, gremark)
+    values ( #{gname}, #{gcount}, 
+      #{gprice}, #{gweight}, #{gvolume}, #{gtype}, 
+      #{gremark})
   </insert>
-  <insert id="insertSelective" parameterType="com.yc.bean.Goods" >
-    insert into goods
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="gid != null" >
-        gid,
-      </if>
-      <if test="gname != null" >
-        gname,
-      </if>
-      <if test="gcount != null" >
-        gcount,
-      </if>
-      <if test="gprice != null" >
-        gprice,
-      </if>
-      <if test="gweight != null" >
-        gweight,
-      </if>
-      <if test="gvolume != null" >
-        gvolume,
-      </if>
-      <if test="gtype != null" >
-        gtype,
-      </if>
-      <if test="gremark != null" >
-        gremark,
-      </if>
-      <if test="remark1 != null" >
-        remark1,
-      </if>
-      <if test="remark2 != null" >
-        remark2,
-      </if>
-      <if test="remark3 != null" >
-        remark3,
-      </if>
-      <if test="remark4 != null" >
-        remark4,
-      </if>
-      <if test="remark5 != null" >
-        remark5,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="gid != null" >
-        #{gid,jdbcType=INTEGER},
-      </if>
-      <if test="gname != null" >
-        #{gname,jdbcType=VARCHAR},
-      </if>
-      <if test="gcount != null" >
-        #{gcount,jdbcType=VARCHAR},
-      </if>
-      <if test="gprice != null" >
-        #{gprice,jdbcType=DOUBLE},
-      </if>
-      <if test="gweight != null" >
-        #{gweight,jdbcType=DOUBLE},
-      </if>
-      <if test="gvolume != null" >
-        #{gvolume,jdbcType=DOUBLE},
-      </if>
-      <if test="gtype != null" >
-        #{gtype,jdbcType=VARCHAR},
-      </if>
-      <if test="gremark != null" >
-        #{gremark,jdbcType=VARCHAR},
-      </if>
-      <if test="remark1 != null" >
-        #{remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark2 != null" >
-        #{remark2,jdbcType=VARCHAR},
-      </if>
-      <if test="remark3 != null" >
-        #{remark3,jdbcType=VARCHAR},
-      </if>
-      <if test="remark4 != null" >
-        #{remark4,jdbcType=VARCHAR},
-      </if>
-      <if test="remark5 != null" >
-        #{remark5,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+  
+ <!-- 修改货物 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Goods" >
     update goods
     <set >
       <if test="gname != null" >
-        gname = #{gname,jdbcType=VARCHAR},
+        gname = #{gname},
       </if>
       <if test="gcount != null" >
-        gcount = #{gcount,jdbcType=VARCHAR},
+        gcount = #{gcount},
       </if>
       <if test="gprice != null" >
-        gprice = #{gprice,jdbcType=DOUBLE},
+        gprice = #{gprice},
       </if>
       <if test="gweight != null" >
-        gweight = #{gweight,jdbcType=DOUBLE},
+        gweight = #{gweight},
       </if>
       <if test="gvolume != null" >
-        gvolume = #{gvolume,jdbcType=DOUBLE},
+        gvolume = #{gvolume},
       </if>
       <if test="gtype != null" >
-        gtype = #{gtype,jdbcType=VARCHAR},
+        gtype = #{gtype},
       </if>
       <if test="gremark != null" >
-        gremark = #{gremark,jdbcType=VARCHAR},
-      </if>
-      <if test="remark1 != null" >
-        remark1 = #{remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark2 != null" >
-        remark2 = #{remark2,jdbcType=VARCHAR},
-      </if>
-      <if test="remark3 != null" >
-        remark3 = #{remark3,jdbcType=VARCHAR},
-      </if>
-      <if test="remark4 != null" >
-        remark4 = #{remark4,jdbcType=VARCHAR},
-      </if>
-      <if test="remark5 != null" >
-        remark5 = #{remark5,jdbcType=VARCHAR},
+        gremark = #{gremark},
       </if>
     </set>
-    where gid = #{gid,jdbcType=INTEGER}
+    where gid = #{gid}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yc.bean.Goods" >
     update goods
