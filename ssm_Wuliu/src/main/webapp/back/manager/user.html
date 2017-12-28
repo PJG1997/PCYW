@@ -1,6 +1,8 @@
 <table id="user_data" data-options="fit:true"></table>
 <div id="user_search">
+	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
 	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a>
 	<div class="datagrid-btn-separator"></div>	
 	<label>用户ID:</label>
 	<input type="text" name="sname" id="user_search_usid" class="song_input">
@@ -9,14 +11,76 @@
 	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
+
+
+<div id="user_detail" class="easyui-dialog" title="用户详情" style="width:340px;height:320px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="user_detail_user">
+	<ul>
+		<li>
+			<label>用户帐户：</label>
+			<input type="text" name="uname" id="user_detail_uname" readonly="readonly"  />			
+		</li>
+		<li>
+			<label>用户姓名：</label>
+			<input type="text" name="urealname" id="user_detail_urealname" readonly="readonly" />	
+		</li>
+		<li>
+			<label>用户地址:</label>
+			<input type="text" name="uaddress" id="user_detail_uaddress" readonly="readonly" />
+		</li>
+		<li>
+			<label>用户手机:</label>
+			<input type="text" name="uphone" id="user_detail_uphone" readonly="readonly" />
+		</li>
+		<li>
+			<label>用户电话:</label>
+			<select type="text" name="utel" id="user_detail_utel" readonly="readonly">
+		</li>
+		<li>
+			<label>用户邮箱:</label>
+			<input type="text" name="uemail" id="user_detail_uemail" readonly="readonly">
+		</li>
+	</ul>
+	</form>
+</div>
+
+
+
+<style>
+	
+	#operation:hover{
+		
+		text-decoration: underline
+	}
+	
+	
+	
+	
+	#user_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	
+	#user_detail{
+	
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	
+	
+</style>
+
+
 <script type="text/javascript">
 var userEditRow=undefined;
 var userOp;
 var userflag;
 
 var userObject=$('#user_data').datagrid({
-	url:'../../userServlet',
-	queryParams:{op:"find"},
+	url:'../../findAllUser.action',
 	fitColumns:true,
 	striped:true,
 	loadMsg:'数据加载中...',
@@ -30,19 +94,16 @@ var userObject=$('#user_data').datagrid({
 	columns:[[
 	          
 			  {field:"usids",checkbox:true},
-	          {field:'photo',title:'会员图片',width:100,align:'center',formatter:function(val,row,index){
-	        	  if(val=="" || val==null || val=="null"){
-	        		  return "<img src='../../images/zanwu.jpg' width='50px' height='50px' />";
-	        	  }else{
-	        		  return "<img src='../../"+val+"' width='100px' height='50px'>";
-	        	  }
-	          }},
-	          {field:'usid',title:'会员编号',width:80,align:'center',sortable:true},   
-	          {field:'uname',title:'会员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'email',title:'会员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'tel',title:'会员电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'sex',title:'会员姓别',width:80,align:'center',editor:{type:"text",options:{required:true}}}
-	          
+	          {field:'usid',title:'用户编号',width:80,align:'center',sortable:true},   
+	          {field:'uname',title:'用户帐号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'urealname',title:'用户姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'uaddress',title:'用户地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'uphone',title:'用户手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'utel',title:'用户电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'uemail',title:'用户邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
 	             
 	]],
 	      
@@ -81,16 +142,33 @@ function user_deleteUser(){
 }
 
 
-function user_searchUser(){
+function detail(val){
 	
-	var usid = $.trim($("#user_search_usid").val());
-	
-	$('#user_data').datagrid({
-		url:"../../userServlet",
-		queryParams:{op:"findByid",usid:usid}
+	$('#user_detail').dialog({
+		title:"用户详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				
+				
+				
+			}
+		}]
 	});
+	$('#user_detail').dialog("open");
 	
+}
+
+
+function update(val){
 	
+}
+
+function cancle(){
+	var user_detail = $("#user_detail");
+	user_detail.css("display","none");
 }
 
 

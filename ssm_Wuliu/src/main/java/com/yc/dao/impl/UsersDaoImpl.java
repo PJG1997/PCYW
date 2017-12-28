@@ -1,5 +1,7 @@
 package com.yc.dao.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,6 +16,19 @@ public class UsersDaoImpl implements UsersDao{
 	@Override
 	public Users login(Users user) {
 		return sqlSession.selectOne("users.loginByPrimaryKey",user);
+	}
+	@Override
+	public List<Users> searchAllUsers( ) {
+		
+		List<Users> ls = sqlSession.selectList("users.searchAllUsers");
+		System.out.println("daoIMpl查询出的:"+ls);
+		return ls;
+		
+	}
+	@Override
+	public int total() {
+		
+		return sqlSession.selectOne("users.getTotal2");
 	}
 
 }

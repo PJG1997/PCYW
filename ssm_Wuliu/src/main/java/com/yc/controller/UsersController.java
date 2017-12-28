@@ -1,5 +1,8 @@
 package com.yc.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,5 +43,21 @@ public class UsersController {
 		}
 		
 		return jsonModel;
+	}
+	
+	@RequestMapping(value="findAllUser.action")
+	@ResponseBody
+	public Map<String,Object> findAllUsersInfo(HttpSession session,HttpServletRequest request){
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		try {
+			map = usersBiz.searchAllUsers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return map;
 	}
 }

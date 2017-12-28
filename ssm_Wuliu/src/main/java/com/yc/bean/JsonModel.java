@@ -9,6 +9,7 @@ public class JsonModel implements Serializable{
 	private Integer code;
 	private Object obj;
 	private String errmsg;
+
 	
 	public Integer getCode() {
 		return code;
@@ -28,6 +29,7 @@ public class JsonModel implements Serializable{
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
 	}
+
 	
 	
 	

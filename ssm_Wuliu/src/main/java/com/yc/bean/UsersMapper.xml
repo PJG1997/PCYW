@@ -204,14 +204,26 @@
 	<select id="searchAllAdmin" resultType="Users">
 		select * from users where status=1
 	</select>
+	<!-- 查询所有权限为用户的帐户 -->
+	<select id="searchAllUsers" resultType="Users">
+		select * from users where status=2
+	</select>
 	
-	<!-- 查询总记录数 -->
+	<!-- 查询管理员总记录数 -->
 	<select id="getTotal" resultType="int">
 		select count(usid) total from users where status=1;
 	</select>
+	
+	<!-- 查询用户总记录数 -->
+	<select id="getTotal2" resultType="int">
+		select count(usid) total from users where status=2;
+	</select>
+	
 	<!-- 添加管理员 -->
 	<insert id="addAdmin" parameterType="Users">
 		insert into users values(#{usid},#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},#{status},null,null,null,null,null);
 	</insert>
+	
+	
   
 </mapper>

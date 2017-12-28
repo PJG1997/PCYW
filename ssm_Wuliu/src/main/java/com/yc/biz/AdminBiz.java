@@ -18,6 +18,11 @@ public interface AdminBiz {
 	 * 添加管理员
 	 */
 	public int addAdmin(Users u);
+	
+	/**
+	 * 查询所有管理员
+	 * @return
+	 */
 	public List<Users> searchAllUsers(Map<String,Object> map);
 	
 }
