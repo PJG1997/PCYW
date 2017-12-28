@@ -52,8 +52,8 @@
             
             <div title="车辆管理" data-options="iconCls:'icon-lorry'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-    				<li iconCls="icon-page"><a href="javascript:void(0)" data-icon="icon-page" data-link="admin.html" iframe="0">交接单查询</a></li>
-                    <li iconCls="icon-lorry-flatbed"><a href="javascript:void(0)" data-icon="icon-lorry-flatbed" data-link="admin.html" iframe="0">车辆信息</a></li>
+    				<li iconCls="icon-page"><a href="javascript:void(0)" data-icon="icon-page" data-link="car.html" iframe="0">交接单查询</a></li>
+                    <li iconCls="icon-lorry-flatbed"><a href="javascript:void(0)" data-icon="icon-lorry-flatbed" data-link="car.html" iframe="0">车辆信息</a></li>
                 </ul>
             </div>
 	    

@@ -23,5 +23,5 @@ public interface CarBiz {
 	
 	
 	/*根据车子id批量删除*/
-	public void delmanyCar(List<Car> list);
+	public void delmanyCar(List list);
 }

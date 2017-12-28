@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.bean.Car;
 import com.yc.bean.JsonModel;
+import com.yc.bean.Shippoint;
 import com.yc.biz.CarBiz;
 
 @Controller
@@ -23,14 +25,15 @@ public class CarController {
 	@Resource(name="carBizImpl")
 	private CarBiz carBiz;
 	private JsonModel jsonModel=new JsonModel();
-	
-	@RequestMapping(value="../../findAllcar.action")
+	private Shippoint sp=new Shippoint();
+	@RequestMapping(value="findAllcar.action")
 	public @ResponseBody Map<String,Object> findAllcar(Car c,HttpServletRequest request){
 		Map<String,Object> map=new HashMap<String,Object>();
 		Integer pageNo=Integer.parseInt(request.getParameter("page"));
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
 		c.setPageNo((pageNo-1)*pageSize);
 		c.setPageSize(pageSize);
+		c.setShipPoint(sp);
 		List<Car> list=new ArrayList<Car>();
 		for(Car car:carBiz.getCarInfo(c))
 		{
@@ -47,6 +50,7 @@ public class CarController {
 			}
 			list.add(car);
 		}
+		System.out.println(list);
 		map.put("rows", list);
 		map.put("total", carBiz.getCarInfo(c).size());
 		return map;
@@ -67,9 +71,45 @@ public class CarController {
 	
 	@RequestMapping("delcar.action")
 	@ResponseBody
-	public int updateCarInfo(Car c){
-		
+	public int delCar(@Param(value = "cid") String cid){
+		String cids[]=cid.split(",");
+		List<String> list=new ArrayList<String>();
+		for(String c:cids){
+			list.add(c);
+		}
+		try {
+			carBiz.delmanyCar(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 		return 1;
 		
+	}
+	
+	@RequestMapping("updatecar.action")
+	@ResponseBody
+	public int updateCarInfo(Car c,HttpServletRequest requset){
+		String status=requset.getParameter("status");
+		String box=requset.getParameter("box");
+		if("在途中".equals(status)){
+			c.setCstatus(1);
+		}else{
+			c.setCstatus(0);
+		}
+		
+		if("有箱".equals(box)){
+			c.setCisbox(0);
+		}else{
+			c.setCisbox(1);
+		}
+		try {
+			
+			carBiz.updateCarInfo(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return 1;
 	}
 }
