@@ -2,37 +2,37 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../../css/login.css">
-<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<link rel="stylesheet" href="../css/login.css">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <title>物流-后台登陆</title>
-<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#sub_btn").click(function() {
-		var aname=$.trim($("#aname").val());
-		var pwd=$.trim($("#pwd").val());
+		var uname=$.trim($("#aname").val());
+		var upwd=$.trim($("#pwd").val());
 		var code=$.trim($("#code").val());
-		if(aname==""||pwd==""||code==""){
+		if(uname==""||upwd==""||code==""){
 			alert("您输入的信息不完整。。。");
 			return;
 		}
 		$.ajax({
-			url :"adminLogin.action",
-			data : {aname:aname,
-					apwd:apwd,
+			url :"usersLogin.action",
+			data : {uname:uname,
+					upwd:upwd,
 					code:code
 			},
 			dataType : "JSON",
 			method:"POST",
 			success : function(data) {
 				if(data.code==2){
-					alert("登录成功");
+					window.location.href="manager/index.jsp";
 				}else if(data.code==3){
 					alert("用户名或密码失败");
 				}else if(data.code==0){
-					alert("验证码错误")
+					alert("验证码错误");
 				}else{
-					alert("登录失败")
+					alert("登录失败");
 				}
 			}
 		});
@@ -62,7 +62,7 @@ $(function(){
 					</div>
 					<div id="btn_area">
 						<input type="button" name="submit" id="sub_btn"
-							value="登&nbsp;&nbsp;录" onclick="adminLogin()"> <input
+							value="登&nbsp;&nbsp;录"> <input
 							type="text" id="code" class="verify"> <img
 							src="valiCodeImg.jsp"
 							onclick="this.src='valiCodeImg.jsp?d='+new Date().getTime()"

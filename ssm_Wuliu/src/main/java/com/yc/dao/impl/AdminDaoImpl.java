@@ -18,11 +18,9 @@ public class AdminDaoImpl implements AdminDao{
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
-	
 	/**
 	 * 查询所有管理员
 	 */
-	@Override
 	public List<Users> searchAllUsers() {
 		
 		
@@ -47,8 +45,12 @@ public class AdminDaoImpl implements AdminDao{
 	 */
 	@Override
 	public int addAdmin(Users u) {
-		
 		return sqlSession.insert("users.insert",u);
+	}
+	
+	public List<Users> searchAllUsers(Map<String, Object> map) {
+		List<Users> ls = sqlSession.selectList("users.searchAllAdmin",map);
+		return ls;
 	}
 	
 }

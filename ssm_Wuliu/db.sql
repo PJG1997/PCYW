@@ -204,9 +204,11 @@ create table users(
 	utel varchar(50),
 	uemail varchar(50),
 	status int, /* 0代表用户封禁，删除状态  1.代表管理员权限,2.代表普通用户权限 */
-	remark1 varchar(3000),
-	remark2 varchar(3000),
-	remark3 varchar(3000),
-	remark4 varchar(3000),
+	remark1 varchar(3000),--pageNo
+	remark2 varchar(3000),--pageSize
+	remark3 varchar(3000),--status
+	remark4 varchar(3000), --自动和usid一致
 	remark5 varchar(3000)
 );
+update users set remark4=2;
+insert into users values(2,'yc','aa','jack','beijing','4165468489','489498749','56448@qq.com','2','null','null','null','null','null');

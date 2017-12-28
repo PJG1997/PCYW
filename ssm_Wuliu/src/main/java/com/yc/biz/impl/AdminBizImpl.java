@@ -28,6 +28,7 @@ public class AdminBizImpl implements AdminBiz{
 		int result = adminDao.total();
 		maps.put("total", result);
 		maps.put("rows", ls);
+		//public List<Users> searchAllUsers(Map<String, Object> map) {
 		
 		return maps;
 	}
@@ -38,6 +39,14 @@ public class AdminBizImpl implements AdminBiz{
 	public int addAdmin(Users u) {
 		
 		return adminDao.addAdmin(u);
+	}
+
+
+
+	@Override
+	public List<Users> searchAllUsers(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

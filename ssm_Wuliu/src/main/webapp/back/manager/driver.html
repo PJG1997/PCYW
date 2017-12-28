@@ -1,1 +1,171 @@
 <!-- 司机 -->
+<table id="_data" data-options="fit:true"></table>
+
+
+<div id="songSheet_search">
+	<label>语种：</label>
+	<select name="languages" id="songSheet_search_languages">
+		<option value="">--全部--</option>
+	</select>
+	<label>风格：</label>
+	<select name="style" id="songSheet_search_style">
+		<option value="">--全部--</option>
+	</select>
+	<label>场景：</label>
+	<select name="scene" id="songSheet_search_scene">
+		<option value="">--全部--</option>
+	</select>
+	<label>情感：</label>
+	<select name="emotion" id="songSheet_search_emotion">
+		<option value="">--全部--</option>
+	</select>
+	<label>主题：</label>
+	<select name="theme" id="songSheet_search_theme">
+		<option value="">--全部--</option>
+	</select>
+	<label>用户名：</label>
+	<input type="text" name="uname" id="songSheet_search_uname" class="songSheet_input">
+	<label>歌单名：</label>
+	<input type="text" name="ssname" id="songSheet_search_ssname" class="songSheet_input">
+	<a href="javascript:songSheet_searchSongSheet()" class="easyui-linkbutton" data-options="iconCls:'icon-report-magnify'">查询</a> 
+</div>
+
+
+<style>
+#songSheet_search label{
+	margin-left:20px;
+}
+</style>
+
+<script type="text/javascript">
+var driverEditRow=undefined;
+var driverOp;
+var driverflag;
+
+var driverObject=$('#_data').datagrid({
+	url:'../../findAll.action',
+	//queryParams:{op:"find"},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'did',
+	remoteSort:false,
+	columns:[[   
+	          {field:"users",checkbox:true},
+	          {field:'did',title:'司机编号',width:80,align:'center',sortable:true},   
+	          {field:'dname',title:'司机姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'dnumber',title:'驾驶证',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'dphone',title:'手机号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'didcard',title:'身份证',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'ddage',title:'年龄',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark1',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+	]],
+	toolbar:[{
+    	text:"添加",	
+    	iconCls: 'icon-user-add',
+    	handler: function(){
+    		if(driverEditRow==undefined){
+    			driverObject.datagrid('insertRow',{index:0,row:{}});
+        		driverObject.datagrid('beginEdit',0);
+    			driverEditRow=0;//记录当前正在别编辑的行的索引
+    			driverOp="adddriver";
+    			driverflag="添加";
+    		}
+    	}
+    },'-',{
+    	text:"修改",
+    	iconCls: 'icon-user-edit',
+    	handler: function(){
+    		if(driverEditRow!=undefined){
+    			driverObject.datagrid("rejectChanges");
+    			driverEditRow=undefined;
+    		}
+    		var row = driverObject.datagrid("getChecked")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			driverEditRow = driverObject.datagrid("getRowIndex",row);
+    			driverObject.datagrid('beginEdit',driverEditRow);
+    			driverOp="updatedriver";
+    			driverflag="修改";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"删除",
+    	iconCls: 'icon-user-delete',
+    	handler: function(){
+    		var rows = driverObject.datagrid("getChecked");
+    		if(rows.length<0){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+    				if(r){
+    					var aids="";
+    					for(var i=0,len=rows.length;i<len-1;i++){
+    						aids+=rows[i].did+",";
+    					}
+    					aids+=rows[i].did;
+    					$.post("../../deldriver.action",{did:aids},function(data){
+    	    				data=parseInt($.trim(data));
+    	    				if(data>0){
+    	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    	    	    			driverObject.datagrid("reload");
+    	    				}else{
+    	    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    	    				}
+    	    			},"text");
+    				}else{
+    					return;
+    				}
+    			});
+    		}
+    	}
+    },'-',{
+    	
+    	text:"保存",
+    	iconCls: 'icon-user-tick',
+    	handler: function(){
+    		if(driverEditRow!=undefined){//说明正在被编辑的行
+    			driverObject.datagrid("endEdit",driverEditRow);
+    			driverEditRow=undefined;
+    		}
+    		var row = driverObject.datagrid("getChanges")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+driverflag+'的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			row["op"]=driverOp+".action";
+    			$.post("../../"+row["op"],row,function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'司机信息'+driverflag+'成功...',timeout:2000,showType:'slide'});
+    	    			driverObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','司机信息'+driverflag+'失败。。。。','error');
+    					location.href.reload();
+    				}
+    			},"text");
+    		}
+    	}
+    	
+	},'-',{
+    	text:"撤销",
+    	iconCls: 'icon-undo',
+    	handler: function(){
+    		driverObject.datagrid("rejectChanges");
+			driverEditRow=undefined;
+    	}	
+	
+	}]
+		
+});
+
+
+
+</script>
