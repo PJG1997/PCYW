@@ -1,11 +1,10 @@
-/*package com.yc.controller;
+package com.yc.controller;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
@@ -74,4 +73,3 @@ public class AdminController {
 		return objMap;
 	}
 }
-*/
