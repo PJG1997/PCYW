@@ -1,4 +1,4 @@
-<table id="route_data" data-options="fit:true"></table>
+<table id="route_data" data-options="fit:true">
 
 <div id="route_search">
 	<a href="javascript:route_showAddRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr-add',plain:true" style="float:left">添加</a>
@@ -9,6 +9,39 @@
 	<div class="datagrid-btn-separator"></div>	
 	
 	<label>路线编号:</label>
-	<input type="text" name="sname" id="route_search_rid" class="song_input">
+	<input type="text" name="rid" id="route_search_rid" class="song_input">
+	
+	<label>路线名:</label>
+	<input type="text" name="rname" id="route_search_rname" class="song_input">
+	
 	<a href="javascript:route_searchRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+	
 </div>
+</table>
+<script type="text/javascript">
+var routeEditRow=undefined;
+var routeOp;
+var routeflag;
+
+var routeObject=$('#route_data').datagrid({
+	url:'../../route.action',
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'deptno',
+	remoteSort:false,
+	columns:[[   
+	          {field:"deptnos",checkbox:true},
+	          {field:'rid',title:'路线编号',width:80,align:'center',sortable:true},   
+	          {field:'aname',title:'路线名称',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'pwd',title:'配送路线顺序',width:80,align:'center',editor:{type:"text",options:{required:true}}}   
+	]],
+	toolbar:'route_search'
+	});
+</script>
+

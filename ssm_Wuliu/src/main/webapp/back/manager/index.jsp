@@ -5,13 +5,13 @@
 <head>
 <meta charset="utf-8" />
 <title>物流后台管理</title>
-<link rel="stylesheet" type="text/css" href="../../easyui/css/easyui.css" />
-<link rel="stylesheet" type="text/css" href="../../easyui/css/wu.css" />
-<link rel="stylesheet" type="text/css" href="../../easyui/css/icon.css" />
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="../../easyui/js/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="../../easyui/js/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../../easyui/js/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../easyui/css/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../easyui/css/wu.css" />
+<link rel="stylesheet" type="text/css" href="../easyui/css/icon.css" />
+<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="../easyui/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="../easyui/js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../easyui/js/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="../../js/showpic.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
 </head>
@@ -38,13 +38,15 @@
             </div>
             
             <div title="物流信息" data-options="iconCls:'icon-car'" style="padding:5px;">  	
-    			<ul class="easyui-tree wu-side-tree">
+    			<ul class="easyui-tree wu-side-tree"> 
                     <li iconCls="icon-map"><a href="javascript:void(0)" data-icon="icon-map" data-link="route.html" iframe="0">管理路线</a></li>
                     <li iconCls="icon-lorry-go"><a href="javascript:void(0)" data-icon="icon-lorry-go" data-link="dispoint.html" iframe="0">管理配送点</a></li>
                     <li iconCls="icon-user-go"><a href="javascript:void(0)" data-icon="icon-user-go" data-link="driver.html" iframe="0">管理司机</a></li>
                     <li iconCls="icon-table"><a href="javascript:void(0)" data-icon="icon-table" data-link="order.html" iframe="0">订单管理</a></li>
                     <li iconCls="icon-table-link"><a href="javascript:void(0)" data-icon="icon-table-link" data-link="transfer.html" iframe="0">交接单管理</a></li>
                     <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="goods.html" iframe="0">商品管理</a></li>
+                    <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="goods.html" iframe="0">价格管理</a></li>
+                    
                 </ul>
             </div>
             

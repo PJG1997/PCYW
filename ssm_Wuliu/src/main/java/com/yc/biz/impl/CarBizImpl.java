@@ -17,7 +17,7 @@ import com.yc.dao.CarDao;
 @Transactional(readOnly=false,isolation=Isolation.DEFAULT,rollbackForClassName={"java.lang.RuntimeException"},propagation=Propagation.REQUIRED)
 public class CarBizImpl implements CarBiz {
 
-	@Resource(name="carDaoMybatisImpl")
+	@Resource(name="carDaoImpl")
 	private CarDao carDao;
 
 	@Transactional(readOnly=true)
