@@ -1,4 +1,4 @@
-/*package com.yc.controller;
+package com.yc.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ import com.yc.biz.CarBiz;
 public class CarController {
 	@Resource(name="carBizImpl")
 	private CarBiz carBiz;
-	private JsonModel<Car> jsonModel=new JsonModel<Car>();
+	private JsonModel jsonModel=new JsonModel();
 	
 	@RequestMapping(value="../../findAllcar.action")
 	public @ResponseBody Map<String,Object> findAllcar(Car c){
@@ -34,4 +34,3 @@ public class CarController {
 		
 	}
 }
-*/
