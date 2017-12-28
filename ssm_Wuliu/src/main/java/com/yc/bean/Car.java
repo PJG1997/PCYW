@@ -28,6 +28,10 @@ public class Car implements Serializable{
     private Double maxcvolume;     //最大容量
     private Double mincton;        //最小吨位
     private Double maxcton;        //最大吨位
+    private Integer pageNo;			
+    private Integer pageSize;
+    private String status;			//字符串的车辆状态
+    private String box;				//字符串的厢式
 	public Integer getCid() {
 		return cid;
 	}
@@ -151,6 +155,30 @@ public class Car implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getBox() {
+		return box;
+	}
+	public void setBox(String box) {
+		this.box = box;
+	}
 	@Override
 	public String toString() {
 		return "Car [cid=" + cid + ", shipPoint=" + shipPoint + ", cnumber=" + cnumber + ", ctype=" + ctype
@@ -158,8 +186,10 @@ public class Car implements Serializable{
 				+ ", cstatus=" + cstatus + ", cisbox=" + cisbox + ", cremake=" + cremake + ", remark1=" + remark1
 				+ ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5
 				+ ", mincvolume=" + mincvolume + ", maxcvolume=" + maxcvolume + ", mincton=" + mincton + ", maxcton="
-				+ maxcton + "]";
+				+ maxcton + ", pageNo=" + pageNo + ", pageSize=" + pageSize + ", status=" + status + ", box=" + box
+				+ "]";
 	}
+	
 	
 	
 }
