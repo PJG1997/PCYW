@@ -17,7 +17,7 @@ public class Driver implements Serializable{
     private String remark2;		//备用字段2
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4
-    private String remark5;		//备用字段5
+    private String remark5;		//备用字段5   用来做状态,是否删除 
 	public Integer getDid() {
 		return did;
 	}

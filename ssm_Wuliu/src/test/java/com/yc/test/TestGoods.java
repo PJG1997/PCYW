@@ -1,4 +1,4 @@
-package com.yc.test;
+/*package com.yc.test;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class TestGoods {
 	@Resource(name="goodsBizImpl")
 	private GoodsBiz goodsBiz;
 	
-	/**
+	*//**
 	 * 添加
-	 */
+	 *//*
 	@Test
 	public void test1(){
 		Goods goods = new Goods();
@@ -34,18 +34,18 @@ public class TestGoods {
 		goods.setGremark("好看");
 		this.goodsBiz.addGoods(goods);
 	}
-	/**
+	*//**
 	 * 删除
-	 */
+	 *//*
 	@Test 
 	public void test2(){
 		Goods goods = new Goods();
 		goods.setGid(1);
 		this.goodsBiz.delGoods(goods);
 	}
-	/**
+	*//**
 	 * 查询
-	 */
+	 *//*
 	@Test 
 	public void test3(){
 		Goods goods = new Goods();
@@ -56,9 +56,9 @@ public class TestGoods {
 	}
 	
 	
-	/**
+	*//**
 	 * 修改
-	 */
+	 *//*
 	@Test 
 	public void test4(){
 		Goods goods = new Goods();
@@ -68,3 +68,4 @@ public class TestGoods {
 		this.goodsBiz.updateGoods(goods);
 	}
 }
+*/
