@@ -20,6 +20,7 @@ public class CarBizImpl implements CarBiz {
 	@Resource(name="carDaoImpl")
 	private CarDao carDao;
 
+	@Override
 	@Transactional(readOnly=true)
 	public List<Car> getCarInfo(Car c) {
 		return carDao.getCarInfo(c);
