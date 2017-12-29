@@ -18,6 +18,22 @@ public class Driver implements Serializable{
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4
     private String remark5;		//备用字段5   用来做状态,是否删除 
+    
+    private Integer pageNo;
+    private Integer pageSize;
+    
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 	public Integer getDid() {
 		return did;
 	}
@@ -101,7 +117,7 @@ public class Driver implements Serializable{
 		return "Driver [did=" + did + ", shipPoint=" + shipPoint + ", dname=" + dname + ", dnumber=" + dnumber
 				+ ", dphone=" + dphone + ", didcard=" + didcard + ", ddage=" + ddage + ", dstatus=" + dstatus
 				+ ", remark1=" + remark1 + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4
-				+ ", remark5=" + remark5 + "]";
+				+ ", remark5=" + remark5 + ", pageNo=" + pageNo + ", pageSize=" + pageSize + "]";
 	}
-    
+	
 }

@@ -1,48 +1,136 @@
 <!-- 司机 -->
-<table id="_data" data-options="fit:true"></table>
+<table id="driver_table" data-options="fit:true"></table>
 
+<!-- 条件查询 -->
+<div id="driver_search">
+	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
+	<div class="datagrid-btn-separator"></div>	
+	<label>用户ID:</label>
+	<input type="text" name="sname" id="user_search_usid" class="song_input">
+	<label>用户姓名</label>
+	<input type="text" name="sname" id="user_search_uname" class="song_input">
+	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
 
-<div id="songSheet_search">
-	<label>语种：</label>
-	<select name="languages" id="songSheet_search_languages">
-		<option value="">--全部--</option>
-	</select>
-	<label>风格：</label>
-	<select name="style" id="songSheet_search_style">
-		<option value="">--全部--</option>
-	</select>
-	<label>场景：</label>
-	<select name="scene" id="songSheet_search_scene">
-		<option value="">--全部--</option>
-	</select>
-	<label>情感：</label>
-	<select name="emotion" id="songSheet_search_emotion">
-		<option value="">--全部--</option>
-	</select>
-	<label>主题：</label>
-	<select name="theme" id="songSheet_search_theme">
-		<option value="">--全部--</option>
-	</select>
-	<label>用户名：</label>
-	<input type="text" name="uname" id="songSheet_search_uname" class="songSheet_input">
-	<label>歌单名：</label>
-	<input type="text" name="ssname" id="songSheet_search_ssname" class="songSheet_input">
-	<a href="javascript:songSheet_searchSongSheet()" class="easyui-linkbutton" data-options="iconCls:'icon-report-magnify'">查询</a> 
+<!-- 司机详情  -->
+<div id="driver_detail" class="easyui-dialog" title="司机详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="driver_detail_form">
+	<ul>
+		<li>
+			<label>司机姓名：</label>
+			<label id="driver_dname_label"></label>		
+		</li>
+		<li>
+			<label>所属配送点：</label>
+			<label id="driver_spname_label"></label>	
+		</li>
+		<li>
+			<label>驾驶证：</label>
+			<label id="driver_dnumber_label"></label>	
+		</li>
+		<li>
+			<label>司机电话:</label>
+			<label id="driver_dphone_label"></label>
+		</li>
+		<li>
+			<label>身份证:</label>
+			<label id="driver_didCard_label"></label>
+		</li>
+		<li>
+			<label>司机年龄:</label>
+			<label id="driver_ddage_label"></label>
+		</li>
+		<li>
+			<label>司机状态:</label>
+			<label id="driver_dstatus_label"></label>
+		</li>
+	</ul>
+	</form>
+</div>
+
+<!-- 修改和添加司机信息都用这个div -->
+<div id="update_driver" class="easyui-dialog" title="添加司机信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_driver_form">
+	<ul>
+		<li>
+			<label>司机姓名：</label>
+			<input type="text" name="update_insert_dname" id="update_insert_dname"  />			
+		</li>
+		<li>
+			<label>配送点名称：</label>
+			<select name="update_insert_spid" id="update_insert_spid">
+	        </select>
+		</li>
+		<li>
+			<label>驾驶证：</label>
+			<input type="text" name="update_insert_dnumber" id="update_insert_dnumber" />
+		</li>
+		<li>
+			<label>司机电话:</label>
+			<input type="text" name="update_insert_dphone" id="update_insert_dphone"  />
+		</li>
+		<li>
+			<label>身份证:</label>
+			<input type="text" name="update_insert_didcard" id="update_insert_didcard" />
+		</li>
+		<li>
+			<label>司机年龄:</label>
+			<input type="text" name="update_insert_ddage" id="update_insert_ddage" />
+		</li>
+		<li>
+			<label>司机状态:</label>
+			<select name="update_insert_dstatus" id="update_insert_dstatus">
+				<option value="0">空闲</option>
+				<option value="1">在忙</option>
+	        </select>
+		</li>
+	</ul>
+	</form>
 </div>
 
 
+
+
+
 <style>
-#songSheet_search label{
-	margin-left:20px;
-}
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#driver_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#driver_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_driver li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_driver{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
 </style>
+
+
 
 <script type="text/javascript">
 var driverEditRow=undefined;
 var driverOp;
 var driverflag;
 
-var driverObject=$('#_data').datagrid({
+var driverObject=$('#driver_table').datagrid({
 	url:'../../findAll.action',
 	//queryParams:{op:"find"},
 	fitColumns:true,
@@ -59,13 +147,20 @@ var driverObject=$('#_data').datagrid({
 	          {field:"users",checkbox:true},
 	          {field:'did',title:'司机编号',width:80,align:'center',sortable:true},   
 	          {field:'dname',title:'司机姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'remark3',title:'所属配送点',width:100,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'dnumber',title:'驾驶证',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'dphone',title:'手机号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'didcard',title:'身份证',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'ddage',title:'年龄',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'remark1',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+	          {field:'remark1',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
 	]],
-	toolbar:[{
+	
+	toolbar:"#driver_search"
+	
+	/*toolbar:[{
     	text:"添加",	
     	iconCls: 'icon-user-add',
     	handler: function(){
@@ -162,8 +257,98 @@ var driverObject=$('#_data').datagrid({
 			driverEditRow=undefined;
     	}	
 	
-	}]
+	}] */
 		
+});
+
+
+function detail(val){
+	$.ajax({
+		url:'../../findAdriveInfo.action',
+		data:{did:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#driver_dname_label").html(item.dname);
+					$("#driver_spname_label").html(item.shipPoint.spname);
+					$("#driver_dnumber_label").html(item.dnumber);
+					$("#driver_dphone_label").html(item.dphone);
+					$("#driver_didCard_label").html(item.didcard);
+					$("#driver_ddage_label").html(item.ddage);
+					if(item.dstatus==1){
+						$("#driver_dstatus_label").html("在忙");
+					}else{
+						$("#driver_dstatus_label").html("空闲");
+					} 
+				});
+			}
+		}
+	});
+	$('#driver_detail').dialog({
+		title:"司机详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#driver_detail').dialog("close");
+			}
+		}]
+	});
+	$('#driver_detail').dialog("open");
+}
+
+function update(val){
+	$.ajax({
+		url:'../../findAdriveInfo.action',
+		data:{did:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_dname").val(item.dname);
+					$("#update_insert_spid").val(item.shipPoint.spid);
+					$("#update_insert_dnumber").val(item.dnumber);
+					$("#update_insert_dphone").val(item.dphone);
+					$("#update_insert_didcard").val(item.didcard);
+					$("#update_insert_ddage").val(item.ddage);
+					$("#update_insert_dstatus").val(item.dstatus);
+				});
+			}
+		}
+	});
+	$('#update_driver').dialog({
+		title:"修改司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				
+			}
+		}]
+	});
+	$('#update_driver').dialog("open");
+}
+
+/*
+ * 先查询到所有的配送点,赋给select
+ */
+$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 $("#update_insert_spid").append(option);
+			 });
+		}
+	})
 });
 
 
