@@ -11,6 +11,8 @@ public interface GoodsBiz{
 	public void delGoods(Goods goods);
 	//修改货物
 	public void updateGoods(Goods goods);
-	//查询
+	//不带分页查询
 	public List<Goods> selectAllGoods(Goods goods);
+	//带条件 带分页查询
+	public List<Goods> selectAllGoodsForPage(Goods goods);
 }

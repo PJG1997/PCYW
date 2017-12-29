@@ -37,4 +37,9 @@ public class GoodsBizImpl implements GoodsBiz{
 		return this.goodsDao.selectAllGoods(goods);
 	}
 
+	@Override
+	public List<Goods> selectAllGoodsForPage(Goods goods) {
+		return this.goodsDao.selectAllGoodsForPage(goods);
+	}
+
 }

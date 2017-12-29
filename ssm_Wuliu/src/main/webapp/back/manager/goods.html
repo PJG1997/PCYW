@@ -1,10 +1,368 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<!-- 商品 -->
+<table id="goods_table" data-options="fit:true"></table>
 
-</body>
-</html>
+<!-- 条件查询 -->
+<div id="goods_search">
+	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
+	<div class="datagrid-btn-separator"></div>	
+	<label>用户ID:</label>
+	<input type="text" name="sname" id="user_search_usid" class="song_input">
+	<label>用户姓名</label>
+	<input type="text" name="sname" id="user_search_uname" class="song_input">
+	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
+
+<!-- 商品详情  -->
+<div id="goods_detail" class="easyui-dialog" title="商品详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="goods_detail_form">
+	<ul>
+		<li>
+			<label>货物名称：</label>
+			<label id="goods_gname_label"></label>		
+		</li>
+		<li>
+			<label>货物数量：</label>
+			<label id="goods_gcount_label"></label>	
+		</li>
+		<li>
+			<label>货物价值：</label>
+			<label id="goods_gprice_label"></label>	
+		</li>
+		<li>
+			<label>货物重量:</label>
+			<label id="goods_gweight_label"></label>
+		</li>
+		<li>
+			<label>货物体积:</label>
+			<label id="goods_gvolume_label"></label>
+		</li>
+		<li>
+			<label>货物类别:</label>
+			<label id="goods_gtype_label"></label>
+		</li>
+		<li>
+			<label>备注:</label>
+			<label id="goods_gremark_label"></label>
+		</li>
+		<li>
+			<label>状态:</label>
+			<label id="goods_remark5_label"></label>
+		</li>
+		
+	</ul>
+	</form>
+</div>
+
+<!-- 修改和添加货物信息都用这个div -->
+<div id="update_goods" class="easyui-dialog" title="添加货物信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_goods_form">
+	<ul>
+		<li>
+			<label>货物名称：</label>
+			<input type="text" name="update_insert_gname" id="update_insert_gname"  />			
+		</li>
+		<li>
+			<label>货物数量：</label>
+			<select name="update_insert_gcount" id="update_insert_gcount">
+	        </select>
+		</li>
+		<li>
+			<label>货物价值：</label>
+			<input type="text" name="update_insert_gprice" id="update_insert_gprice" />
+		</li>
+		<li>
+			<label>货物重量:</label>
+			<input type="text" name="update_insert_gweight" id="update_insert_gweight"  />
+		</li>
+		<li>
+			<label>货物体积:</label>
+			<input type="text" name="update_insert_gvolume" id="update_insert_gvolume" />
+		</li>
+		<li>
+			<label>货物类型:</label>
+			<input type="text" name="update_insert_gtype" id="update_insert_gtype" />
+		</li>
+		<li>
+			<label>备注:</label>
+			<input type="text" name="update_insert_gremark" id="update_insert_gremark" />
+		</li>
+		<li>
+			<label>状态:</label>
+			<select name="update_insert_remark5" id="update_insert_remark5">
+				<option value="0">已送达</option>
+				<option value="1">配送中</option>
+	        </select>		
+	   	</li>
+		
+	</ul>
+	</form>
+</div>
+
+
+
+
+
+<style>
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#goods_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#goods_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_goods li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_goods{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+</style>
+
+
+
+<script type="text/javascript">
+var goodsEditRow=undefined;
+var goodsOp;
+var goodsflag;
+
+var goodsObject=$('#goods_table').datagrid({
+	url:'../../findAllForGoods.action',
+	//queryParams:{op:"find"},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'gid',
+	remoteSort:false,
+	columns:[[   
+	          {field:"users",checkbox:true},
+	          {field:'gid',title:'货物编号',width:80,align:'center',sortable:true},   
+	          {field:'gname',title:'货物数量',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'gprice',title:'货物价值',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'gweight',title:'货物重量',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'gvolume',title:'货物体积',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'gtype',title:'货物类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark5',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
+	]],
+	
+	toolbar:"#goods_search"
+	
+	/*toolbar:[{
+    	text:"添加",	
+    	iconCls: 'icon-user-add',
+    	handler: function(){
+    		if(goodsEditRow==undefined){
+    			goodsObject.datagrid('insertRow',{index:0,row:{}});
+        		goodsObject.datagrid('beginEdit',0);
+    			goodsEditRow=0;//记录当前正在别编辑的行的索引
+    			goodsOp="addgoods";
+    			goodsflag="添加";
+    		}
+    	}
+    },'-',{
+    	text:"修改",
+    	iconCls: 'icon-user-edit',
+    	handler: function(){
+    		if(goodsEditRow!=undefined){
+    			goodsObject.datagrid("rejectChanges");
+    			goodsEditRow=undefined;
+    		}
+    		var row = goodsObject.datagrid("getChecked")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			goodsEditRow = goodsObject.datagrid("getRowIndex",row);
+    			goodsObject.datagrid('beginEdit',goodsEditRow);
+    			goodsOp="updategoods";
+    			goodsflag="修改";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"删除",
+    	iconCls: 'icon-user-delete',
+    	handler: function(){
+    		var rows = goodsObject.datagrid("getChecked");
+    		if(rows.length<0){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+    				if(r){
+    					var aids="";
+    					for(var i=0,len=rows.length;i<len-1;i++){
+    						aids+=rows[i].did+",";
+    					}
+    					aids+=rows[i].did;
+    					$.post("../../delgoods.action",{did:aids},function(data){
+    	    				data=parseInt($.trim(data));
+    	    				if(data>0){
+    	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    	    	    			goodsObject.datagrid("reload");
+    	    				}else{
+    	    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    	    				}
+    	    			},"text");
+    				}else{
+    					return;
+    				}
+    			});
+    		}
+    	}
+    },'-',{
+    	
+    	text:"保存",
+    	iconCls: 'icon-user-tick',
+    	handler: function(){
+    		if(goodsEditRow!=undefined){//说明正在被编辑的行
+    			goodsObject.datagrid("endEdit",goodsEditRow);
+    			goodsEditRow=undefined;
+    		}
+    		var row = goodsObject.datagrid("getChanges")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+goodsflag+'的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			row["op"]=goodsOp+".action";
+    			$.post("../../"+row["op"],row,function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'司机信息'+goodsflag+'成功...',timeout:2000,showType:'slide'});
+    	    			goodsObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','司机信息'+goodsflag+'失败。。。。','error');
+    					location.href.reload();
+    				}
+    			},"text");
+    		}
+    	}
+    	
+	},'-',{
+    	text:"撤销",
+    	iconCls: 'icon-undo',
+    	handler: function(){
+    		goodsObject.datagrid("rejectChanges");
+			goodsEditRow=undefined;
+    	}	
+	
+	}] */
+		
+});
+
+
+function detail(val){
+	$.ajax({
+		url:'../../findGoodsInfo.action',
+		data:{gid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#goods_gname_label").html(item.gname);
+					$("#goods_gcount_label").html(item.gcount);
+					$("#goods_gprice_label").html(item.gprice);
+					$("#goods_gweight_label").html(item.gweight);
+					$("#goods_gvolume_label").html(item.gvolume);
+					$("#goods_gtype_label").html(item.gtype);
+					$("#goods_gremark_label").html(item.gremark);
+					if(item.remark5==1){
+						$("#driver_remark5_label").html("已送达");
+					}else{
+						$("#driver_remark5_label").html("配送中");
+					} 
+				});
+			}
+		}
+	});
+	$('#goods_detail').dialog({
+		title:"商品详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#goods_detail').dialog("close");
+			}
+		}]
+	});
+	$('#goods_detail').dialog("open");
+}
+
+function update(val){
+	$.ajax({
+		url:'../../findGoodsInfo.action',
+		data:{gid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_gname").val(item.gname);
+					$("#update_insert_gcount").val(item.gcount);
+					$("#update_insert_gprice").val(item.gprice);
+					$("#update_insert_gweight").val(item.gweight);
+					$("#update_insert_gvolume").val(item.gvolume);
+					$("#update_insert_gtype").val(item.gtype);
+					$("#update_insert_gremark").val(item.gremark);
+					$("#update_insert_remark5").val(item.remark5);
+				});
+			}
+		}
+	});
+	$('#update_goods').dialog({
+		title:"修改商品信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				
+			}
+		}]
+	});
+	$('#update_goods').dialog("open");
+}
+
+/*
+ * 先查询到所有的配送点,赋给select
+ */
+ 
+/**$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 $("#update_insert_spid").append(option);
+			 });
+		}
+	})
+});*/
+
+
+
+</script>

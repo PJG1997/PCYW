@@ -39,11 +39,18 @@ public class GoodsDaoImpl implements GoodsDao{
 		this.sqlSession.update("goods.updateByPrimaryKeySelective", goods);
 	}
 	/**
-	 * 查询
+	 * 不带分页查询
 	 */
 	@Override
 	public List<Goods> selectAllGoods(Goods goods) {
 		return this.sqlSession.selectList("goods.select", goods);
+	}
+	/**
+	 * 带分页
+	 */
+	@Override
+	public List<Goods> selectAllGoodsForPage(Goods goods) {
+		return this.sqlSession.selectList("goods.selectPage", goods);
 	}
 
 }
