@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.bean.Driver;
@@ -30,7 +31,8 @@ public class DriverController {
 	
 	//带条件,带分页查询司机的信息
 	@RequestMapping("findAll.action")
-	public @ResponseBody Map<String,Object>  findDriver(Driver driver,HttpServletRequest request){
+	public @ResponseBody Map<String,Object>  findDriver(Driver driver,HttpServletRequest request,@RequestParam(value="spid") Integer spid){
+		sp.setSpid(spid);
 		driver.setShipPoint(sp);
 		//获取pageNo
 		Integer pageNo=Integer.parseInt(request.getParameter("page"));  
@@ -62,14 +64,9 @@ public class DriverController {
 	
 	//添加司机信息
 	@RequestMapping("adddriver.action")
-	public @ResponseBody int addDriver(Driver driver){
-		//从前台传过来的数据是在忙或者是空闲，要把它转为1或者是0
-		if(driver.getRemark1()=="在忙"){
-			driver.setDstatus(1);
-		}else{
-			driver.setDstatus(0);
-		}
-		
+	public @ResponseBody int addDriver(Driver driver,@RequestParam(value="spid") Integer spid){
+		sp.setSpid(spid);
+		driver.setShipPoint(sp);
 		try {
 			driverBiz.insertDriver(driver);
 		} catch (Exception e) {
@@ -96,23 +93,21 @@ public class DriverController {
 		return 1;
 	}
 	
-	//修改司机信息
+	//修改司机信息:不能直接用对象去接受了
 	@RequestMapping("updatedriver.action")
-	public @ResponseBody int updateDriver(@Param(value="did") Integer did,@Param(value="dname") String dname,
-			@Param(value="dnumber") String dnumber,@Param(value="dphone") String dphone,
-			@Param(value="didcard") String didcard,@Param(value="ddage") Integer ddage,@Param(value="remark1") String remark1){
+	public @ResponseBody int updateDriver(@RequestParam(value="update_insert_did") Integer did,@RequestParam(value="update_insert_dname") String dname,
+			@RequestParam(value="update_insert_spid") Integer spid,@RequestParam(value="update_insert_dnumber") String dnumber,@RequestParam(value="update_insert_dphone") String dphone,
+			@RequestParam(value="update_insert_didcard") String didcard,@RequestParam(value="update_insert_ddage") Integer ddage,@RequestParam(value="update_insert_dstatus") Integer dstatus){
 		Driver driver=new Driver();
+		sp.setSpid(spid);
 		driver.setDid(did);
 		driver.setDname(dname);
 		driver.setDnumber(dnumber);
 		driver.setDphone(dphone);
 		driver.setDidcard(didcard);
 		driver.setDdage(ddage);
-		if("在忙".equals(remark1)){
-			driver.setDstatus(1);
-		}else{
-			driver.setDstatus(0);
-		}
+		driver.setDstatus(dstatus);
+		driver.setShipPoint(sp);
 		try {
 			driverBiz.updateDriver(driver);
 		} catch (Exception e) {

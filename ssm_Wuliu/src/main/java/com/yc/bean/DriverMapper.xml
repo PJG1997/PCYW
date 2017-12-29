@@ -62,10 +62,7 @@
     		<if test="dname!=null and dname!=''">
     		    and	dname like CONCAT('%',#{dname},'%' )
     		</if>
-    		<if test="dphone!=null and dphone!=''">
-    		    and	dphone like CONCAT('%',#{dphone},'%')
-    		</if>
-    		<if test="dstatus!=null and dstatus!=''">
+    		<if test="dstatus!=null or dstatus==0">
     			and dstatus=#{dstatus}
     		</if>
     	</where>
@@ -87,10 +84,7 @@
     		<if test="dname!=null and dname!=''">
     			and dname like CONCAT('%',#{dname},'%' )
     		</if>
-    		<if test="dphone!=null and dphone!=''">
-    			and dphone like CONCAT('%',#{dphone},'%')
-    		</if>
-    		<if test="dstatus!=null and dstatus!=''">
+    		<if test="dstatus!=null or dstatus==0">
     			and dstatus=#{dstatus}
     		</if>
     	</where>
@@ -110,6 +104,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="did != null" >
         did,
+      </if>
+      <if test="shipPoint.spid!=null and shipPoint.spid!=''" >
+        spid,
       </if>
       <if test="dname != null" >
         dname,
@@ -146,6 +143,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="did != null" >
         #{did,jdbcType=INTEGER},
+      </if>
+       <if test="shipPoint.spid!=null and shipPoint.spid!=''" >
+        #{shipPoint.spid},
       </if>
       <if test="dname != null" >
         #{dname,jdbcType=VARCHAR},
@@ -185,9 +185,12 @@
  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Driver" >
     update driver
     <set >
-      <if test="dname != null" >
+      <if test="dname != null and dname!=''" >
         dname = #{dname,jdbcType=VARCHAR},
       </if>
+      <if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  		spid=#{shipPoint.spid},
+  	  </if>
       <if test="dnumber != null" >
         dnumber = #{dnumber,jdbcType=VARCHAR},
       </if>
@@ -216,7 +219,7 @@
         remark4 = #{remark4,jdbcType=VARCHAR},
       </if>
     </set>
-    where did = #{did,jdbcType=INTEGER}
+    where did = #{did,jdbcType=INTEGER} and remark5=1
   </update>
   
 </mapper>
