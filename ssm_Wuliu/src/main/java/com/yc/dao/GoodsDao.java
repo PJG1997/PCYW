@@ -8,7 +8,7 @@ public interface GoodsDao {
 	//添加货物
 	public void addGoods(Goods goods);
 	//删除货物
-	public void delGoods(Goods goods);
+	public void delGoods(List list);
 	//修改货物
 	public void updateGoods(Goods goods);
 	//带条件 不带分页查询

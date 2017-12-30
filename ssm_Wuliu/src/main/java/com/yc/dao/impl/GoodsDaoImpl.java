@@ -27,8 +27,8 @@ public class GoodsDaoImpl implements GoodsDao{
 	 * 删除货物
 	 */
 	@Override
-	public void delGoods(Goods goods) {
-		this.sqlSession.delete("goods.deleteByPrimaryKey", goods);
+	public void delGoods(List list) {
+		this.sqlSession.delete("goods.deleteByPrimaryKey",list);
 	}
 	
 	/**

@@ -32,11 +32,12 @@
     gid,gname, gcount, gprice, gweight, gvolume, gtype, gremark,remark5
     from goods
     <where>
+    		remark5=1
     	<if test="gid!=null and gid!=''">
-    		gid=#{gid}
+    		and gid=#{gid}
     	</if>
     	<if test="gname!=null and gname!=''">
-    		and gname=%${gname}%
+    		and gname like CONCAT('%',#{gname},'%' )
     	</if>
     	<if test="gcount!=null and gcount!=''">
     		and gcount=#{gcount}
@@ -51,7 +52,7 @@
     		and gvolume between ${mingvolume} and ${maxgvolume}
     	</if>
     	<if test="gtype!=null and gtype!=''">
-    		and gtype=#{gtype}
+    		and gtype like CONCAT('%',#{gtype},'%' )
     	</if>
     </where>
     <include refid="pageSql" />
@@ -59,14 +60,15 @@
   
     <select id="select" resultMap="BaseResultMap" parameterType="Goods" >
     select 
-    gid,gname, gcount, gprice, gweight, gvolume, gtype, gremark
+    gid,gname, gcount, gprice, gweight, gvolume, gtype, gremark,remark5
     from goods
     <where>
+    		remark5=1
     	<if test="gid!=null and gid!=''">
-    		gid=#{gid}
+    		and gid=#{gid}
     	</if>
     	<if test="gname!=null and gname!=''">
-    		and gname=%${gname}%
+    		and gname like CONCAT('%',#{gname},'%' )
     	</if>
     	<if test="gcount!=null and gcount!=''">
     		and gcount=#{gcount}
@@ -81,17 +83,20 @@
     		and gvolume between ${mingvolume} and ${maxgvolume}
     	</if>
     	<if test="gtype!=null and gtype!=''">
-    		and gtype=#{gtype}
+    		and gtype like CONCAT('%',#{gtype},'%' )
     	</if>
     </where>
     <include refid="pageSql" />
   </select>
   
   <!-- 删除 -->
-  <delete id="deleteByPrimaryKey" parameterType="Goods" >
-    delete from goods
-    where gid = #{gid}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="Goods" >
+    update goods set remark5=0
+    where gid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </update>
   <!-- 添加货物 -->
   <insert id="insert"  parameterType="Goods" useGeneratedKeys="true" 
  		keyColumn="gid" keyProperty="gid" >
