@@ -3,15 +3,15 @@
 
 <!-- 条件查询 -->
 <div id="goods_search">
-	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
-	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<a href="javascript:addGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
 	<div class="datagrid-btn-separator"></div>	
-	<label>用户ID:</label>
-	<input type="text" name="sname" id="user_search_usid" class="song_input">
-	<label>用户姓名</label>
-	<input type="text" name="sname" id="user_search_uname" class="song_input">
-	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+	<label>货物名称:</label>
+	<input type="text" name="goods_search_gname" id="goods_search_gname" class="song_input">
+	<label>货物类别:</label>
+	<input type="text" name="goods_search_gtype" id="goods_search_gtype" class="song_input">
+	<a href="javascript:searchGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
 <!-- 商品详情  -->
@@ -47,10 +47,7 @@
 			<label>备注:</label>
 			<label id="goods_gremark_label"></label>
 		</li>
-		<li>
-			<label>状态:</label>
-			<label id="goods_remark5_label"></label>
-		</li>
+		
 		
 	</ul>
 	</form>
@@ -62,13 +59,14 @@
 	<form id="update_goods_form">
 	<ul>
 		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_gid" name="update_insert_gid" />
 			<label>货物名称：</label>
 			<input type="text" name="update_insert_gname" id="update_insert_gname"  />			
 		</li>
 		<li>
 			<label>货物数量：</label>
-			<select name="update_insert_gcount" id="update_insert_gcount">
-	        </select>
+			<input type="text" name="update_insert_gcount" id="update_insert_gcount">
 		</li>
 		<li>
 			<label>货物价值：</label>
@@ -88,15 +86,9 @@
 		</li>
 		<li>
 			<label>备注:</label>
-			<input type="text" name="update_insert_gremark" id="update_insert_gremark" />
+			<textarea rows="10" cols="50" name="update_insert_gremark" id="update_insert_gremark"></textarea> 
 		</li>
-		<li>
-			<label>状态:</label>
-			<select name="update_insert_remark5" id="update_insert_remark5">
-				<option value="0">已送达</option>
-				<option value="1">配送中</option>
-	        </select>		
-	   	</li>
+	
 		
 	</ul>
 	</form>
@@ -156,12 +148,12 @@ var goodsObject=$('#goods_table').datagrid({
 	columns:[[   
 	          {field:"users",checkbox:true},
 	          {field:'gid',title:'货物编号',width:80,align:'center',sortable:true},   
-	          {field:'gname',title:'货物数量',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'gname',title:'货物名称',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
+	          {field:'gcount',title:'货物数量',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
 	          {field:'gprice',title:'货物价值',width:100,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'gweight',title:'货物重量',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'gvolume',title:'货物体积',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'gtype',title:'货物类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'remark5',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
 	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
 	          }}
@@ -272,6 +264,7 @@ var goodsObject=$('#goods_table').datagrid({
 
 
 function detail(val){
+	
 	$.ajax({
 		url:'../../findGoodsInfo.action',
 		data:{gid:val},
@@ -287,11 +280,7 @@ function detail(val){
 					$("#goods_gvolume_label").html(item.gvolume);
 					$("#goods_gtype_label").html(item.gtype);
 					$("#goods_gremark_label").html(item.gremark);
-					if(item.remark5==1){
-						$("#driver_remark5_label").html("已送达");
-					}else{
-						$("#driver_remark5_label").html("配送中");
-					} 
+					
 				});
 			}
 		}
@@ -310,6 +299,7 @@ function detail(val){
 	$('#goods_detail').dialog("open");
 }
 
+//修改商品
 function update(val){
 	$.ajax({
 		url:'../../findGoodsInfo.action',
@@ -319,6 +309,7 @@ function update(val){
 		success:function(data){
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
+					$("#update_insert_gid").val(item.gid);
 					$("#update_insert_gname").val(item.gname);
 					$("#update_insert_gcount").val(item.gcount);
 					$("#update_insert_gprice").val(item.gprice);
@@ -326,7 +317,6 @@ function update(val){
 					$("#update_insert_gvolume").val(item.gvolume);
 					$("#update_insert_gtype").val(item.gtype);
 					$("#update_insert_gremark").val(item.gremark);
-					$("#update_insert_remark5").val(item.remark5);
 				});
 			}
 		}
@@ -338,13 +328,118 @@ function update(val){
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
-				
+				$.ajax({
+					url:"../../updategoods.action",
+					data:$("#update_goods_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_goods').dialog("close");
+							goodsObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
 			}
 		}]
 	});
 	$('#update_goods').dialog("open");
 }
 
+/**
+ * 添加商品信息
+ */
+function addGoods(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_gname").val("");
+	$("#update_insert_gcount").val("");
+	$("#update_insert_gprice").val("");
+	$("#update_insert_gweight").val("");
+	$("#update_insert_gvolume").val("");
+	$("#update_insert_gtype").val("");
+	$("#update_insert_gremark").val("");
+
+	$('#update_goods').dialog({
+		title:"添加商品信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				gname=$("#update_insert_gname").val();
+				gcount=$("#update_insert_gcount").val();
+				gprice=$("#update_insert_gprice").val();
+				gweight=$("#update_insert_gweight").val();
+				gvolume=$("#update_insert_gvolume").val();
+				gtype=$("#update_insert_gtype").val();
+				gremark=$("#update_insert_gremark").val();
+				
+				
+				$.ajax({
+					url:"../../addgoods.action",
+					data:{gname:gname,gcount:gcount,gprice:gprice,gweight:gweight,gvolume:gvolume,gtype:gtype,gremark:gremark},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#update_goods').dialog("close");
+							goodsObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_goods').dialog("open");
+}
+
+/*
+ * 删除商品信息 
+ */
+function deleteGoods(){
+	var rows = goodsObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].gid+",";
+				}
+				aids+=rows[i].gid;
+				$.post("../../delgoods.action",{gid:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'商品信息删除成功...',timeout:2000,showType:'slide'});
+    	    			goodsObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','商品信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索商品信息 
+ */
+function searchGoods(){
+	gname=$("#goods_search_gname").val();
+	gtype=$("#goods_search_gtype").val();
+	$('#goods_table').datagrid({
+		url:"../../findAllForGoods.action",
+		queryParams:{gtype:gtype,gname:gname}
+	})
+}
 /*
  * 先查询到所有的配送点,赋给select
  */

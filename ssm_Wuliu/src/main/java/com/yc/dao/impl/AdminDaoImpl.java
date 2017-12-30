@@ -21,8 +21,6 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public List<Users> searchAllUsers() {
 		
-		
-		
 		List<Users> ls = sqlSession.selectList("users.searchAllAdmin");
 		
 		
