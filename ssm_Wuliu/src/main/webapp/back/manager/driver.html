@@ -3,15 +3,23 @@
 
 <!-- 条件查询 -->
 <div id="driver_search">
-	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
-	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
-	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
+	<a href="javascript:addDriver()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteDriver()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	<div class="datagrid-btn-separator"></div>	
-	<label>用户ID:</label>
-	<input type="text" name="sname" id="user_search_usid" class="song_input">
-	<label>用户姓名</label>
-	<input type="text" name="sname" id="user_search_uname" class="song_input">
-	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+	<label>配送点名称:</label>
+	<select name="search_spid" id="search_spid">
+		<option value="">--全部--</option>
+	</select>
+	<label>司机状态:</label>
+	<select name="search_dstatus" id="search_dstatus">
+		<option value="">--全部--</option>
+		<option value="0">空闲</option>
+		<option value="1">在忙</option>
+	</select>
+	<label>司机姓名</label>
+	<input type="text" name="search_dname" id="search_dname" class="song_input">
+	
+	<a href="javascript:searchDriver()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
 <!-- 司机详情  -->
@@ -57,6 +65,8 @@
 	<form id="update_driver_form">
 	<ul>
 		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_did" name="update_insert_did" />
 			<label>司机姓名：</label>
 			<input type="text" name="update_insert_dname" id="update_insert_dname"  />			
 		</li>
@@ -132,7 +142,7 @@ var driverflag;
 
 var driverObject=$('#driver_table').datagrid({
 	url:'../../findAll.action',
-	//queryParams:{op:"find"},
+	queryParams:{spid:'',dstatus:'',dname:''},
 	fitColumns:true,
 	striped:true,
 	loadMsg:'数据加载中。。。。',
@@ -157,107 +167,7 @@ var driverObject=$('#driver_table').datagrid({
 	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
 	          }}
 	]],
-	
 	toolbar:"#driver_search"
-	
-	/*toolbar:[{
-    	text:"添加",	
-    	iconCls: 'icon-user-add',
-    	handler: function(){
-    		if(driverEditRow==undefined){
-    			driverObject.datagrid('insertRow',{index:0,row:{}});
-        		driverObject.datagrid('beginEdit',0);
-    			driverEditRow=0;//记录当前正在别编辑的行的索引
-    			driverOp="adddriver";
-    			driverflag="添加";
-    		}
-    	}
-    },'-',{
-    	text:"修改",
-    	iconCls: 'icon-user-edit',
-    	handler: function(){
-    		if(driverEditRow!=undefined){
-    			driverObject.datagrid("rejectChanges");
-    			driverEditRow=undefined;
-    		}
-    		var row = driverObject.datagrid("getChecked")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
-    			
-    		}else{
-    			driverEditRow = driverObject.datagrid("getRowIndex",row);
-    			driverObject.datagrid('beginEdit',driverEditRow);
-    			driverOp="updatedriver";
-    			driverflag="修改";
-    		}
-    	}
-    },'-',{
-    	
-    	text:"删除",
-    	iconCls: 'icon-user-delete',
-    	handler: function(){
-    		var rows = driverObject.datagrid("getChecked");
-    		if(rows.length<0){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
-    				if(r){
-    					var aids="";
-    					for(var i=0,len=rows.length;i<len-1;i++){
-    						aids+=rows[i].did+",";
-    					}
-    					aids+=rows[i].did;
-    					$.post("../../deldriver.action",{did:aids},function(data){
-    	    				data=parseInt($.trim(data));
-    	    				if(data>0){
-    	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
-    	    	    			driverObject.datagrid("reload");
-    	    				}else{
-    	    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
-    	    				}
-    	    			},"text");
-    				}else{
-    					return;
-    				}
-    			});
-    		}
-    	}
-    },'-',{
-    	
-    	text:"保存",
-    	iconCls: 'icon-user-tick',
-    	handler: function(){
-    		if(driverEditRow!=undefined){//说明正在被编辑的行
-    			driverObject.datagrid("endEdit",driverEditRow);
-    			driverEditRow=undefined;
-    		}
-    		var row = driverObject.datagrid("getChanges")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+driverflag+'的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			row["op"]=driverOp+".action";
-    			$.post("../../"+row["op"],row,function(data){
-    				data=parseInt($.trim(data));
-    				if(data>0){
-    					$.messager.show({title:'温馨提示',msg:'司机信息'+driverflag+'成功...',timeout:2000,showType:'slide'});
-    	    			driverObject.datagrid("reload");
-    				}else{
-    					$.messager.alert('失败提示','司机信息'+driverflag+'失败。。。。','error');
-    					location.href.reload();
-    				}
-    			},"text");
-    		}
-    	}
-    	
-	},'-',{
-    	text:"撤销",
-    	iconCls: 'icon-undo',
-    	handler: function(){
-    		driverObject.datagrid("rejectChanges");
-			driverEditRow=undefined;
-    	}	
-	
-	}] */
 		
 });
 
@@ -309,6 +219,7 @@ function update(val){
 		success:function(data){
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
+					$("#update_insert_did").val(item.did);
 					$("#update_insert_dname").val(item.dname);
 					$("#update_insert_spid").val(item.shipPoint.spid);
 					$("#update_insert_dnumber").val(item.dnumber);
@@ -327,12 +238,119 @@ function update(val){
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
-				
+				$.ajax({
+					url:"../../updatedriver.action",
+					data:$("#update_driver_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_driver').dialog("close");
+							driverObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
 			}
 		}]
 	});
 	$('#update_driver').dialog("open");
 }
+
+/**
+ * 添加司机信息
+ */
+function addDriver(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_dname").val("");
+	$("#update_insert_spid option:first").prop("selected", 'selected');
+	$("#update_insert_dnumber").val("");
+	$("#update_insert_dphone").val("");
+	$("#update_insert_didcard").val("");
+	$("#update_insert_ddage").val("");
+	$("#update_insert_spid option:first").prop("selected", 'selected');
+	
+	$('#update_driver').dialog({
+		title:"添加司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				dname=$("#update_insert_dname").val();
+				spid=$("#update_insert_spid").val();
+				dnumber=$("#update_insert_dnumber").val();
+				dphone=$("#update_insert_dphone").val();
+				didcard=$("#update_insert_didcard").val();
+				ddage=$("#update_insert_ddage").val();
+				dstatus=$("#update_insert_dstatus").val();
+				
+				$.ajax({
+					url:"../../adddriver.action",
+					data:{dname:dname,spid:spid,dnumber:dnumber,dphone:dphone,didcard:didcard,ddage:ddage,dstatus:dstatus},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#update_driver').dialog("close");
+							driverObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_driver').dialog("open");
+}
+
+/*
+ * 删除司机信息 
+ */
+function deleteDriver(){
+	var rows = driverObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].did+",";
+				}
+				aids+=rows[i].did;
+				$.post("../../deldriver.action",{did:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    	    			driverObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索司机信息 
+ */
+function searchDriver(){
+	spid=$("#search_spid").val();
+	dstatus=$("#search_dstatus").val();
+	dname=$("#search_dname").val();
+	$('#driver_table').datagrid({
+		url:"../../findAll.action",
+		queryParams:{spid:spid,dstatus:dstatus,dname:dname}
+	})
+}
+
 
 /*
  * 先查询到所有的配送点,赋给select
@@ -346,6 +364,7 @@ $(function(){
 			$.each(data.obj,function(index,item){		//给select赋值houseType
 				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
 				 $("#update_insert_spid").append(option);
+				 $("#search_spid").append(option);
 			 });
 		}
 	})
