@@ -14,78 +14,99 @@
     <result column="remark3" property="remark3" jdbcType="VARCHAR" />
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
+    <association property="shipPoint" javaType="Shippoint" resultMap="ShippointMap" />
   </resultMap>
   
+  <resultMap id="ShippointMap" type="com.yc.bean.Shippoint" >
+    <id property="spid" column="spid"/>
+    	<result property="spname" column="spname"></result>
+    	<result property="spperson" column="spperson"></result>
+    	<result property="sptel" column="sptel"></result>
+    	<result property="spemail" column="spemail"></result>
+    	<result property="spaddress" column="spaddress"></result>
+    	<result property="sptype" column="sptype"></result>
+    	<result property="sppersontel" column="sppersontel"></result>
+    	<result property="spfax" column="spfax"></result>
+    	<result property="sparea" column="sparea"></result>
+  </resultMap>
+  
+  
+  
+  <!-- 需要查询到的字段 -->
   <sql id="Base_Column_List" >
-    did, dname, dnumber, dphone, didCard, ddage, dstatus, remark1, remark2, remark3, 
-    remark4, remark5
+    did,driver.spid, dname, dnumber, dphone, didCard, ddage, dstatus, driver.remark1, driver.remark2, driver.remark3, 
+    driver.remark4, driver.remark5,shipPoint.spid,spname,spperson,sptel,spemail,spaddress,sptype,sppersontel,spfax,sparea
   </sql>
   
-  <sql id="pageSql">
- 		<if test="did!=null and ddage!=null">
- 			limit #{did},#{ddage}
+  <!-- 分页查询     remark1:表示pageNo  remark2:表示pageSize   因为remake1和ramark2是字符串所以要把它们转为整形 -->
+   <sql id="pageSql">
+ 		<if test="pageNo!=null and pageSize!=null">
+ 			limit #{pageNo},#{pageSize}
  		</if>
  	</sql>
   
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Driver" >
+  <!-- 带条件，带分页的查询  -->
+ <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Driver" >
     select 
     <include refid="Base_Column_List" />
-    from driver
+    from driver left join shipPoint
+  	on 	driver.spid=shipPoint.spid
     	<where>
+    		 driver.remark5=1 and shipPoint.remark5=1
+    		<if test="did!=null and did!=''">
+    			and did=#{did}
+    		</if>
+    		<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  				and shipPoint.spid=#{shipPoint.spid}
+  			</if>
     		<if test="dname!=null and dname!=''">
-    			dname like CONCAT('%',#{dname},'%' )
+    		    and	dname like CONCAT('%',#{dname},'%' )
     		</if>
-    		<if test="dphone!=null and dphone!=''">
-    			dphone like CONCAT('%',#{dphone},'%')
-    		</if>
-    		<if test="dstatus!=null and dstatus!=''">
-    			dstatus=#{dstatus}
+    		<if test="dstatus!=null or dstatus==0">
+    			and dstatus=#{dstatus}
     		</if>
     	</where>
     	<include refid="pageSql" />
   </select>
   
+  <!-- 带条件,不带分页的查询 -->
   <select id="selectDriverNoCondition" resultMap="BaseResultMap">
-  	select * from driver
+  	select * from driver left join shipPoint
+  	on 	driver.spid=shipPoint.spid
   		<where>
+  			 driver.remark5=1 and shipPoint.remark5=1
+  			<if test="did!=null and did!=''">
+    			and did=#{did}
+    		</if>
+    		<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  				and shipPoint.spid=#{shipPoint.spid}
+  			</if>
     		<if test="dname!=null and dname!=''">
-    			dname like CONCAT('%',#{dname},'%' )
+    			and dname like CONCAT('%',#{dname},'%' )
     		</if>
-    		<if test="dphone!=null and dphone!=''">
-    			dphone like CONCAT('%',#{dphone},'%')
-    		</if>
-    		<if test="dstatus!=null and dstatus!=''">
-    			dstatus=#{dstatus}
+    		<if test="dstatus!=null or dstatus==0">
+    			and dstatus=#{dstatus}
     		</if>
     	</where>
   </select>
-  
+  <!-- 删除司机信息 -->
   <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
-    delete from driver
+    update driver set remark5=0
     where did in
     <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
     	#{item}
     </foreach>
   </delete>
   
-  <insert id="insert" parameterType="com.yc.bean.Driver" >
-    insert into driver (did, dname, 
-      dnumber, dphone, didCard, 
-      ddage, dstatus, remark1, 
-      remark2, remark3, remark4, 
-      remark5)
-    values (#{did,jdbcType=INTEGER}, #{dname,jdbcType=VARCHAR}, 
-      #{dnumber,jdbcType=VARCHAR}, #{dphone,jdbcType=VARCHAR}, #{didcard,jdbcType=VARCHAR}, 
-      #{ddage,jdbcType=INTEGER}, #{dstatus,jdbcType=INTEGER},'备用', 
-      '备用', '备用', '备用', 
-      '备用')
-  </insert>
-  
-  <insert id="insertSelective" parameterType="com.yc.bean.Driver" >
+  <!-- 添加司机信息 -->
+ <insert id="insertSelective" parameterType="com.yc.bean.Driver" >
     insert into driver
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="did != null" >
         did,
+      </if>
+      <if test="shipPoint.spid!=null and shipPoint.spid!=''" >
+        spid,
       </if>
       <if test="dname != null" >
         dname,
@@ -117,13 +138,14 @@
       <if test="remark4 != null" >
         remark4,
       </if>
-      <if test="remark5 != null" >
         remark5,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="did != null" >
         #{did,jdbcType=INTEGER},
+      </if>
+       <if test="shipPoint.spid!=null and shipPoint.spid!=''" >
+        #{shipPoint.spid},
       </if>
       <if test="dname != null" >
         #{dname,jdbcType=VARCHAR},
@@ -155,18 +177,20 @@
       <if test="remark4 != null" >
         #{remark4,jdbcType=VARCHAR},
       </if>
-      <if test="remark5 != null" >
-        #{remark5,jdbcType=VARCHAR},
-      </if>
+        '1'
     </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Driver" >
+  <!-- 修改司机信息 -->
+ <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Driver" >
     update driver
     <set >
-      <if test="dname != null" >
+      <if test="dname != null and dname!=''" >
         dname = #{dname,jdbcType=VARCHAR},
       </if>
+      <if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  		spid=#{shipPoint.spid},
+  	  </if>
       <if test="dnumber != null" >
         dnumber = #{dnumber,jdbcType=VARCHAR},
       </if>
@@ -194,27 +218,8 @@
       <if test="remark4 != null" >
         remark4 = #{remark4,jdbcType=VARCHAR},
       </if>
-      <if test="remark5 != null" >
-        remark5 = #{remark5,jdbcType=VARCHAR},
-      </if>
     </set>
-    where did = #{did,jdbcType=INTEGER}
+    where did = #{did,jdbcType=INTEGER} and remark5=1
   </update>
   
-  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Driver" >
-    update driver
-    set 
-      dname = #{dname,jdbcType=VARCHAR},
-      dnumber = #{dnumber,jdbcType=VARCHAR},
-      dphone = #{dphone,jdbcType=VARCHAR},
-      didCard = #{didcard,jdbcType=VARCHAR},
-      ddage = #{ddage,jdbcType=INTEGER},
-      dstatus = #{dstatus,jdbcType=INTEGER},
-      remark1 = #{remark1,jdbcType=VARCHAR},
-      remark2 = #{remark2,jdbcType=VARCHAR},
-      remark3 = #{remark3,jdbcType=VARCHAR},
-      remark4 = #{remark4,jdbcType=VARCHAR},
-      remark5 = #{remark5,jdbcType=VARCHAR}
-    where did = #{did,jdbcType=INTEGER}
-  </update>
 </mapper>

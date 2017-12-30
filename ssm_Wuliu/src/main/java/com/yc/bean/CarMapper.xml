@@ -8,7 +8,7 @@
  		size="512"
  		readOnly="true" />
   <!-- 车子的整个元素   -->
-  <resultMap id="carMap" type="Car" >
+  <resultMap id="carMap" type="com.yc.bean.Car" >
     <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="cnumber" property="cnumber" jdbcType="VARCHAR" />
     <result column="ctype" property="ctype" jdbcType="VARCHAR" />

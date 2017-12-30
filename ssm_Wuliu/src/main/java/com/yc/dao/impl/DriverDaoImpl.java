@@ -16,26 +16,51 @@ public class DriverDaoImpl implements DriverDao{
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
+	/**
+	 * 添加司机信息
+	 * @param driver
+	 * @return
+	 */
 	@Override
 	public int insertDriver(Driver driver) {
 		return sqlSession.insert("driver.insertSelective", driver);
 	}
 
+	/**
+	 * 批量删除司机信息
+	 * @param list
+	 * @return
+	 */
 	@Override
 	public int deleteDriver(List list) {
 		return sqlSession.delete("driver.deleteByPrimaryKey", list);
 	}
 
+	/**
+	 * 修改司机信息
+	 * @param driver
+	 * @return
+	 */
 	@Override
 	public int updateDriver(Driver driver) {
 		return sqlSession.update("driver.updateByPrimaryKeySelective", driver);
 	}
 
+	/**
+	 * 带条件，带分页的查询
+	 * @param driver
+	 * @return
+	 */
 	@Override
 	public List<Driver> findDriver(Driver driver) {
 		return sqlSession.selectList("driver.selectByPrimaryKey", driver);
 	}
 
+	/**
+	 * 带条件,不带分页的查询
+	 * @param driver
+	 * @return
+	 */
 	@Override
 	public List<Driver> findDriverNoCondition(Driver driver) {
 		return sqlSession.selectList("driver.selectDriverNoCondition",driver);

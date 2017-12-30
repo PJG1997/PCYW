@@ -220,4 +220,11 @@
       remark5 = #{remark5,jdbcType=VARCHAR}
     where spid = #{spid,jdbcType=INTEGER}
   </update>
+  
+  <!-- 自己写的查询所有的配送点 -->
+  <select id="findAllShippoint" resultMap="BaseResultMap">
+  	select * from shippoint where remark5=1
+  </select>
+  
+  
 </mapper>

@@ -1,4 +1,4 @@
-package com.yc.test;
+/*package com.yc.test;
 
 import java.util.Date;
 
@@ -57,3 +57,4 @@ public class TestWuliu {
 	}
 	
 }
+*/

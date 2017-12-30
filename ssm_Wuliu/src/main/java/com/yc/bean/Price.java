@@ -3,9 +3,6 @@ package com.yc.bean;
 import java.io.Serializable;
 
 public class Price implements Serializable{
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -4364751437416888298L;
 	
 	private Integer pid;		//价格编号
