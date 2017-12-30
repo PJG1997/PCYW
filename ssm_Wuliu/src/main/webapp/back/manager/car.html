@@ -114,10 +114,10 @@ var carObject=$('#car_data').datagrid({
     				if(r){
     					var aids="";
     					for(var i=0,len=rows.length;i<len-1;i++){
-    						aids+=rows[i].did+",";
+    						aids+=rows[i].cid+",";
     					}
-    					aids+=rows[i].did;
-    					$.post("../../delcar.action",{did:aids},function(data){
+    					aids+=rows[i].cid;
+    					$.post("../../delcar.action",{cid:aids},function(data){
     	    				data=parseInt($.trim(data));
     	    				if(data>0){
     	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});

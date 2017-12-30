@@ -93,8 +93,8 @@
   <!-- 批量删除多辆车子 -->
   <update id="delmanyCar" parameterType="java.util.List">
   	update car set remark5=0 where cid in
-  	<foreach collection="List" index="index"  item="item"  open="("  close=")" separator=",">
-  	#{cid}
+  	<foreach collection="list" index="index"  item="item"  open="("  close=")" separator=",">
+  	#{item}
   	</foreach>
   </update>
 </mapper>

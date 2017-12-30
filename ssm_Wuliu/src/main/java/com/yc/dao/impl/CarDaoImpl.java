@@ -50,7 +50,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public void delmanyCar(List list) {
 
-		this.sqlSession.delete("com.yc.bean.CarMapper.delmanyCar", list);
+		this.sqlSession.update("com.yc.bean.CarMapper.delmanyCar", list);
 	}
 
 }
