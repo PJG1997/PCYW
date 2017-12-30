@@ -1,5 +1,8 @@
 package com.yc.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.bean.Car;
@@ -26,14 +30,17 @@ public class CarController {
 	private CarBiz carBiz;
 	private JsonModel jsonModel=new JsonModel();
 	private Shippoint sp=new Shippoint();
+	//查询
 	@RequestMapping(value="findAllcar.action")
-	public @ResponseBody Map<String,Object> findAllcar(Car c,HttpServletRequest request){
+	public @ResponseBody Map<String,Object> findAllcar(Car c,HttpServletRequest request,@RequestParam(value="spid") Integer spid){
 		Map<String,Object> map=new HashMap<String,Object>();
+		sp.setSpid(spid);
+		c.setShipPoint(sp);
+		map.put("total", carBiz.getCarInfo(c).size());
 		Integer pageNo=Integer.parseInt(request.getParameter("page"));
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
 		c.setPageNo((pageNo-1)*pageSize);
 		c.setPageSize(pageSize);
-		c.setShipPoint(sp);
 		List<Car> list=new ArrayList<Car>();
 		for(Car car:carBiz.getCarInfo(c))
 		{
@@ -42,33 +49,56 @@ public class CarController {
 			}else{
 				car.setStatus("在途中");
 			}
-			
 			if(car.getCisbox()==0){
 				car.setBox("有箱");
 			}else{
 				car.setBox("无箱");
 			}
+			car.setRemark3(car.getShipPoint().getspname());
+			car.setRemark4(String.valueOf(car.getCid()));
 			list.add(car);
 		}
-		System.out.println(list);
 		map.put("rows", list);
-		map.put("total", carBiz.getCarInfo(c).size());
+		
+		
+		
 		return map;
 		
 	}
-	
+	//添加
 	@RequestMapping("addcar.action")
 	@ResponseBody
-	public int addCar(Car c){
+	public JsonModel addCar(@RequestParam(value="update_insert_cid") Integer cid,
+			@RequestParam(value="update_insert_spid") Integer spid,@RequestParam(value="update_insert_cnumber") String cnumber,
+			@RequestParam(value="update_insert_ctype") String ctype,@RequestParam(value="update_insert_cbuyday") Date cbuyday,
+			@RequestParam(value="update_insert_crunnum") String crunnum,@RequestParam(value="update_insert_cvolume") Double cvolume,
+			@RequestParam(value="update_insert_cton") Double cton,@RequestParam(value="update_insert_cstatus") Integer cstatus,
+			@RequestParam(value="update_insert_cisbox") Integer cisbox,@RequestParam(value="update_insert_cremake") String cremake){
 		try {
+			Car c=new Car();
+			sp.setSpid(spid);
+			c.setShipPoint(sp);
+			c.setCid(cid);
+			c.setCnumber(cnumber);
+			c.setCtype(ctype);
+			c.setCbuyday(cbuyday);
+			c.setCrunnum(crunnum);
+			c.setCvolume(cvolume);
+			c.setCton(cton);
+			c.setCisbox(cisbox);
+			c.setCstatus(cstatus);
+			c.setCremake(cremake);
 			carBiz.addCar(c);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			jsonModel.setCode(0);
+			
+			return jsonModel;
 		}
-		return 1;
+		jsonModel.setCode(1);
+		return jsonModel;
 	}
-	
+	//批量删除
 	@RequestMapping("delcar.action")
 	@ResponseBody
 	public int delCar(@Param(value = "cid") String cid){
@@ -86,30 +116,47 @@ public class CarController {
 		return 1;
 		
 	}
-	
+	//
 	@RequestMapping("updatecar.action")
 	@ResponseBody
-	public int updateCarInfo(Car c,HttpServletRequest requset){
-		String status=requset.getParameter("status");
-		String box=requset.getParameter("box");
-		if("在途中".equals(status)){
-			c.setCstatus(1);
-		}else{
-			c.setCstatus(0);
-		}
-		
-		if("有箱".equals(box)){
-			c.setCisbox(0);
-		}else{
-			c.setCisbox(1);
-		}
+	public JsonModel updateCarInfo(@RequestParam(value="update_insert_cid") Integer cid,
+			@RequestParam(value="update_insert_spid") Integer spid,@RequestParam(value="update_insert_cnumber") String cnumber,
+			@RequestParam(value="update_insert_ctype") String ctype,@RequestParam(value="update_insert_cbuyday") String buyday,
+			@RequestParam(value="update_insert_crunnum") String crunnum,@RequestParam(value="update_insert_cvolume") Double cvolume,
+			@RequestParam(value="update_insert_cton") Double cton,@RequestParam(value="update_insert_cstatus") Integer cstatus,
+			@RequestParam(value="update_insert_cisbox") Integer cisbox,@RequestParam(value="update_insert_cremake") String cremake) throws ParseException{
+		Car c=new Car();
+		sp.setSpid(spid);
+		c.setCid(cid);
+		c.setCnumber(cnumber);
+		c.setCtype(ctype);
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		c.setCbuyday(sdf.parse(buyday));
+		c.setCrunnum(crunnum);
+		c.setCvolume(cvolume);
+		c.setCton(cton);
+		c.setCstatus(cstatus);
+		c.setCisbox(cisbox);
+		c.setCremake(cremake);
+		c.setShipPoint(sp);
 		try {
 			
 			carBiz.updateCarInfo(c);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			jsonModel.setCode(0);
+			return jsonModel;
 		}
-		return 1;
+		jsonModel.setCode(1);
+		return jsonModel;
+	}
+	
+	//查看车辆详情
+	@RequestMapping("findCarInfo.action")
+	@ResponseBody
+	public JsonModel findCarInfo(Car car){
+		car.setShipPoint(sp);
+		jsonModel.setObj(carBiz.getCarInfo(car));
+		return jsonModel;
 	}
 }

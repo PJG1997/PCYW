@@ -1,50 +1,137 @@
 <!-- 司机 -->
-<table id="car_data" data-options="fit:true"></table>
 
-
-<div id="songSheet_search">
-	<label>语种：</label>
-	<select name="languages" id="songSheet_search_languages">
+<table id="car_table" data-options="fit:true"></table>
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<!-- 条件查询 -->
+<div id="car_search">
+	<a href="javascript:addcar()" class="easyui-linkbutton"
+		data-options="iconCls:'icon-user-delete',plain:true"
+		style="float: left">添加</a> <a href="javascript:deletecar()"
+		class="easyui-linkbutton"
+		data-options="iconCls:'icon-user-delete',plain:true"
+		style="float: left">删除</a>
+	<div class="datagrid-btn-separator"></div>
+	<label>配送点名称:</label> <select name="search_spid" id="search_spid">
 		<option value="">--全部--</option>
-	</select>
-	<label>风格：</label>
-	<select name="style" id="songSheet_search_style">
+	</select> <label>车辆状态:</label> <select name="search_cstatus" id="search_cstatus">
 		<option value="">--全部--</option>
-	</select>
-	<label>场景：</label>
-	<select name="scene" id="songSheet_search_scene">
+		<option value="0">空闲</option>
+		<option value="1">在途中</option>
+	</select> <label>是否有箱:</label> <select name="search_cisbox" id="search_cisbox">
 		<option value="">--全部--</option>
-	</select>
-	<label>情感：</label>
-	<select name="emotion" id="songSheet_search_emotion">
-		<option value="">--全部--</option>
-	</select>
-	<label>主题：</label>
-	<select name="theme" id="songSheet_search_theme">
-		<option value="">--全部--</option>
-	</select>
-	<label>用户名：</label>
-	<input type="text" name="uname" id="songSheet_search_uname" class="songSheet_input">
-	<label>歌单名：</label>
-	<input type="text" name="ssname" id="songSheet_search_ssname" class="songSheet_input">
-	<a href="javascript:songSheet_searchSongSheet()" class="easyui-linkbutton" data-options="iconCls:'icon-report-magnify'">查询</a> 
+		<option value="0">有箱</option>
+		<option value="1">无箱</option>
+	</select> <label>车牌号:</label> <input type="text" name="search_cnumber"
+		id="search_cnumber" class="song_input" /> 容量范围:<input type="text"
+		name="mincvolume" id="mincvolume" />-<input type="text"
+		name="maxcvolume" id="maxcvolume" /> <a href="javascript:searchcar()"
+		class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
 
+<!-- 司机详情  -->
+<div id="car_detail" class="easyui-dialog" title="司机详情"
+	style="width: 400px; height: 410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="car_detail_form">
+		<ul>
+			<li><label>车牌号：</label> <label id="car_cnumber_label"></label></li>
+			<li><label>所属配送点：</label> <label id="car_spname_label"></label>
+			</li>
+			<li><label>汽车类型：</label> <label id="car_ctype_label"></label></li>
+
+			<li><label>购买日期:</label> <label id="car_cbuyday_label"></label>
+			</li>
+			<li><label>营运证号:</label> <label id="car_crunnum_label"></label>
+			</li>
+			<li><label>容积:</label> <label id="car_cvolume_label"></label></li>
+			<li><label>吨位:</label> <label id="car_cton_label"></label></li>
+			<li><label>车辆状态:</label> <label id="car_cstatus_label"></label>
+			</li>
+			<li><label>是否箱式:</label> <label id="car_cisbox_label"></label></li>
+			<li><label>备注:</label> <label id="car_cremake_label"></label></li>
+		</ul>
+	</form>
+</div>
+
+<!-- 修改和添加司机信息都用这个div -->
+<div id="update_car" class="easyui-dialog" title="添加司机信息"
+	style="width: 400px; height: 410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_car_form">
+		<ul>
+			<li><input type="hidden" id="update_insert_cid"
+				name="update_insert_cid" /> <label>车牌号：</label> <input type="text"
+				name="update_insert_cnumber" id="update_insert_cnumber" /></li>
+			<li><label>配送点名称：</label> <select name="update_insert_spid"
+				id="update_insert_spid">
+			</select></li>
+			<li><label>汽车类型：</label> <input type="text"
+				name="update_insert_ctype" id="update_insert_ctype" /></li>
+			<li><label>购买日期:</label> <input type="text"
+				name="update_insert_cbuyday" id="update_insert_cbuyday"
+				onfocus="WdatePicker({lang:'en'})" class="Wdate" /></li>
+			<li><label>营运证号:</label> <input type="text"
+				name="update_insert_crunnum" id="update_insert_crunnum" /></li>
+			<li><label>容积:</label> <input type="text"
+				name="update_insert_cvolume" id="update_insert_cvolume" /></li>
+			<li><label>吨位:</label> <input type="text"
+				name="update_insert_cton" id="update_insert_cton" /></li>
+			<li><label>车辆状态:</label> <select name="update_insert_cstatus"
+				id="update_insert_cstatus">
+					<option value="0">空闲</option>
+					<option value="1">在途中</option>
+			</select></li>
+			<li><label>是否箱式:</label> <select name="update_insert_cisbox"
+				id="update_insert_cisbox">
+					<option value="0">有箱</option>
+					<option value="1">无箱</option>
+			</select></li>
+			<li><label>车辆备注:</label> <textarea rows="50" cols="50"
+				name="update_insert_cremake"	id="update_insert_cremake"></textarea></li>
+		</ul>
+	</form>
+</div>
+
+
+
+
 <style>
-#songSheet_search label{
-	margin-left:20px;
+#operation:hover {
+	text-decoration: underline;
+}
+
+#car_detail li {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+#car_detail {
+	border: 1px solid #95b8e7;
+	line-height: 20px;
+}
+
+#update_car li {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+#update_car {
+	border: 1px solid #95b8e7;
+	line-height: 20px;
 }
 </style>
+
+
 
 <script type="text/javascript">
 var carEditRow=undefined;
 var carOp;
 var carflag;
 
-var carObject=$('#car_data').datagrid({
+var carObject=$('#car_table').datagrid({
 	url:'../../findAllcar.action',
-	//queryParams:{op:"find"},
+	queryParams:{spid:'',dstatus:'',dname:''},
 	fitColumns:true,
 	striped:true,
 	loadMsg:'数据加载中。。。。',
@@ -54,12 +141,12 @@ var carObject=$('#car_data').datagrid({
 	pageSize:5,
 	pageList:[5,10,20,30,50],
 	sortName:'cid',
+	toolbar:"#car_search",
 	remoteSort:false,
 	columns:[[   
 	          {field:"car",checkbox:true},
 	          {field:'cid',title:'车辆编号',width:80,align:'center',sortable:true},   
-	          {field:'shipPoint.spid',title:'公司编号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'shipPoint.spname',title:'所属公司',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark3',title:'所属公司',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'cnumber',title:'车牌号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'ctype',title:'汽车类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'cvolume',title:'容积(m^3)',width:80,align:'center',editor:{type:"text",options:{required:true}}},
@@ -67,110 +154,227 @@ var carObject=$('#car_data').datagrid({
 	          {field:'status',title:'车辆状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'box',title:'箱式',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
-	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>";
 	          }}
-	]],
-	toolbar:[{
-    	text:"添加",	
-    	iconCls: 'icon-user-add',
-    	handler: function(){
-    		if(carEditRow==undefined){
-    			carObject.datagrid('insertRow',{index:0,row:{}});
-        		carObject.datagrid('beginEdit',0);
-    			carEditRow=0;//记录当前正在别编辑的行的索引
-    			carOp="addcar";
-    			carflag="添加";
-    		}
-    	}
-    },'-',{
-    	text:"修改",
-    	iconCls: 'icon-user-edit',
-    	handler: function(){
-    		if(carEditRow!=undefined){
-    			carObject.datagrid("rejectChanges");
-    			carEditRow=undefined;
-    		}
-    		var row = carObject.datagrid("getChecked")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
-    			
-    		}else{
-    			carEditRow = carObject.datagrid("getRowIndex",row);
-    			carObject.datagrid('beginEdit',carEditRow);
-    			carOp="updatecar";
-    			carflag="修改";
-    		}
-    	}
-    },'-',{
-    	
-    	text:"删除",
-    	iconCls: 'icon-user-delete',
-    	handler: function(){
-    		var rows = carObject.datagrid("getChecked");
-    		if(rows.length<0){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
-    				if(r){
-    					var aids="";
-    					for(var i=0,len=rows.length;i<len-1;i++){
-    						aids+=rows[i].cid+",";
-    					}
-    					aids+=rows[i].cid;
-    					$.post("../../delcar.action",{cid:aids},function(data){
-    	    				data=parseInt($.trim(data));
-    	    				if(data>0){
-    	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
-    	    	    			carObject.datagrid("reload");
-    	    				}else{
-    	    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
-    	    				}
-    	    			},"text");
-    				}else{
-    					return;
-    				}
-    			});
-    		}
-    	}
-    },'-',{
-    	
-    	text:"保存",
-    	iconCls: 'icon-user-tick',
-    	handler: function(){
-    		if(carEditRow!=undefined){//说明正在被编辑的行
-    			carObject.datagrid("endEdit",carEditRow);
-    			carEditRow=undefined;
-    		}
-    		var row = carObject.datagrid("getChanges")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+carflag+'的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			row["op"]=carOp+".action";
-    			$.post("../../"+row["op"],row,function(data){
-    				data=parseInt($.trim(data));
-    				if(data>0){
-    					$.messager.show({title:'温馨提示',msg:'司机信息'+carflag+'成功...',timeout:2000,showType:'slide'});
-    	    			carObject.datagrid("reload");
-    				}else{
-    					$.messager.alert('失败提示','司机信息'+carflag+'失败。。。。','error');
-    					location.href.reload();
-    				}
-    			},"text");
-    		}
-    	}
-    	
-	},'-',{
-    	text:"撤销",
-    	iconCls: 'icon-undo',
-    	handler: function(){
-    		carObject.datagrid("rejectChanges");
-			carEditRow=undefined;
-    	}	
-	
-	}]
+	]]
 		
 });
+//详情
+function detail(val){
+	$.ajax({
+		url:'../../findCarInfo.action',
+		data:{cid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#car_cnumber_label").html(item.cnumber);
+					$("#car_spname_label").html(item.shipPoint.spname);
+					$("#car_ctype_label").html(item.ctype);
+					$("#car_cbuyday_label").html(item.buyday);
+					$("#car_crunnum_label").html(item.crunnum);
+					$("#car_cvolume_label").html(item.cvolume);
+					$("#car_cton_label").html(item.cton);
+					$("#car_cremake_label").html(item.cremake);
+					if(item.cstatus==1){
+						$("#car_cstatus_label").html("在途中");
+					}else{
+						$("#car_cstatus_label").html("空闲");
+					}
+					if(item.cisbox==1){
+						$("#car_cisbox_label").html("无箱");
+					}else{
+						$("#car_cisbox_label").html("有箱");
+					}
+				});
+			}
+		}
+	});
+	$('#car_detail').dialog({
+		title:"司机详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#car_detail').dialog("close");
+			}
+		}]
+	});
+	$('#car_detail').dialog("open");
+}
+//修改
+function update(val){
+	$.ajax({
+		url:'../../findCarInfo.action',
+		data:{cid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_cid").val(item.cid);
+					$("#update_insert_cnumber").val(item.cnumber);
+					$("#update_insert_spid").val(item.shipPoint.spid);
+					$("#update_insert_ctype").val(item.ctype);
+					$("#update_insert_cbuyday").val(item.buyday);
+					$("#update_insert_crunnum").val(item.crunnum);
+					$("#update_insert_cvolume").val(item.cvolume);
+					$("#update_insert_cton").val(item.cton);
+					$("#update_insert_cstatus").val(item.cstatus);
+					$("#update_insert_cisbox").val(item.cisbox);
+					$("#update_insert_cremake").val(item.cremake);
+				});
+			}
+		}
+	});
+	$('#update_car').dialog({
+		title:"修改司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updatecar.action",
+					data:$("#update_car_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data.code==1){		//说明修改成功...
+							$('#update_car').dialog("close");
+							carObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_car').dialog("open");
+}
+/**
+ * 添加车辆信息
+ */
+function addcar(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_cnumber").val("");
+	$("#update_insert_spid option:first").prop("selected", 'selected');
+	$("#update_insert_ctype").val("");
+	$("#update_insert_cbuyday").val("");
+	$("#update_insert_crunnum").val("");
+	$("#update_insert_cvolume").val("");
+	$("#update_insert_cton").val("");
+	$("#update_insert_cstatus").val("");
+	$("#update_insert_cisbox").val("");
+	$("#update_insert_cremake").val("");
+	
+	$('#update_car').dialog({
+		title:"添加司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				cnumber=$("#update_insert_cnumber").val();
+				spid=$("#update_insert_spid").val();
+				ctype=$("#update_insert_ctype").val();
+				cbuyday=$("#update_insert_cbuyday").val();
+				crunnum=$("#update_insert_crunnum").val();
+				cvolume=$("#update_insert_cvolume").val();
+				cton=$("#update_insert_cton").val();
+				cstatus=$("#update_insert_cstatus").val();
+				cisbox=$("#update_insert_cisbox").val();
+				cremake=$("#update_insert_cremake").val();
+
+			 $.ajax({
+					url:"../../addcar.action",
+					data:$("#update_car_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data.code==1){		//说明添加成功...
+							$('#update_car').dialog("close");
+							carObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				}); 
+			}
+		}]
+	});
+	$('#update_car').dialog("open");
+}
+/*
+ * 删除司机信息 
+ */
+function deletecar(){
+	var rows = carObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].cid+",";
+				}
+				aids+=rows[i].cid;
+				$.post("../../delcar.action",{cid:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    	    			carObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索司机信息 
+ */
+function searchcar(){
+	spid=$("#search_spid").val();
+	cstatus=$("#search_cstatus").val();
+	cnumber=$("#search_cnumber").val();
+	cisbox=$("#search_cisbox").val();
+	mincvolume=$("#mincvolume").val();
+	maxcvolume=$("#maxcvolume").val();
+	 $('#car_table').datagrid({
+		url:"../../findAllcar.action",
+		queryParams:{spid:spid,cstatus:cstatus,cnumber:cnumber,cisbox:cisbox,mincvolume:mincvolume
+			,maxcvolume:maxcvolume}
+	}) 
+}
 
 
+/*
+ * 先查询到所有的配送点,赋给select
+*/
+$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 $("#update_insert_spid").append(option);
+				 $("#search_spid").append(option);
+			 });
+		}
+	})
+});
 
+ 
 </script>
