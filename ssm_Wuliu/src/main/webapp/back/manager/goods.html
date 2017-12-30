@@ -7,12 +7,6 @@
 	<a href="javascript:deleteGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
 	<div class="datagrid-btn-separator"></div>	
-	<label>货物状态:</label>
-	<select name="goods_search_remark5" id="goods_search_remark5">
-		<option value="">--全部--</option>
-		<option value="0">已送达</option>
-		<option value="1">配送中</option>
-	</select>
 	<label>货物名称:</label>
 	<input type="text" name="goods_search_gname" id="goods_search_gname" class="song_input">
 	<label>货物类别:</label>
@@ -53,10 +47,7 @@
 			<label>备注:</label>
 			<label id="goods_gremark_label"></label>
 		</li>
-		<li>
-			<label>状态:</label>
-			<label id="goods_remark5_label"></label>
-		</li>
+		
 		
 	</ul>
 	</form>
@@ -68,6 +59,8 @@
 	<form id="update_goods_form">
 	<ul>
 		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_gid" name="update_insert_gid" />
 			<label>货物名称：</label>
 			<input type="text" name="update_insert_gname" id="update_insert_gname"  />			
 		</li>
@@ -95,13 +88,7 @@
 			<label>备注:</label>
 			<textarea rows="10" cols="50" name="update_insert_gremark" id="update_insert_gremark"></textarea> 
 		</li>
-		<li>
-			<label>状态:</label>
-			<select name="update_insert_remark5" id="update_insert_remark5">
-				<option value="0">已送达</option>
-				<option value="1">配送中</option>
-	        </select>		
-	   	</li>
+	
 		
 	</ul>
 	</form>
@@ -167,7 +154,6 @@ var goodsObject=$('#goods_table').datagrid({
 	          {field:'gweight',title:'货物重量',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'gvolume',title:'货物体积',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'gtype',title:'货物类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'remark5',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
 	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
 	          }}
@@ -278,7 +264,7 @@ var goodsObject=$('#goods_table').datagrid({
 
 
 function detail(val){
-	alert(val);
+	
 	$.ajax({
 		url:'../../findGoodsInfo.action',
 		data:{gid:val},
@@ -294,11 +280,7 @@ function detail(val){
 					$("#goods_gvolume_label").html(item.gvolume);
 					$("#goods_gtype_label").html(item.gtype);
 					$("#goods_gremark_label").html(item.gremark);
-					if(item.remark5==1){
-						$("#goods_remark5_label").html("已送达");
-					}else{
-						$("#goods_remark5_label").html("配送中");
-					} 
+					
 				});
 			}
 		}
@@ -327,6 +309,7 @@ function update(val){
 		success:function(data){
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
+					$("#update_insert_gid").val(item.gid);
 					$("#update_insert_gname").val(item.gname);
 					$("#update_insert_gcount").val(item.gcount);
 					$("#update_insert_gprice").val(item.gprice);
@@ -334,7 +317,6 @@ function update(val){
 					$("#update_insert_gvolume").val(item.gvolume);
 					$("#update_insert_gtype").val(item.gtype);
 					$("#update_insert_gremark").val(item.gremark);
-					$("#update_insert_remark5").val(item.remark5);
 				});
 			}
 		}
@@ -346,7 +328,20 @@ function update(val){
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
-				
+				$.ajax({
+					url:"../../updategoods.action",
+					data:$("#update_goods_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_goods').dialog("close");
+							goodsObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
 			}
 		}]
 	});
@@ -362,11 +357,12 @@ function addGoods(){
 	$("#update_insert_gcount").val("");
 	$("#update_insert_gprice").val("");
 	$("#update_insert_gweight").val("");
+	$("#update_insert_gvolume").val("");
 	$("#update_insert_gtype").val("");
 	$("#update_insert_gremark").val("");
 
 	$('#update_goods').dialog({
-		title:"添加司机信息",
+		title:"添加商品信息",
 		iconCls: 'icon-user-add',
 		buttons:[{
 			text: '确认',
@@ -437,12 +433,11 @@ function deleteGoods(){
  *搜索商品信息 
  */
 function searchGoods(){
-	remark5=$("#goods_search_remark5").val();
 	gname=$("#goods_search_gname").val();
 	gtype=$("#goods_search_gtype").val();
 	$('#goods_table').datagrid({
 		url:"../../findAllForGoods.action",
-		queryParams:{gtype:gtype,remark5:remark5,gname:gname}
+		queryParams:{gtype:gtype,gname:gname}
 	})
 }
 /*

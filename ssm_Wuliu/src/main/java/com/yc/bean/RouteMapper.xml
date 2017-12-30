@@ -23,7 +23,7 @@
   <!-- 查询 带分页-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
     select 
-    rname,rvia,remark5
+    rid,rname,rvia,remark5
     from route
    <where>
    		remark5=1
@@ -31,7 +31,7 @@
     	and	rid=#{rid}
     </if>
    	<if test="rname!=null and rname!=''">
-   		and rname=%${rname}%
+   		and rname like CONCAT('%',#{rname},'%' )
    	</if>
    </where>
    <include refid="pageSql" />
@@ -40,7 +40,7 @@
    <!-- 查询 带分页-->
   <select id="selectByPrimaryKeyforPage" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
     select 
-    rname,rvia,remark5
+    rid,rname,rvia,remark5
     from route
    <where>
    		remark5=1
@@ -48,7 +48,7 @@
     	and	rid=#{rid}
     </if>
    	<if test="rname!=null and rname!=''">
-   		and rname=%${rname}%
+   		and rname like CONCAT('%',#{rname},'%' )
    	</if>
    </where>
   </select>
