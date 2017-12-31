@@ -17,6 +17,24 @@ public class Route implements Serializable{
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4
     private String remark5;		//备用字段5
+    
+    
+    //分页
+    private Integer pageNo;
+    private Integer pageSize;
+    
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 	public Integer getRid() {
 		return rid;
 	}
@@ -68,7 +86,8 @@ public class Route implements Serializable{
 	@Override
 	public String toString() {
 		return "Route [rid=" + rid + ", rname=" + rname + ", rvia=" + rvia + ", remark1=" + remark1 + ", remark2="
-				+ remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + "]";
+				+ remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + ", pageNo="
+				+ pageNo + ", pageSize=" + pageSize + "]";
 	}
-    
+
 }

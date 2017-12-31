@@ -1,30 +1,98 @@
-<table id="route_data" data-options="fit:true">
+<!-- 路线 -->
+<table id="route_table" data-options="fit:true"></table>
 
+<!-- 条件查询 -->
 <div id="route_search">
-	<a href="javascript:route_showAddRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr-add',plain:true" style="float:left">添加</a>
-	<div class="datagrid-btn-separator"></div>
-	<a href="javascript:route_showUpdateRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr-edit',plain:true" style="float:left">修改</a>
-	<div class="datagrid-btn-separator"></div>
-	<a href="javascript:route_deleteRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr-delete',plain:true" style="float:left">删除</a>
+	<a href="javascript:addRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
 	<div class="datagrid-btn-separator"></div>	
-	
 	<label>路线编号:</label>
-	<input type="text" name="rid" id="route_search_rid" class="song_input">
-	
-	<label>路线名:</label>
-	<input type="text" name="rname" id="route_search_rname" class="song_input">
-	
-	<a href="javascript:route_searchRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
-	
+	<input type="text" name="route_search_rid" id="route_search_rid" class="song_input">
+	<label>路线名称:</label>
+	<input type="text" name="route_search_rname" id="route_search_rname" class="song_input">
+	<a href="javascript:searchRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
-</table>
+
+<!-- 商品详情  -->
+<div id="route_detail" class="easyui-dialog" title="商品详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="route_detail_form">
+	<ul>
+		<li>
+			<label>路线名称：</label>
+			<label id="route_rname_label"></label>		
+		</li>
+		<li>
+			<label>配送路线顺序：</label>
+			<label id="route_rvia_label"></label>	
+		</li>
+	
+	</ul>
+	</form>
+</div>
+
+<!-- 修改和添加路线信息都用这个div -->
+<div id="update_route" class="easyui-dialog" title="添加路线信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_route_form">
+	<ul>
+		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_rid_route" name="update_insert_rid_route" />
+			<label>路线名称：</label>
+			<input type="text" name="update_insert_rname_route" id="update_insert_rname_route"  />			
+		</li>
+		<li>
+			<label>配送路线顺序：</label>
+			<input type="text" name="update_insert_rvia_route" id="update_insert_rvia_route">
+		</li>
+		
+	</ul>
+	</form>
+</div>
+
+
+
+
+
+<style>
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#route_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#route_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_route li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_route{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+</style>
+
+
+
 <script type="text/javascript">
 var routeEditRow=undefined;
 var routeOp;
 var routeflag;
 
-var routeObject=$('#route_data').datagrid({
-	url:'../../route.action',
+var routeObject=$('#route_table').datagrid({
+	url:'../../findAllForRoute.action',
+	//queryParams:{op:"find"},
 	fitColumns:true,
 	striped:true,
 	loadMsg:'数据加载中。。。。',
@@ -33,15 +101,294 @@ var routeObject=$('#route_data').datagrid({
 	pageNumber:1,
 	pageSize:5,
 	pageList:[5,10,20,30,50],
-	sortName:'deptno',
+	sortName:'rid',
 	remoteSort:false,
 	columns:[[   
-	          {field:"deptnos",checkbox:true},
+	          {field:"users",checkbox:true},
 	          {field:'rid',title:'路线编号',width:80,align:'center',sortable:true},   
-	          {field:'aname',title:'路线名称',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
-	          {field:'pwd',title:'配送路线顺序',width:80,align:'center',editor:{type:"text",options:{required:true}}}   
+	          {field:'rname',title:'路线名称',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
+	          {field:'rvia',title:'配送路线顺序',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
 	]],
-	toolbar:'route_search'
-	});
-</script>
+	
+	toolbar:"#route_search"
+	
+	/*toolbar:[{
+    	text:"添加",	
+    	iconCls: 'icon-user-add',
+    	handler: function(){
+    		if(routeEditRow==undefined){
+    			routeObject.datagrid('insertRow',{index:0,row:{}});
+        		routeObject.datagrid('beginEdit',0);
+    			routeEditRow=0;//记录当前正在别编辑的行的索引
+    			routeOp="addroute";
+    			routeflag="添加";
+    		}
+    	}
+    },'-',{
+    	text:"修改",
+    	iconCls: 'icon-user-edit',
+    	handler: function(){
+    		if(routeEditRow!=undefined){
+    			routeObject.datagrid("rejectChanges");
+    			routeEditRow=undefined;
+    		}
+    		var row = routeObject.datagrid("getChecked")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
+    			
+    		}else{
+    			routeEditRow = routeObject.datagrid("getRowIndex",row);
+    			routeObject.datagrid('beginEdit',routeEditRow);
+    			routeOp="updateroute";
+    			routeflag="修改";
+    		}
+    	}
+    },'-',{
+    	
+    	text:"删除",
+    	iconCls: 'icon-user-delete',
+    	handler: function(){
+    		var rows = routeObject.datagrid("getChecked");
+    		if(rows.length<0){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+    				if(r){
+    					var aids="";
+    					for(var i=0,len=rows.length;i<len-1;i++){
+    						aids+=rows[i].did+",";
+    					}
+    					aids+=rows[i].did;
+    					$.post("../../delroute.action",{did:aids},function(data){
+    	    				data=parseInt($.trim(data));
+    	    				if(data>0){
+    	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    	    	    			routeObject.datagrid("reload");
+    	    				}else{
+    	    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    	    				}
+    	    			},"text");
+    				}else{
+    					return;
+    				}
+    			});
+    		}
+    	}
+    },'-',{
+    	
+    	text:"保存",
+    	iconCls: 'icon-user-tick',
+    	handler: function(){
+    		if(routeEditRow!=undefined){//说明正在被编辑的行
+    			routeObject.datagrid("endEdit",routeEditRow);
+    			routeEditRow=undefined;
+    		}
+    		var row = routeObject.datagrid("getChanges")[0];
+    		if(row==undefined){
+    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+routeflag+'的数据...',timeout:2000,showType:'slide'});
+    		}else{
+    			row["op"]=routeOp+".action";
+    			$.post("../../"+row["op"],row,function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'司机信息'+routeflag+'成功...',timeout:2000,showType:'slide'});
+    	    			routeObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','司机信息'+routeflag+'失败。。。。','error');
+    					location.href.reload();
+    				}
+    			},"text");
+    		}
+    	}
+    	
+	},'-',{
+    	text:"撤销",
+    	iconCls: 'icon-undo',
+    	handler: function(){
+    		routeObject.datagrid("rejectChanges");
+			routeEditRow=undefined;
+    	}	
+	
+	}] */
+		
+});
 
+
+function detail(val){
+	
+	$.ajax({
+		url:'../../findRouteInfo.action',
+		data:{rid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#route_rname_label").html(item.rname);
+					$("#route_rvia_label").html(item.rvia);
+				});
+			}
+		}
+	});
+	$('#route_detail').dialog({
+		title:"商品详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#route_detail').dialog("close");
+			}
+		}]
+	});
+	$('#route_detail').dialog("open");
+}
+
+//修改商品
+function update(val){
+	$.ajax({
+		url:'../../findRouteInfo.action',
+		data:{rid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_rid_route").val(item.rid);
+					$("#update_insert_rname_route").val(item.rname);
+					$("#update_insert_rvia_route").val(item.rvia);
+				});
+			}
+		}
+	});
+	$('#update_route').dialog({
+		title:"修改商品信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updateRoute.action",
+					data:$("#update_route_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_route').dialog("close");
+							routeObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_route').dialog("open");
+}
+
+/**
+ * 添加商品信息
+ */
+function addRoute(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_rname_route").val("");
+	$("#update_insert_rvia_route").val("");
+	$('#update_route').dialog({
+		title:"添加商品信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				rname=$("#update_insert_rname_route").val();
+				rvia=$("#update_insert_rvia_route").val();
+				
+				$.ajax({
+					url:"../../addRoute.action",
+					data:{rname:rname,rvia:rvia},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#update_route').dialog("close");
+							routeObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_route').dialog("open");
+}
+
+/*
+ * 删除商品信息 
+ */
+function deleteRoute(){
+	var rows = routeObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].rid+",";
+				}
+				aids+=rows[i].rid;
+				$.post("../../delRoute.action",{rid:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'路线信息删除成功...',timeout:2000,showType:'slide'});
+    	    			routeObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','路线信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索商品信息 
+ */
+function searchRoute(){
+	rname=$("#route_search_rname").val();
+	rid=$("#route_search_rid").val();
+	$('#route_table').datagrid({
+		url:"../../findAllForRoute.action",
+		queryParams:{rid:rid,rname:rname}
+	})
+}
+/*
+ * 先查询到所有的配送点,赋给select
+ */
+ 
+/**$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 $("#update_insert_spid").append(option);
+			 });
+		}
+	})
+});*/
+
+
+
+</script>

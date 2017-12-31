@@ -23,10 +23,11 @@
     <result column="remark2" property="remark2" jdbcType="VARCHAR" />
     <result column="remark3" property="remark3" jdbcType="VARCHAR" />
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
-    <result column="remark5" property="remark5" jdbcType="VARCHAR" />
     <!--  他所属公司的元素  没有包括公司的备注   和5个备份 -->
-    <collection property="shipPoint" ofType="shipPoint">
-    	<id property="spid" column="spid"/>
+    <association property="shipPoint" resultMap="selectShippoint"></association>
+  </resultMap>
+  <resultMap type="Shippoint" id="selectShippoint">
+  		<id property="spid" column="spid"/>
     	<result property="spname" column="spname"></result>
     	<result property="spperson" column="spperson"></result>
     	<result property="sptel" column="sptel"></result>
@@ -36,7 +37,6 @@
     	<result property="sppersontel" column="sppersontel"></result>
     	<result property="spfax" column="spfax"></result>
     	<result property="sparea" column="sparea"></result>
-    </collection>
   </resultMap>
   <!-- 获得这个车子的全部信息 以及它所属公司的信息      没有包括这两个表的备份 -->
   <select id="getCarInfo" resultMap="carMap">
@@ -45,15 +45,15 @@
   	from car
   	left join shipPoint
   	on 	car.spid=shipPoint.spid
-  	where remark3=1
+  	where car.remark5=1 and shipPoint.remark5=1
   		<if test="cid!=null and cid!=''">
   			and cid=#{cid}
   		</if>
-  		<if test="spname!=null and spname!=''">
-  			and spname like '%${shipPoint.spname}'
+  		<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  			and shippoint.spid=#{shipPoint.spid}
   		</if>
-  		<if test="ctype!=null and ctype!=''">
-  			and ctype like '%${ctype}'
+  		<if test="cnumber!=null and cnumber!=''">
+  			and cnumber like '%${cnumber}'
   		</if>
   		<if test="mincvolume!=null and mincvolume!='' and maxcvolume=!'' and maxcvolume!=null">
   			and cvolume between ${mincvolume} and ${maxcvolume}
@@ -61,24 +61,28 @@
   		<if test="mincton!=null and mincton!='' and maxcton=!'' and maxcton!=null">
   			and cton between ${mincton} and ${maxcton}
   		</if>
-  		<if test="cstatus!=null and cstatus!=''">
+  		<if test="cstatus!=null or cstatus==0">
   			and cstatus=#{cstatus}
   		</if>
-  		<if test="cisbox!=null and cisbox!=''">
+  		<if test="cisbox!=null or cisbox==0">
   			and cisbox=#{cisbox}
   		</if>
+  		<if test="pageNo!=null and pageSize!=null">
+  			limit #{pageNo},#{pageSize}
+  		</if>
   </select>
+  
   
   <!-- 添加车子的信息 -->
   <insert id="addCar" parameterType="Car" useGeneratedKeys="true" 
  		keyColumn="cid" keyProperty="cid">
  		insert into car(
- 			spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,remark3
+ 			spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,remark5
  		) values(#{shipPoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},#{cstatus},#{cisbox},#{cremake},1)
   </insert>
   <!--   修改整个车子的信息   （全部的信息） -->
   <update id="updateCarInfo" parameterType="Car">
-  	update car set cnumber=#{cumber},ctype=#{ctype},cbuyday=#{cbuyday},crunnum=#{crunnum},cvolume=#{cvolume},cton=#{cton},cstatus=#{cstatus},cisbox=#{cisbox},cremake=#{remake}
+  	update car set spid=#{shipPoint.spid},cnumber=#{cnumber},ctype=#{ctype},cbuyday=#{cbuyday},crunnum=#{crunnum},cvolume=#{cvolume},cton=#{cton},cstatus=#{cstatus},cisbox=#{cisbox},cremake=#{cremake}
   	where cid=#{cid}
   </update>  
   <!-- 修改这个车子的状态  主要是这个车子是否为空闲的或者为在途中 -->
@@ -87,14 +91,14 @@
   </update>
   <!-- 删除车子 -->
   <update id="delCar" parameterType="Car">
-  	update car set remark3=0 where cid=#{cid}
+  	update car set remark5=0 where cid=#{cid}
   </update>
   
   <!-- 批量删除多辆车子 -->
   <update id="delmanyCar" parameterType="java.util.List">
-  	update car set remark3=0 where cid in
-  	<foreach collection="List" index="index"  item="item"  open="("  close=")" separator=",">
-  	#{cid}
+  	update car set remark5=0 where cid in
+  	<foreach collection="list" index="index"  item="item"  open="("  close=")" separator=",">
+  	#{item}
   	</foreach>
   </update>
 </mapper>

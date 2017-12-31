@@ -23,8 +23,8 @@ public class GoodsBizImpl implements GoodsBiz{
 	}
 
 	@Override
-	public void delGoods(Goods goods) {
-		this.goodsDao.delGoods(goods);
+	public void delGoods(List list) {
+		this.goodsDao.delGoods(list);
 	}
 
 	@Override

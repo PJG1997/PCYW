@@ -38,8 +38,8 @@ public class RouteBizImpl implements RouteBiz{
 	 * 删除
 	 */
 	@Override
-	public void deleteRoute(Route route) {
-		this.routeDao.deleteRoute(route);
+	public void deleteRoute(List list) {
+		this.routeDao.deleteRoute(list);
 	}
 	
 	/**
@@ -48,6 +48,14 @@ public class RouteBizImpl implements RouteBiz{
 	@Override
 	public void updateRoute(Route route) {
 		this.routeDao.updateRoute(route);
+	}
+	
+	/**
+	 * 分页 查询
+	 */
+	@Override
+	public List<Route> selectRouteForPage(Route route) {
+		return this.routeDao.selectRouteForPage(route);
 	}
 
 }
