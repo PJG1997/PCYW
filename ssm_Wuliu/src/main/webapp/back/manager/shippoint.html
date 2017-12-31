@@ -242,6 +242,7 @@ function update(val){
 		success:function(data){
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
+					alert(item.spid);
 					$("#update_insert_spid").val(item.spid);
 					$("#update_insert_spname").val(item.spname);
 					$("#update_insert_spperson").val(item.spperson);

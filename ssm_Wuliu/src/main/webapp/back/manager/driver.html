@@ -179,7 +179,6 @@ function detailDriver(val){
 		dataType:"JSON",
 		method:"POST",
 		success:function(data){
-			alert(123)
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
 					$("#driver_dname_label").html(item.dname);
@@ -246,6 +245,7 @@ function updateDriver(val){
 					method:"POST",
 					success:function(data){
 						if(data==1){		//说明修改成功...
+							$('#update_driver').dialog("close");
 							driverObject.datagrid("reload");
 						}else{
 							alert("修改失败...");
