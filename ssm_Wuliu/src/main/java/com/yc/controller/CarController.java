@@ -59,9 +59,6 @@ public class CarController {
 			list.add(car);
 		}
 		map.put("rows", list);
-		
-		
-		
 		return map;
 		
 	}
