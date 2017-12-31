@@ -245,7 +245,6 @@ function update(val){
 					method:"POST",
 					success:function(data){
 						if(data==1){		//说明修改成功...
-							$('#update_driver').dialog("close");
 							driverObject.datagrid("reload");
 						}else{
 							alert("修改失败...");

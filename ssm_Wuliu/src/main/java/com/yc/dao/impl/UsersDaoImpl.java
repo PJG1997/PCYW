@@ -17,18 +17,44 @@ public class UsersDaoImpl implements UsersDao{
 	public Users login(Users user) {
 		return sqlSession.selectOne("users.loginByPrimaryKey",user);
 	}
+	/**
+	 * 分页查询
+	 */
 	@Override
-	public List<Users> searchAllUsers( ) {
+	public List<Users> searchAllUsers(Users u) {
 		
-		List<Users> ls = sqlSession.selectList("users.searchAllUsers");
-		System.out.println("daoIMpl查询出的:"+ls);
+		List<Users> ls = sqlSession.selectList("users.searchAllUsers",u);
 		return ls;
 		
 	}
+	/**
+	 * 无分页查询
+	 */
+	public List<Users> searchAllUsersNoCondition(Users u){
+		return sqlSession.selectList("users.selectDriverNoCondition",u);
+	}
+	
+	/**
+	 * 获取总数
+	 */
 	@Override
 	public int total() {
 		
 		return sqlSession.selectOne("users.getTotal2");
+	}
+	@Override
+	public int insertUser(Users u) {
+		
+		return sqlSession.insert("users.insertSelective",u);
+	}
+	/**
+	 * 修改用户
+	 */
+	@Override
+	public int updateUser(Users u) {
+		
+		return sqlSession.update("users.updateByPrimaryKeySelective",u);
+		
 	}
 
 }

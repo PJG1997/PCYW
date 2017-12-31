@@ -1,6 +1,8 @@
 package com.yc.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Users;
 import com.yc.biz.UsersBiz;
@@ -21,6 +24,8 @@ import com.yc.biz.UsersBiz;
 public class UsersController {
 	@Resource(name="usersBizImpl")
 	private UsersBiz usersBiz;
+	
+	
 	
 	@RequestMapping(value="back/usersLogin.action")
 	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Users users){
@@ -46,17 +51,92 @@ public class UsersController {
 	
 	@RequestMapping(value="findAllUser.action")
 	@ResponseBody
-	public Map<String,Object> findAllUsersInfo(HttpSession session,HttpServletRequest request){
-		
+	public Map<String,Object> findAllUsersInfo(HttpSession session,HttpServletRequest request,Users u){
 		Map<String,Object> map = new HashMap<String,Object>();
-		
-		try {
-			map = usersBiz.searchAllUsers();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//获取pageNo
+		Integer pageNo=Integer.parseInt(request.getParameter("page"));  
+		//获取pageSize
+		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
+		u.setPageNo((pageNo-1)*pageSize);	
+		u.setPageSize(pageSize);
+		u.setStatus(2);
+		List<Users> list=new ArrayList<Users>();
+		for(Users user:usersBiz.searchAllUsers(u)){
+			user.setRemark4(String.valueOf(user.getUsid()));
+			list.add(user);
 		}
+		
+		//easyui必须接受这样的格式,rows和total是必须的
+		map.put("rows", list);
+		//driverBiz.findDriverNoCondition(driver).size()调用的是带条件,不带分页的查询,这里不能带分页,如果一带分页,total就会等于pageSize
+		map.put("total", usersBiz.searchAllUsersNoCondition(u).size());
 		
 		return map;
 	}
+	@RequestMapping(value="findUsersInfo.action")
+	@ResponseBody
+	public Map<String,Object> findUsersInfoByUsid(HttpSession session,HttpServletRequest request){
+		Integer usid = Integer.parseInt(request.getParameter("usid"));
+		Users u =new Users();
+		u.setUsid(usid);
+		List<Users> list=new ArrayList<Users>();
+		list = usersBiz.searchAllUsers(u);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("total", 1);
+		map.put("rows", list);
+		return map;
+		
+	}
+	
+	@RequestMapping(value="addUser.action")
+	@ResponseBody
+	public JsonModel addUser(HttpSession session,HttpServletRequest request){
+		JsonModel jsonModel= new JsonModel();
+		Users u = new Users();
+		u.setUname(request.getParameter("uname"));
+		u.setUpwd("123");
+		u.setUrealname(request.getParameter("urealname"));
+		u.setUaddress(request.getParameter("uaddress"));
+		u.setUphone(request.getParameter("uphone"));
+		u.setUtel(request.getParameter("utel"));
+		u.setUemail(request.getParameter("uemail"));
+		u.setStatus(2);
+		
+		int result = usersBiz.insertUser(u);
+		
+		if(result>0){
+			jsonModel.setCode(1);
+		}else{
+			jsonModel.setCode(0);
+		}
+		
+		
+		return jsonModel;
+		
+	}
+	
+	@RequestMapping(value="updateUser.action")
+	@ResponseBody
+	public JsonModel updateUsers(HttpSession session,HttpServletRequest request){
+		JsonModel jsonModel = new JsonModel();
+		
+		Users u = new Users();
+		u.setUsid(Integer.parseInt(request.getParameter("usid")));
+		u.setUname(request.getParameter("uname"));
+		u.setUrealname(request.getParameter("urealname"));
+		u.setUaddress(request.getParameter("uaddress"));
+		u.setUphone(request.getParameter("uphone"));
+		u.setUtel(request.getParameter("utel"));
+		u.setUemail(request.getParameter("uemail"));
+		
+		int result =usersBiz.updateUser(u);
+		if(result>0){
+			jsonModel.setCode(1);
+		}else{
+			jsonModel.setCode(0);
+		}
+		return jsonModel;
+		
+	}
+	
 }

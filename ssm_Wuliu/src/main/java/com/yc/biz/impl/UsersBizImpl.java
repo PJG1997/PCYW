@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yc.bean.Users;
@@ -15,7 +16,7 @@ import com.yc.dao.UsersDao;
 
 
 @Service
-@Transactional(readOnly=true)
+@Transactional(isolation=Isolation.DEFAULT,rollbackForClassName="java.lang.RuntimeException")
 public class UsersBizImpl implements UsersBiz{
 	@Resource(name="usersDaoImpl")
 	private UsersDao usersDao;
@@ -23,15 +24,33 @@ public class UsersBizImpl implements UsersBiz{
 	public Users login(Users user) {
 		return usersDao.login(user);
 	}
+	/**
+	 * 分页
+	 */
 	@Override
-	public Map<String, Object> searchAllUsers() {
+	public List<Users> searchAllUsers(Users u) {
+		return usersDao.searchAllUsers(u);
+	}
+	@Override
+	public int insertUser(Users u) {
 		
-		List<Users> ls = usersDao.searchAllUsers();
-		Map<String,Object> maps = new HashMap<String,Object>();
-		int result = usersDao.total();
-		maps.put("total", result);
-		maps.put("rows", ls);
-		return maps;
+		return usersDao.insertUser(u);
+		
+	}
+	/**
+	 * 无分页
+	 */
+	@Override
+	public List<Users> searchAllUsersNoCondition(Users u) {
+		
+		return usersDao.searchAllUsersNoCondition(u);
+	}
+	/**
+	 * 修改用户
+	 */
+	@Override
+	public int updateUser(Users u) {
+		return usersDao.updateUser(u);
 	}
 
 }

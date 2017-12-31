@@ -18,7 +18,7 @@
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    usid, uname, upwd, urealName, uaddress, uphone, utel, uemail, status, remark1, remark2, 
+    usid, uname, upwd, urealname, uaddress, uphone, utel, uemail, status, remark1, remark2, 
     remark3, remark4, remark5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -204,10 +204,80 @@
 	<select id="searchAllAdmin" resultType="Users">
 		select * from users where status=1
 	</select>
-	<!-- 查询所有权限为用户的帐户 -->
-	<select id="searchAllUsers" resultType="Users">
-		select * from users where status=2
-	</select>
+	
+	<!-- 需要查询到的字段 -->
+  <sql id="Base_Column_List2" >
+    usid,uname,urealname,uaddress,uphone,utel,uemail,status
+  </sql>
+  
+  <!-- 分页查询     remark1:表示pageNo  remark2:表示pageSize   因为remake1和ramark2是字符串所以要把它们转为整形 -->
+   <sql id="pageSql">
+ 		<if test="pageNo!=null and pageSize!=null">
+ 			limit #{pageNo},#{pageSize}
+ 		</if>
+ 	</sql>
+  
+  <!-- 带条件，带分页的查询  -->
+ <select id="searchAllUsers" resultMap="BaseResultMap" parameterType="com.yc.bean.Users" >
+    select 
+    <include refid="Base_Column_List2" />
+    from users 
+    	<where>
+    		<if test="usid!=null">
+    			and usid=#{usid}
+    		</if>
+    		<if test="uname!=null and uname!=''">
+  				and uname=#{uname}
+  			</if>
+    		<if test="urealname!=null and urealname!=''">
+    		    and	urealname=#{urealname}
+    		</if>
+    		<if test="uaddress!=null and uaddress!='' ">
+    			and uaddress=#{uaddress}
+    		</if>
+    		<if test="uphone!=null and uphone!=''">
+    			and uphone=#{uphone}
+    		</if>
+    		<if test="utel!=null and utel!=''">
+    			and utel=#{utel}
+    		</if>
+    		<if test="status!=null">
+    			and status=#{status}
+    		</if>
+    	</where>
+    	<include refid="pageSql" />
+  </select>
+  
+  <!-- 带条件,不带分页的查询 -->
+  <select id="selectDriverNoCondition" resultMap="BaseResultMap">
+  	select * from users 
+  		<where>
+  			<if test="usid!=null">
+    			and usid=#{usid}
+    		</if>
+    		<if test="uname!=null and uname!=''">
+  				and uname=#{uname}
+  			</if>
+    		<if test="urealname!=null and urealname!=''">
+    			and urealname=#{urealname}
+    		</if>
+    		<if test="uphone!=null and uphone!='' ">
+    			and uphone=#{uphone}
+    		</if>
+    		<if test="utel!=null and utel!='' ">
+    			and utel=#{utel}
+    		</if>
+    		<if test="uemail!=null and uemail!='' ">
+    			and uemail=#{uemail}
+    		</if>
+    		<if test="status!=null">
+    			and status=#{status}
+    		</if>
+    	</where>
+  </select>
+	
+	
+	
 	
 	<!-- 查询管理员总记录数 -->
 	<select id="getTotal" resultType="int">
@@ -219,9 +289,10 @@
 		select count(usid) total from users where status=2;
 	</select>
 	
-	<!-- 添加管理员 -->
-	<insert id="addAdmin" parameterType="Users">
-		insert into users values(#{usid},#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},#{status},null,null,null,null,null);
+	<!-- 添加Users -->
+	<insert id="addUsers" parameterType="Users">
+		insert into users(uname,upwd,urealname,uaddress,uphone,utel,uemail,status,null,null,null,null,null) 
+		values(#{usid},#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},#{status},null,null,null,null,null);
 	</insert>
 	
 	
