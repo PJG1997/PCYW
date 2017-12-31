@@ -1,5 +1,6 @@
 package com.yc.biz;
 
+import java.util.List;
 import java.util.Map;
 
 import com.yc.bean.Users;
@@ -14,8 +15,30 @@ public interface UsersBiz {
 	
 	/**
 	 * 查询所有用户
+	 * 分页
 	 * @return
 	 */
-	public Map<String,Object> searchAllUsers();
+	public List<Users> searchAllUsers(Users u);
+	
+	/**
+	 * 无分页查询
+	 * @param u
+	 * @return
+	 */
+	public List<Users> searchAllUsersNoCondition(Users u);
+	
+	/**
+	 * 添加用户
+	 * @param u
+	 * @return
+	 */
+	public int insertUser(Users u);
+	
+	/**
+	 * 修改用户
+	 * @param u
+	 * @return
+	 */
+	public int updateUser(Users u);
 	
 }

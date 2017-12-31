@@ -164,7 +164,7 @@ var driverObject=$('#driver_table').datagrid({
 	          {field:'ddage',title:'年龄',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark1',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
-	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	        	  return "<a id='operation' href='javascript:detailDriver("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateDriver("+val+")' style='color:#39f'>修改</a>"
 	          }}
 	]],
 	toolbar:"#driver_search"
@@ -172,13 +172,14 @@ var driverObject=$('#driver_table').datagrid({
 });
 
 
-function detail(val){
+function detailDriver(val){
 	$.ajax({
 		url:'../../findAdriveInfo.action',
 		data:{did:val},
 		dataType:"JSON",
 		method:"POST",
 		success:function(data){
+			alert(123)
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
 					$("#driver_dname_label").html(item.dname);
@@ -210,7 +211,7 @@ function detail(val){
 	$('#driver_detail').dialog("open");
 }
 
-function update(val){
+function updateDriver(val){
 	$.ajax({
 		url:'../../findAdriveInfo.action',
 		data:{did:val},
@@ -245,7 +246,6 @@ function update(val){
 					method:"POST",
 					success:function(data){
 						if(data==1){		//说明修改成功...
-							$('#update_driver').dialog("close");
 							driverObject.datagrid("reload");
 						}else{
 							alert("修改失败...");
