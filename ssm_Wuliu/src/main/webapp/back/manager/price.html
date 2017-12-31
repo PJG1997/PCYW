@@ -1,0 +1,339 @@
+<!-- 价格 -->
+<table id="price_table" data-options="fit:true"></table>
+
+<!-- 条件查询 -->
+<div id="driver_search">
+	<a href="javascript:addPrice()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deletePrice()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>起始地址:</label>
+		<input type="text" name="search_pfrom" id="search_pfrom" class="song_input" >
+	<label>终点地址:</label>
+		<input type="text" name="search_pto" id="search_pto" class="song_input" >
+	<a href="javascript:searchPrice()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
+
+<!-- 价格详情  -->
+<div id="price_detail" class="easyui-dialog" title="价格详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="price_detail_form">
+	<ul>
+		<li>
+			<label>起始地址：</label>
+			<label id="price_pfrom_label"></label>		
+		</li>
+		<li>
+			<label>终止地址：</label>
+			<label id="price_pto_label"></label>	
+		</li>
+		<li>
+			<label>首重价格：</label>
+			<label id="price_pfirstwei_label"></label>	
+		</li>
+		<li>
+			<label>次重价格:</label>
+			<label id="price_prestwei_label"></label>
+		</li>
+		<li>
+			<label>首立方价格:</label>
+			<label id="price_pfirstvol_label"></label>
+		</li>
+		<li>
+			<label>次立方价格:</label>
+			<label id="price_prestvol_label"></label>
+		</li>
+		<li>
+			<label>预计时间:</label>
+			<label id="price_pretime_label"></label>
+		</li>
+	</ul>
+	</form>
+</div>
+
+<!-- 修改和添加价格信息都用这个div -->
+<div id="update_price" class="easyui-dialog" title="添加价格信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_price_form">
+	<ul>
+		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_pid" name="update_insert_pid" />
+			<label>起始地址：</label>
+			<input type="text" name="update_insert_pfrom" id="update_insert_pfrom"  />			
+		</li>
+		<li>
+			<label>终止地址：</label>
+			<input type="text" name="update_insert_pto" id="update_insert_pto" />
+		</li>
+		<li>
+			<label>首重价格：</label>
+			<input type="text" name="update_insert_pfirstwei" id="update_insert_pfirstwei" />
+		</li>
+		<li>
+			<label>次重价格:</label>
+			<input type="text" name="update_insert_prestwei" id="update_insert_prestwei"  />
+		</li>
+		<li>
+			<label>首立方价格:</label>
+			<input type="text" name="update_insert_pfirstvol" id="update_insert_pfirstvol" />
+		</li>
+		<li>
+			<label>次立方价格:</label>
+			<input type="text" name="update_insert_prestvol" id="update_insert_prestvol" />
+		</li>
+		<li>
+			<label>预计时间(单位:小时):</label>
+			<input type="text" name="update_insert_pretime" id="update_insert_pretime" />
+		</li>
+	</ul>
+	</form>
+</div>
+
+
+
+
+
+<style>
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#price_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#price_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_price li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_price{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+</style>
+
+
+
+<script type="text/javascript">
+var priceEditRow=undefined;
+var priceOp;
+var priceflag;
+
+var priceObject=$('#price_table').datagrid({
+	url:'../../findAllPrice.action',
+	queryParams:{pfrom:'',pto:''},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'pid',
+	remoteSort:false,
+	columns:[[   
+	          {field:"users",checkbox:true},
+	          {field:'pid',title:'价格编号',width:80,align:'center',sortable:true},   
+	          {field:'pfrom',title:'起始地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'pto',title:'终止地址',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'pfirstwei',title:'首重价格',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'prestwei',title:'次重价格',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'pfirstvol',title:'首立方价格',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'prestvol',title:'次立方价格',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'pretime',title:'预计时间(单位:小时)',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
+	]],
+	toolbar:"#driver_search"
+		
+});
+
+
+function detail(val){
+	$.ajax({
+		url:'../../findPriceInfo.action',
+		data:{pid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#price_pfrom_label").html(item.pfrom);
+					$("#price_pto_label").html(item.pto);
+					$("#price_pfirstwei_label").html(item.pfirstwei);
+					$("#price_prestwei_label").html(item.prestwei);
+					$("#price_pfirstvol_label").html(item.pfirstvol);
+					$("#price_prestvol_label").html(item.prestvol);
+					$("#price_pretime_label").html(item.pretime);
+				});
+			}
+		}
+	});
+	$('#price_detail').dialog({
+		title:"价格详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#price_detail').dialog("close");
+			}
+		}]
+	});
+	$('#price_detail').dialog("open");
+}
+
+function update(val){
+	$.ajax({
+		url:'../../findPriceInfo.action',
+		data:{pid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_pid").val(item.pid);
+					$("#update_insert_pfrom").val(item.pfrom);
+					$("#update_insert_pto").val(item.pto);
+					$("#update_insert_pfirstwei").val(item.pfirstwei);
+					$("#update_insert_prestwei").val(item.prestwei);
+					$("#update_insert_pfirstvol").val(item.pfirstvol);
+					$("#update_insert_prestvol").val(item.prestvol);
+					$("#update_insert_pretime").val(item.pretime);
+				});
+			}
+		}
+	});
+	$('#update_price').dialog({
+		title:"修改价格信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updatePrice.action",
+					data:$("#update_price_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_price').dialog("close");
+							priceObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_price').dialog("open");
+}
+
+/**
+ * 添加价格信息
+ */
+function addPrice(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_pid").val("");
+	$("#update_insert_pfrom").val("");
+	$("#update_insert_pto").val("");
+	$("#update_insert_pfirstwei").val("");
+	$("#update_insert_prestwei").val("");
+	$("#update_insert_pfirstvol").val("");
+	$("#update_insert_prestvol").val("");
+	$("#update_insert_pretime").val("");
+	
+	$('#update_price').dialog({
+		title:"添加价格信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				pfrom=$("#update_insert_pfrom").val();
+				pto=$("#update_insert_pto").val();
+				pfirstwei=$("#update_insert_pfirstwei").val();
+				prestwei=$("#update_insert_prestwei").val();
+				pfirstvol=$("#update_insert_pfirstvol").val();
+				prestvol=$("#update_insert_prestvol").val();
+				pretime=$("#update_insert_pretime").val();
+				
+				$.ajax({
+					url:"../../addPrice.action",
+					data:{pfrom:pfrom,pto:pto,pfirstwei:pfirstwei,prestwei:prestwei,pfirstvol:pfirstvol,prestvol:prestvol,pretime:pretime},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#update_price').dialog("close");
+							priceObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_price').dialog("open");
+}
+
+/*
+ * 删除价格信息 
+ */
+function deletePrice(){
+	var rows = priceObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].pid+",";
+				}
+				aids+=rows[i].pid;
+				$.post("../../delPrice.action",{pid:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'价格信息删除成功...',timeout:2000,showType:'slide'});
+    	    			priceObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','价格信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索价格信息 
+ */
+function searchPrice(){
+	pfrom=$("#search_pfrom").val();
+	pto=$("#search_pto").val();
+	$('#price_table').datagrid({
+		url:"../../findAllPrice.action",
+		queryParams:{pfrom:pfrom,pto:pto}
+	})
+}
+
+
+
+</script>
