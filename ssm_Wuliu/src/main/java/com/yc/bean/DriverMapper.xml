@@ -89,7 +89,8 @@
     		</if>
     	</where>
   </select>
-  <!-- 删除司机信息 -->
+  
+  <!-- 删除价格信息 -->
   <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
     update driver set remark5=0
     where did in

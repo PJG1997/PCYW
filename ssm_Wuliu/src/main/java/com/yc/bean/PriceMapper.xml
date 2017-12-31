@@ -20,9 +20,18 @@
     pid, pfrom, pto, pfirstwei, prestwei, pfirstvol, prestvol, pretime, remark1, remark2, 
     remark3, remark4, remark5
   </sql>
+  
+  <!-- 分页查询     remark1:表示pageNo  remark2:表示pageSize   因为remake1和ramark2是字符串所以要把它们转为整形 -->
+   <sql id="pageSql">
+ 		<if test="pageNo!=null and pageSize!=null">
+ 			limit #{pageNo},#{pageSize}
+ 		</if>
+ 	</sql>
+  
+   <!-- 带条件，带分页的查询  -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Price" >
     select 
-    pfrom,pto,pfirstwei,prestwei,pfirstvol,prestvol,pretime,remark5
+    pid, pfrom,pto,pfirstwei,prestwei,pfirstvol,prestvol,pretime,remark5
     from price
     <where>
     	remark5=1
@@ -30,17 +39,45 @@
     		and pid=#{pid}
     	</if>
     	<if test="pfrom!=null and pfrom!=''">
-    		and pfrom=%${pfrom}%
+    		and pfrom like CONCAT('%',#{pfrom},'%' )
     	</if>
     	<if test="pto!=null and pto!=''">
-    		and pto=%${pto}%
+    		and pto like CONCAT('%',#{pto},'%' )
+    	</if>
+    </where>
+    <include refid="pageSql" />
+  </select>
+  
+  <!-- 带条件,不带分页的查询 -->
+  <select id="selectNopage" resultMap="BaseResultMap" parameterType="com.yc.bean.Price" >
+    select 
+    pid, pfrom,pto,pfirstwei,prestwei,pfirstvol,prestvol,pretime,remark5
+    from price
+    <where>
+    	remark5=1
+    	<if test="pid!=null and pid!=''">
+    		and pid=#{pid}
+    	</if>
+    	<if test="pfrom!=null and pfrom!=''">
+    		and pfrom like CONCAT('%',#{pfrom},'%' )
+    	</if>
+    	<if test="pto!=null and pto!=''">
+    		and pto like CONCAT('%',#{pto},'%' )
     	</if>
     </where>
   </select>
-  <update id="deleteByPrimaryKey" parameterType="com.yc.bean.Price" >
+  
+  
+  
+  <!-- 删除司机信息 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
     update price set remark5=0
-    where pid = #{pid}
-  </update>
+    where pid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </delete>
+  
   <insert id="insert" parameterType="com.yc.bean.Price" >
     insert into price (pfrom, pto, 
       pfirstwei, prestwei, pfirstvol, 

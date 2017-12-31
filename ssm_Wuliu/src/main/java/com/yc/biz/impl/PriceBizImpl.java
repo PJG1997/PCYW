@@ -37,8 +37,8 @@ public class PriceBizImpl implements PriceBiz{
 	 * 删除
 	 */
 	@Override
-	public void deletePrice(Price price) {
-		this.priceDao.deletePrice(price);
+	public void deletePrice(List list) {
+		this.priceDao.deletePrice(list);
 	}
 	
 	/**
@@ -47,6 +47,11 @@ public class PriceBizImpl implements PriceBiz{
 	@Override
 	public List<Price> selectPrice(Price price) {
 		return this.priceDao.selectPrice(price);
+	}
+
+	@Override
+	public List<Price> selectPriceNoPage(Price price) {
+		return priceDao.selectPriceNoPage(price);
 	}
 
 }

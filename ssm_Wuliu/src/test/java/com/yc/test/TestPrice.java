@@ -1,4 +1,4 @@
-package com.yc.test;
+/*package com.yc.test;
 
 
 import java.util.List;
@@ -55,3 +55,4 @@ public class TestPrice {
 		}
 	}
 }
+*/
