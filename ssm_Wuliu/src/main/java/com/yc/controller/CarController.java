@@ -41,7 +41,7 @@ public class CarController {
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
 		c.setPageNo((pageNo-1)*pageSize);
 		c.setPageSize(pageSize);
-		List<Car> list=new ArrayList<Car>();
+		List<Car> list2=new ArrayList<Car>();
 		for(Car car:carBiz.getCarInfo(c))
 		{
 			if(car.getCstatus()==0){
@@ -56,9 +56,10 @@ public class CarController {
 			}
 			car.setRemark3(car.getShipPoint().getspname());
 			car.setRemark4(String.valueOf(car.getCid()));
-			list.add(car);
+			list2.add(car);
 		}
-		map.put("rows", list);
+		map.put("rows", list2);
+		
 		return map;
 		
 	}

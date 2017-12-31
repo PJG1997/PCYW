@@ -41,7 +41,7 @@ public class AdminDaoImpl implements AdminDao{
 	 */
 	@Override
 	public int addAdmin(Users u) {
-		return sqlSession.insert("users.insert",u);
+		return sqlSession.insert("users.addUsers",u);
 	}
 	
 	@Override

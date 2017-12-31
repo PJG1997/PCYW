@@ -15,14 +15,36 @@ public interface UsersDao {
 	
 	/**
 	 * 查询所有用户
-	 * @param user
+	 * @param user分页
 	 * @return
 	 */
-	public List<Users> searchAllUsers();
+	public List<Users> searchAllUsers(Users u);
+	
+	/**
+	 * 无分页查询
+	 * @param u
+	 * @return
+	 */
+	public List<Users> searchAllUsersNoCondition(Users u);
 	
 	/**
 	 * 查询总记录数
 	 * @return
 	 */
 	public int total();
+	
+	/**
+	 * 添加用户
+	 * @param u
+	 * @return
+	 */
+	public int insertUser(Users u);
+	
+	/**
+	 * 修改用户
+	 * @param u
+	 * @return
+	 */
+	public int updateUser(Users u);
+	
 }

@@ -1,8 +1,8 @@
 <table id="user_data" data-options="fit:true"></table>
 <div id="user_search">
-	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-add',plain:true" style="float:left">添加</a>
 	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
-	<a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a>
+	
 	<div class="datagrid-btn-separator"></div>	
 	<label>用户ID:</label>
 	<input type="text" name="sname" id="user_search_usid" class="song_input">
@@ -19,27 +19,95 @@
 	<ul>
 		<li>
 			<label>用户帐户：</label>
-			<input type="text" name="uname" id="user_detail_uname" readonly="readonly"  />			
+			<label  id="user_detail_uname"></label>			
 		</li>
 		<li>
 			<label>用户姓名：</label>
-			<input type="text" name="urealname" id="user_detail_urealname" readonly="readonly" />	
+			<label id="user_detail_urealname"></label>	
 		</li>
 		<li>
-			<label>用户地址:</label>
-			<input type="text" name="uaddress" id="user_detail_uaddress" readonly="readonly" />
+			<label>用户地址：</label>
+			<label id="user_detail_uaddress"></label>	
 		</li>
 		<li>
-			<label>用户手机:</label>
-			<input type="text" name="uphone" id="user_detail_uphone" readonly="readonly" />
+			<label>用户手机：</label>
+			<label id="user_detail_uphone"></label>	
 		</li>
 		<li>
-			<label>用户电话:</label>
-			<select type="text" name="utel" id="user_detail_utel" readonly="readonly">
+			<label>用户电话：</label>
+			<label id="user_detail_utel"></label>	
 		</li>
 		<li>
-			<label>用户邮箱:</label>
-			<input type="text" name="uemail" id="user_detail_uemail" readonly="readonly">
+			<label>用户邮箱：</label>
+			<label id="user_detail_uemail"></label>	
+		</li>
+	</ul>
+	</form>
+</div>
+
+<div id="user_add" class="easyui-dialog" title="用户添加" style="width:340px;height:320px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="user_add_user">
+	<ul>
+		<li>
+			<label>用户帐户：</label>
+			<input type="text" name="uname" id="user_detail_uname"   />			
+		</li>
+		<li>
+			<label>用户姓名：</label>
+			<input type="text" name="urealname" id="user_detail_urealname"  />	
+		</li>
+		<li>
+			<label>用户地址：</label>
+			<input type="text" name="uaddress" id="user_detail_uaddress"  />
+		</li>
+		<li>
+			<label>用户手机：</label>
+			<input type="text" name="uphone" id="user_detail_uphone"  />
+		</li>
+		<li>
+			<label>用户电话：</label>
+			<input type="text" name="utel" id="user_detail_utel" />
+		</li>
+		<li>
+			<label>用户邮箱：</label>
+			<input type="text" name="uemail" id="user_detail_uemail"/>
+		</li>
+	</ul>
+	</form>
+</div>
+
+<div id="user_update" class="easyui-dialog" title="用户修改" style="width:340px;height:320px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="user_update_user">
+	<ul>
+		<li>
+			<label>用户编号：</label>
+			<input type="text" name="usid" id="user_update_usid"  readOnly="true" />			
+		</li>
+		<li>
+			<label>用户帐户：</label>
+			<input type="text" name="uname" id="user_update_uname"   />			
+		</li>
+		<li>
+			<label>用户姓名：</label>
+			<input type="text" name="urealname" id="user_update_urealname"  />	
+		</li>
+		<li>
+			<label>用户地址：</label>
+			<input type="text" name="uaddress" id="user_update_uaddress"  />
+		</li>
+		<li>
+			<label>用户手机：</label>
+			<input type="text" name="uphone" id="user_update_uphone"  />
+		</li>
+		<li>
+			<label>用户电话：</label>
+			<input type="text" name="utel" id="user_update_utel" />
+		</li>
+		<li>
+			<label>用户邮箱：</label>
+			<input type="text" name="uemail" id="user_update_uemail"/>
 		</li>
 	</ul>
 	</form>
@@ -52,13 +120,23 @@
 		text-decoration: underline
 	}
 	
-	#user_detail li{
+	#user_detail  li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#user_update  li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#user_add  li{
 	list-style-type:none;
 	margin-top:20px;
 	}
 	
 	
-	#user_detail{
+	#user_detail,#user_add{
 	
 	border:1px solid #95b8e7;
 	line-height:20px;
@@ -138,6 +216,30 @@ function user_deleteUser(){
 
 
 function detail(val){
+	
+	
+	$.ajax({
+		url:'../../findUsersInfo.action',
+		data:{usid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.rows!=null&&data.rows.length>0){
+				$.each(data.rows,function(index,item){
+					
+					$("#user_detail_uname").html(item.uname);
+					$("#user_detail_urealname").html(item.urealname);
+					$("#user_detail_uaddress").html(item.uaddress);
+					$("#user_detail_uphone").html(item.uphone);
+					$("#user_detail_utel").html(item.utel);
+					$("#user_detail_uemail").html(item.uemail);
+					
+				});
+			}
+		}
+	});
+	
+	
 	$('#user_detail').dialog({
 		title:"用户详情",
 		iconCls: 'icon-user-add',
@@ -145,6 +247,10 @@ function detail(val){
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
+				
+				
+				
+				$('#user_detail').dialog("close");
 			}
 		}]
 	});
@@ -153,12 +259,97 @@ function detail(val){
 
 
 function update(val){
+	$.ajax({
+		url:'../../findUsersInfo.action',
+		data:{usid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.rows!=null&&data.rows.length>0){
+				$.each(data.rows,function(index,item){
+					$("#user_update_usid").val(item.usid);
+					$("#user_update_uname").val(item.uname);
+					$("#user_update_urealname").val(item.urealname);
+					$("#user_update_uaddress").val(item.uaddress);
+					$("#user_update_uphone").val(item.uphone);
+					$("#user_update_utel").val(item.utel);
+					$("#user_update_uemail").val(item.uemail);
+					
+				});
+			}
+		}
+	});
+	
+	$('#user_update').dialog({
+		title:"修改用户信息",
+		iconCls: 'icon-user-add',
+		
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				
+				$.ajax({
+					url :"../../updateUser.action",
+					data :$("#user_update_user").serialize(),
+					dataType : "JSON",
+					method:"POST",
+					success : function(data) {
+						if(data.code==1){
+							$('#user_update').dialog("close");
+							userObject.datagrid("reload");
+						}
+					}
+				});
+				
+			}
+		}]
+	});
+	
+	
+	
+	$('#user_update').dialog("open");
 	
 }
 
-function cancle(){
-	var user_detail = $("#user_detail");
-	user_detail.css("display","none");
+
+
+
+function user_addUser(){
+	
+	
+	
+	
+	$('#user_add').dialog({
+		title:"添加用户",
+		iconCls: 'icon-user-add',
+		
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				
+				$.ajax({
+					url :"../../addUser.action",
+					data :$("#user_add_user").serialize() ,
+					dataType : "JSON",
+					method:"POST",
+					success : function(data) {
+						if(data.code==1){
+							$('#user_add').dialog("close");
+							userObject.datagrid("reload");
+						}
+					}
+				});
+			
+				
+				
+				
+				
+			}
+		}]
+	});
+	$('#user_add').dialog("open");
 }
 
 
