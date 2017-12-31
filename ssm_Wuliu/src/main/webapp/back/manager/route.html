@@ -109,7 +109,7 @@ var routeObject=$('#route_table').datagrid({
 	          {field:'rname',title:'路线名称',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
 	          {field:'rvia',title:'配送路线顺序',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
-	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	        	  return "<a id='operation' href='javascript:detail_route("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update_route("+val+")' style='color:#39f'>修改</a>"
 	          }}
 	]],
 	
@@ -217,7 +217,7 @@ var routeObject=$('#route_table').datagrid({
 });
 
 
-function detail(val){
+function detail_route(val){
 	
 	$.ajax({
 		url:'../../findRouteInfo.action',
@@ -248,7 +248,7 @@ function detail(val){
 }
 
 //修改商品
-function update(val){
+function update_route(val){
 	$.ajax({
 		url:'../../findRouteInfo.action',
 		data:{rid:val},
