@@ -56,7 +56,9 @@ public class Handover implements Serializable{
 		return hfromspname;
 	}
 	public void setHfromspname(String hfromspname) {
+		
 		this.hfromspname = hfromspname;
+		
 	}
 	public String getHtospname() {
 		return htospname;

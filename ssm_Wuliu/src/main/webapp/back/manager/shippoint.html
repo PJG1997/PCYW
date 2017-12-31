@@ -236,7 +236,7 @@ function detail(val){
 function update(val){
 	$.ajax({
 		url:'../../findShippointOne.action',
-		data:{did:val},
+		data:{spid:val},
 		dataType:"JSON",
 		method:"POST",
 		success:function(data){
