@@ -14,18 +14,41 @@
   <sql id="Base_Column_List" >
     rid, rname, rvia, remark1, remark2, remark3, remark4, remark5
   </sql>
-  
-  <!-- 查询 -->
+   <!-- 分页查询    pageNo:表示pageNo  pageSize:表示pageSize   因为pageSize和pageSize是字符串所以要把它们转为整形 -->
+   <sql id="pageSql">
+ 		<if test="pageNo!=null and pageSize!=null">
+ 			limit #{pageNo},#{pageSize}
+ 		</if>
+ 	</sql>
+  <!-- 查询 带分页-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
     select 
-    rname,rvia
+    rid,rname,rvia,remark5
     from route
    <where>
+   		remark5=1
    <if test="rid!=null and rid!=''">
-    		rid=#{rid}
+    	and	rid=#{rid}
     </if>
    	<if test="rname!=null and rname!=''">
-   		and rname=%${rname}%
+   		and rname like CONCAT('%',#{rname},'%' )
+   	</if>
+   </where>
+   <include refid="pageSql" />
+  </select>
+  
+   <!-- 查询 带分页-->
+  <select id="selectByPrimaryKeyforPage" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
+    select 
+    rid,rname,rvia,remark5
+    from route
+   <where>
+   		remark5=1
+   <if test="rid!=null and rid!=''">
+    	and	rid=#{rid}
+    </if>
+   	<if test="rname!=null and rname!=''">
+   		and rname like CONCAT('%',#{rname},'%' )
    	</if>
    </where>
   </select>
@@ -33,7 +56,10 @@
   <!-- 删除 修改状态 -->
   <update id="deleteByPrimaryKey" parameterType="com.yc.bean.Route" >
    update route set remark5=0 
-    where rid = #{rid}
+    where rid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
   </update>
   
   <!-- 添加 -->

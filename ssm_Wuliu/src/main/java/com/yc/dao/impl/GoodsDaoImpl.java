@@ -27,8 +27,8 @@ public class GoodsDaoImpl implements GoodsDao{
 	 * 删除货物
 	 */
 	@Override
-	public void delGoods(Goods goods) {
-		this.sqlSession.delete("goods.deleteByPrimaryKey", goods);
+	public void delGoods(List list) {
+		this.sqlSession.delete("goods.deleteByPrimaryKey",list);
 	}
 	
 	/**
@@ -39,11 +39,18 @@ public class GoodsDaoImpl implements GoodsDao{
 		this.sqlSession.update("goods.updateByPrimaryKeySelective", goods);
 	}
 	/**
-	 * 查询
+	 * 不带分页查询
 	 */
 	@Override
 	public List<Goods> selectAllGoods(Goods goods) {
 		return this.sqlSession.selectList("goods.select", goods);
+	}
+	/**
+	 * 带分页
+	 */
+	@Override
+	public List<Goods> selectAllGoodsForPage(Goods goods) {
+		return this.sqlSession.selectList("goods.selectPage", goods);
 	}
 
 }

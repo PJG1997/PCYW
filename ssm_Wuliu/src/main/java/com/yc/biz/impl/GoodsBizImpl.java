@@ -23,8 +23,8 @@ public class GoodsBizImpl implements GoodsBiz{
 	}
 
 	@Override
-	public void delGoods(Goods goods) {
-		this.goodsDao.delGoods(goods);
+	public void delGoods(List list) {
+		this.goodsDao.delGoods(list);
 	}
 
 	@Override
@@ -35,6 +35,11 @@ public class GoodsBizImpl implements GoodsBiz{
 	@Override
 	public List<Goods> selectAllGoods(Goods goods) {
 		return this.goodsDao.selectAllGoods(goods);
+	}
+
+	@Override
+	public List<Goods> selectAllGoodsForPage(Goods goods) {
+		return this.goodsDao.selectAllGoodsForPage(goods);
 	}
 
 }

@@ -16,21 +16,28 @@
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
   </resultMap>
+  <!-- 分页查询    pageNo:表示pageNo  pageSize:表示pageSize   因为pageSize和pageSize是字符串所以要把它们转为整形 -->
+   <sql id="pageSql">
+ 		<if test="pageNo!=null and pageSize!=null">
+ 			limit #{pageNo},#{pageSize}
+ 		</if>
+ 	</sql>
   <sql id="Base_Column_List" >
     gid, gname, gcount, gprice, gweight, gvolume, gtype, gremark, remark1, remark2, remark3, 
     remark4, remark5
   </sql>
-  <!-- 查询 -->
-  <select id="select" resultMap="BaseResultMap" parameterType="Goods" >
+  <!--带条件 带分页 查询 -->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="Goods" >
     select 
-    gname, gcount, gprice, gweight, gvolume, gtype, gremark
+    gid,gname, gcount, gprice, gweight, gvolume, gtype, gremark,remark5
     from goods
     <where>
+    		remark5=1
     	<if test="gid!=null and gid!=''">
-    		gid=#{gid}
+    		and gid=#{gid}
     	</if>
     	<if test="gname!=null and gname!=''">
-    		and gname=%${gname}%
+    		and gname like CONCAT('%',#{gname},'%' )
     	</if>
     	<if test="gcount!=null and gcount!=''">
     		and gcount=#{gcount}
@@ -45,26 +52,60 @@
     		and gvolume between ${mingvolume} and ${maxgvolume}
     	</if>
     	<if test="gtype!=null and gtype!=''">
-    		and gtype=#{gtype}
+    		and gtype like CONCAT('%',#{gtype},'%' )
     	</if>
     </where>
+    <include refid="pageSql" />
   </select>
   
+    <select id="select" resultMap="BaseResultMap" parameterType="Goods" >
+    select 
+    gid,gname, gcount, gprice, gweight, gvolume, gtype, gremark,remark5
+    from goods
+    <where>
+    		remark5=1
+    	<if test="gid!=null and gid!=''">
+    		and gid=#{gid}
+    	</if>
+    	<if test="gname!=null and gname!=''">
+    		and gname like CONCAT('%',#{gname},'%' )
+    	</if>
+    	<if test="gcount!=null and gcount!=''">
+    		and gcount=#{gcount}
+    	</if>
+    	<if test="mingprice!=null and minsprice!='' and maxgprice=null and maxsprice!=''">
+    		and gprice between ${minsprice} and ${maxsprice}
+    	</if>
+    	<if test="mingweight!=null and mingweight!='' and maxgweight!=null and maxsprice!=''">
+    		and gweight between ${minsprice} and ${maxsprice}
+    	</if>
+    	<if test="mingvolume!=null and mingvolume!='' and maxgvolume!=null and maxgvolum!=''">
+    		and gvolume between ${mingvolume} and ${maxgvolume}
+    	</if>
+    	<if test="gtype!=null and gtype!=''">
+    		and gtype like CONCAT('%',#{gtype},'%' )
+    	</if>
+    </where>
+    <include refid="pageSql" />
+  </select>
   
   <!-- 删除 -->
-  <delete id="deleteByPrimaryKey" parameterType="Goods" >
-    delete from goods
-    where gid = #{gid}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="Goods" >
+    update goods set remark5=0
+    where gid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </update>
   <!-- 添加货物 -->
   <insert id="insert"  parameterType="Goods" useGeneratedKeys="true" 
  		keyColumn="gid" keyProperty="gid" >
     insert into goods ( gname, gcount, 
       gprice, gweight, gvolume, 
-      gtype, gremark)
+      gtype, gremark,remark5)
     values ( #{gname}, #{gcount}, 
       #{gprice}, #{gweight}, #{gvolume}, #{gtype}, 
-      #{gremark})
+      #{gremark},1)
   </insert>
   
  <!-- 修改货物 -->
@@ -92,6 +133,10 @@
       <if test="gremark != null" >
         gremark = #{gremark},
       </if>
+      <if test="remark5 != null" >
+        remark5 = #{remark5},
+      </if>
+      
     </set>
     where gid = #{gid}
   </update>

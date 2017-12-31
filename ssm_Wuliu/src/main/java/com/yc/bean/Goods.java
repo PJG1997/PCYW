@@ -26,8 +26,24 @@ public class Goods implements Serializable{
     private Double mingvolume;
     private Double maxgvolume;
     
+    //分页
+    private Integer pageNo;
+    private Integer pageSize;
     
     
+    
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 	public Double getMingprice() {
 		return mingprice;
 	}
@@ -148,9 +164,8 @@ public class Goods implements Serializable{
 				+ gweight + ", gvolume=" + gvolume + ", gtype=" + gtype + ", gremark=" + gremark + ", remark1="
 				+ remark1 + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5="
 				+ remark5 + ", mingprice=" + mingprice + ", maxgprice=" + maxgprice + ", mingweight=" + mingweight
-				+ ", maxgweight=" + maxgweight + ", mingvolume=" + mingvolume + ", maxgvolume=" + maxgvolume + "]";
+				+ ", maxgweight=" + maxgweight + ", mingvolume=" + mingvolume + ", maxgvolume=" + maxgvolume
+				+ ", pageNo=" + pageNo + ", pageSize=" + pageSize + "]";
 	}
-	
-	
 
 }

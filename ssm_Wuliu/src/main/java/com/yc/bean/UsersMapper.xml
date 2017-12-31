@@ -27,6 +27,7 @@
     from users
     where usid = #{usid,jdbcType=INTEGER}
   </select>
+  <!-- 管理员登录 -->
   <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
     select 
     *
@@ -37,6 +38,7 @@
     delete from users
     where usid = #{usid,jdbcType=INTEGER}
   </delete>
+  <!-- 添加管理员 -->
   <insert id="insert" parameterType="Users" useGeneratedKeys="true" 
  		keyColumn="usid" keyProperty="usid" >
     insert into users ( uname, upwd, 
@@ -44,7 +46,7 @@
       utel, uemail, status)
     values ( #{uname}, #{upwd}, 
       #{urealname}, #{uaddress}, #{uphone}, 
-      #{utel}, #{uemail}, #{status})
+      #{utel}, #{uemail}, 1)
   </insert>
   <insert id="insertSelective" parameterType="com.yc.bean.Users" >
     insert into users

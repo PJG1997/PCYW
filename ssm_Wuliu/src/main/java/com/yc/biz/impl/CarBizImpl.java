@@ -46,7 +46,7 @@ public class CarBizImpl implements CarBiz {
 
 
 	@Override
-	public void delmanyCar(List<Car> list) {
+	public void delmanyCar(List list) {
 		this.carDao.delmanyCar(list);
 	}
 

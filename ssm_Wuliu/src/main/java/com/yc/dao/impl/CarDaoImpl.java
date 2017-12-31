@@ -25,7 +25,7 @@ public class CarDaoImpl implements CarDao {
 
 	@Override
 	public List<Car> getCarInfo(Car c) {
-		return this.sqlSession.selectOne("com.yc.bean.CarMapper.getCarInfo", c);
+		return this.sqlSession.selectList("com.yc.bean.CarMapper.getCarInfo", c);
 	}
 
 	@Override
@@ -48,9 +48,9 @@ public class CarDaoImpl implements CarDao {
 
 
 	@Override
-	public void delmanyCar(List<Car> list) {
+	public void delmanyCar(List list) {
 
-		this.sqlSession.delete("com.yc.bean.CarMapper.delmanyCar", list);
+		this.sqlSession.update("com.yc.bean.CarMapper.delmanyCar", list);
 	}
 
 }

@@ -32,12 +32,6 @@ public class TestRoute {
 	/**
 	 * 删除
 	 */
-	@Test
-	public void test2(){
-		Route route = new Route();
-		route.setRid(1);
-		this.routeBiz.deleteRoute(route);
-	}
 	
 	/**
 	 * 查询
