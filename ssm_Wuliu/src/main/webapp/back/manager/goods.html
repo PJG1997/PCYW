@@ -155,7 +155,7 @@ var goodsObject=$('#goods_table').datagrid({
 	          {field:'gvolume',title:'货物体积',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'gtype',title:'货物类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
-	        	  return "<a id='operation' href='javascript:detailGoods("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateGoods("+val+")' style='color:#39f'>修改</a>"
+	        	  return "<a id='operation' href='javascript:detail_Goods("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update_Goods("+val+")' style='color:#39f'>修改</a>"
 	          }}
 	]],
 	
@@ -164,7 +164,7 @@ var goodsObject=$('#goods_table').datagrid({
 });
 
 
-function detailGoods(val){
+function detail_Goods(val){
 	
 	$.ajax({
 		url:'../../findGoodsInfo.action',
@@ -201,7 +201,7 @@ function detailGoods(val){
 }
 
 //修改商品
-function updateGoods(val){
+function update_Goods(val){
 	$.ajax({
 		url:'../../findGoodsInfo.action',
 		data:{gid:val},

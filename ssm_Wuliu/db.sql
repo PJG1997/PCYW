@@ -194,6 +194,8 @@ create table shippoint(
 	remark5 varchar(3000)
 );
 
+insert into shippoint values(1,'hgpsd','tome','56161','64648@qq.com','tianjing',1,'5641681486','4648648','16515','dasd',null,null,null,null,null);
+
 create table users(
 	usid int primary key auto_increment,
 	uname varchar(50),

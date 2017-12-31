@@ -47,7 +47,7 @@ public class AdminController {
 		Map<String,Object> objMap=new HashMap<String,Object>();
 		try {
 			Users u = new Users();
-			u.setUsid(1);
+			
 			u.setUname(request.getParameter("uname"));
 			u.setUpwd(request.getParameter("upwd"));
 			u.setUrealname(request.getParameter("urealname"));
