@@ -34,6 +34,14 @@ public class CarController {
 	@RequestMapping(value="findAllcar.action")
 	public @ResponseBody Map<String,Object> findAllcar(Car c,HttpServletRequest request,@RequestParam(value="spid") Integer spid){
 		Map<String,Object> map=new HashMap<String,Object>();
+		List<Car> list=new ArrayList<Car>();
+		List<Car> rows=carBiz.getCarInfo(c);
+		for(Car car:rows){
+			car.setRemark3(car.getShipPoint().getspname());
+			list.add(car);
+		}
+		int total=list.size();
+		map.put("total", total);
 		sp.setSpid(spid);
 		c.setShipPoint(sp);
 		map.put("total", carBiz.getCarInfo(c).size());
@@ -41,7 +49,7 @@ public class CarController {
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
 		c.setPageNo((pageNo-1)*pageSize);
 		c.setPageSize(pageSize);
-		List<Car> list=new ArrayList<Car>();
+		List<Car> list2=new ArrayList<Car>();
 		for(Car car:carBiz.getCarInfo(c))
 		{
 			if(car.getCstatus()==0){
@@ -56,12 +64,9 @@ public class CarController {
 			}
 			car.setRemark3(car.getShipPoint().getspname());
 			car.setRemark4(String.valueOf(car.getCid()));
-			list.add(car);
+			list2.add(car);
 		}
-		map.put("rows", list);
-		
-		
-		
+		map.put("rows", list2);
 		return map;
 		
 	}

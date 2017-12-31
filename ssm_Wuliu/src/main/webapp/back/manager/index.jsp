@@ -45,7 +45,7 @@
                     <li iconCls="icon-table"><a href="javascript:void(0)" data-icon="icon-table" data-link="order.html" iframe="0">订单管理</a></li>
                     <li iconCls="icon-table-link"><a href="javascript:void(0)" data-icon="icon-table-link" data-link="transfer.html" iframe="0">交接单管理</a></li>
                     <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="goods.html" iframe="0">商品管理</a></li>
-                    <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="goods.html" iframe="0">价格管理</a></li>
+                    <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="price.html" iframe="0">价格管理</a></li>
                     
                 </ul>
             </div>

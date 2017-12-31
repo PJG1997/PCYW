@@ -1,1 +1,407 @@
 <!-- 订单 -->
+<table id="order_table" data-options="fit:true"></table>
+
+<!-- 条件查询 -->
+<div id="order_search">
+	<a href="javascript:addOrder()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteOrder()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>用户姓名:</label>
+	<select name="search_username" id="search_username">
+		<option value="">--全部--</option>
+	</select>
+	<label>配送点名称:</label>
+	<select name="search_spid" id="search_spid">
+		<option value="">--全部--</option>
+	</select>
+	<a href="javascript:searchOrder()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
+
+<!-- 订单详情  -->
+<div id="order_detail" class="easyui-dialog" title="订单详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="order_detail_form">
+	<ul>
+		<li>
+			<label>用户姓名：</label>
+			<label id="order_usernamename_label"></label>		
+		</li>
+		<li>
+			<label>配送点名：</label>
+			<label id="order_spname_label"></label>	
+		</li>
+		<li>
+			<label>寄件人姓名：</label>
+			<label id="order_osendname_label"></label>	
+		</li>
+		<li>
+			<label>寄件人电话:</label>
+			<label id="order_osendtel_label"></label>
+		</li>
+		<li>
+			<label>寄件人地址:</label>
+			<label id="order_osendaddress_label"></label>
+		</li>
+		<li>
+			<label>收件人姓名:</label>
+			<label id="order_orecname_label"></label>
+		</li>
+		<li>
+			<label>收件人电话:</label>
+			<label id="order_orectel_label"></label>
+		</li>
+		<li>
+			<label>收件人地址:</label>
+			<label id="order_orecaddress_label"></label>
+		</li>
+		<li>
+			<label>收件人邮编:</label>
+			<label id="order_oreccode_label"></label>
+		</li>
+		<li>
+			<label>收件人手机号码:</label>
+			<label id="order_orecphone_label"></label>
+		</li>
+		<li>
+			<label>订单日期:</label>
+			<label id="order_otime_label"></label>
+		</li>
+		
+		<li>
+			<label>配送费:</label>
+			<label id="order_orecaddress_label"></label>
+		</li>
+		<li>
+			<label>收件人邮编:</label>
+			<label id="order_oreccode_label"></label>
+		</li>
+		<li>
+			<label>收件人手机号码:</label>
+			<label id="order_orecphone_label"></label>
+		</li>
+		<li>
+			<label>订单日期:</label>
+			<label id="order_otime_label"></label>
+		</li>
+		
+		
+		
+		
+	</ul>
+	</form>
+</div>
+
+<!-- 修改和添加订单信息都用这个div -->
+<div id="update_order" class="easyui-dialog" title="添加订单信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_order_form">
+	<ul>
+		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_did" name="update_insert_did" />
+			<label>订单姓名：</label>
+			<input type="text" name="update_insert_dname" id="update_insert_dname"  />			
+		</li>
+		<li>
+			<label>配送点名称：</label>
+			<select name="update_insert_spid" id="update_insert_spid">
+	        </select>
+		</li>
+		<li>
+			<label>驾驶证：</label>
+			<input type="text" name="update_insert_dnumber" id="update_insert_dnumber" />
+		</li>
+		<li>
+			<label>订单电话:</label>
+			<input type="text" name="update_insert_dphone" id="update_insert_dphone"  />
+		</li>
+		<li>
+			<label>身份证:</label>
+			<input type="text" name="update_insert_didcard" id="update_insert_didcard" />
+		</li>
+		<li>
+			<label>订单年龄:</label>
+			<input type="text" name="update_insert_ddage" id="update_insert_ddage" />
+		</li>
+		<li>
+			<label>订单状态:</label>
+			<select name="update_insert_dstatus" id="update_insert_dstatus">
+				<option value="0">空闲</option>
+				<option value="1">在忙</option>
+	        </select>
+		</li>
+	</ul>
+	</form>
+</div>
+
+
+
+
+
+<style>
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#order_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#order_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_order li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_order{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+</style>
+
+
+
+<script type="text/javascript">
+var orderEditRow=undefined;
+var orderOp;
+var orderflag;
+
+var orderObject=$('#order_table').datagrid({
+	url:'../../findAll.action',
+	queryParams:{spid:'',dstatus:'',dname:''},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'did',
+	remoteSort:false,
+	columns:[[   
+	          {field:"users",checkbox:true},
+	          {field:'did',title:'订单编号',width:80,align:'center',sortable:true},   
+	          {field:'dname',title:'订单姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'remark3',title:'所属配送点',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'dnumber',title:'驾驶证',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'dphone',title:'手机号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'didcard',title:'身份证',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'ddage',title:'年龄',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark1',title:'状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
+	]],
+	toolbar:"#order_search"
+		
+});
+
+
+function detail(val){
+	$.ajax({
+		url:'../../findAdriveInfo.action',
+		data:{did:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#order_usernamename_label").html(item.dname);
+					$("#order_spname_label").html(item.shipPoint.spname);
+					$("#order_osendname_label").html(item.dnumber);
+					$("#order_osendtel_label").html(item.dphone);
+					$("#order_osendaddress_label").html(item.didcard);
+					$("#order_orecname_label").html(item.ddage);
+					if(item.dstatus==1){
+						$("#order_orectel_label").html("在忙");
+					}else{
+						$("#order_orectel_label").html("空闲");
+					} 
+				});
+			}
+		}
+	});
+	$('#order_detail').dialog({
+		title:"订单详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#order_detail').dialog("close");
+			}
+		}]
+	});
+	$('#order_detail').dialog("open");
+}
+
+function update(val){
+	$.ajax({
+		url:'../../findAdriveInfo.action',
+		data:{did:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_did").val(item.did);
+					$("#update_insert_dname").val(item.dname);
+					$("#update_insert_spid").val(item.shipPoint.spid);
+					$("#update_insert_dnumber").val(item.dnumber);
+					$("#update_insert_dphone").val(item.dphone);
+					$("#update_insert_didcard").val(item.didcard);
+					$("#update_insert_ddage").val(item.ddage);
+					$("#update_insert_dstatus").val(item.dstatus);
+				});
+			}
+		}
+	});
+	$('#update_order').dialog({
+		title:"修改订单信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updateorder.action",
+					data:$("#update_order_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_order').dialog("close");
+							orderObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_order').dialog("open");
+}
+
+/**
+ * 添加订单信息
+ */
+function addorder(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_dname").val("");
+	$("#update_insert_spid option:first").prop("selected", 'selected');
+	$("#update_insert_dnumber").val("");
+	$("#update_insert_dphone").val("");
+	$("#update_insert_didcard").val("");
+	$("#update_insert_ddage").val("");
+	$("#update_insert_dstatus option:first").prop("selected", 'selected');
+	
+	$('#update_order').dialog({
+		title:"添加订单信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				dname=$("#update_insert_dname").val();
+				spid=$("#update_insert_spid").val();
+				dnumber=$("#update_insert_dnumber").val();
+				dphone=$("#update_insert_dphone").val();
+				didcard=$("#update_insert_didcard").val();
+				ddage=$("#update_insert_ddage").val();
+				dstatus=$("#update_insert_dstatus").val();
+				
+				$.ajax({
+					url:"../../addorder.action",
+					data:{dname:dname,spid:spid,dnumber:dnumber,dphone:dphone,didcard:didcard,ddage:ddage,dstatus:dstatus},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#update_order').dialog("close");
+							orderObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_order').dialog("open");
+}
+
+/*
+ * 删除订单信息 
+ */
+function deleteorder(){
+	var rows = orderObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].did+",";
+				}
+				aids+=rows[i].did;
+				$.post("../../delorder.action",{did:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'订单信息删除成功...',timeout:2000,showType:'slide'});
+    	    			orderObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','订单信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索订单信息 
+ */
+function searchorder(){
+	spid=$("#search_spid").val();
+	dstatus=$("#search_username").val();
+	dname=$("#search_dname").val();
+	$('#order_table').datagrid({
+		url:"../../findAll.action",
+		queryParams:{spid:spid,dstatus:dstatus,dname:dname}
+	})
+}
+
+
+/*
+ * 先查询到所有的配送点,赋给select
+ */
+$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 $("#update_insert_spid").append(option);
+				 $("#search_spid").append(option);
+			 });
+		}
+	})
+});
+
+
+
+</script>

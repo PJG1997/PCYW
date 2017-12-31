@@ -10,7 +10,10 @@ public interface PriceBiz {
 	//修改
 	public void updatePrice(Price price);
 	//删除
-	public void deletePrice(Price price);
+	public void deletePrice(List list);
 	//查询
 	public List<Price> selectPrice(Price price);
+	
+	//不带分页的查询
+	public List<Price> selectPriceNoPage(Price price);
 }

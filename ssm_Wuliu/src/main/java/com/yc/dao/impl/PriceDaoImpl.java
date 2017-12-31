@@ -34,8 +34,8 @@ public class PriceDaoImpl implements PriceDao{
 	 * 删除
 	 */
 	@Override
-	public void deletePrice(Price price) {
-		this.sqlSession.update("price.deleteByPrimaryKey",price);
+	public void deletePrice(List list) {
+		this.sqlSession.update("price.deleteByPrimaryKey",list);
 	}
 	
 	/**
@@ -44,6 +44,11 @@ public class PriceDaoImpl implements PriceDao{
 	@Override
 	public List<Price> selectPrice(Price price) {
 		return this.sqlSession.selectList("price.selectByPrimaryKey", price);
+	}
+
+	@Override
+	public List<Price> selectPriceNoPage(Price price) {
+		return sqlSession.selectList("price.selectNopage", price);
 	}
 
 }
