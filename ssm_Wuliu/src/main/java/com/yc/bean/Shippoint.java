@@ -24,6 +24,10 @@ public class Shippoint implements Serializable{
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4
     private String remark5;		//备用字段5
+    
+    private String type;   //配送点类型
+    private Integer pageNo;
+    private Integer pageSize;
 	public Integer getSpid() {
 		return spid;
 	}
@@ -120,13 +124,37 @@ public class Shippoint implements Serializable{
 	public void setRemark5(String remark5) {
 		this.remark5 = remark5;
 	}
+
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	@Override
 	public String toString() {
 		return "Shippoint [spid=" + spid + ", spname=" + spname + ", spperson=" + spperson + ", sptel=" + sptel
 				+ ", spemail=" + spemail + ", spaddress=" + spaddress + ", sptype=" + sptype + ", sppersontel="
 				+ sppersontel + ", spfax=" + spfax + ", sparea=" + sparea + ", spremark=" + spremark + ", remark1="
 				+ remark1 + ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5="
-				+ remark5 + "]";
+				+ remark5 + ", type=" + type + ", pageNo=" + pageNo + ", pageSize=" + pageSize + "]";
 	}
+	
+	
 
 }
