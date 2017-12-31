@@ -78,7 +78,7 @@
  		keyColumn="cid" keyProperty="cid">
  		insert into car(
  			spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,remark5
- 		) values(#{shipPoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},0,#{cisbox},#{cremake},1)
+ 		) values(#{shipPoint.spid},#{cnumber},#{ctype},#{cbuyday},#{crunnum},#{cvolume},#{cton},#{cstatus},#{cisbox},#{cremake},1)
   </insert>
   <!--   修改整个车子的信息   （全部的信息） -->
   <update id="updateCarInfo" parameterType="Car">
