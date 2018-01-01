@@ -19,11 +19,8 @@ public class AdminDaoImpl implements AdminDao{
 	 * 查询所有管理员
 	 */
 	@Override
-	public List<Users> searchAllUsers() {
-		
-		List<Users> ls = sqlSession.selectList("users.searchAllAdmin");
-		
-		
+	public List<Users> searchAllAdmin(Users users) {
+		List<Users> ls = sqlSession.selectList("users.selectByPrimaryKey",users);
 		return ls;
 	}
 
@@ -43,11 +40,20 @@ public class AdminDaoImpl implements AdminDao{
 	public int addAdmin(Users u) {
 		return sqlSession.insert("users.addUsers",u);
 	}
-	
+
 	@Override
-	public List<Users> searchAllUsers(Map<String, Object> map) {
-		List<Users> ls = sqlSession.selectList("users.searchAllAdmin",map);
-		return ls;
+	public int deleteAdmin(List list) {
+		return sqlSession.delete("users.deleteByPrimaryKey",list);
+	}
+
+	@Override
+	public List<Users> searchAllAdminNoPage(Users users) {
+		return sqlSession.selectList("users.selectByPrimaryKeyNoPage",users);
+	}
+
+	@Override
+	public int updateAdmin(Users users) {
+		return sqlSession.update("users.updateByPrimaryKeySelective",users);
 	}
 	
 }

@@ -18,22 +18,6 @@ import com.yc.dao.AdminDao;
 public class AdminBizImpl implements AdminBiz{
 	@Resource(name="adminDaoImpl")
 	private AdminDao adminDao;
-	
-	
-	
-	@Override
-	public Map<String, Object> searchAllUsers() {
-		List<Users> ls = adminDao.searchAllUsers();
-		Map<String,Object> maps = new HashMap<String,Object>();
-		int result = adminDao.total();
-		maps.put("total", result);
-		maps.put("rows", ls);
-		//public List<Users> searchAllUsers(Map<String, Object> map) {
-		
-		return maps;
-	}
-
-
 
 	@Override
 	public int addAdmin(Users u) {
@@ -41,14 +25,24 @@ public class AdminBizImpl implements AdminBiz{
 		return adminDao.addAdmin(u);
 	}
 
-
-
 	@Override
-	public List<Users> searchAllUsers(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteAdmin(List list) {
+		return adminDao.deleteAdmin(list);
 	}
 
-	
-	
+	@Override
+	public List<Users> searchAllAdmin(Users users) {
+		return adminDao.searchAllAdmin(users);
+	}
+
+	@Override
+	public List<Users> searchAllAdminNoPage(Users users) {
+		return adminDao.searchAllAdminNoPage(users);
+	}
+
+	@Override
+	public int updateAdmin(Users users) {
+		return adminDao.updateAdmin(users);
+	}
+
 }

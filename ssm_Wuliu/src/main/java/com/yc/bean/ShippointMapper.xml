@@ -52,6 +52,9 @@
 	<if test="spaddress!=null and spaddress!=''">
     	and spaddress like CONCAT('%',#{spaddress},'%' )
     </if>
+    <if test="pageNo!=null and pageSize!=null">
+  			limit #{pageNo},#{pageSize}
+  	</if>
   </select>
   <insert id="insert" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" 
   		keyColumn="spid" keyProperty="spid" >

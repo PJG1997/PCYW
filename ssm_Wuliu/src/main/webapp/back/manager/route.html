@@ -7,8 +7,6 @@
 	<a href="javascript:deleteRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	<!-- <a href="javascript:user_updateUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">修改</a> -->
 	<div class="datagrid-btn-separator"></div>	
-	<label>路线编号:</label>
-	<input type="text" name="route_search_rid" id="route_search_rid" class="song_input">
 	<label>路线名称:</label>
 	<input type="text" name="route_search_rname" id="route_search_rname" class="song_input">
 	<a href="javascript:searchRoute()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
@@ -115,105 +113,6 @@ var routeObject=$('#route_table').datagrid({
 	
 	toolbar:"#route_search"
 	
-	/*toolbar:[{
-    	text:"添加",	
-    	iconCls: 'icon-user-add',
-    	handler: function(){
-    		if(routeEditRow==undefined){
-    			routeObject.datagrid('insertRow',{index:0,row:{}});
-        		routeObject.datagrid('beginEdit',0);
-    			routeEditRow=0;//记录当前正在别编辑的行的索引
-    			routeOp="addroute";
-    			routeflag="添加";
-    		}
-    	}
-    },'-',{
-    	text:"修改",
-    	iconCls: 'icon-user-edit',
-    	handler: function(){
-    		if(routeEditRow!=undefined){
-    			routeObject.datagrid("rejectChanges");
-    			routeEditRow=undefined;
-    		}
-    		var row = routeObject.datagrid("getChecked")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
-    			
-    		}else{
-    			routeEditRow = routeObject.datagrid("getRowIndex",row);
-    			routeObject.datagrid('beginEdit',routeEditRow);
-    			routeOp="updateroute";
-    			routeflag="修改";
-    		}
-    	}
-    },'-',{
-    	
-    	text:"删除",
-    	iconCls: 'icon-user-delete',
-    	handler: function(){
-    		var rows = routeObject.datagrid("getChecked");
-    		if(rows.length<0){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
-    				if(r){
-    					var aids="";
-    					for(var i=0,len=rows.length;i<len-1;i++){
-    						aids+=rows[i].did+",";
-    					}
-    					aids+=rows[i].did;
-    					$.post("../../delroute.action",{did:aids},function(data){
-    	    				data=parseInt($.trim(data));
-    	    				if(data>0){
-    	    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
-    	    	    			routeObject.datagrid("reload");
-    	    				}else{
-    	    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
-    	    				}
-    	    			},"text");
-    				}else{
-    					return;
-    				}
-    			});
-    		}
-    	}
-    },'-',{
-    	
-    	text:"保存",
-    	iconCls: 'icon-user-tick',
-    	handler: function(){
-    		if(routeEditRow!=undefined){//说明正在被编辑的行
-    			routeObject.datagrid("endEdit",routeEditRow);
-    			routeEditRow=undefined;
-    		}
-    		var row = routeObject.datagrid("getChanges")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+routeflag+'的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			row["op"]=routeOp+".action";
-    			$.post("../../"+row["op"],row,function(data){
-    				data=parseInt($.trim(data));
-    				if(data>0){
-    					$.messager.show({title:'温馨提示',msg:'司机信息'+routeflag+'成功...',timeout:2000,showType:'slide'});
-    	    			routeObject.datagrid("reload");
-    				}else{
-    					$.messager.alert('失败提示','司机信息'+routeflag+'失败。。。。','error');
-    					location.href.reload();
-    				}
-    			},"text");
-    		}
-    	}
-    	
-	},'-',{
-    	text:"撤销",
-    	iconCls: 'icon-undo',
-    	handler: function(){
-    		routeObject.datagrid("rejectChanges");
-			routeEditRow=undefined;
-    	}	
-	
-	}] */
-		
 });
 
 
