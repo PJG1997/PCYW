@@ -47,4 +47,12 @@ public interface UsersDao {
 	 */
 	public int updateUser(Users u);
 	
+	
+	/**
+	 * 删除用户
+	 * @param u
+	 * @return
+	 */
+	public int deleteUsers(Users u);
+	
 }

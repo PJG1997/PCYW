@@ -56,5 +56,14 @@ public class UsersDaoImpl implements UsersDao{
 		return sqlSession.update("users.updateByPrimaryKeySelective",u);
 		
 	}
+	
+	/**
+	 * 删除用户
+	 */
+	@Override
+	public int deleteUsers(Users u) {
+		
+		return sqlSession.update("users.updateByPrimaryKeySelective",u);
+	}
 
 }

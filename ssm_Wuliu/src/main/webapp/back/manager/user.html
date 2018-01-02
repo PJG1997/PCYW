@@ -4,8 +4,6 @@
 	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	
 	<div class="datagrid-btn-separator"></div>	
-	<label>用户ID:</label>
-	<input type="text" name="sname" id="user_search_usid" class="song_input">
 	<label>用户姓名</label>
 	<input type="text" name="sname" id="user_search_uname" class="song_input">
 	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
@@ -82,8 +80,8 @@
 	<form id="user_update_user">
 	<ul>
 		<li>
-			<label>用户编号：</label>
-			<input type="text" name="usid" id="user_update_usid"  readOnly="true" />			
+			
+			<input type="text" name="usid" id="user_update_usid"  readOnly="true" hidden="true"/>			
 		</li>
 		<li>
 			<label>用户帐户：</label>
@@ -197,15 +195,19 @@ function user_deleteUser(){
 				}
 				usids+=rows[i].usid;
 				
-				$.post("../../userServlet",{op:"delUser",usid:usids},function(data){
-    				data=parseInt($.trim(data));
-    				if(data>0){
-    					$.messager.show({title:'温馨提示',msg:'用户信息删除成功...',timeout:2000,showType:'slide'});
-    					userObject.datagrid("reload");
-    				}else{
-    					$.messager.alert('失败提示','用户信息删除失败。。。。','error');
-    				}
-    			},"text");
+				$.ajax({
+					url:'../../deleteUsers.action',
+					data:{usid:val},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){
+							$.messager.show({title:'温馨提示',msg:'数据删除成功',timeout:2000,showType:'slide'});
+						}
+					}
+				});
+				
+				
 			}else{
 				return;
 			}
@@ -337,6 +339,7 @@ function user_addUser(){
 					success : function(data) {
 						if(data.code==1){
 							$('#user_add').dialog("close");
+							$.messager.show({title:'温馨提示',msg:'数据添加成功',timeout:2000,showType:'slide'});
 							userObject.datagrid("reload");
 						}
 					}
