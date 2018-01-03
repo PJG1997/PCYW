@@ -270,6 +270,8 @@ function addcar(){
 	$("#update_insert_cstatus").val("");
 	$("#update_insert_cisbox").val("");
 	$("#update_insert_cremake").val("");
+	$("#update_insert_cstatus option:first").prop("selected", 'selected');
+	$("#update_insert_cisbox option:first").prop("selected", 'selected');
 	
 	$('#update_car').dialog({
 		title:"添加司机信息",

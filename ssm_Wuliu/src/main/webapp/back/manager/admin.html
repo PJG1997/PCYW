@@ -1,5 +1,165 @@
 <table id="admin_data" data-options="fit:true"></table>
 
+<div id="admin_search">
+	<a href="javascript:addAdmin()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteAdmin()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>管理员姓名:</label>
+	<input type="text" name="sname" id="admin_search_uname" class="song_input">
+	<a href="javascript:admin_searchAdmin()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
+
+<div id="admin_detail" class="easyui-dialog" title="司机详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="admin_detail_admin">
+	<ul>
+		<li>
+			<label>管理员帐户：</label>
+			<label  id="admin_detail_uname"></label>			
+		</li>
+		<li>
+			<label>管理员姓名：</label>
+			<label id="admin_detail_urealname"></label>	
+		</li>
+		<li>
+			<label>管理员地址：</label>
+			<label id="admin_detail_uaddress"></label>	
+		</li>
+		<li>
+			<label>管理员手机：</label>
+			<label id="admin_detail_uphone"></label>	
+		</li>
+		<li>
+			<label>管理员电话：</label>
+			<label id="admin_detail_utel"></label>	
+		</li>
+		<li>
+			<label>管理员邮箱：</label>
+			<label id="admin_detail_uemail"></label>	
+		</li>
+	</ul>
+	</form>
+</div>
+
+
+
+<div id="insert_admin" class="easyui-dialog" title="添加司机信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-admin-add',resizable:true,modal:true,closed:true">
+	<form id="insert_admin_form">
+	<ul>
+		<li>
+		<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_usid" name="update_insert_usid" />
+			<label>管理员帐户：</label>
+			<input type="text" name="uname" id="admin_insert_uname"   />			
+		</li>
+		
+		<li>
+			<label>管理员密码：</label>
+			<input type="password" name="uname" id="admin_insert_pwd"   />			
+		</li>
+		
+		<li>
+			<label>管理员姓名：</label>
+			<input type="text" name="urealname" id="admin_insert_urealname"  />	
+		</li>
+		<li>
+			<label>管理员地址：</label>
+			<input type="text" name="uaddress" id="admin_insert_uaddress"  />
+		</li>
+		<li>
+			<label>管理员手机：</label>
+			<input type="text" name="uphone" id="admin_insert_uphone"  />
+		</li>
+		<li>
+			<label>管理员电话：</label>
+			<input type="text" name="utel" id="admin_insert_utel" />
+		</li>
+		<li>
+			<label>管理员邮箱：</label>
+			<input type="text" name="uemail" id="admin_insert_uemail"/>
+		</li>
+	</ul>
+	</form>
+</div>
+
+<div id="update_admin" class="easyui-dialog" title="修改管理员信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-admin-add',resizable:true,modal:true,closed:true">
+	<form id="update_admin_form">
+	<ul>
+		<li>
+		<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="admin_update_usid" name="admin_update_usid" />
+			<label>管理员帐户：</label>
+			<input type="text" name="admin_update_uname" id="admin_update_uname"   />			
+		</li>
+		<li>
+			<label>管理员姓名：</label>
+			<input type="text" name="admin_update_urealname" id="admin_update_urealname"  />	
+		</li>
+		<li>
+			<label>管理员地址：</label>
+			<input type="text" name="admin_update_uaddress" id="admin_update_uaddress"  />
+		</li>
+		<li>
+			<label>管理员手机：</label>
+			<input type="text" name="admin_update_uphone" id="admin_update_uphone"  />
+		</li>
+		<li>
+			<label>管理员电话：</label>
+			<input type="text" name="admin_update_utel" id="admin_update_utel" />
+		</li>
+		<li>
+			<label>管理员邮箱：</label>
+			<input type="text" name="admin_update_uemail" id="admin_update_uemail"/>
+		</li>
+	</ul>
+	</form>
+</div>
+
+
+
+<style>
+
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#admin_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#admin_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_admin li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_admin{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}	
+	
+	#insert_admin li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#insert_admin{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}	
+	
+	
+</style>
+
+
+
 <script type="text/javascript">
 var adminEditRow=undefined;
 var adminOp;
@@ -21,137 +181,183 @@ var adminObject=$('#admin_data').datagrid({
 	          {field:"usids",checkbox:true},
 	          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
 	          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
-	          {field:'upwd',title:'管理员密码',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'urealname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uaddress',title:'住址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'uphone',title:'管理员手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'utel',title:'管理员住宅电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uemail',title:'管理员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+	          {field:'uemail',title:'管理员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detailAdmin("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateAdmin("+val+")' style='color:#39f'>修改</a>"
+	          }}
 	]],
-	toolbar:[{
-    	text:"添加",	
-    	iconCls: 'icon-user-add',
-    	
-    	handler: function(){
-    		if(adminEditRow==undefined){
-    			
-    			adminObject.datagrid('insertRow',{index:0,row:{}});
-        		adminObject.datagrid('beginEdit',0);
-    			adminEditRow=0;//记录当前正在别编辑的行的索引
-    			adminOp="addAdmin.action";
-    			adminflag="添加";
-    		}
-    	}
-    },'-',{
-    	
-    	text:"修改",
-    	iconCls: 'icon-user-edit',
-    	handler: function(){
-    		if(adminEditRow!=undefined){
-    			adminObject.datagrid("rejectChanges");
-    			adminEditRow=undefined;
-    		}
-    		var row = adminObject.datagrid("getChecked")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要修改的数据...',timeout:2000,showType:'slide'});
-    			
-    		}else{
-    			adminEditRow = adminObject.datagrid("getRowIndex",row);
-    			adminObject.datagrid('beginEdit',adminEditRow);
-    			adminOp="updateAdmin";
-    			adminflag="修改";
-    		}
-    	}
-    },'-',{
-    	
-    	text:"删除",
-    	iconCls: 'icon-user-delete',
-    	handler: function(){
-    		var rows = adminObject.datagrid("getChecked");
-    		if(rows.length<0){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
-    		}else{
-    			$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
-    				if(r){
-    					var aids="";
-    					for(var i=0,len=rows.length;i<len-1;i++){
-    						aids+=rows[i].aid+",";
-    					}
-    					aids+=rows[i].aid;
-    					
-    					$.post("../../adminServlet",{op:"delAdmin",aid:aids},function(data){
-    	    				data=parseInt($.trim(data));
-    	    				if(data>0){
-    	    					$.messager.show({title:'温馨提示',msg:'管理员信息删除成功...',timeout:2000,showType:'slide'});
-    	    	    			adminObject.datagrid("reload");
-    	    				}else{
-    	    					$.messager.alert('失败提示','管理员信息删除失败。。。。','error');
-    	    				}
-    	    			},"text");
-    				}else{
-    					return;
-    				}
-    			});
-    		}
-    	}
-    },'-',{
-    	
-    	text:"保存",
-    	iconCls: 'icon-user-tick',
-    	handler: function(){
-    		if(adminEditRow!=undefined){//说明正在被编辑的行
-    			adminObject.datagrid("endEdit",adminEditRow);
-    			adminEditRow=undefined;
-    		}
-    		var row = adminObject.datagrid("getChanges")[0];
-    		if(row==undefined){
-    			$.messager.show({title:'温馨提示',msg:'请编辑你要'+adminflag+'的数据...',timeout:2000,showType:'slide'});
-    			
-    		}else{
-    			
-    			var action = "../../"+adminOp;
-    			/*$.post("../../adminServlet",row,function(data){
+	toolbar:"#admin_search"
+});
+
+function addAdmin(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#admin_insert_uname").val("");
+	$("#admin_insert_pwd").val("");
+	$("#admin_insert_urealname").val("");
+	$("#admin_insert_uaddress").val("");
+	$("#admin_insert_uphone").val("");
+	$("#admin_insert_utel").val("");
+	$("#admin_insert_uaddress").val("");
+	$("#admin_insert_uemail").val("");
+	
+	$('#insert_admin').dialog({
+		title:"添加管理员信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				 //得到表单下面的数据
+				uname=$("#admin_insert_uname").val();
+				upwd=$("#admin_insert_pwd").val();
+				urealname=$("#admin_insert_urealname").val();
+				uaddress=$("#admin_insert_uaddress").val();
+				uphone=$("#admin_insert_uphone").val();
+				utel=$("#admin_insert_utel").val();
+				uemail=$("#admin_insert_uemail").val();
+				$.ajax({
+					url:"../../addAdmin.action",
+					data:{uname:uname,upwd:upwd,urealname:urealname,uaddress:uaddress,uphone:uphone,utel:utel,uemail:uemail},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#insert_admin').dialog("close");
+							adminObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				}); 
+			}
+		}]
+	});
+	$('#insert_admin').dialog("open");
+}
+
+function deleteAdmin(){
+	var rows = adminObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].usid+",";
+				}
+				aids+=rows[i].usid;
+				
+				$.post("../../deleteAdmin.action",{usid:aids},function(data){
     				data=parseInt($.trim(data));
     				if(data>0){
-    					$.messager.show({title:'温馨提示',msg:'管理员信息'+adminflag+'成功...',timeout:2000,showType:'slide'});
+    					$.messager.show({title:'温馨提示',msg:'管理员信息删除成功...',timeout:2000,showType:'slide'});
     	    			adminObject.datagrid("reload");
     				}else{
-    					$.messager.alert('失败提示','管理员信息'+adminflag+'失败。。。。','error');
+    					$.messager.alert('失败提示','管理员信息删除失败。。。。','error');
     				}
-    			},"text");*/
-    			
-    			$.ajax({
-    				url:action,
-    				data:row,
-    				dataType:"JSON",
-    				method:"POST",
-    				success:function(data){
-    					if(data.code==1){
-    						$.messager.show({title:'温馨提示',msg:'管理员信息'+adminflag+'成功...',timeout:2000,showType:'slide'});
-        	    			adminObject.datagrid("reload");
-    					}else{
-        					$.messager.alert('失败提示','管理员信息'+adminflag+'失败。。。。','error');
-    					}
-    				}
-    				
-    			});
-    			
-    			
-    		}
-    	}
-    	
-	},'-',{
-    	
-    	text:"撤销",
-    	iconCls: 'icon-undo',
-    	handler: function(){
-    		adminObject.datagrid("rejectChanges");
-			adminEditRow=undefined;
-    	}	
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+function detailAdmin(val){
+	$.ajax({
+		url:'../../findAdminInfo.action',
+		data:{usid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#admin_detail_uname").html(item.uname);
+					$("#admin_detail_urealname").html(item.urealname);
+					$("#admin_detail_uaddress").html(item.uaddress);
+					$("#admin_detail_uphone").html(item.uphone);
+					$("#admin_detail_utel").html(item.utel);
+					$("#admin_detail_uemail").html(item.uemail);
+				});
+			}
+		}
+	});
 	
-	}]
-		
-});
+	$('#admin_detail').dialog({
+		title:"管理员详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#admin_detail').dialog("close");
+			}
+		}]
+	});
+	$('#admin_detail').dialog("open");
+}
+
+function updateAdmin(val){
+	$.ajax({
+		url:'../../findAdminInfo.action',
+		data:{usid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#admin_update_usid").val(item.usid);
+					$("#admin_update_uname").val(item.uname);
+					$("#admin_update_pwd").val(item.pwd);
+					$("#admin_update_urealname").val(item.urealname);
+					$("#admin_update_uaddress").val(item.uaddress);
+					$("#admin_update_uphone").val(item.uphone);
+					$("#admin_update_utel").val(item.utel);
+					$("#admin_update_uaddress").val(item.uaddress);
+					$("#admin_update_uemail").val(item.uemail);
+				});
+			}
+		}
+	});
+	$('#update_admin').dialog({
+		title:"修改司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updateAdmin.action",
+					data:$("#update_admin_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_admin').dialog("close");
+							adminObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_admin').dialog("open");
+}
+
+function admin_searchAdmin(){
+	uname=$("#admin_search_uname").val();
+	$('#admin_data').datagrid({
+		url:"../../findAllAdmin.action",
+		queryParams:{uname:uname}
+	})
+}
 
 
 

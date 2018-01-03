@@ -42,7 +42,7 @@
     </if>
     <if test="spperson!=null and spperson!=''">
     	and spperson like CONCAT('%',#{spperson},'%' )
-    </if> 
+    </if>
     <if test="sptel!=null and sptel!=''">
     	and sptel like CONCAT('%',#{sptel},'%' )
     </if>
@@ -52,6 +52,9 @@
 	<if test="spaddress!=null and spaddress!=''">
     	and spaddress like CONCAT('%',#{spaddress},'%' )
     </if>
+    <if test="pageNo!=null and pageSize!=null">
+  			limit #{pageNo},#{pageSize}
+  	</if>
   </select>
   <insert id="insert" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" 
   		keyColumn="spid" keyProperty="spid" >

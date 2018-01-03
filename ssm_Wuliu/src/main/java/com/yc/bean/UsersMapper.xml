@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.yc.bean.Users" >
     <id column="usid" property="usid" jdbcType="INTEGER" />
     <result column="uname" property="uname" jdbcType="VARCHAR" />
-    <result column="upwd" property="upwd" jdbcType="VARCHAR" />
     <result column="urealName" property="urealname" jdbcType="VARCHAR" />
     <result column="uaddress" property="uaddress" jdbcType="VARCHAR" />
     <result column="uphone" property="uphone" jdbcType="VARCHAR" />
@@ -18,15 +17,42 @@
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    usid, uname, upwd, urealname, uaddress, uphone, utel, uemail, status, remark1, remark2, 
+    usid, uname, urealname, uaddress, uphone, utel, uemail, status, remark1, remark2, 
     remark3, remark4, remark5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from users
-    where usid = #{usid,jdbcType=INTEGER}
+    <where>
+    	status=1
+    	<if test="usid!=null and usid!=''">
+    		and usid=#{usid}
+    	</if>
+    	<if test="uname!=null and uname!=''">
+  			and uname like CONCAT('%',#{uname},'%' )
+  		</if>
+  		<include refid="pageSql" />
+    </where>
   </select>
+  
+  <select id="selectByPrimaryKeyNoPage" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    <where>
+    	status=1
+    	<if test="usid!=null and usid!=''">
+    		and usid=#{usid}
+    	</if>
+    	<if test="uname!=null and uname!=''">
+  			and uname like CONCAT('%',#{uname},'%' )
+  		</if>
+    </where>
+  </select>
+  
+  
+  
   <!-- 管理员登录 -->
   <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
     select 
@@ -34,10 +60,16 @@
     from users
     where uname=#{uname} and upwd=#{upwd} and status=1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from users
-    where usid = #{usid,jdbcType=INTEGER}
+  
+  <!-- 删除用户信息 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    update users set status=0
+    where usid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
   </delete>
+  
   <!-- 添加管理员 -->
   <insert id="insert" parameterType="Users" useGeneratedKeys="true" 
  		keyColumn="usid" keyProperty="usid" >
@@ -184,6 +216,7 @@
     </set>
     where usid = #{usid,jdbcType=INTEGER}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.yc.bean.Users" >
     update users
     set uname = #{uname,jdbcType=VARCHAR},
@@ -204,7 +237,8 @@
   
   <!-- 查询所有管理员 -->
 	<select id="searchAllAdmin" resultType="Users">
-		select * from users where status=1
+		select usid, uname, urealname, uaddress, uphone, utel, uemail, status, remark1, remark2, 
+   		 remark3, remark4, remark5 from users where status=1
 	</select>
 	
 	<!-- 需要查询到的字段 -->
@@ -225,27 +259,13 @@
     <include refid="Base_Column_List2" />
     from users 
     	<where>
+    		status=2
     		<if test="usid!=null">
     			and usid=#{usid}
     		</if>
     		<if test="uname!=null and uname!=''">
-  				and uname=#{uname}
+  				and uname like CONCAT('%',#{uname},'%' )
   			</if>
-    		<if test="urealname!=null and urealname!=''">
-    		    and	urealname=#{urealname}
-    		</if>
-    		<if test="uaddress!=null and uaddress!='' ">
-    			and uaddress=#{uaddress}
-    		</if>
-    		<if test="uphone!=null and uphone!=''">
-    			and uphone=#{uphone}
-    		</if>
-    		<if test="utel!=null and utel!=''">
-    			and utel=#{utel}
-    		</if>
-    		<if test="status!=null">
-    			and status=#{status}
-    		</if>
     	</where>
     	<include refid="pageSql" />
   </select>
@@ -254,27 +274,13 @@
   <select id="selectDriverNoCondition" resultMap="BaseResultMap">
   	select * from users 
   		<where>
+  			status=2
   			<if test="usid!=null">
     			and usid=#{usid}
     		</if>
     		<if test="uname!=null and uname!=''">
   				and uname=#{uname}
   			</if>
-    		<if test="urealname!=null and urealname!=''">
-    			and urealname=#{urealname}
-    		</if>
-    		<if test="uphone!=null and uphone!='' ">
-    			and uphone=#{uphone}
-    		</if>
-    		<if test="utel!=null and utel!='' ">
-    			and utel=#{utel}
-    		</if>
-    		<if test="uemail!=null and uemail!='' ">
-    			and uemail=#{uemail}
-    		</if>
-    		<if test="status!=null">
-    			and status=#{status}
-    		</if>
     	</where>
   </select>
 	
@@ -293,9 +299,12 @@
 	
 	<!-- 添加Users -->
 	<insert id="addUsers" parameterType="Users">
-		insert into users(uname,upwd,urealname,uaddress,uphone,utel,uemail,status,null,null,null,null,null) 
-		values(#{usid},#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},#{status},null,null,null,null,null);
+		insert into users(uname,upwd,urealname,uaddress,uphone,utel,uemail,status) 
+		values(#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},1);
 	</insert>
+	
+	
+	
 	
 	
   

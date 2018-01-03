@@ -52,5 +52,9 @@ public class UsersBizImpl implements UsersBiz{
 	public int updateUser(Users u) {
 		return usersDao.updateUser(u);
 	}
+	@Override
+	public int deleteUsers(List list) {
+		return usersDao.deleteUsers(list);
+	}
 
 }

@@ -40,7 +40,7 @@ public class ShippointController {
 		map.put("total", shippointBiz.getShippointInfo(sp).size());
 		Integer pageNo=Integer.parseInt(request.getParameter("page"));
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
-		sp.setPageNo(pageNo);
+		sp.setPageNo((pageNo-1)*pageSize);
 		sp.setPageSize(pageSize);
 		List<Shippoint> list=new ArrayList<Shippoint>();
 		for(Shippoint ship:shippointBiz.getShippointInfo(sp)){

@@ -37,7 +37,7 @@ public class RouteController {
 		route.setPageSize(pageSize);	//pageSize表示pageSize
 		List<Route> list=new ArrayList<Route>();
 		
-		for(Route r:routeBiz.selectRoute(route)){
+		for(Route r:routeBiz.selectRouteForPage(route)){
 			//remark4存给gid
 			r.setRemark4(String.valueOf(r.getRid()));
 			list.add(r);

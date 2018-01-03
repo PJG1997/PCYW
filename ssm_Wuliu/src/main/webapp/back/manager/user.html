@@ -4,8 +4,6 @@
 	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	
 	<div class="datagrid-btn-separator"></div>	
-	<label>用户ID:</label>
-	<input type="text" name="sname" id="user_search_usid" class="song_input">
 	<label>用户姓名</label>
 	<input type="text" name="sname" id="user_search_uname" class="song_input">
 	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
@@ -82,10 +80,7 @@
 	<form id="user_update_user">
 	<ul>
 		<li>
-			<label>用户编号：</label>
-			<input type="text" name="usid" id="user_update_usid"  readOnly="true" />			
-		</li>
-		<li>
+			<input type="hidden" name="usid" id="user_update_usid"  readOnly="true" />			
 			<label>用户帐户：</label>
 			<input type="text" name="uname" id="user_update_uname"   />			
 		</li>
@@ -165,7 +160,6 @@ var userObject=$('#user_data').datagrid({
 	sortName:'usid',
 	remoteSort:false,
 	columns:[[
-	          
 			  {field:"usids",checkbox:true},
 	          {field:'usid',title:'用户编号',width:80,align:'center',sortable:true},   
 	          {field:'uname',title:'用户帐号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
@@ -177,7 +171,6 @@ var userObject=$('#user_data').datagrid({
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
 	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
 	          }}
-	             
 	]],
 	      
 	toolbar:"#user_search"
@@ -197,7 +190,7 @@ function user_deleteUser(){
 				}
 				usids+=rows[i].usid;
 				
-				$.post("../../userServlet",{op:"delUser",usid:usids},function(data){
+				$.post("../../deleteUsers.action",{usid:usids},function(data){
     				data=parseInt($.trim(data));
     				if(data>0){
     					$.messager.show({title:'温馨提示',msg:'用户信息删除成功...',timeout:2000,showType:'slide'});
@@ -216,8 +209,6 @@ function user_deleteUser(){
 
 
 function detail(val){
-	
-	
 	$.ajax({
 		url:'../../findUsersInfo.action',
 		data:{usid:val},
@@ -247,9 +238,6 @@ function detail(val){
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
-				
-				
-				
 				$('#user_detail').dialog("close");
 			}
 		}]
@@ -274,7 +262,6 @@ function update(val){
 					$("#user_update_uphone").val(item.uphone);
 					$("#user_update_utel").val(item.utel);
 					$("#user_update_uemail").val(item.uemail);
-					
 				});
 			}
 		}
@@ -283,12 +270,10 @@ function update(val){
 	$('#user_update').dialog({
 		title:"修改用户信息",
 		iconCls: 'icon-user-add',
-		
 		buttons:[{
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
-				
 				$.ajax({
 					url :"../../updateUser.action",
 					data :$("#user_update_user").serialize(),
@@ -305,30 +290,18 @@ function update(val){
 			}
 		}]
 	});
-	
-	
-	
 	$('#user_update').dialog("open");
-	
 }
 
-
-
-
 function user_addUser(){
-	
-	
-	
 	
 	$('#user_add').dialog({
 		title:"添加用户",
 		iconCls: 'icon-user-add',
-		
 		buttons:[{
 			text: '确认',
 			iconCls: 'icon-user-add',
 			handler:function(){
-				
 				$.ajax({
 					url :"../../addUser.action",
 					data :$("#user_add_user").serialize() ,
@@ -341,17 +314,19 @@ function user_addUser(){
 						}
 					}
 				});
-			
-				
-				
-				
-				
 			}
 		}]
 	});
 	$('#user_add').dialog("open");
 }
 
+function user_searchUser(){
+	uname=$("#user_search_uname").val();
+	$('#user_data').datagrid({
+		url:"../../findAllUser.action",
+		queryParams:{uname:uname}
+	})
+}
 
 
 
