@@ -42,10 +42,11 @@ public interface UsersBiz {
 	public int updateUser(Users u);
 	
 	/**
-	 * 删除用户
-	 * @param u
+
+	 * 批量删除用户信息
+	 * @param list
 	 * @return
 	 */
-	public int deleteUsers(Users u);
+	public int deleteUsers(List list);
 	
 }

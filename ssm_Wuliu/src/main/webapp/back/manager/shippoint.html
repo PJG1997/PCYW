@@ -1,28 +1,391 @@
-<!-- 配送点 -->
-<table id="dispoint_data" data-options="fit:true"></table>
+<!-- 司机 -->
+<table id="shippoint_table" data-options="fit:true"></table>
 
-	<div id="dispoint_search">
-		<a href="javascript:route_showAddDispoint()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-cdr-add',plain:true" style="float: left">添加</a>
-		<div class="datagrid-btn-separator"></div>
-		<a href="javascript:dispoint_showUpdateDispoint()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-cdr-edit',plain:true" style="float: left">修改</a>
-		<div class="datagrid-btn-separator"></div>
-		<a href="javascript:dispoint_deleteDispoint()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-cdr-delete',plain:true"
-			style="float: left">删除</a>
-		<div class="datagrid-btn-separator"></div>
+<!-- 条件查询 -->
+<div id="shippoint_search">
+	<a href="javascript:addshippoint()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteshippoint()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>配送点名称:</label>
+		<input type="text" name="search_spname" id="search_spname" class="song_input">
+	<label>联系人:</label>
+		<input type="text" name="search_spperson" id="search_spperson" class="song_input">
+	<label>联系方式:</label>
+	<input type="text" name="search_sptel" id="search_sptel" class="song_input">
+	
+	<label>Email:</label>
+	<input type="text" name="search_spemail" id="search_spemail" class="song_input">
+	<label>地址:</label>
+	<input type="text" name="search_spaddress" id="search_spaddress" class="song_input">
+	<a href="javascript:searchshippoint()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
 
-		<label>配送点编号:</label> <input type="text" name="spid"
-			id="route_search_rid" class="song_input"> <label>路线名:</label>
-		<input type="text" name="rname" id="route_search_rname"
-			class="song_input"> <a href="javascript:route_searchRoute()"
-			class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
-	</div> 
+<!-- 司机详情  -->
+<div id="shippoint_detail" class="easyui-dialog" title="司机详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="shippoint_detail_form">
+	<ul>
+		<li>
+			<label>配送点名称：</label>
+			<label id="shippoint_spname_label"></label>		
+		</li>
+		<li>
+			<label>联系人：</label>
+			<label id="shippoint_spperson_label"></label>	
+		</li>
+		<li>
+			<label>配送点电话：</label>
+			<label id="shippoint_sptel_label"></label>	
+		</li>
+		<li>
+			<label>联系EMail:</label>
+			<label id="shippoint_spemail_label"></label>
+		</li>
+		<li>
+			<label>配送点地址:</label>
+			<label id="shippoint_spaddress_label"></label>
+		</li>
+		<li>
+			<label>配送点类型:</label>
+			<label id="shippoint_sptype_label"></label>
+		</li>
+		<li>
+			<label>联系人电话:</label>
+			<label id="shippoint_sppersontel_label"></label>
+		</li>
+		<li>
+			<label>配送点传真:</label>
+			<label id="shippoint_spfax_label"></label>
+		</li>
+		<li>
+			<label>配送点范围:</label>
+			<label id="shippoint_sparea_label"></label>
+		</li>
+		<li>
+			<label>备注:</label>
+			<label id="shippoint_spremark_label"></label>
+			
+		</li>
+	</ul>
+	</form>
+</div>
 
+<!-- 修改和添加司机信息都用这个div -->
+<div id="update_shippoint" class="easyui-dialog" title="添加司机信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_shippoint_form">
+	<ul>
+		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_spid" name="update_insert_spid" />
+			<label>配送点名称：</label>
+			<input type="text" name="update_insert_spname" id="update_insert_spname"  />			
+		</li>
+		<li>
+			<label>联系人：</label>
+	        <input type="text" name="update_insert_spperson" id="update_insert_spperson"  />
+		</li>
+		<li>
+			<label>配送点电话：</label>
+			<input type="text" name="update_insert_sptel" id="update_insert_sptel" />
+		</li>
+		<li>
+			<label>联系EMail:</label>
+			<input type="text" name="update_insert_spemail" id="update_insert_spemail"  />
+		</li>
+		<li>
+			<label>配送点地址:</label>
+			<input type="text" name="update_insert_spaddress" id="update_insert_spaddress" />
+		</li>
+		<li>
+			<label>配送点类型:</label>
+			<select name="update_insert_sptype" id="update_insert_sptype">
+				<option value="0">配送点</option>
+				<option value="1">代理点</option>
+	        </select>
+		</li>
+		<li>
+			<label>联系人电话:</label>
+			<input type="text" name="update_insert_sppersontel" id="update_insert_sppersontel" />
+		</li>
+		<li>
+			<label>配送点传真:</label>
+			<input type="text" name="update_insert_spfax" id="update_insert_spfax" />
+		</li>
+		<li>
+			<label>配送点范围:</label>
+			<input type="text" name="update_insert_sparea" id="update_insert_sparea" />
+		</li>
+		<li><label>备注:</label> <textarea rows="50" cols="50"
+				name="update_insert_spremark"	id="update_insert_spremark"></textarea></li>
+	</ul>
+	</form>
+</div>
+
+
+
+
+
+<style>
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#shippoint_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#shippoint_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_shippoint li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_shippoint{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+</style>
 
 
 
 <script type="text/javascript">
+var shippointEditRow=undefined;
+var shippointOp;
+var shippointflag;
+
+var shippointObject=$('#shippoint_table').datagrid({
+	url:'../../findShippoint.action',
+	queryParams:{spid:'',dstatus:'',dname:''},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'spid',
+	remoteSort:false,
+	columns:[[   
+	          {field:"users",checkbox:true},
+	          {field:'spid',title:'配送编号',width:80,align:'center',sortable:true},   
+	          {field:'spname',title:'配送点名称',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'spperson',title:'联系人',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'sptel',title:'配送点电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'spemail',title:'联系EMail',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'spaddress',title:'配送点地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'type',title:'配送点类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'spfax',title:'配送点传真',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+	          }}
+	]],
+	toolbar:"#shippoint_search"
+		
+});
+
+
+function detail(val){
+	$.ajax({
+		url:'../../findShippointOne.action',
+		data:{spid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#shippoint_spname_label").html(item.spname);
+					$("#shippoint_spperson_label").html(item.spperson);
+					$("#shippoint_sptel_label").html(item.sptel);
+					$("#shippoint_spemail_label").html(item.spemail);
+					$("#shippoint_spaddress_label").html(item.spaddress);
+					$("#shippoint_sppersontel_label").html(item.sppersontel);
+					if(item.sptype==1){
+						$("#shippoint_sptype_label").html("代理点");
+					}else{
+						$("#shippoint_sptype_label").html("配送点");
+					} 
+					$("#shippoint_spfax_label").html(item.spfax);
+					$("#shippoint_sparea_label").html(item.sparea);
+					$("#shippoint_spremark_label").html(item.spremark);
+				});
+			}
+		}
+	});
+	$('#shippoint_detail').dialog({
+		title:"司机详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#shippoint_detail').dialog("close");
+			}
+		}]
+	});
+	$('#shippoint_detail').dialog("open");
+}
+
+function update(val){
+	$.ajax({
+		url:'../../findShippointOne.action',
+		data:{spid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_spid").val(item.spid);
+					$("#update_insert_spname").val(item.spname);
+					$("#update_insert_spperson").val(item.spperson);
+					$("#update_insert_sptel").val(item.sptel);
+					$("#update_insert_spemail").val(item.spemail);
+					$("#update_insert_spaddress").val(item.spaddress);
+					$("#update_insert_sptype").val(item.sptype);
+					$("#update_insert_sppersontel").val(item.sppersontel);
+					$("#update_insert_spfax").val(item.spfax);
+					$("#update_insert_sparea").val(item.sparea);
+					$("#update_insert_spremark").val(item.spremark);
+				});
+			}
+		}
+	});
+	$('#update_shippoint').dialog({
+		title:"修改司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updateshippoint.action",
+					data:$("#update_shippoint_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data.code==1){		//说明修改成功...
+							$('#update_shippoint').dialog("close");
+							shippointObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_shippoint').dialog("open");
+}
+
+/**
+ * 添加司机信息
+ */
+function addshippoint(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_spname").val("");
+	$("#update_insert_sptype option:first").prop("selected", 'selected');
+	$("#update_insert_spperson").val("");
+	$("#update_insert_sptel").val("");
+	$("#update_insert_spemail").val("");
+	$("#update_insert_spaddress").val("");
 	
+	$("#update_insert_sppersontel").val("");
+	$("#update_insert_spfax").val("");
+	$("#update_insert_sparea").val("");
+	$("#update_insert_spremark").val("");
+	$('#update_shippoint').dialog({
+		title:"添加司机信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				spname=$("#update_insert_spname").val();
+				spperson=$("#update_insert_spperson").val();
+				sptel=$("#update_insert_sptel").val();
+				spemail=$("#update_insert_spemail").val();
+				spaddress=$("#update_insert_spaddress").val();
+				sppersontel=$("#update_insert_sppersontel").val();
+				sptype=$("#update_insert_sptype").val();
+				spfax=$("#update_insert_spfax").val();
+				sparea=$("#update_insert_sparea").val();
+				spremark=$("#update_insert_spremark").val();
+				$.ajax({
+					url:"../../addshippoint.action",
+					data:$("#update_shippoint_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data.code==1){		//说明添加成功...
+							$('#update_shippoint').dialog("close");
+							shippointObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_shippoint').dialog("open");
+}
+
+/*
+ * 删除司机信息 
+ */
+function deleteshippoint(){
+	var rows = shippointObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].spid+",";
+				}
+				aids+=rows[i].spid;
+				$.post("../../delshippoint.action",{spid:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    	    			shippointObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索司机信息 
+ */
+function searchshippoint(){
+	spname=$("#search_spname").val();
+	spperson=$("#search_spperson").val();
+	sptel=$("#search_sptel").val();
+	spemail=$("#search_spemail").val();
+	spaddress=$("#search_spaddress").val();
+	$('#shippoint_table').datagrid({
+		url:"../../findShippoint.action",
+		queryParams:{spname:spname,spperson:spperson,sptel:sptel,spemail:spemail,spaddress:spaddress}
+	})
+}
+
+
+
+
+
 </script>

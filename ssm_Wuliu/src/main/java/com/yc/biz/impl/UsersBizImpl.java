@@ -52,14 +52,10 @@ public class UsersBizImpl implements UsersBiz{
 	public int updateUser(Users u) {
 		return usersDao.updateUser(u);
 	}
-	
-	/**
-	 * 删除用户
-	 */
+
 	@Override
-	public int deleteUsers(Users u) {
-		// TODO Auto-generated method stub
-		return usersDao.deleteUsers(u);
+	public int deleteUsers(List list) {
+		return usersDao.deleteUsers(list);
 	}
 
 }

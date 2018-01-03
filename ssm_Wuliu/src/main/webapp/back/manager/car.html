@@ -131,7 +131,7 @@ var carflag;
 
 var carObject=$('#car_table').datagrid({
 	url:'../../findAllcar.action',
-	queryParams:{spid:'',dstatus:'',dname:''},
+	queryParams:{spid:'',cstatus:'',cname:''},
 	fitColumns:true,
 	striped:true,
 	loadMsg:'数据加载中。。。。',
@@ -147,7 +147,6 @@ var carObject=$('#car_table').datagrid({
 	          {field:"car",checkbox:true},
 	          {field:'cid',title:'车子编号',width:80,align:'center',sortable:true},   
 	          {field:'remark3',title:'所属公司名',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
-	          {field:'cname',title:'车辆名',width:80,align:'center',editor:{type:"text",options:{required:true}}}, 
 	          {field:'cnumber',title:'车牌号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'ctype',title:'汽车类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'cvolume',title:'容积(m^3)',width:80,align:'center',editor:{type:"text",options:{required:true}}},
@@ -271,6 +270,8 @@ function addcar(){
 	$("#update_insert_cstatus").val("");
 	$("#update_insert_cisbox").val("");
 	$("#update_insert_cremake").val("");
+	$("#update_insert_cstatus option:first").prop("selected", 'selected');
+	$("#update_insert_cisbox option:first").prop("selected", 'selected');
 	
 	$('#update_car').dialog({
 		title:"添加司机信息",

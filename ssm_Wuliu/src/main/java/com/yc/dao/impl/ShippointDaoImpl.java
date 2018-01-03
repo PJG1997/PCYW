@@ -16,9 +16,40 @@ public class ShippointDaoImpl implements ShippointDao{
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
+	
+	public SqlSessionTemplate getSqlSession() {
+		return sqlSession;
+	}
+
+	public void setSqlSession(SqlSessionTemplate sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+
 	@Override
 	public List<Shippoint> findAllShippoint() {
-		return sqlSession.selectList("shippoint.findAllShippoint");
+		return this.sqlSession.selectList("com.yc.bean.ShippointMapper.findAllShippoint");
+	}
+
+	@Override
+	public List<Shippoint> getShippointInfo(Shippoint sp) {
+		return this.sqlSession.selectList("com.yc.bean.ShippointMapper.selectByPrimaryKey", sp);
+	}
+
+	@Override
+	public void updateShippointInfo(Shippoint sp) {
+		this.sqlSession.update("com.yc.bean.ShippointMapper.updateByPrimaryKeySelective", sp);
+	}
+
+	@Override
+	public void delmanyShippoint(List list) {
+		// TODO Auto-generated method stub
+		this.sqlSession.update("com.yc.bean.ShippointMapper.delmanyShippoint", list);
+	}
+
+	@Override
+	public void addShippoint(Shippoint sp) {
+		// TODO Auto-generated method stub
+		this.sqlSession.insert("com.yc.bean.ShippointMapper.insert", sp);
 	}
 
 }

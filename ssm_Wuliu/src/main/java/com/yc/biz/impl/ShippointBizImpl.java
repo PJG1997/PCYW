@@ -22,7 +22,31 @@ public class ShippointBizImpl implements ShippointBiz{
 	
 	@Override
 	public List<Shippoint> findAllShippoint() {
-		return shippointDao.findAllShippoint();
+		return this.shippointDao.findAllShippoint();
+	}
+
+	@Override
+	public List<Shippoint> getShippointInfo(Shippoint sp) {
+		// TODO Auto-generated method stub
+		return this.shippointDao.getShippointInfo(sp);
+	}
+
+	@Override
+	public void updateShippointInfo(Shippoint sp) {
+		// TODO Auto-generated method stub
+		this.shippointDao.updateShippointInfo(sp);
+	}
+
+	@Override
+	public void delmanyShippoint(List list) {
+		// TODO Auto-generated method stub
+		this.shippointDao.delmanyShippoint(list);
+	}
+
+	@Override
+	public void addShippoint(Shippoint sp) {
+		// TODO Auto-generated method stub
+		this.shippointDao.addShippoint(sp);
 	}
 
 }

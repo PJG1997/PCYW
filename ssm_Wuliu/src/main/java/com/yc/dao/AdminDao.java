@@ -12,7 +12,9 @@ public interface AdminDao {
 	 * 查询所有管理员
 	 * @return
 	 */
-	public List<Users> searchAllUsers();
+	public List<Users> searchAllAdmin(Users users);
+	
+	public List<Users> searchAllAdminNoPage(Users users);
 	
 	
 	/**
@@ -27,6 +29,10 @@ public interface AdminDao {
 	 */
 	public int addAdmin(Users u);
 	
-	public List<Users> searchAllUsers(Map<String,Object> map); //查询所有管理员信息
+	
+	public int deleteAdmin(List list);
+	
+	
+	public int updateAdmin(Users users);
 	
 }
