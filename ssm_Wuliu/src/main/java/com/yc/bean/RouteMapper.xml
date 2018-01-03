@@ -20,7 +20,7 @@
  			limit #{pageNo},#{pageSize}
  		</if>
  	</sql>
-  <!-- 查询 带分页-->
+  <!-- 查询 不带分页-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
     select 
     rid,rname,rvia,remark5
@@ -34,7 +34,6 @@
    		and rname like CONCAT('%',#{rname},'%' )
    	</if>
    </where>
-   <include refid="pageSql" />
   </select>
   
    <!-- 查询 带分页-->
@@ -51,6 +50,7 @@
    		and rname like CONCAT('%',#{rname},'%' )
    	</if>
    </where>
+   <include refid="pageSql" />
   </select>
   
   <!-- 删除 修改状态 -->
