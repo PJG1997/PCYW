@@ -38,7 +38,7 @@ public class GoodsController {
 		goods.setPageSize(pageSize);	//pageSize表示pageSize
 		List<Goods> list=new ArrayList<Goods>();
 		
-		for(Goods good:goodsBiz.selectAllGoods(goods)){
+		for(Goods good:goodsBiz.selectAllGoodsForPage(goods)){
 			//remark4存给gid
 			good.setRemark4(String.valueOf(good.getGid()));
 			list.add(good);

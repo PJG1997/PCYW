@@ -86,7 +86,6 @@
     		and gtype like CONCAT('%',#{gtype},'%' )
     	</if>
     </where>
-    <include refid="pageSql" />
   </select>
   
   <!-- 删除 -->

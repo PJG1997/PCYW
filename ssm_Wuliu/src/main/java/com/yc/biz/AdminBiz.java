@@ -11,7 +11,9 @@ public interface AdminBiz {
 	 * 查询所有管理员
 	 * @return
 	 */
-	public Map<String,Object> searchAllUsers();
+	public List<Users> searchAllAdmin(Users users);
+	
+	public List<Users> searchAllAdminNoPage(Users users);
 	
 	
 	/**
@@ -19,10 +21,10 @@ public interface AdminBiz {
 	 */
 	public int addAdmin(Users u);
 	
-	/**
-	 * 查询所有管理员
-	 * @return
-	 */
-	public List<Users> searchAllUsers(Map<String,Object> map);
+	
+	public int deleteAdmin(List list);
+	
+	
+	public int updateAdmin(Users users);
 	
 }

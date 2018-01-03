@@ -31,19 +31,9 @@ public class CarController {
 	private JsonModel jsonModel=new JsonModel();
 	private Shippoint sp=new Shippoint();
 	//查询
-	
-	
 	@RequestMapping(value="findAllcar.action")
 	public @ResponseBody Map<String,Object> findAllcar(Car c,HttpServletRequest request,@RequestParam(value="spid") Integer spid){
 		Map<String,Object> map=new HashMap<String,Object>();
-		List<Car> list=new ArrayList<Car>();
-		List<Car> rows=carBiz.getCarInfo(c);
-		for(Car car:rows){
-			car.setRemark3(car.getShipPoint().getspname());
-			list.add(car);
-		}
-		int total=list.size();
-		map.put("total", total);
 		sp.setSpid(spid);
 		c.setShipPoint(sp);
 		map.put("total", carBiz.getCarInfo(c).size());
@@ -68,7 +58,7 @@ public class CarController {
 			car.setRemark4(String.valueOf(car.getCid()));
 			list2.add(car);
 		}
-		map.put("rows", list);
+		map.put("rows", list2);
 		
 		return map;
 		
