@@ -20,6 +20,7 @@ import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Users;
 import com.yc.biz.AdminBiz;
+import com.yc.util.MD5Encryption;
 
 @Controller
 @Scope(value="prototype")
@@ -54,6 +55,8 @@ public class AdminController {
 	@RequestMapping(value="addAdmin.action")
 	@ResponseBody
 	public int addAdmin(Users users){
+		String pwd=MD5Encryption.createPassword(users.getUpwd());
+		users.setUpwd(pwd);
 		try {
 			adminBiz.addAdmin(users);
 		} catch (Exception e) {

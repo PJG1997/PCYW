@@ -303,9 +303,4 @@
 		values(#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},1);
 	</insert>
 	
-	
-	
-	
-	
-  
 </mapper>

@@ -64,13 +64,13 @@
   </update>
   
   <!-- 添加 -->
-  <insert id="insert" parameterType="com.yc.bean.Route" >
-    insert into route (rid, rname, rvia,remark5)
-    values (#{rid}, #{rname}, #{rvia},1)
+  <insert id="insert" parameterType="com.yc.bean.Route" useGeneratedKeys="true" keyProperty="rid" keyColumn="rid">
+    insert into route (rname, rvia,remark5)
+    values (#{rname}, #{rvia},1)
   </insert>
  
  <!-- 修改 -->
-  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Route" >
+  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Route" useGeneratedKeys="true" keyProperty="rid" keyColumn="rid">
     update route
     <set >
       <if test="rname != null" >

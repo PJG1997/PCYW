@@ -25,6 +25,7 @@ public class RouteController {
 	@Resource(name="routeBizImpl")
 	private RouteBiz routeBiz;
 	Map<String,Object> map=new HashMap<String,Object>();
+	private JsonModel jsonModel=new JsonModel();
 	
 	//查询
 	@RequestMapping(value="findAllForRoute.action")
@@ -59,14 +60,33 @@ public class RouteController {
 	
 	//添加商品
 	@RequestMapping("addRoute.action")
-	public @ResponseBody int addDriver(Route route){
-		try {
-			routeBiz.addRoute(route);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
+	public @ResponseBody JsonModel addDriver(@RequestParam(value="route_rid") Integer rid,@RequestParam(value="routeName") String routeName,@RequestParam(value="routeShunxu") String routeShunxu){
+		Route route=new Route();
+		String[] routes=routeShunxu.split(",");
+		String rs="";
+		for(int i=0,len=routes.length;i<len;i++){
+			if(i==len-1){
+				rs+=routes[i];
+			}else{
+				rs+=routes[i]+"-";
+			}
 		}
-		return 1;
+		route.setRname(routeName);
+		route.setRvia(rs);
+		try {
+			if(rid==0){
+				routeBiz.addRoute(route);
+			}else{
+				route.setRid(rid);
+				routeBiz.updateRoute(route);
+			}
+			jsonModel.setCode(1);
+		} catch (Exception e) {
+			jsonModel.setCode(0);
+			e.printStackTrace();
+		}
+		jsonModel.setObj(route);
+		return jsonModel;
 	}
 	
 	//批量删除
