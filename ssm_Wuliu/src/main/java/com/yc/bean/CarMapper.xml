@@ -23,6 +23,7 @@
     <result column="remark2" property="remark2" jdbcType="VARCHAR" />
     <result column="remark3" property="remark3" jdbcType="VARCHAR" />
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
+    <result column="remark5" property="remark5" jdbcType="VARCHAR" />
     <!--  他所属公司的元素  没有包括公司的备注   和5个备份 -->
     <association property="shipPoint" resultMap="selectShippoint"></association>
   </resultMap>
@@ -39,7 +40,7 @@
     	<result property="sparea" column="sparea"></result>
   </resultMap>
   <!-- 获得这个车子的全部信息 以及它所属公司的信息      没有包括这两个表的备份 -->
-  <select id="getCarInfo" resultMap="carMap">
+  <select id="getCarInfo" resultMap="carMap" >
   	select cid,car.spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,
   			shipPoint.spid,spname,spperson,sptel,spemail,spaddress,sptype,sppersontel,spfax,sparea
   	from car
@@ -53,7 +54,7 @@
   			and shippoint.spid=#{shipPoint.spid}
   		</if>
   		<if test="cnumber!=null and cnumber!=''">
-  			and cnumber like '%${cnumber}'
+  			and cnumber like CONCAT('%',#{cnumber},'%' )
   		</if>
   		<if test="mincvolume!=null and mincvolume!='' and maxcvolume=!'' and maxcvolume!=null">
   			and cvolume between ${mincvolume} and ${maxcvolume}

@@ -3,8 +3,6 @@
 <mapper namespace="order1" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Order1" >
     <id column="osid" property="osid" jdbcType="INTEGER" />
-    <result column="usid" property="usid" jdbcType="INTEGER" />
-    <result column="spid" property="spid" jdbcType="INTEGER" />
     <result column="osendName" property="osendname" jdbcType="VARCHAR" />
     <result column="osendTel" property="osendtel" jdbcType="VARCHAR" />
     <result column="osendAddress" property="osendaddress" jdbcType="VARCHAR" />
@@ -33,6 +31,11 @@
     orecCode, orecPhone, otime, oprice, oinsurePrice, otype, ostatus, ostartTime, oendTime, 
     orecSpname, oremark, remark1, remark2, remark3, remark4, remark5
   </sql>
+  <select id="selectFindAll" resultMap="BaseResultMap">
+  	select 
+	*
+    from order1 where remark5=1
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

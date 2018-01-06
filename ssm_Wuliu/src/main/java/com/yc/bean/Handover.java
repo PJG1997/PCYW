@@ -1,6 +1,7 @@
 package com.yc.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Handover implements Serializable{
@@ -10,7 +11,7 @@ public class Handover implements Serializable{
     private Car car;		//汽车对象
     private Driver driver;	//司机对象
     private Order1 order1;	//订单对象
-    private Integer rid;	//路线对象
+    private Route route;
     private String hfromspname;		//起始配送点名称
     private String htospname;		//到达配送点名称
     private Date hstarttime;		//起始时间
@@ -22,6 +23,15 @@ public class Handover implements Serializable{
     private String remark3;			//备用字段3
     private String remark4;			//备用字段4
     private String remark5;			//备用字段5
+    private String starttime;       //String的起始时间
+    private String endtime;			//String的到达时间
+    private Integer pageSize;
+    private Integer pageNo;
+    private String cnumber;
+    private String dname;
+    private Integer osid;
+    private String rname;
+    private String status;    //交接单状态
 	public Integer getHid() {
 		return hid;
 	}
@@ -46,12 +56,6 @@ public class Handover implements Serializable{
 	public void setOrder1(Order1 order1) {
 		this.order1 = order1;
 	}
-	public Integer getRid() {
-		return rid;
-	}
-	public void setRid(Integer rid) {
-		this.rid = rid;
-	}
 	public String getHfromspname() {
 		return hfromspname;
 	}
@@ -71,12 +75,20 @@ public class Handover implements Serializable{
 	}
 	public void setHstarttime(Date hstarttime) {
 		this.hstarttime = hstarttime;
+		long l=hstarttime.getTime();
+		Date d=new Date(l);
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		starttime=sdf.format(d);
 	}
 	public Date getHendtime() {
 		return hendtime;
 	}
 	public void setHendtime(Date hendtime) {
 		this.hendtime = hendtime;
+		long l=hendtime.getTime();
+		Date d=new Date(l);
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		endtime=sdf.format(d);
 	}
 	public Integer getHstatus() {
 		return hstatus;
@@ -120,13 +132,79 @@ public class Handover implements Serializable{
 	public void setRemark5(String remark5) {
 		this.remark5 = remark5;
 	}
+	
+	public String getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+	public String getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+	public Route getRoute() {
+		return route;
+	}
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+	
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public String getCnumber() {
+		return cnumber;
+	}
+	public void setCnumber(String cnumber) {
+		this.cnumber = cnumber;
+	}
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
+	public Integer getOsid() {
+		return osid;
+	}
+	public void setOsid(Integer osid) {
+		this.osid = osid;
+	}
+	public String getRname() {
+		return rname;
+	}
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "Handover [hid=" + hid + ", car=" + car + ", driver=" + driver + ", order1=" + order1 + ", rid=" + rid
-				+ ", hfromspname=" + hfromspname + ", htospname=" + htospname + ", hstarttime=" + hstarttime
+		return "Handover [hid=" + hid + ", car=" + car + ", driver=" + driver + ", order1=" + order1 + ", route="
+				+ route + ", hfromspname=" + hfromspname + ", htospname=" + htospname + ", hstarttime=" + hstarttime
 				+ ", hendtime=" + hendtime + ", hstatus=" + hstatus + ", hremark=" + hremark + ", remark1=" + remark1
 				+ ", remark2=" + remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5
-				+ "]";
+				+ ", starttime=" + starttime + ", endtime=" + endtime + ", pageSize=" + pageSize + ", pageNo=" + pageNo
+				+ ", cnumber=" + cnumber + ", dname=" + dname + ", osid=" + osid + ", rname=" + rname + ", status="
+				+ status + "]";
 	}
+	
     
 }
