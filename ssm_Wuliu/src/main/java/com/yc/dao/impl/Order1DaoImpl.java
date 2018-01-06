@@ -9,24 +9,21 @@ import org.springframework.stereotype.Repository;
 
 import com.yc.bean.Order1;
 import com.yc.dao.Order1Dao;
+
 @Repository
-public class Order1DaoImpl implements Order1Dao {
-	
+public class Order1DaoImpl implements Order1Dao{
+
 	@Resource(name="sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
-	public SqlSessionTemplate getSqlSession() {
-		return sqlSession;
+	@Override
+	public int addOrder1(Order1 order1) {
+		return sqlSession.insert("order1.insertSelective", order1);
 	}
-
-	public void setSqlSession(SqlSessionTemplate sqlSession) {
-		this.sqlSession = sqlSession;
-	}
-
+	
 	@Override
 	public List<Order1> findAll() {
-		
-		return this.sqlSession.selectList("order1.selectFindAll");
+		return sqlSession.selectList("order1.selectFindAll");
 	}
-
+	
 }

@@ -12,18 +12,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yc.bean.Order1;
 import com.yc.biz.Order1Biz;
 import com.yc.dao.Order1Dao;
-@Service
-@Transactional(readOnly=false,isolation=Isolation.DEFAULT,rollbackForClassName={"java.lang.RuntimeException"},propagation=Propagation.REQUIRED)
 
-public class Order1BizImpl implements Order1Biz {
+@Service
+@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.SUPPORTS)
+public class Order1BizImpl implements Order1Biz{
 
 	@Resource(name="order1DaoImpl")
-	private Order1Dao order1Dao;
+	private Order1Dao order1dao;
+	
 	@Override
-	@Transactional(readOnly=true)
-	public List<Order1> findAll() {
-
-		return order1Dao.findAll();
+	public int addOrder1(Order1 order1) {
+		return order1dao.addOrder1(order1);
 	}
 
+	@Override
+	public List<Order1> findAll() {
+		return null;
+	}
 }

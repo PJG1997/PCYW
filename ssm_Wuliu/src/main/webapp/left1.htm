@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_nbGroup(event, grpName) { //v6.0
+  var i,img,nbArr,args=MM_nbGroup.arguments;
+  if (event == "init" && args.length > 2) {
+    if ((img = MM_findObj(args[2])) != null && !img.MM_init) {
+      img.MM_init = true; img.MM_up = args[3]; img.MM_dn = img.src;
+      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
+      nbArr[nbArr.length] = img;
+      for (i=4; i < args.length-1; i+=2) if ((img = MM_findObj(args[i])) != null) {
+        if (!img.MM_up) img.MM_up = img.src;
+        img.src = img.MM_dn = args[i+1];
+        nbArr[nbArr.length] = img;
+    } }
+  } else if (event == "over") {
+    document.MM_nbOver = nbArr = new Array();
+    for (i=1; i < args.length-1; i+=3) if ((img = MM_findObj(args[i])) != null) {
+      if (!img.MM_up) img.MM_up = img.src;
+      img.src = (img.MM_dn && args[i+2]) ? args[i+2] : ((args[i+1])? args[i+1] : img.MM_up);
+      nbArr[nbArr.length] = img;
+    }
+  } else if (event == "out" ) {
+    for (i=0; i < document.MM_nbOver.length; i++) {
+      img = document.MM_nbOver[i]; img.src = (img.MM_dn) ? img.MM_dn : img.MM_up; }
+  } else if (event == "down") {
+    nbArr = document[grpName];
+    if (nbArr)
+      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.MM_up; img.MM_dn = 0; }
+    document[grpName] = nbArr = new Array();
+    for (i=2; i < args.length-1; i+=2) if ((img = MM_findObj(args[i])) != null) {
+      if (!img.MM_up) img.MM_up = img.src;
+      img.src = img.MM_dn = (args[i+1])? args[i+1] : img.MM_up;
+      nbArr[nbArr.length] = img;
+  } }
+}
+//-->
+</script>
+<script language="JavaScript">
+<!--
+function MenuClick( MenuID )
+	{
+		var i = 0;
+		var idMenu = null;
+		for (i = 1; i <= 3; i++)
+		{
+			idMenu = "Menu" + i;
+			if (idMenu == MenuID)
+			{
+				eval(idMenu).style.display = "";
+			}
+			else
+			{
+				eval(idMenu).style.display = "none";
+			}
+		}
+	}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+
+
+</head>
+
+<body background="images/leftbg1.jpg" leftmargin="0" topmargin="0" onLoad="MM_preloadImages('images/ksbl-bt011a.jpg','images/ksbl-bt012a.jpg','images/ksbl-bt013a.jpg','images/ksbl-bt014a.jpg','images/ksbl-bt015a.jpg','images/ksbl-bt018a.jpg','file:///E|/course/web课程/物流管理/lpfpages/images/ksbl-bt020.jpg')">
+<table width="100" height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td height="9"><img src="images/bott1111ombg" width="1" height="1"></td>
+  </tr>
+  <tr> 
+    <td height="11"><img src="images/left01.jpg" width="145" height="36"></td>
+  </tr>
+  <tr> 
+    <td height="11" valign="top" background="images/leftbg.jpg">&nbsp;<img src="images/ksbl-bt031.jpg" name="ksblbt031" width="130" height="23" border="0" style="cursor: hand" onMouseOver="MM_nbGroup('over','ksblbt031','images/ksbl-bt031a.jpg','images/ksbl-bt031a.jpg',1)" onMouseOut="MM_nbGroup('out')"></td>
+  </tr>
+  <tr id="Menu1">
+    <td valign="top" background="images/leftbg.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="5" valign="top"><img src="images/line.jpg" width="137" height="2"></td>
+        </tr>
+        <tr>
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="4">&nbsp;</td>
+                <td><table width="98" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><img src="images/ksbl-bt003.jpg" width="131" height="5"></td>
+                    </tr>
+                    <tr> 
+                      <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddglnew.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','ddlr','images/ddlra.jpg',1)" onMouseOver="MM_nbGroup('over','ddlr','images/ddlra.jpg','images/ddlra.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ddlr.jpg" name="ddlr" width="124" height="24" border="0"></a></div></td>
+                    </tr>
+                    <!--<tr> 
+                      <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddglquit.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','ksblbt019','images/ksbl-bt019a.jpg',1)" onMouseOver="MM_nbGroup('over','ksblbt019','images/ksbl-bt019a.jpg','images/ksbl-bt019a.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ksbl-bt019.jpg" name="ksblbt019" width="124" height="24" border="0"></a></div></td>
+                    </tr>-->
+					<tr>
+					  <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddgldel.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','ksblbt020','images/ksbl-bt020a.jpg',1)" onMouseOver="MM_nbGroup('over','ksblbt020','images/ksbl-bt020a.jpg','images/ksbl-bt020a.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ksbl-bt020.jpg" name="ksblbt020" width="124" height="24" border="0"></a></div>
+					</tr>
+					 <tr>
+					  <td><hr></td>
+					</tr>
+					<tr>
+					  <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddglnewadmin.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','ksblbt018a','images/ksbl-bt018a.jpg',1)" onMouseOver="MM_nbGroup('over','ksblbt018','images/ksbl-bt018a.jpg','images/ksbl-bt018a.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ksbl-bt018.jpg" name="ksblbt018" width="124" height="24" border="0"></a></div></td>
+					</tr>
+					 <tr>
+					  <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddgldel.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','xddcxa','images/xddcxa.jpg',1)" onMouseOver="MM_nbGroup('over','xddcx','images/xddcxa.jpg','images/xddcxa.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/xddcx.jpg" name="xddcx" width="124" height="24" border="0"></a></div></td>
+					</tr>
+					<tr>
+					  <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddgldelcheck.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','shcxa','images/shcxa.jpg',1)" onMouseOver="MM_nbGroup('over','shcx','images/shcxa.jpg','images/shcxa.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/shcx.jpg" name="shcx" width="124" height="24" border="0"></a></div></td>
+					</tr>
+				    <!-- 
+				     <tr>
+					   <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddgldelnocheck.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','wysdda','images/wysdda.jpg',1)" onMouseOver="MM_nbGroup('over','wysdd','images/wysdda.jpg','images/wysdda.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/wysdd.jpg" name="wysdd" width="124" height="24" border="0"></a></div></td>
+					 </tr>
+					 -->
+					<tr>
+					  <td background="images/ksbl-bt005.jpg"><div align="center"><a href="ddglstatistic.html" target="mainFrame1" onClick="MM_nbGroup('down','group1','ddtja','images/ddtja.jpg',1)" onMouseOver="MM_nbGroup('over','ddtj','images/ddtja.jpg','images/ddtja.jpg',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ddtj.jpg" name="ddtj" width="124" height="24" border="0"></a></div></td>
+					</tr>
+                    <tr> 
+                      <td><img src="images/ksbl-bt004.jpg" width="131" height="5"></td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table> </td>
+  </tr>
+  <tr> 
+    <td height="5"><img src="images/left02.jpg" width="145" height="36"></td>
+  </tr>
+  <tr> 
+    <td height="6"><img src="images/bott1111ombg" width="1" height="1"></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -35,6 +35,23 @@ public class Order1 implements Serializable{
     private String remark4;			//备用字段4
     private String remark5;			//备用字段5
     
+    private String ostarttimeString;
+    private String oendtimeString;
+    
+    
+    
+	public String getOstarttimeString() {
+		return ostarttimeString;
+	}
+	public void setOstarttimeString(String ostarttimeString) {
+		this.ostarttimeString = ostarttimeString;
+	}
+	public String getOendtimeString() {
+		return oendtimeString;
+	}
+	public void setOendtimeString(String oendtimeString) {
+		this.oendtimeString = oendtimeString;
+	}
 	public Integer getOsid() {
 		return osid;
 	}
@@ -193,7 +210,7 @@ public class Order1 implements Serializable{
 				+ ", otime=" + otime + ", oprice=" + oprice + ", oinsureprice=" + oinsureprice + ", otype=" + otype
 				+ ", ostatus=" + ostatus + ", ostarttime=" + ostarttime + ", oendtime=" + oendtime + ", orecspname="
 				+ orecspname + ", oremark=" + oremark + ", remark1=" + remark1 + ", remark2=" + remark2 + ", remark3="
-				+ remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + "]";
+				+ remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + ", ostarttimeString=" + ostarttimeString
+				+ ", oendtimeString=" + oendtimeString + "]";
 	}
-
 }

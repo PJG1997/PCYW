@@ -19,6 +19,7 @@ import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Users;
 import com.yc.biz.UsersBiz;
+import com.yc.util.MD5Encryption;
 
 @Controller
 @Scope(value="prototype")
@@ -34,6 +35,8 @@ public class UsersController {
 
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
+			String pwd=MD5Encryption.createPassword(users.getUpwd());
+			users.setUpwd(pwd);
 			Users u=usersBiz.login(users);
 			if(u!=null){
 				jsonModel.setCode(2);
@@ -93,7 +96,7 @@ public class UsersController {
 		JsonModel jsonModel= new JsonModel();
 		Users u = new Users();
 		u.setUname(request.getParameter("uname"));
-		u.setUpwd("123");
+		u.setUpwd("31151D398A3508AC");
 		u.setUrealname(request.getParameter("urealname"));
 		u.setUaddress(request.getParameter("uaddress"));
 		u.setUphone(request.getParameter("uphone"));

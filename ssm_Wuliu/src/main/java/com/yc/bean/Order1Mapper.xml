@@ -66,7 +66,8 @@
       #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
       #{remark5,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yc.bean.Order1" >
+  
+  <insert id="insertSelective" parameterType="com.yc.bean.Order1" useGeneratedKeys="true" keyColumn="osid" keyProperty="osid">
     insert into order1
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="osid != null" >
@@ -75,7 +76,7 @@
       <if test="usid != null" >
         usid,
       </if>
-      <if test="spid != null" >
+      <if test="shipPoint.spid != null" >
         spid,
       </if>
       <if test="osendname != null" >
@@ -141,19 +142,17 @@
       <if test="remark4 != null" >
         remark4,
       </if>
-      <if test="remark5 != null" >
-        remark5,
-      </if>
+       remark5
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="osid != null" >
         #{osid,jdbcType=INTEGER},
       </if>
-      <if test="usid != null" >
+      <if test="users.usid != null" >
         #{usid,jdbcType=INTEGER},
       </if>
-      <if test="spid != null" >
-        #{spid,jdbcType=INTEGER},
+      <if test="shipPoint.spid != null" >
+        #{shipPoint.spid,jdbcType=INTEGER},
       </if>
       <if test="osendname != null" >
         #{osendname,jdbcType=VARCHAR},
@@ -218,19 +217,17 @@
       <if test="remark4 != null" >
         #{remark4,jdbcType=VARCHAR},
       </if>
-      <if test="remark5 != null" >
-        #{remark5,jdbcType=VARCHAR},
-      </if>
+        '1',
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Order1" >
     update order1
     <set >
-      <if test="usid != null" >
-        usid = #{usid,jdbcType=INTEGER},
+      <if test="users.usid != null" >
+        usid = #{users.usid,jdbcType=INTEGER},
       </if>
-      <if test="spid != null" >
-        spid = #{spid,jdbcType=INTEGER},
+      <if test="shipPoint.spid != null" >
+        spid = #{shipPoint.spid,jdbcType=INTEGER},
       </if>
       <if test="osendname != null" >
         osendName = #{osendname,jdbcType=VARCHAR},
@@ -299,34 +296,6 @@
         remark5 = #{remark5,jdbcType=VARCHAR},
       </if>
     </set>
-    where osid = #{osid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Order1" >
-    update order1
-    set usid = #{usid,jdbcType=INTEGER},
-      spid = #{spid,jdbcType=INTEGER},
-      osendName = #{osendname,jdbcType=VARCHAR},
-      osendTel = #{osendtel,jdbcType=VARCHAR},
-      osendAddress = #{osendaddress,jdbcType=VARCHAR},
-      orecName = #{orecname,jdbcType=VARCHAR},
-      orecTel = #{orectel,jdbcType=VARCHAR},
-      orecAddress = #{orecaddress,jdbcType=VARCHAR},
-      orecCode = #{oreccode,jdbcType=VARCHAR},
-      orecPhone = #{orecphone,jdbcType=VARCHAR},
-      otime = #{otime,jdbcType=DATE},
-      oprice = #{oprice,jdbcType=DOUBLE},
-      oinsurePrice = #{oinsureprice,jdbcType=DOUBLE},
-      otype = #{otype,jdbcType=INTEGER},
-      ostatus = #{ostatus,jdbcType=INTEGER},
-      ostartTime = #{ostarttime,jdbcType=DATE},
-      oendTime = #{oendtime,jdbcType=DATE},
-      orecSpname = #{orecspname,jdbcType=VARCHAR},
-      oremark = #{oremark,jdbcType=VARCHAR},
-      remark1 = #{remark1,jdbcType=VARCHAR},
-      remark2 = #{remark2,jdbcType=VARCHAR},
-      remark3 = #{remark3,jdbcType=VARCHAR},
-      remark4 = #{remark4,jdbcType=VARCHAR},
-      remark5 = #{remark5,jdbcType=VARCHAR}
     where osid = #{osid,jdbcType=INTEGER}
   </update>
 </mapper>

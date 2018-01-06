@@ -1,0 +1,60 @@
+.wenzi3 .input1 {
+	background-color: #CCCCCC;
+	height: 20px;
+	width: 85px;
+}
+.wenzi {
+	font-family: "����";
+	font-size: 15px;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	text-align: left;
+	
+}
+.wenzi1 {
+	font-family: "����";
+	font-size: 13px;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	text-align: left;
+	text-indent: 34px;
+}
+.wenzi3 {
+    font-family: "����";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	color: #0033FF;
+	text-align: left;
+	
+	
+}
+body {
+	font-size: 12px;
+	line-height: 20px;
+	color: #000000;
+	text-decoration: none;
+	text-align:right;
+	margin:0px;
+}
+
+
+td {
+	font-size: 12px;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+.auto{
+	position:fixed;
+    z-index:9998;
+    width:530px;
+    border-radius:4px;
+    box-shadow:0 5px 16px rgba(0,0,0,0.8);
+    border:none;	
+	background:#fff;
+	display:none;
+}
+
