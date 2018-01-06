@@ -31,7 +31,7 @@ public class UsersController {
 		JsonModel jsonModel= new JsonModel();
 		String code = request.getParameter("code");
 		String codes=String.valueOf(session.getAttribute("rand"));
-
+		
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
 			Users u=usersBiz.login(users);

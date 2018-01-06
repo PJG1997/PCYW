@@ -1,5 +1,5 @@
 create database wuliu;
-
+use wuliu;
 create table car(
 	cid int primary key auto_increment,
 	spid int,    /*   这个字段加外键   */
@@ -214,3 +214,13 @@ create table users(
 );
 update users set remark4=2;
 insert into users values(2,'yc','aa','jack','beijing','4165468489','489498749','56448@qq.com','2','null','null','null','null','null');
+
+create table log(
+	lid int primary key auto_increment,
+	lusid int,
+	luname varchar(50),
+	ldate date, --操作时间
+	lopreation varchar(50)--操作信息
+);
+
+drop table log;

@@ -66,7 +66,7 @@
             
             <div title="系统设置" data-options="iconCls:'icon-wrench'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="log.html" iframe="0">查看日志</a></li>
                   
                 </ul>
             </div>
