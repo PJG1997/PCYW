@@ -12,13 +12,31 @@ public class Proxy implements Serializable{
     private String prname;		//代理名字
     private String prtime;		//代理的工作时间
     private Double prprice;		//代理价格
-    private Shippoint shippoint; //配送点对象
+    private Shippoint shipPoint; //配送点对象
     private String prremark;	//配注
     private String remark1;		//备用字段1
     private String remark2;		//备用字段2
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4
     private String remark5;		//备用字段5
+    
+    private Integer pageNo;
+    private Integer pageSize;
+    
+    
+    
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 	public Integer getPrid() {
 		return prid;
 	}
@@ -44,10 +62,10 @@ public class Proxy implements Serializable{
 		this.prprice = prprice;
 	}
 	public Shippoint getShippoint() {
-		return shippoint;
+		return shipPoint;
 	}
-	public void setShippoint(Shippoint shippoint) {
-		this.shippoint = shippoint;
+	public void setShippoint(Shippoint shipPoint) {
+		this.shipPoint = shipPoint;
 	}
 	public String getPrremark() {
 		return prremark;
@@ -88,8 +106,8 @@ public class Proxy implements Serializable{
 	@Override
 	public String toString() {
 		return "Proxy [prid=" + prid + ", prname=" + prname + ", prtime=" + prtime + ", prprice=" + prprice
-				+ ", shippoint=" + shippoint + ", prremark=" + prremark + ", remark1=" + remark1 + ", remark2="
-				+ remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + "]";
+				+ ", shippoint=" + shipPoint + ", prremark=" + prremark + ", remark1=" + remark1 + ", remark2="
+				+ remark2 + ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + ", pageNo="
+				+ pageNo + ", pageSize=" + pageSize + "]";
 	}
-    
 }

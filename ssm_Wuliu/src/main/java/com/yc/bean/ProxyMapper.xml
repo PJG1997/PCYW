@@ -6,159 +6,113 @@
     <result column="prname" property="prname" jdbcType="VARCHAR" />
     <result column="prtime" property="prtime" jdbcType="VARCHAR" />
     <result column="prprice" property="prprice" jdbcType="DOUBLE" />
-    <result column="spid" property="spid" jdbcType="INTEGER" />
     <result column="prremark" property="prremark" jdbcType="VARCHAR" />
     <result column="remark1" property="remark1" jdbcType="VARCHAR" />
     <result column="remark2" property="remark2" jdbcType="VARCHAR" />
     <result column="remark3" property="remark3" jdbcType="VARCHAR" />
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
+     <association property="shipPoint" javaType="Shippoint" resultMap="ShippointMap" />
+  </resultMap>
+  
+  <resultMap id="ShippointMap" type="com.yc.bean.Shippoint" >
+    <id property="spid" column="spid"/>
+    	<result property="spname" column="spname"></result>
+    	<result property="spperson" column="spperson"></result>
+    	<result property="sptel" column="sptel"></result>
+    	<result property="spemail" column="spemail"></result>
+    	<result property="spaddress" column="spaddress"></result>
+    	<result property="sptype" column="sptype"></result>
+    	<result property="sppersontel" column="sppersontel"></result>
+    	<result property="spfax" column="spfax"></result>
+    	<result property="sparea" column="sparea"></result>
   </resultMap>
   <sql id="Base_Column_List" >
-    prid, prname, prtime, prprice, spid, prremark, remark1, remark2, remark3, remark4, 
+    prid, prname, prtime, prprice, proxy.spid, prremark, remark1, remark2, remark3, remark4, 
     remark5
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from proxy
-    where prid = #{prid,jdbcType=INTEGER}
+  <!-- 分页查询 -->
+  <sql id="pageSql">
+ 	<if test="pageNo!=null and pageSize!=null">
+ 		limit #{pageNo},#{pageSize}
+ 	</if>
+  </sql>
+  
+  <!-- 不带分页查询 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Proxy" >
+    select * from proxy left join shipPoint
+    on proxy.spid=shipPoint.spid
+    <where>
+    	proxy.remark5=1 and shipPoint.remark5=1
+    	<if test="prid!=null and prid!=''">
+    		and prid=#{prid}
+    	</if>
+    	<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  			and shipPoint.spid=#{shipPoint.spid}
+  		</if>
+  		<if test="prname!=null and prname!=''">
+    		and	prname like CONCAT('%',#{prname},'%' )
+    	</if>
+    </where>
+    
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from proxy
-    where prid = #{prid,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.yc.bean.Proxy" >
-    insert into proxy (prid, prname, prtime, 
-      prprice, spid, prremark, 
-      remark1, remark2, remark3, 
-      remark4, remark5)
-    values (#{prid,jdbcType=INTEGER}, #{prname,jdbcType=VARCHAR}, #{prtime,jdbcType=VARCHAR}, 
-      #{prprice,jdbcType=DOUBLE}, #{spid,jdbcType=INTEGER}, #{prremark,jdbcType=VARCHAR}, 
-      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, 
-      #{remark4,jdbcType=VARCHAR}, #{remark5,jdbcType=VARCHAR})
-  </insert>
+  
+    <!-- 带分页查询 -->
+  <select id="selectByPrimaryKeyforPage" resultMap="BaseResultMap" parameterType="com.yc.bean.Proxy" >
+    select * from proxy left join shipPoint
+    on proxy.spid=shipPoint.spid
+    <where>
+    	proxy.remark5=1 and shipPoint.remark5=1
+    	<if test="prid!=null and prid!=''">
+    		and prid=#{prid}
+    	</if>
+    	<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  			and shipPoint.spid=#{shipPoint.spid}
+  		</if>
+  		<if test="prname!=null and prname!=''">
+    		and	prname like CONCAT('%',#{prname},'%' )
+    	</if>
+    </where>
+    <include refid="pageSql" />
+  </select>
+  
+  <!-- 删除（批量） -->
+  <update id="deleteByPrimaryKey" parameterType="com.yc.bean.Proxy" >
+     update proxy set remark5=0
+    where prid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </update>
+  
+	<!-- 添加 -->
   <insert id="insertSelective" parameterType="com.yc.bean.Proxy" >
-    insert into proxy
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="prid != null" >
-        prid,
-      </if>
-      <if test="prname != null" >
-        prname,
-      </if>
-      <if test="prtime != null" >
-        prtime,
-      </if>
-      <if test="prprice != null" >
-        prprice,
-      </if>
-      <if test="spid != null" >
-        spid,
-      </if>
-      <if test="prremark != null" >
-        prremark,
-      </if>
-      <if test="remark1 != null" >
-        remark1,
-      </if>
-      <if test="remark2 != null" >
-        remark2,
-      </if>
-      <if test="remark3 != null" >
-        remark3,
-      </if>
-      <if test="remark4 != null" >
-        remark4,
-      </if>
-      <if test="remark5 != null" >
-        remark5,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="prid != null" >
-        #{prid,jdbcType=INTEGER},
-      </if>
-      <if test="prname != null" >
-        #{prname,jdbcType=VARCHAR},
-      </if>
-      <if test="prtime != null" >
-        #{prtime,jdbcType=VARCHAR},
-      </if>
-      <if test="prprice != null" >
-        #{prprice,jdbcType=DOUBLE},
-      </if>
-      <if test="spid != null" >
-        #{spid,jdbcType=INTEGER},
-      </if>
-      <if test="prremark != null" >
-        #{prremark,jdbcType=VARCHAR},
-      </if>
-      <if test="remark1 != null" >
-        #{remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark2 != null" >
-        #{remark2,jdbcType=VARCHAR},
-      </if>
-      <if test="remark3 != null" >
-        #{remark3,jdbcType=VARCHAR},
-      </if>
-      <if test="remark4 != null" >
-        #{remark4,jdbcType=VARCHAR},
-      </if>
-      <if test="remark5 != null" >
-        #{remark5,jdbcType=VARCHAR},
-      </if>
-    </trim>
+    insert into proxy(prname,prtime,prprice,spid,prremark,remark5) values
+    (#{prname},#{prtime},#{prprice},#{shipPoint.spid},#{prremark},1)
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Proxy" >
     update proxy
     <set >
       <if test="prname != null" >
-        prname = #{prname,jdbcType=VARCHAR},
+        prname = #{prname},
       </if>
       <if test="prtime != null" >
-        prtime = #{prtime,jdbcType=VARCHAR},
+        prtime = #{prtime},
       </if>
       <if test="prprice != null" >
-        prprice = #{prprice,jdbcType=DOUBLE},
+        prprice = #{prprice},
       </if>
-      <if test="spid != null" >
-        spid = #{spid,jdbcType=INTEGER},
+      <if test="shipPoint.spid != null" >
+        spid = #{shipPoint.spid},
       </if>
       <if test="prremark != null" >
-        prremark = #{prremark,jdbcType=VARCHAR},
-      </if>
-      <if test="remark1 != null" >
-        remark1 = #{remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark2 != null" >
-        remark2 = #{remark2,jdbcType=VARCHAR},
-      </if>
-      <if test="remark3 != null" >
-        remark3 = #{remark3,jdbcType=VARCHAR},
-      </if>
-      <if test="remark4 != null" >
-        remark4 = #{remark4,jdbcType=VARCHAR},
+        prremark = #{prremark},
       </if>
       <if test="remark5 != null" >
-        remark5 = #{remark5,jdbcType=VARCHAR},
+        remark5 = #{remark5},
       </if>
     </set>
-    where prid = #{prid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yc.bean.Proxy" >
-    update proxy
-    set prname = #{prname,jdbcType=VARCHAR},
-      prtime = #{prtime,jdbcType=VARCHAR},
-      prprice = #{prprice,jdbcType=DOUBLE},
-      spid = #{spid,jdbcType=INTEGER},
-      prremark = #{prremark,jdbcType=VARCHAR},
-      remark1 = #{remark1,jdbcType=VARCHAR},
-      remark2 = #{remark2,jdbcType=VARCHAR},
-      remark3 = #{remark3,jdbcType=VARCHAR},
-      remark4 = #{remark4,jdbcType=VARCHAR},
-      remark5 = #{remark5,jdbcType=VARCHAR}
-    where prid = #{prid,jdbcType=INTEGER}
+    where prid = #{prid}
   </update>
 </mapper>

@@ -109,4 +109,13 @@ public class AdminController {
 		jsonModel.setObj(adminBiz.searchAllAdmin(users));
 		return jsonModel;
 	}
+	
+	@RequestMapping("findAllAdmin2.action")
+	public @ResponseBody JsonModel findAllAdmin2(Users users){
+		JsonModel jsonModel=new JsonModel();
+		List<Users> list = adminBiz.searchAllAdmin(users);
+		jsonModel.setCode(1);
+		jsonModel.setObj(list);
+		return jsonModel;
+	}
 }
