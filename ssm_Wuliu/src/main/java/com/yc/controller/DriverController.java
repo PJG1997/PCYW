@@ -28,7 +28,15 @@ public class DriverController {
 	private DriverBiz driverBiz;
 	Map<String,Object> map=new HashMap<String,Object>();
 	private Shippoint sp=new Shippoint();
-
+	
+	@RequestMapping("findAlld.action")
+	@ResponseBody
+	public JsonModel findAll(Driver d){
+		d.setShipPoint(sp);
+		JsonModel jsonModel=new JsonModel();
+		jsonModel.setObj(driverBiz.findDriverNoCondition(d));
+		return jsonModel;
+	}
 	//带条件,带分页查询司机的信息
 	@RequestMapping("findAll.action")
 	public @ResponseBody Map<String,Object>  findDriver(Driver driver,HttpServletRequest request,@RequestParam(value="spid") Integer spid){

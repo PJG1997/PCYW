@@ -1,5 +1,7 @@
 package com.yc.dao.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,5 +20,10 @@ public class Order1DaoImpl implements Order1Dao{
 	public int addOrder1(Order1 order1) {
 		return sqlSession.insert("order1.insertSelective", order1);
 	}
-
+	
+	@Override
+	public List<Order1> findAll() {
+		return sqlSession.selectList("order1.selectFindAll");
+	}
+	
 }

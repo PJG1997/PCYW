@@ -46,4 +46,12 @@ public class Order1Controller {
 		}
 		return jsonModel;
 	}
+	
+	@RequestMapping("findAllo.action")
+	@ResponseBody
+	public JsonModel findAll(){
+		jsonModel.setObj(order1Biz.findAll());
+		return jsonModel;
+		
+	}
 }

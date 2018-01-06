@@ -1,5 +1,7 @@
 package com.yc.biz.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -23,4 +25,8 @@ public class Order1BizImpl implements Order1Biz{
 		return order1dao.addOrder1(order1);
 	}
 
+	@Override
+	public List<Order1> findAll() {
+		return null;
+	}
 }
