@@ -30,6 +30,14 @@ public class CarController {
 	private CarBiz carBiz;
 	private JsonModel jsonModel=new JsonModel();
 	private Shippoint sp=new Shippoint();
+	@RequestMapping("findAllc.action")
+	@ResponseBody
+	public JsonModel findAll(Car c){
+		c.setShipPoint(sp);
+		jsonModel.setObj(carBiz.getCarInfo(c));
+		return jsonModel;
+		
+	}
 	//查询
 	@RequestMapping(value="findAllcar.action")
 	public @ResponseBody Map<String,Object> findAllcar(Car c,HttpServletRequest request,@RequestParam(value="spid") Integer spid){

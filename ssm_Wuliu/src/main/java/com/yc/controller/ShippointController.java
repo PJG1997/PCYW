@@ -44,11 +44,6 @@ public class ShippointController {
 		sp.setPageSize(pageSize);
 		List<Shippoint> list=new ArrayList<Shippoint>();
 		for(Shippoint ship:shippointBiz.getShippointInfo(sp)){
-			if(ship.getSptype()==0){
-				ship.setType("配送点");
-			}else{
-				ship.setType("代理点");
-			}
 			ship.setRemark4(String.valueOf(ship.getSpid()));
 			list.add(ship);
 		}
@@ -68,10 +63,10 @@ public class ShippointController {
 	public JsonModel updateshippoint(@RequestParam(value="update_insert_spid") Integer spid,
 			@RequestParam(value="update_insert_spname") String spname,@RequestParam(value="update_insert_spperson") String spperson,
 			@RequestParam(value="update_insert_sptel") String sptel,@RequestParam(value="update_insert_spemail") String spemail,
-			@RequestParam(value="update_insert_spaddress") String spaddress,@RequestParam(value="update_insert_sptype") Integer sptype,
+			@RequestParam(value="update_insert_spaddress") String spaddress,
 			@RequestParam(value="update_insert_sppersontel") String sppersontel,
 			@RequestParam(value="update_insert_spfax") String spfax,@RequestParam(value="update_insert_sparea") String sparea,
-			@RequestParam(value="update_insert_spremark") String spremark){
+			@RequestParam(value="update_insert_spremark") String spremark,@RequestParam(value="update_insert_remark1") String remark1){
 				
 		Shippoint sp=new Shippoint();
 		sp.setSpid(spid);
@@ -80,8 +75,8 @@ public class ShippointController {
 		sp.setSptel(sptel);
 		sp.setSpemail(spemail);
 		sp.setSpaddress(spaddress);
-		sp.setSptype(sptype);
 		sp.setSppersontel(sppersontel);
+		sp.setRemark1(remark1);
 		sp.setSpfax(spfax);
 		sp.setSparea(sparea);
 		sp.setSpremark(spremark);
@@ -102,10 +97,10 @@ public class ShippointController {
 	public JsonModel addShippoint(@RequestParam(value="update_insert_spid") Integer spid,
 			@RequestParam(value="update_insert_spname") String spname,@RequestParam(value="update_insert_spperson") String spperson,
 			@RequestParam(value="update_insert_sptel") String sptel,@RequestParam(value="update_insert_spemail") String spemail,
-			@RequestParam(value="update_insert_spaddress") String spaddress,@RequestParam(value="update_insert_sptype") Integer sptype,
+			@RequestParam(value="update_insert_spaddress") String spaddress,
 			@RequestParam(value="update_insert_sppersontel") String sppersontel,
 			@RequestParam(value="update_insert_spfax") String spfax,@RequestParam(value="update_insert_sparea") String sparea,
-			@RequestParam(value="update_insert_spremark") String spremark){
+			@RequestParam(value="update_insert_spremark") String spremark,@RequestParam(value="update_insert_remark1") String remark1){
 		Shippoint sp=new Shippoint();
 		sp.setSpid(spid);
 		sp.setspname(spname);
@@ -113,11 +108,11 @@ public class ShippointController {
 		sp.setSptel(sptel);
 		sp.setSpemail(spemail);
 		sp.setSpaddress(spaddress);
-		sp.setSptype(sptype);
 		sp.setSppersontel(sppersontel);
 		sp.setSpfax(spfax);
 		sp.setSparea(sparea);
 		sp.setSpremark(spremark);
+		sp.setRemark1(remark1);
 		
 		try {
 			shippointBiz.addShippoint(sp);

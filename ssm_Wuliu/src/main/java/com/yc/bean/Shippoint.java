@@ -14,12 +14,12 @@ public class Shippoint implements Serializable{
     private String sptel;		//	配送点电话、
     private String spemail;		//	联系EMail、
     private String spaddress;	//	配送点地址、
-    private Integer sptype;		//	配送点类型、(0 配送点,1 代理点)
+    private Integer sptype;		//	配送点类型、(0 配送点,1 代理点)删除
     private String sppersontel;	//	联系人电话、
     private String spfax;		//	配送点传真
     private String sparea;		//	配送点范围
     private String spremark;	//	备注
-    private String remark1;		//备用字段1
+    private String remark1;		//备用字段1   城市
     private String remark2;		//备用字段2
     private String remark3;		//备用字段3
     private String remark4;		//备用字段4

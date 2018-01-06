@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="handover" >
+<mapper namespace="com.yc.bean.HandoverMapper" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Handover" >
     <id column="hid" property="hid" jdbcType="INTEGER" />
     <result column="hfromSpname" property="hfromspname" jdbcType="VARCHAR" />
@@ -21,7 +21,7 @@
   	<!-- 交接单对订单的关联 -->
   	<association property="order1" resultMap="selectorder1"></association>
   	<!-- 交接单对路线的关联 -->
-  	<association property="rid" resultMap="selectroute"></association>
+  	<association property="route" resultMap="selectroute"></association>
   </resultMap>
   <resultMap type="Car" id="selectcar">
   	<id property="cid" column="cid"></id>
@@ -74,11 +74,11 @@
     hremark, remark1, remark2, remark3, remark4, remark5
   </sql>
   <!-- 查询交接单所有数据  其中包括 车辆编号  司机姓名  订单编号   路线名称 -->
-  <select id="selectHandorderInfo" resultMap="BaseResultMap">
+  <select id="selectHandorderInfo" resultMap="BaseResultMap" >
   	select h.*,c.cnumber,d.dname,o.osid,r.rname 
   	from handover h,car c,driver d,order1 o,route r
   	 WHERE h.cid=c.cid AND h.did=d.did and h.osid=o.osid and h.rid=r.rid
-  	 and h.remark5=1 and d.remark5=1 and o.remark5=1 and r.remark=1
+  	 and h.remark5=1 and c.remark5=1 and d.remark5=1 and o.remark5=1 and r.remark5=1
   	<if test="hid!=null and hid!=''">
   		and hid=#{hid}
   	</if>
@@ -96,7 +96,7 @@
   	</if>
   	<if test="pageNo!=null and pageSize!=null">
   			limit #{pageNo},#{pageSize}
-  		</if>
+  	</if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -110,11 +110,11 @@
       htoSpname, hstartTime, hendTime, 
       hstatus, hremark, 
       remark5)
-    values (#{hid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{did,jdbcType=INTEGER}, 
-      #{osid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{hfromspname,jdbcType=VARCHAR}, 
+    values (#{hid,jdbcType=INTEGER}, #{car.cid,jdbcType=INTEGER}, #{driver.did,jdbcType=INTEGER}, 
+      #{order1.osid,jdbcType=INTEGER}, #{route.rid,jdbcType=INTEGER}, #{hfromspname,jdbcType=VARCHAR}, 
       #{htospname,jdbcType=VARCHAR}, #{hstarttime,jdbcType=DATE}, #{hendtime,jdbcType=DATE}, 
       #{hstatus,jdbcType=INTEGER}, #{hremark,jdbcType=VARCHAR},
-      #{remark5,jdbcType=VARCHAR})
+      1)
   </insert>
   <insert id="insertSelective" parameterType="com.yc.bean.Handover" >
     insert into handover
@@ -122,16 +122,16 @@
       <if test="hid != null" >
         hid,
       </if>
-      <if test="cid != null" >
+      <if test="car.cid != null" >
         cid,
       </if>
-      <if test="did != null" >
+      <if test="driver.did != null" >
         did,
       </if>
-      <if test="osid != null" >
+      <if test="order1.osid != null" >
         osid,
       </if>
-      <if test="rid != null" >
+      <if test="route.rid != null" >
         rid,
       </if>
       <if test="hfromspname != null" >
@@ -164,25 +164,23 @@
       <if test="remark4 != null" >
         remark4,
       </if>
-      <if test="remark5 != null" >
         remark5,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="hid != null" >
         #{hid,jdbcType=INTEGER},
       </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=INTEGER},
+      <if test="car.cid != null" >
+        #{car.cid,jdbcType=INTEGER},
       </if>
-      <if test="did != null" >
-        #{did,jdbcType=INTEGER},
+      <if test="driver.did != null" >
+        #{driver.did,jdbcType=INTEGER},
       </if>
-      <if test="osid != null" >
-        #{osid,jdbcType=INTEGER},
+      <if test="order1.osid != null" >
+        #{order1.osid,jdbcType=INTEGER},
       </if>
-      <if test="rid != null" >
-        #{rid,jdbcType=INTEGER},
+      <if test="route.rid != null" >
+        #{route.rid,jdbcType=INTEGER},
       </if>
       <if test="hfromspname != null" >
         #{hfromspname,jdbcType=VARCHAR},
@@ -214,25 +212,23 @@
       <if test="remark4 != null" >
         #{remark4,jdbcType=VARCHAR},
       </if>
-      <if test="remark5 != null" >
-        #{remark5,jdbcType=VARCHAR},
-      </if>
+        1
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yc.bean.Handover" >
     update handover
     <set >
-      <if test="cid != null" >
-        cid = #{cid,jdbcType=INTEGER},
+      <if test="car.cid != null" >
+        cid = #{car.cid,jdbcType=INTEGER},
       </if>
-      <if test="did != null" >
-        did = #{did,jdbcType=INTEGER},
+      <if test="driver.did != null" >
+        did = #{driver.did,jdbcType=INTEGER},
       </if>
-      <if test="osid != null" >
-        osid = #{osid,jdbcType=INTEGER},
+      <if test="order1.osid != null" >
+        osid = #{order1.osid,jdbcType=INTEGER},
       </if>
-      <if test="rid != null" >
-        rid = #{rid,jdbcType=INTEGER},
+      <if test="route.rid != null" >
+        rid = #{route.rid,jdbcType=INTEGER},
       </if>
       <if test="hfromspname != null" >
         hfromSpname = #{hfromspname,jdbcType=VARCHAR},
@@ -272,10 +268,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yc.bean.Handover" >
     update handover
-    set cid = #{cid,jdbcType=INTEGER},
-      did = #{did,jdbcType=INTEGER},
-      osid = #{osid,jdbcType=INTEGER},
-      rid = #{rid,jdbcType=INTEGER},
+    set cid = #{car.cid,jdbcType=INTEGER},
+      did = #{driver.did,jdbcType=INTEGER},
+      osid = #{order1.osid,jdbcType=INTEGER},
+      rid = #{route.rid,jdbcType=INTEGER},
       hfromSpname = #{hfromspname,jdbcType=VARCHAR},
       htoSpname = #{htospname,jdbcType=VARCHAR},
       hstartTime = #{hstarttime,jdbcType=DATE},

@@ -25,7 +25,13 @@ public class RouteController {
 	@Resource(name="routeBizImpl")
 	private RouteBiz routeBiz;
 	Map<String,Object> map=new HashMap<String,Object>();
-	
+	@RequestMapping("findAllr.action")
+	@ResponseBody
+	public JsonModel findAll(Route r){
+		JsonModel jsonModel=new JsonModel();
+		jsonModel.setObj(routeBiz.selectRoute(r));
+		return jsonModel;
+	}
 	//查询
 	@RequestMapping(value="findAllForRoute.action")
 	public @ResponseBody Map<String,Object>  findRoute(Route route,HttpServletRequest request){
