@@ -32,4 +32,9 @@ public class LogDaoImpl implements LogDao {
 		return sqlSession.selectList("log.searchLogByldate",log);
 	}
 
+	@Override
+	public int insertLog(Log log) {
+		return sqlSession.insert("log.insertLog",log);
+	}
+
 }

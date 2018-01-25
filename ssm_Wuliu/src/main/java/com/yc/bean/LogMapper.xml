@@ -7,12 +7,12 @@
     <result column="lusid" property="lusid" jdbcType="INTEGER" />
     <result column="luname" property="luname" jdbcType="VARCHAR" />
     <result column="ldate" property="ldate" jdbcType="DATE" />
-    <result column="lopreation" property="lopreation" jdbcType="VARCHAR" />
+    <result column="loperation" property="loperation" jdbcType="VARCHAR" />
   </resultMap>
   
   <!-- 需要查询到的字段 -->
   <sql id="Base_Column_List">
-  		lid,lusid,luname,ldate,lopreation
+  		lid,lusid,luname,ldate,loperation
   </sql>
   
   <!-- 分页查询 -->
@@ -34,7 +34,9 @@
   		select * from log
   </select>
   
-  
+  <insert id="insertLog" parameterType="com.yc.bean.Log">
+  		insert into log(lusid,luname,ldate,loperation) values(#{lusid},#{luname},#{ldate},#{loperation})
+  </insert>
 
   
 </mapper>

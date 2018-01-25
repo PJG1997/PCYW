@@ -219,8 +219,9 @@ create table log(
 	lid int primary key auto_increment,
 	lusid int,
 	luname varchar(50),
-	ldate date, --操作时间
-	lopreation varchar(50)--操作信息
+	ldate date, 
+	loperation varchar(50)
 );
-
+select * from log;
 drop table log;
+delete from log;

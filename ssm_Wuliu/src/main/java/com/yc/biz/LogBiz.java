@@ -27,4 +27,11 @@ public interface LogBiz {
 	 */
 	public List<Log> searchLogByldate(Log log);
 	
+	/**
+	 * 添加日志
+	 * @param log
+	 * @return
+	 */
+	public int insertLog(Log log);
+	
 }

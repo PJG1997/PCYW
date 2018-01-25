@@ -1,7 +1,8 @@
 package com.yc.bean;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Log implements Serializable{
 
@@ -12,12 +13,11 @@ public class Log implements Serializable{
 	private Integer lusid;
 	private String luname;
 	private Date ldate;
-	private String lopreation;
+	private String loperation;
 	
 	
 	private Integer pageNo;
 	private Integer pageSize;
-	
 	public Integer getLid() {
 		return lid;
 	}
@@ -42,11 +42,11 @@ public class Log implements Serializable{
 	public void setLdate(Date ldate) {
 		this.ldate = ldate;
 	}
-	public String getLopreation() {
-		return lopreation;
+	public String getLoperation() {
+		return loperation;
 	}
-	public void setLopreation(String lopreation) {
-		this.lopreation = lopreation;
+	public void setLoperation(String loperation) {
+		this.loperation = loperation;
 	}
 	
 	
@@ -63,10 +63,13 @@ public class Log implements Serializable{
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Log [lid=" + lid + ", lusid=" + lusid + ", luname=" + luname + ", ldate=" + ldate + ", lopreation="
-				+ lopreation + "]";
+				+ loperation + "]";
 	}
 	
 	

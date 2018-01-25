@@ -30,5 +30,12 @@ public interface LogDao {
 	 */
 	public List<Log> searchLogByLdate(Log log);
 	
+	/**
+	 * 添加日志
+	 * @param log
+	 * @return
+	 */
+	public int insertLog(Log log);
+	
 	
 }

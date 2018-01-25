@@ -22,25 +22,35 @@ import com.yc.biz.LogBiz;
 public class LogController {
 	@Resource(name="logBizImpl")
 	private LogBiz logBiz;
-	
+
 	@RequestMapping(value="findAllLog.action")
 	@ResponseBody
 	public Map<String,Object> findAllLog(HttpSession session,HttpServletRequest request,Log log){
-		
-		 Map<String,Object> map = new HashMap<String,Object>();
 
-		 Integer pageNo=Integer.parseInt(request.getParameter("page"));  
-		 //获取pageSize
-		 Integer pageSize=Integer.parseInt(request.getParameter("rows"));
-		 log.setPageNo((pageNo-1)*pageSize);	
-		 log.setPageSize(pageSize);
-		 List<Log> ls = logBiz.searchAllLog(log);
-		 
-		 map.put("rows", ls);
-		 map.put("total", logBiz.searchAllLogNoCondition(log).size());
-		 
+		Map<String, Object> map=new HashMap<String,Object>();
+		try {
+
+			Integer pageNo=Integer.parseInt(request.getParameter("page"));  
+			//获取pageSize
+			Integer pageSize=Integer.parseInt(request.getParameter("rows"));
+			log.setPageNo((pageNo-1)*pageSize);	
+			log.setPageSize(pageSize);
+			System.out.println("coming");
+			List<Log> ls = new ArrayList<Log>();
+			
+			for(Log logs:logBiz.searchAllLog(log)){
+				ls.add(logs);
+			}
+			System.out.println(ls);
+			map.put("rows", ls);
+			map.put("total", logBiz.searchAllLogNoCondition(log).size());
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return map;
 	}
-	
-	
+
+
 }
