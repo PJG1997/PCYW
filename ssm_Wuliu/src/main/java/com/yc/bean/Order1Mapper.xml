@@ -46,26 +46,6 @@
     delete from order1
     where osid = #{osid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.yc.bean.Order1" >
-    insert into order1 (osid, usid, spid, 
-      osendName, osendTel, osendAddress, 
-      orecName, orecTel, orecAddress, 
-      orecCode, orecPhone, otime, 
-      oprice, oinsurePrice, otype, 
-      ostatus, ostartTime, oendTime, 
-      orecSpname, oremark, remark1, 
-      remark2, remark3, remark4, 
-      remark5)
-    values (#{osid,jdbcType=INTEGER}, #{usid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, 
-      #{osendname,jdbcType=VARCHAR}, #{osendtel,jdbcType=VARCHAR}, #{osendaddress,jdbcType=VARCHAR}, 
-      #{orecname,jdbcType=VARCHAR}, #{orectel,jdbcType=VARCHAR}, #{orecaddress,jdbcType=VARCHAR}, 
-      #{oreccode,jdbcType=VARCHAR}, #{orecphone,jdbcType=VARCHAR}, #{otime,jdbcType=DATE}, 
-      #{oprice,jdbcType=DOUBLE}, #{oinsureprice,jdbcType=DOUBLE}, #{otype,jdbcType=INTEGER}, 
-      #{ostatus,jdbcType=INTEGER}, #{ostarttime,jdbcType=DATE}, #{oendtime,jdbcType=DATE}, 
-      #{orecspname,jdbcType=VARCHAR}, #{oremark,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
-      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{remark4,jdbcType=VARCHAR}, 
-      #{remark5,jdbcType=VARCHAR})
-  </insert>
   
   <insert id="insertSelective" parameterType="com.yc.bean.Order1" useGeneratedKeys="true" keyColumn="osid" keyProperty="osid">
     insert into order1
@@ -73,7 +53,7 @@
       <if test="osid != null" >
         osid,
       </if>
-      <if test="usid != null" >
+      <if test="users.usid != null" >
         usid,
       </if>
       <if test="shipPoint.spid != null" >
@@ -149,7 +129,7 @@
         #{osid,jdbcType=INTEGER},
       </if>
       <if test="users.usid != null" >
-        #{usid,jdbcType=INTEGER},
+        #{users.usid,jdbcType=INTEGER},
       </if>
       <if test="shipPoint.spid != null" >
         #{shipPoint.spid,jdbcType=INTEGER},

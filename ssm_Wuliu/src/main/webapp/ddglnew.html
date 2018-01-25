@@ -31,9 +31,9 @@ function addOrder(){
 	oprice=$("#oprice").val();
 	remark2=$('input[name="payment"]:checked').val();
 	oremark=$("#oremark").val();
-	alert(remark2);
 	$.ajax({
 		url:"addOrder.action",
+		//remark1用来存路线id    remark2用来存支付人
 		data:{osendname:osendname,osendtel:osendtel,osendaddress:osendaddress,orecname:orecname,orectel:orectel,
 			orecaddress:orecaddress,oreccode:oreccode,orecphone:orecphone,oprice:oprice,oinsureprice:oinsureprice,
 			otype:otype,ostatus:ostatus,ostarttimeString:ostarttimeString,oendtimeString:oendtimeString,orecspname:orecspname,
@@ -42,26 +42,71 @@ function addOrder(){
 		method:"POST",
 		success:function(data){
 			if(data.code==1){
-				alert("添加成功...");
-			}else{
-				alert("添加失败...")
+				$("#order_osid").val(data.obj.osid);
+				//先获取订单的订单编号
+				osid=$("#order_osid").val();
+				
+				//获取总行数
+			    var rowsTotal=document.getElementById("mainBody").rows.length-1;
+			    var goodsNames="";      //将所有的商品名拼接起来赋给goodsName
+			    var goodsCounts="";     //将所有的商品数量拼接起来赋给goodsCounts
+			    var goodsPrices="";     //将所有的商品数价格拼接起来赋给goodsPrices
+			    var goodsGweights="";  	//将所有的商品重量拼接起来赋给goodsGweights
+			    var goodsGvolumes="";	//将所有的商品体积拼接起来赋给goodsGvolumes
+			    var goodsGremarks="";	//将所有的商品备注拼接起来赋给goodsGremarks
+			    for(var i=0;i<rowsTotal;i++){
+			    	if(i==rowsTotal-1){
+			    		goodsNames+=$("#select_Goods"+i+" option:selected").text();
+			    		goodsCounts+=$("#goods_count"+i+"").val();
+			    		goodsPrices+=$("#goods_gprice"+i+"").val();
+			    		goodsGweights+=$("#goods_gweight"+i+"").val();
+			    		goodsGvolumes+=$("#goods_gvolume"+i+"").val();
+			    		goodsGremarks+=$("#goods_gremark"+i+"").val();
+			    	}else{
+			    		goodsNames+=$('#select_Goods0 option:selected').text()+"-";
+			    		goodsCounts+=$("#goods_count"+i+"").val()+"-";
+			    		goodsPrices+=$("#goods_gprice"+i+"").val()+"-";
+			    		goodsGweights+=$("#goods_gweight"+i+"").val()+"-";
+			    		goodsGvolumes+=$("#goods_gvolume"+i+"").val()+"-";
+			    		goodsGremarks+=$("#goods_gremark"+i+"").val()+"-";
+			    	}
+			    }
+			    //发送请求将订单详细表保存起来
+			    $.ajax({
+			    	url:"addOrderInfo.action",
+			    	data:{osid:osid,goodsNames:goodsNames,goodsCounts:goodsCounts,goodsPrices:goodsPrices,
+			    		goodsGweights:goodsGweights,goodsGvolumes:goodsGvolumes,goodsGremarks:goodsGremarks},
+			    	dataType:"JSON",
+			    	method:"POST",
+			    	success:function(data){
+			    		if(data.code==1){
+			    			alert("添加成功...");
+			    			window.location.href="ddgldel.html"; 
+			    		}else{
+			    			alert("添加失败...");
+			    		}
+			    	}
+			    })
 			}
 		}
+	});
+    
 	
-	}) 
+	
 }
 function reset1(){
 	document.form1.action="ddglnew.html";
 	document.form1.reset();
 }
 
-
-   // 新增行   
+   // 新增行 
+    var hangshu=-1;           //看这个表格有多少行
     function addRow(){   
         //var textNum = document.getElementById("rownum");   
         // 得到新增行记录的行数   
         //var index = textNum.value;   
-         var index = 1;
+        var index = 1;
+        hangshu++;
         if(!checknum(index)){   
             alert("You can only input number in the TEXT!");   
             textNum.focus();    
@@ -77,7 +122,7 @@ function reset1(){
             var newtext1 = document.createElement("td");   
             var newtext2 = document.createElement("td");   
             var newtext3 = document.createElement("td"); 
-			var newtext4 = document.createElement("td"); 
+			//var newtext4 = document.createElement("td"); 
 			var newtext5 = document.createElement("td"); 
 			var newtext6 = document.createElement("td"); 
 			var newtext7 = document.createElement("td"); 
@@ -85,21 +130,23 @@ function reset1(){
 			var newtext9 = document.createElement("td"); 
 			
             newCheckBox.innerHTML = '<center><input type="Checkbox" name="checkbox" onclick = "checkBoxSel()"></center>';   
-            newtext1.innerHTML = '<input type="text" name="newCarName" size="9">';   
-            newtext2.innerHTML = '<input type="text" name="newCarName" size="9">';   
-            newtext3.innerHTML = '<input type="text" name="newCarName" size="9">';   
-			newtext4.innerHTML = '<input type="text" name="newCarName" size="9">';  
-			newtext5.innerHTML = '<input type="text" name="newCarName" size="9">';  
-			newtext6.innerHTML = '<input type="text" name="newCarName" size="9">';  
-			newtext7.innerHTML = '<input type="text" name="newCarName" size="9">';  
-			newtext8.innerHTML = '<select name="select1"><option>衣物</option><option>设备</option></select>';  
-			newtext9.innerHTML = '<input type="text" name="newCarName" size="9">';  
+            newtext1.innerHTML = "<select name='select_Goods"+hangshu+"' id='select_Goods"+hangshu+"' onclick='huodeSelectdObj(this)'></select>";   
+            newtext2.innerHTML = "<input type='text' name='goods_gid"+hangshu+"'id='goods_gid"+hangshu+"' size='9' disabled>";   
+            newtext3.innerHTML = "<input type='text' name='goods_count"+hangshu+"'id='goods_count"+hangshu+"' size='9' onBlur='setTotal(this)' >";    
+			//newtext4.innerHTML = "<input type='text' name='goods_remark1"+hangshu+"'id='goods_remark1"+hangshu+"' size='9' disabled>";   
+			newtext5.innerHTML = "<input type='text' name='goods_gprice"+hangshu+"'id='goods_gprice"+hangshu+"' size='9' disabled>";   
+			newtext6.innerHTML = "<input type='text' name='goods_gweight"+hangshu+"'id='goods_gweight"+hangshu+"' size='9' disabled>";   
+			newtext7.innerHTML = "<input type='text' name='goods_gvolume"+hangshu+"'id='goods_gvolume"+hangshu+"' size='9' disabled>";  
+			newtext8.innerHTML = "<input type='text' name='goods_gtype"+hangshu+"'id='goods_gtype"+hangshu+"' size='9' disabled>";   
+			newtext9.innerHTML = "<input type='text' name='goods_gremark"+hangshu+"'id='goods_gremark"+hangshu+"' size='9'>";  
+			
+			
             // 新增的tr节点下增加td节点   
             newRowObj.appendChild(newCheckBox);     
             newRowObj.appendChild(newtext1);    
             newRowObj.appendChild(newtext2);    
             newRowObj.appendChild(newtext3);   
-			newRowObj.appendChild(newtext4);  
+			//newRowObj.appendChild(newtext4);  
 			newRowObj.appendChild(newtext5);  
 			newRowObj.appendChild(newtext6); 
 			newRowObj.appendChild(newtext7);  
@@ -110,8 +157,68 @@ function reset1(){
 			//newRowObj.setAttribute("bgcolor","red");   
             // tbody节点下增加tr节点   
             tableBodyObj.appendChild(newRowObj);   
+            
+          //从数据库里面查询到各种商品，然后赋值给select
+			$.ajax({
+				url:"qiantai_findAllGoods.action",
+				dataType:"JSON",
+				method:"POST",
+				success:function(data){
+					if(data.code==1){
+						$.each(data.obj,function(index,item){
+							var option="<option value='"+item.gid+"' onclick='selectGoods("+item.gid+")'>"+item.gname+"</option>";
+							$('#select_Goods'+hangshu).append(option);
+						});
+					}
+				}
+			});
         }   
     }   
+    
+    var selectObj;     //selectObj对象
+    var jibenGprice;   //将基本的价格存起来
+    var jibenGweight;	//将基本的重量存起来
+    var jibenGvolume;	//将基本的体积存起来
+    //选择一种商品时触发事件
+    function selectGoods(gid){
+    	//通过商品的ID查询到该商品的基本信息
+    	$.ajax({
+    		url:"findGoodsInfo.action",
+    		data:{gid:gid},
+    		dataType:"JSON",
+    		method:"POST",
+    		success:function(data){
+    			//已经查询到该商品的基本信息  然后赋值给input文本框
+    			var shuzi=selectObj.substring(12);
+    			$('#goods_gid'+shuzi).val(data.obj[0].gid);
+    			$('#goods_count'+shuzi).val(data.obj[0].gcount);
+    			//$('#goods_remark1'+shuzi).val(data.obj[0].remark1);
+    			jibenGprice=data.obj[0].gprice/data.obj[0].gcount;
+    			$('#goods_gprice'+shuzi).val(data.obj[0].gprice);
+    			jibenGweight=data.obj[0].gweight/data.obj[0].gcount;
+    			$('#goods_gweight'+shuzi).val(data.obj[0].gweight);
+    			jibenGvolume=data.obj[0].gvolume/data.obj[0].gcount;
+    			$('#goods_gvolume'+shuzi).val(data.obj[0].gvolume);
+    			$('#goods_gtype'+shuzi).val(data.obj[0].gtype);
+    			$('#goods_gremark'+shuzi).val(data.obj[0].gremark);
+    		}
+    	})
+    }
+    
+    //获取到select的对象
+    function huodeSelectdObj(obj){
+    	selectObj=obj.id
+    }
+    
+    //当改变数量时，其他价格也要随着改变
+    function setTotal(obj){
+    	var shuzi=obj.id.substring(11);
+		$('#goods_gprice'+shuzi).val(jibenGprice*$('#goods_count'+shuzi).val());
+		$('#goods_gweight'+shuzi).val(jibenGweight*$('#goods_count'+shuzi).val());
+		$('#goods_gvolume'+shuzi).val(jibenGvolume*$('#goods_count'+shuzi).val()); 
+    }
+    
+    
     // 新增行数选择框检查输入必须是数字   
     function checknum(strVal){   
        /* if (strVal.length != 0){   
@@ -470,12 +577,12 @@ function checkForm(form){
                     <td colspan="3"><input name="textfield6" id="osendtel" type="text" size="20"></td>
 				   </td>
 				 </tr>
-	             <tr bgcolor="#FFFFFF"> 
+	             <!-- <tr bgcolor="#FFFFFF"> 
                     <td width="14%" height="25">寄件人地址</td>
                     <td width="16%"><input name="textfield3" type="text" size="20"></td>
                     <td width="12%"></td>
                     <td ></td>
-                  </tr>
+                  </tr> -->
                 </table> </td>
             </tr>
           </table></td>
@@ -507,12 +614,14 @@ function checkForm(form){
 				   </td>
 				 </tr>
 	          <tr bgcolor="#FFFFFF"> 
-                    <td width="14%" height="25">地址</td>
-                    <td width="16%"><input name="textfield3" type="text" size="20"></td>
+                    <!-- <td width="14%" height="25">地址</td>
+                    <td width="16%"><input name="textfield3" type="text" size="20"></td> -->
                     <td width="16%">邮编</td>
                     <td width="21%"><input name="textfield4" id="oreccode" type="text" size="20"></td>
 					<td width="12%">电话</td>
                     <td width="21%"><input name="textfield5" id="orectel" type="text" size="20"></td>
+                  	<td width="12%"></td>
+                    <td width="21%"></td>
                   </tr>
 				   <tr bgcolor="#FFFFFF"> 
                   </tr>
@@ -564,6 +673,9 @@ function checkForm(form){
 
 	  <tr><td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
             <tr> 
+            <!-- 用来暂存订单id -->
+            <input type="hidden" id="order_osid"
+				name="order_osid" value="0" />  
               <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
                   <tr> 
                     <td height="5" bgcolor="FDC31A"><img src="images/a666nniu020.jpg" width="1" height="1"></td>
@@ -576,7 +688,7 @@ function checkForm(form){
                    <td width="82" bgcolor="#E6F2F2"><font color="#0000FF">货物名称</font></td>
                    <td width="85" bgcolor="#E6F2F2"><font color="#0000FF">货物编码</font></td>
                    <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">货物数量</font></td>
-				   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">单位</font></td>
+				   <!-- <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">单位</font></td> -->
                    <td width="99" bgcolor="#E6F2F2"><font color="#0000FF">货物价值(￥元)</font></td>
                    <td width="84" bgcolor="#E6F2F2"><font color="#0000FF">货物重量(kg)</font></td>
                    <td width="93" bgcolor="#E6F2F2"><font color="#0000FF">货物体积(m3)</font></td>
@@ -626,7 +738,7 @@ function checkForm(form){
     </table>
 	<table width="100%" border="0" cellpadding="0" cellspacing="1"  class="sub">
 	<tr><td style="text-align:center"><input type="button" value="保存" onclick="addOrder()" /></td>
-	<td style="text-align:center"><input type="button" value="取消" onclick=""></td>
+	<td style="text-align:center"><input type="button" value="取消"></td>
 	  </tr>
 	</table>
           
