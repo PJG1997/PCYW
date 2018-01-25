@@ -36,7 +36,7 @@ public class HandoverController {
 	private Driver d=new Driver();
 	private Order1 o=new Order1();
 	private Route r=new Route();
-	//查询
+	//后台查询
 	@RequestMapping("findAllhandover.action")
 	@ResponseBody
 	public Map<String,Object> findAllhandover(Handover h,HttpServletRequest request){
@@ -72,7 +72,7 @@ public class HandoverController {
 		
 	}
 	
-	//查看交接单查询
+	//后台查看交接单查询
 	@RequestMapping("findhandoverInfo.action")
 	@ResponseBody
 	public JsonModel findhandoverInfo(Handover h){
@@ -84,7 +84,7 @@ public class HandoverController {
 		return jsonModel;
 	}
 	
-	//修改交接单
+	//后台修改交接单
 	@RequestMapping("updatehandover.action")
 	@ResponseBody
 	public JsonModel updatehandover(@RequestParam(value="update_insert_hid") Integer hid,
@@ -119,7 +119,7 @@ public class HandoverController {
 			jsonModel.setCode(1);
 			return jsonModel;
 	}
-	//添加
+	//后台添加
 	@RequestMapping("addhandover.action")
 	@ResponseBody
 	public JsonModel addHandover(@RequestParam(value="update_insert_hid") Integer hid,
@@ -153,7 +153,14 @@ public class HandoverController {
 		jsonModel.setCode(1);
 		return jsonModel;
 	}
-	//批量删除
+	//用户的添加  点击订单完成后实现该订单的所有交接单
+	@RequestMapping("useraddhandover.action")
+	@ResponseBody
+	public JsonModel useraddhandover(){
+		
+		return jsonModel;
+	}
+	//后台批量删除
 	@RequestMapping("delhandover.action")
 	@ResponseBody
 	public int delHandover(@Param(value = "hid") String hid){
@@ -171,4 +178,5 @@ public class HandoverController {
 		return 1;
 		
 	}
+	
 }
