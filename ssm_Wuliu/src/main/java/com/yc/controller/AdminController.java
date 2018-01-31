@@ -20,6 +20,7 @@ import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Users;
 import com.yc.biz.AdminBiz;
+import com.yc.util.MD5Encryption;
 
 @Controller
 @Scope(value="prototype")
@@ -54,6 +55,8 @@ public class AdminController {
 	@RequestMapping(value="addAdmin.action")
 	@ResponseBody
 	public int addAdmin(Users users){
+		String pwd=MD5Encryption.createPassword(users.getUpwd());
+		users.setUpwd(pwd);
 		try {
 			adminBiz.addAdmin(users);
 		} catch (Exception e) {
@@ -107,6 +110,15 @@ public class AdminController {
 	public @ResponseBody JsonModel findAdriveInfo(Users users){
 		JsonModel jsonModel=new JsonModel();
 		jsonModel.setObj(adminBiz.searchAllAdmin(users));
+		return jsonModel;
+	}
+	
+	@RequestMapping("findAllAdmin2.action")
+	public @ResponseBody JsonModel findAllAdmin2(Users users){
+		JsonModel jsonModel=new JsonModel();
+		List<Users> list = adminBiz.searchAllAdmin(users);
+		jsonModel.setCode(1);
+		jsonModel.setObj(list);
 		return jsonModel;
 	}
 }

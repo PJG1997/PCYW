@@ -9,7 +9,7 @@
 	<a href="javascript:admin_searchAdmin()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
-<div id="admin_detail" class="easyui-dialog" title="司机详情" style="width:400px;height:410px;"
+<div id="admin_detail" class="easyui-dialog" title="管理员详情" style="width:400px;height:410px;"
 	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
 	<form id="admin_detail_admin">
 	<ul>
@@ -43,7 +43,7 @@
 
 
 
-<div id="insert_admin" class="easyui-dialog" title="添加司机信息" style="width:400px;height:410px;"
+<div id="insert_admin" class="easyui-dialog" title="添加管理员信息" style="width:400px;height:410px;"
 	data-options="iconCls:'icon-admin-add',resizable:true,modal:true,closed:true">
 	<form id="insert_admin_form">
 	<ul>
@@ -79,6 +79,7 @@
 			<label>管理员邮箱：</label>
 			<input type="text" name="uemail" id="admin_insert_uemail"/>
 		</li>
+		
 	</ul>
 	</form>
 </div>
@@ -164,35 +165,42 @@
 var adminEditRow=undefined;
 var adminOp;
 var adminflag;
-
-var adminObject=$('#admin_data').datagrid({
-	url:'../../findAllAdmin.action',
-	fitColumns:true,
-	striped:true,
-	loadMsg:'数据加载中。。。。',
-	rownumbers:true,
-	pagination:true,
-	pageNumber:1,
-	pageSize:5,
-	pageList:[5,10,20,30,50],
-	sortName:'usid',
-	remoteSort:false,
-	columns:[[   
-	          {field:"usids",checkbox:true},
-	          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
-	          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
-	          {field:'urealname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uaddress',title:'住址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uphone',title:'管理员手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'utel',title:'管理员住宅电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uemail',title:'管理员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
-	        	  return "<a id='operation' href='javascript:detailAdmin("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateAdmin("+val+")' style='color:#39f'>修改</a>"
-	          }}
-	]],
-	toolbar:"#admin_search"
-});
-
+ $(function(){
+	$.post("../../findAllAdmin2.action",{page:1,rows:5},function(data){ 
+		var adminObject=$('#admin_data').datagrid({
+			url:'../../findAllAdmin.action',
+			fitColumns:true,
+			striped:true,
+			loadMsg:'数据加载中。。。。',
+			rownumbers:true,
+			pagination:true,
+			pageNumber:1,
+			pageSize:5,
+			pageList:[5,10,20,30,50],
+			sortName:'usid',
+			remoteSort:false,
+			columns:[[   
+			          {field:"usids",checkbox:true},
+			          {field:'usid',title:'管理员编号',width:80,align:'center',sortable:true},   
+			          {field:'uname',title:'管理员帐户名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+			          {field:'urealname',title:'管理员姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'uaddress',title:'住址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'uphone',title:'管理员手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'utel',title:'管理员住宅电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'uemail',title:'管理员邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'status',title:'管理员状态',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+								if(row.status==1){
+									return "<a id='operation' href='javascript:detailAdmin("+row.usid+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateAdmin("+val+")' style='color:#39f'>修改</a>"
+								}else{
+									return "<a id='operation' href='javascript:detailAdmin("+row.usid+")' style='color:#39f' >恢复</a>"
+								}
+			          }}
+			]],
+			toolbar:"#admin_search"
+		});
+ 	});
+}) 
 function addAdmin(){
 	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
 	$("#admin_insert_uname").val("");
@@ -242,6 +250,7 @@ function addAdmin(){
 function deleteAdmin(){
 	var rows = adminObject.datagrid("getChecked");
 	if(rows.length<0){
+		alert(123)
 		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
 	}else{
 		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){

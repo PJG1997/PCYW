@@ -42,12 +42,12 @@
 			<label id="shippoint_spemail_label"></label>
 		</li>
 		<li>
-			<label>配送点地址:</label>
-			<label id="shippoint_spaddress_label"></label>
+			<label>配送点所属城市:</label>
+			<label id="shippoint_remark1_label"></label>
 		</li>
 		<li>
-			<label>配送点类型:</label>
-			<label id="shippoint_sptype_label"></label>
+			<label>配送点地址:</label>
+			<label id="shippoint_spaddress_label"></label>
 		</li>
 		<li>
 			<label>联系人电话:</label>
@@ -98,11 +98,8 @@
 			<input type="text" name="update_insert_spaddress" id="update_insert_spaddress" />
 		</li>
 		<li>
-			<label>配送点类型:</label>
-			<select name="update_insert_sptype" id="update_insert_sptype">
-				<option value="0">配送点</option>
-				<option value="1">代理点</option>
-	        </select>
+			<label>配送点所属城市:</label>
+			<input type="text" name="update_insert_remark1" id="update_insert_spaddress" />
 		</li>
 		<li>
 			<label>联系人电话:</label>
@@ -181,7 +178,6 @@ var shippointObject=$('#shippoint_table').datagrid({
 	          {field:'sptel',title:'配送点电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'spemail',title:'联系EMail',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'spaddress',title:'配送点地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'type',title:'配送点类型',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'spfax',title:'配送点传真',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
 	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
@@ -205,13 +201,9 @@ function detail(val){
 					$("#shippoint_spperson_label").html(item.spperson);
 					$("#shippoint_sptel_label").html(item.sptel);
 					$("#shippoint_spemail_label").html(item.spemail);
+					$("#shippoint_remark1_label").html(item.remark1);
 					$("#shippoint_spaddress_label").html(item.spaddress);
 					$("#shippoint_sppersontel_label").html(item.sppersontel);
-					if(item.sptype==1){
-						$("#shippoint_sptype_label").html("代理点");
-					}else{
-						$("#shippoint_sptype_label").html("配送点");
-					} 
 					$("#shippoint_spfax_label").html(item.spfax);
 					$("#shippoint_sparea_label").html(item.sparea);
 					$("#shippoint_spremark_label").html(item.spremark);
@@ -248,7 +240,7 @@ function update(val){
 					$("#update_insert_sptel").val(item.sptel);
 					$("#update_insert_spemail").val(item.spemail);
 					$("#update_insert_spaddress").val(item.spaddress);
-					$("#update_insert_sptype").val(item.sptype);
+					$("#update_insert_remark1").val(item.remark1);
 					$("#update_insert_sppersontel").val(item.sppersontel);
 					$("#update_insert_spfax").val(item.spfax);
 					$("#update_insert_sparea").val(item.sparea);
@@ -290,12 +282,11 @@ function update(val){
 function addshippoint(){
 	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
 	$("#update_insert_spname").val("");
-	$("#update_insert_sptype option:first").prop("selected", 'selected');
 	$("#update_insert_spperson").val("");
 	$("#update_insert_sptel").val("");
 	$("#update_insert_spemail").val("");
 	$("#update_insert_spaddress").val("");
-	
+	$("#update_insert_remark1").val("");
 	$("#update_insert_sppersontel").val("");
 	$("#update_insert_spfax").val("");
 	$("#update_insert_sparea").val("");
@@ -313,8 +304,8 @@ function addshippoint(){
 				sptel=$("#update_insert_sptel").val();
 				spemail=$("#update_insert_spemail").val();
 				spaddress=$("#update_insert_spaddress").val();
+				remark1=$("#update_insert_remark1").val();
 				sppersontel=$("#update_insert_sppersontel").val();
-				sptype=$("#update_insert_sptype").val();
 				spfax=$("#update_insert_spfax").val();
 				sparea=$("#update_insert_sparea").val();
 				spremark=$("#update_insert_spremark").val();

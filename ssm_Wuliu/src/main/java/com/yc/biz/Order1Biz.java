@@ -1,0 +1,16 @@
+package com.yc.biz;
+
+import java.util.List;
+
+import com.yc.bean.Order1;
+
+public interface Order1Biz {
+	/**
+	 * 添加订单信息
+	 * @param order1
+	 * @return
+	 */
+	public int addOrder1(Order1 order1);
+
+	public List<Order1> findAll();
+}

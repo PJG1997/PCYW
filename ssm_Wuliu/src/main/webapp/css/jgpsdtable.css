@@ -1,0 +1,24 @@
+td {
+	font-family: "ËÎÌו";
+	font-size: 12px;
+	color: #000000;
+	text-align: left;
+}
+
+div {
+	font-family: "ËÎÌו";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	text-align: left;
+}
+.sub {
+	border: thin solid #CCCCCC;
+}
+
+th {
+	font-family: "ËÎÌו";
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}

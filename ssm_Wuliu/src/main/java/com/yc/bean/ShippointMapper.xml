@@ -61,12 +61,12 @@
     insert into shippoint (spname, spperson, 
       sptel, spemail, spaddress, 
       spType, sppersonTel, spfax, 
-      sparea, spremark, 
+      sparea, spremark, remark1,
       remark5)
     values ( #{spname,jdbcType=VARCHAR}, #{spperson,jdbcType=VARCHAR}, 
       #{sptel,jdbcType=VARCHAR}, #{spemail,jdbcType=VARCHAR}, #{spaddress,jdbcType=VARCHAR}, 
       #{sptype,jdbcType=INTEGER}, #{sppersontel,jdbcType=VARCHAR}, #{spfax,jdbcType=VARCHAR}, 
-      #{sparea,jdbcType=VARCHAR}, #{spremark,jdbcType=VARCHAR}, 
+      #{sparea,jdbcType=VARCHAR}, #{spremark,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR},
       "1")
   </insert>
  

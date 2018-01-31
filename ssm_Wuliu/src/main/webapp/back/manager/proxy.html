@@ -1,0 +1,335 @@
+<!-- 代理点 -->
+<table id="proxy_table" data-options="fit:true"></table>
+
+<!-- 条件查询 -->
+<div id="proxy_search">
+	<a href="javascript:addProxy()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
+	<a href="javascript:deleteProxy()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>配送点名称:</label>
+	<select name="search_spid" id="search_spid">
+		<option value="">--全部--</option>
+	</select>
+	<label>代理点名称</label>
+	<input type="text" name="search_prname" id="search_prname" class="song_input">
+	<a href="javascript:searchProxy()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+</div>
+
+<!-- 代理点详情  -->
+<div id="proxy_detail" class="easyui-dialog" title="代理点详情" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="proxy_detail_form">
+	<ul>
+		<li>
+			<label>代理点名称：</label>
+			<label id="proxy_prname_label"></label>		
+		</li>
+		<li>
+			<label>所属配送点：</label>
+			<label id="proxy_spname_label"></label>	
+		</li>
+		<li>
+			<label>代理点工作时间：</label>
+			<label id="proxy_prtime_label"></label>	
+		</li>
+		<li>
+			<label>代理点价格:</label>
+			<label id="proxy_prprice_label"></label>
+		</li>
+		<li>
+			<label>代理点备注:</label>
+			<label id="proxy_prremark_label"></label>
+		</li>
+	</ul>
+	</form>
+</div>
+
+<!-- 修改和添加代理点信息都用这个div -->
+<div id="update_proxy" class="easyui-dialog" title="添加代理点信息" style="width:400px;height:410px;"
+	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
+	<form id="update_proxy_form">
+	<ul>
+		<li>
+			<!-- 暂时用隐藏文本框存id值 -->
+			<input type="hidden" id="update_insert_prid_proxy" name="update_insert_prid_proxy" />
+			<label>代理点姓名：</label>
+			<input type="text" name="update_insert_prname_proxy" id="update_insert_prname_proxy"  />			
+		</li>
+		<li>
+			<label>配送点名称：</label>
+			<select name="update_insert_spid" id="update_insert_spid">
+	        </select>
+		</li>
+		<li>
+			<label>代理点工作时间：</label>
+			<input type="text" name="update_insert_prtime_proxy" id="update_insert_prtime_proxy" />
+		</li>
+		<li>
+			<label>代理点价格:</label>
+			<input type="text" name="update_insert_prprice_proxy" id="update_insert_prprice_proxy"  />
+		</li>
+		
+		<li>
+			<label>代理点备注:</label>
+			<input type="text" name="update_insert_prremark_proxy" id="update_insert_prremark_proxy" />
+		</li>
+		
+	</ul>
+	</form>
+</div>
+
+
+
+
+
+<style>
+	#operation:hover{
+		text-decoration: underline
+	}
+	
+	#proxy_detail li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#proxy_detail{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+	#update_proxy li{
+	list-style-type:none;
+	margin-top:20px;
+	}
+	
+	#update_proxy{
+	border:1px solid #95b8e7;
+	line-height:20px;
+	}
+	
+</style>
+
+
+
+<script type="text/javascript">
+var proxyEditRow=undefined;
+var proxyOp;
+var proxyflag;
+
+var proxyObject=$('#proxy_table').datagrid({
+	url:'../../findAllProxy.action',
+	queryParams:{spid:'',prname:''},
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中。。。。',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'prid',
+	remoteSort:false,
+	columns:[[   
+	          {field:"users",checkbox:true},
+	          {field:'prid',title:'代理点编号',width:80,align:'center',sortable:true},   
+	          {field:'prname',title:'代理点姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},  
+	          {field:'remark3',title:'所属配送点',width:100,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'prprice',title:'代理点价格',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'prtime',title:'代理点运营时间',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+	        	  return "<a id='operation' href='javascript:detailProxy("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateProxy("+val+")' style='color:#39f'>修改</a>"
+	          }}
+	]],
+	toolbar:"#proxy_search"
+		
+});
+
+
+function detailProxy(val){
+	$.ajax({
+		url:'../../findAproxyInfo.action',
+		data:{prid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#proxy_prname_label").html(item.prname);
+					$("#proxy_spname_label").html(item.shippoint.spname);
+					$("#proxy_prprice_label").html(item.prprice);
+					$("#proxy_prtime_label").html(item.prtime);
+					$("#proxy_prremark_label").html(item.prremark);
+				});
+			}
+		}
+	});
+	$('#proxy_detail').dialog({
+		title:"代理点详情",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$('#proxy_detail').dialog("close");
+			}
+		}]
+	});
+	$('#proxy_detail').dialog("open");
+}
+
+function updateProxy(val){
+	$.ajax({
+		url:'../../findAproxyInfo.action',
+		data:{prid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#update_insert_prid_proxy").val(item.prid);
+					$("#update_insert_prname_proxy").val(item.prname);
+					$("#update_insert_spid").val(item.shippoint.spid);
+					$("#update_insert_prtime_proxy").val(item.prtime);
+					$("#update_insert_prprice_proxy").val(item.prprice);
+					$("#update_insert_prremark_proxy").val(item.prremark);
+				});
+			}
+		}
+	});
+	$('#update_proxy').dialog({
+		title:"修改代理点信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				$.ajax({
+					url:"../../updateproxy.action",
+					data:$("#update_proxy_form").serialize(),
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明修改成功...
+							$('#update_proxy').dialog("close");
+							proxyObject.datagrid("reload");
+						}else{
+							alert("修改失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_proxy').dialog("open");
+}
+
+/**
+ * 添加代理点信息
+ */
+function addProxy(){
+	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
+	$("#update_insert_prname_proxy").val("");
+	$("#update_insert_spid option:first").prop("selected", 'selected');
+	$("#update_insert_prtime_proxy").val("");
+	$("#update_insert_prprice_proxy").val("");
+	$("#update_insert_prremark_proxy").val("");
+	
+	$('#update_proxy').dialog({
+		title:"添加代理点信息",
+		iconCls: 'icon-user-add',
+		buttons:[{
+			text: '确认',
+			iconCls: 'icon-user-add',
+			handler:function(){
+				//得到表单下面的数据
+				prname=$("#update_insert_prname_proxy").val();
+				spid=$("#update_insert_spid").val();
+				prtime=$("#update_insert_prtime_proxy").val();
+				prprice=$("#update_insert_prprice_proxy").val();
+				prremark=$("#update_insert_prremark_proxy").val();
+				alert(spid)
+				$.ajax({
+					url:"../../addproxy.action",
+					data:{prname:prname,spid:spid,prtime:prtime,prprice:prprice,prremark:prremark},
+					dataType:"JSON",
+					method:"POST",
+					success:function(data){
+						if(data==1){		//说明添加成功...
+							$('#update_proxy').dialog("close");
+							proxyObject.datagrid("reload");
+						}else{
+							alert("添加失败...");
+						}
+					}
+				});
+			}
+		}]
+	});
+	$('#update_proxy').dialog("open");
+}
+
+/*
+ * 删除代理点信息 
+ */
+function deleteProxy(){
+	var rows = proxyObject.datagrid("getChecked");
+	if(rows.length<0){
+		$.messager.show({title:'温馨提示',msg:'请编辑你要删除的数据...',timeout:2000,showType:'slide'});
+	}else{
+		$.messager.confirm('确认提示','数据一旦删除将不能恢复，您确定要删除吗？',function(r){
+			if(r){
+				var aids="";
+				for(var i=0,len=rows.length;i<len-1;i++){
+					aids+=rows[i].prid+",";
+				}
+				aids+=rows[i].prid;
+				$.post("../../delproxy.action",{prid:aids},function(data){
+    				data=parseInt($.trim(data));
+    				if(data>0){
+    					$.messager.show({title:'温馨提示',msg:'代理点信息删除成功...',timeout:2000,showType:'slide'});
+    	    			proxyObject.datagrid("reload");
+    				}else{
+    					$.messager.alert('失败提示','代理点信息删除失败。。。。','error');
+    				}
+    			},"text");
+			}else{
+				return;
+			}
+		});
+	}
+}
+
+/*
+ *搜索代理点信息 
+ */
+function searchProxy(){
+	spid=$("#search_spid").val();
+	prname=$("#search_prname").val();
+	$('#proxy_table').datagrid({
+		url:"../../findAllProxy.action",
+		queryParams:{spid:spid,prname:prname}
+	})
+}
+
+
+/*
+ * 先查询到所有的配送点,赋给select
+ */
+$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 $("#update_insert_spid").append(option);
+				 $("#search_spid").append(option);
+			 });
+		}
+	})
+});
+
+
+
+</script>
