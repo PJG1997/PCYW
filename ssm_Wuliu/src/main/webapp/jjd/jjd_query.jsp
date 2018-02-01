@@ -53,7 +53,7 @@
 				</td>
 			    <td bgcolor="#FFFFFF" rowspan="2" style="text-align:center">
 			     <input type="submit"  size="12" style="background-image: url(../images/chaxun.jpg);border:none;width:81;height:22" value=""  /><!-- <img src="yemian/images/chaxun.jpg" width="81" height="22" onclick="sub1()"> --></td>
-            </tr>
+            </tr> 
 			 <tr> 
 				  <td bgcolor="#FFFFFF">&nbsp;起始点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  	<select name="handover.hfromSpname" id="froms">

@@ -71,6 +71,8 @@ create table handover(
 );
 
 
+
+
 create table orderHandover(
 	ohid int primary key auto_increment,
 	hid int,/*   这个字段加外键   */
