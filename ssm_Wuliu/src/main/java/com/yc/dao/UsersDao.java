@@ -54,4 +54,8 @@ public interface UsersDao {
 	 */
 	public int deleteUsers(List list);
 	
+	/*
+	 * 根据usid查它的所属地*/
+	public Users findUsersByUsid(Users u);
+	
 }

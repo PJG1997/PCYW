@@ -39,4 +39,10 @@ public class HandoverBizImpl implements HandoverBiz {
 		handoverDao.delmanyHandover(list);
 	}
 
+	@Override
+	public Handover gethandover(Handover h) {
+		return handoverDao.gethandover(h);
+	}
+	
+	
 }

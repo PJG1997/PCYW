@@ -46,5 +46,10 @@ public class HandoverDaoImpl implements HandoverDao {
 	public void setSqlSession(SqlSessionTemplate sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	//只根据hid查信息
+	@Override
+	public Handover gethandover(Handover h) {
+		return sqlSession.selectOne("com.yc.bean.HandoverMapper.selectByPrimaryKey", h);
+	}
 	
 }

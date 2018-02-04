@@ -21,4 +21,7 @@ public interface HandoverDao {
 	/*
 	 * 根据车子id批量删除车辆*/
 	public void delmanyHandover(List list);
+	
+	/*根据id来查*/
+	public Handover gethandover(Handover h);
 }

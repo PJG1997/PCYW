@@ -65,6 +65,9 @@
     		<if test="dstatus!=null or dstatus==0">
     			and dstatus=#{dstatus}
     		</if>
+    		<if test="shipPoint.spaddress!=null and shipPoint.spaddress!=''">
+    			and shipPoint.spaddress=#{shipPoint.spaddress}
+    		</if>
     	</where>
     	<include refid="pageSql" />
   </select>

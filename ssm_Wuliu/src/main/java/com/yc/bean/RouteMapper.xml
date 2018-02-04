@@ -14,6 +14,13 @@
   <sql id="Base_Column_List" >
     rid, rname, rvia, remark1, remark2, remark3, remark4, remark5
   </sql>
+  <!-- 根据路线的id去查找信息 -->
+    <select id="selectByPrimaryKeyrvia" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from route
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
    <!-- 分页查询    pageNo:表示pageNo  pageSize:表示pageSize   因为pageSize和pageSize是字符串所以要把它们转为整形 -->
    <sql id="pageSql">
  		<if test="pageNo!=null and pageSize!=null">

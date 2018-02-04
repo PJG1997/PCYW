@@ -56,5 +56,9 @@ public class UsersBizImpl implements UsersBiz{
 	public int deleteUsers(List list) {
 		return usersDao.deleteUsers(list);
 	}
+	@Override
+	public Users findUsersByUsid(Users u) {
+		return usersDao.findUsersByUsid(u);
+	}
 
 }

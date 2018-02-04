@@ -94,6 +94,9 @@
   	<if test="driver.dname!=null and driver.dname!=''">
   		and d.dname  like CONCAT('%',#{d.dname},'%' )
   	</if>
+  	<if test="order1.osid!=null and order1.osid!=''">
+  		and o.osid=#{order1.osid}
+  	</if>
   	<if test="pageNo!=null and pageSize!=null">
   			limit #{pageNo},#{pageSize}
   	</if>

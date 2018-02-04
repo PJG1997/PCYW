@@ -21,12 +21,17 @@ public class Order1BizImpl implements Order1Biz{
 	private Order1Dao order1dao;
 	
 	@Override
-	public int addOrder1(Order1 order1) {
+	public Integer addOrder1(Order1 order1) {
 		return order1dao.addOrder1(order1);
 	}
 
 	@Override
 	public List<Order1> findAll() {
-		return null;
+		return order1dao.findAll();
+	}
+
+	@Override
+	public Order1 findRid(Order1 order1) {
+		return order1dao.findRid(order1);
 	}
 }
