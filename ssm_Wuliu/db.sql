@@ -20,7 +20,7 @@ create table car(
 );
 
 insert into car(cid,spid,cnumber,ctype,cbuyDay,crunNum,cvolume,cton,cstatus,cisBox) values(1,1,'1001','c',now(),'1000m',20,30,0,1);
-
+update car set remark5=1 where cid=1;
 create table driver(
 	did int  primary key auto_increment,
 	spid int,    
@@ -38,6 +38,8 @@ create table driver(
 );
 select * from driver;
 update driver set spid=2,dname='ycs',dnumber='asd',dphone='21316549874',didCard='asdsadasd',ddage=20,dstatus=0 where did=1;
+update driver set remark5=1 where did=1;
+
 create table goods(
 	gid int primary key auto_increment,
 	gname varchar(50),
@@ -53,8 +55,11 @@ create table goods(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
+update goods set remark5=1 where gid=1;
+
 select * from goods;
 insert into goods(gname,gcount,gprice,gweight,gvolume,gtype,gremark,remark1,remark2,remark3,remark4,remark5) values('food','1000',1000,200,30,'a','null','null','null','null','null','null');
+
 create table handover(
 	hid int primary key auto_increment,
 	cid int ,/*   这个字段加外键   */
@@ -75,6 +80,7 @@ create table handover(
 );
 select * from handover;
 insert into handover(cid,did,osid,rid,hfromSpname,htoSpname,hstartTime,hendTime,hstatus) values(1,1,1,1,'cs','sh',now(),now(),0);
+update handover set remark5=1 where hid=1;
 
 
 
@@ -116,8 +122,10 @@ create table order1(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
-
-
+insert into order1(usid,spid,osendName,osendTel,osendAddress,orecCode,orecPhone,otime,oprice,oinsurePrice,otype,ostatus,ostartTime,oendTime,orecSpname)
+values(1,1,'asdasd','asdad','dgfdg','asdad','16354654',now(),100,200,1,1,now(),now(),'asdsad');
+select * from order1;
+update order1 set remark5=1 where osid=1;
 create table orderInfo(
 	oiid int primary key auto_increment,
 	osid int,/*   这个字段加外键   */
@@ -181,6 +189,8 @@ create table route(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
+
+select * from route;
 --配送点
 create table shippoint(
 	spid int primary key auto_increment,
@@ -202,7 +212,7 @@ create table shippoint(
 );
 
 insert into shippoint values(1,'hgpsd','tome','56161','64648@qq.com','tianjing',1,'5641681486','4648648','16515','dasd',null,null,null,null,null);
-
+select * from shippoint;
 create table users(
 	usid int primary key auto_increment,
 	uname varchar(50),
@@ -219,6 +229,7 @@ create table users(
 	remark4 varchar(3000), --自动和usid一致
 	remark5 varchar(3000)
 );
+select * from users;
 update users set upwd='DF2107E57ED58419' where uname='yc';
 update users set remark4=2;
 insert into users values(2,'yc','aa','jack','beijing','4165468489','489498749','56448@qq.com','2','null','null','null','null','null');
@@ -233,3 +244,5 @@ create table log(
 select * from log;
 drop table log;
 delete from log;
+
+ 

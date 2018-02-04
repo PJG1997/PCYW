@@ -11,19 +11,20 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-	<link href="css/table.css" rel="stylesheet" type="text/css">
-	<link href="css/jgpsdtable.css" rel="stylesheet" type="text/css">
-	<link href="css/wenzi.css" rel="stylesheet" type="text/css">
+	<link href="../css/table.css" rel="stylesheet" type="text/css"> 
+	
 	<script type="text/javascript" src="../back/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
 	
 	
 	
-<script type="text/javascript" src="js/jjd_query.js">
-
-</script>
+<script type="text/javascript" src="js/jjd_query.js"></script>
+<style type="text/css">
+	#jjdinfo{
+		margin-left: 100px;
+	}
+</style>
 <title>生成交接单</title>
-<link href="../css/table.css" rel="stylesheet" type="text/css"> 
 </head>
 <body leftmargin="0" topmargin="15">
  <div id="content-header">
@@ -78,7 +79,7 @@
           	 <h5>交接单列表</h5>
           </div>
     	  <div class="widget-content nopadding">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table data-table table-bordered"  >
+		<table width="100%" border="0"  class="table data-table table-bordered" align="center" >
 			  <thead>
                 <tr>
                 	<th>序号</th>
@@ -97,6 +98,8 @@
 	          		
 				</tbody>
 		</table>
+		<br /><br /><br />
+		<center><a href="javascript:lastPage()">上一页</a><label>总共有:n页 当前为1/n</label><a href="javascript:nextPage()">下一页</a></center>
           </div>
       </div>
     </div>
