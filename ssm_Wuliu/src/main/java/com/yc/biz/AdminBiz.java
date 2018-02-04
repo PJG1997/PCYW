@@ -27,4 +27,7 @@ public interface AdminBiz {
 	
 	public int updateAdmin(Users users);
 	
+	//恢复管理员
+	public int updateStatus(Users u);
+	
 }

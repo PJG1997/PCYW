@@ -54,4 +54,7 @@ public interface UsersDao {
 	 */
 	public int deleteUsers(List list);
 	
+	//恢复用户
+	public int updateStatus(Users u);
+	
 }

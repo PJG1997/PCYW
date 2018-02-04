@@ -45,4 +45,9 @@ public class AdminBizImpl implements AdminBiz{
 		return adminDao.updateAdmin(users);
 	}
 
+	@Override
+	public int updateStatus(Users u) {
+		return adminDao.updateStatus(u);
+	}
+
 }

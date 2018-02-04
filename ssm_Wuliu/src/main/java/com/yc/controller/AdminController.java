@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Users;
 import com.yc.biz.AdminBiz;
@@ -119,6 +118,20 @@ public class AdminController {
 		List<Users> list = adminBiz.searchAllAdmin(users);
 		jsonModel.setCode(1);
 		jsonModel.setObj(list);
+		return jsonModel;
+	}
+	
+	@RequestMapping("updateStatus.action")
+	public @ResponseBody JsonModel updateStatus(Users users,@Param(value = "usid") Integer usid){
+		JsonModel jsonModel=new JsonModel();
+		users.setUsid(usid);
+		try {
+			adminBiz.updateStatus(users);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonModel.setCode(0);
+		}
+		jsonModel.setCode(1);
 		return jsonModel;
 	}
 }

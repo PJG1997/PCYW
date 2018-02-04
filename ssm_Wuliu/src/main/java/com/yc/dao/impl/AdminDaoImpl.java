@@ -55,5 +55,10 @@ public class AdminDaoImpl implements AdminDao{
 	public int updateAdmin(Users users) {
 		return sqlSession.update("users.updateByPrimaryKeySelective",users);
 	}
+
+	@Override
+	public int updateStatus(Users u) {
+		return sqlSession.update("users.updateStatus", u);
+	}
 	
 }
