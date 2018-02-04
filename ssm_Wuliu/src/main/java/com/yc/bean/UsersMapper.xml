@@ -66,15 +66,10 @@
     where uname=#{uname} and upwd=#{upwd} and status=1
   </select>
   
-  <!-- 删除用户信息 -->
-  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
-    update users set status=0
-    where usid in
-    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
-    	#{item}
-    </foreach>
-  </delete>
+
+ 
   
+
   <!-- 添加管理员 -->
   <insert id="insert" parameterType="Users" useGeneratedKeys="true" 
  		keyColumn="usid" keyProperty="usid" >
@@ -305,5 +300,21 @@
 		insert into users(uname,upwd,urealname,uaddress,uphone,utel,uemail,status) 
 		values(#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},1);
 	</insert>
+
+	 <!-- 删除用户信息 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    update users set status=0
+    where usid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </delete>
+
 	
+	
+	
+	
+
+  
+
 </mapper>

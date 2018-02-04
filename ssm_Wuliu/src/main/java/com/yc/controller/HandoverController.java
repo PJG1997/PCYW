@@ -36,7 +36,7 @@ public class HandoverController {
 	private Order1Biz order1Biz;
 	private JsonModel jsonModel=new JsonModel();
 	private Car c=new Car();
-	private Driver d=new Driver();
+	private Driver d=new Driver(); 
 	private Order1 o=new Order1();
 	private Route r=new Route();
 	//后台查询

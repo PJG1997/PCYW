@@ -80,6 +80,7 @@
 	<form id="user_update_user">
 	<ul>
 		<li>
+
 			<input type="hidden" name="usid" id="user_update_usid"  readOnly="true" />			
 			<label>用户帐户：</label>
 			<input type="text" name="uname" id="user_update_uname"   />			
@@ -190,6 +191,7 @@ function user_deleteUser(){
 				}
 				usids+=rows[i].usid;
 				
+
 				$.post("../../deleteUsers.action",{usid:usids},function(data){
     				data=parseInt($.trim(data));
     				if(data>0){
@@ -310,6 +312,7 @@ function user_addUser(){
 					success : function(data) {
 						if(data.code==1){
 							$('#user_add').dialog("close");
+							$.messager.show({title:'温馨提示',msg:'数据添加成功',timeout:2000,showType:'slide'});
 							userObject.datagrid("reload");
 						}
 					}

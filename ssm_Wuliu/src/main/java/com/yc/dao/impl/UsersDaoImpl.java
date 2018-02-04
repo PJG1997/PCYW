@@ -56,6 +56,7 @@ public class UsersDaoImpl implements UsersDao{
 		return sqlSession.update("users.updateByPrimaryKeySelective",u);
 		
 	}
+
 	@Override
 	public int deleteUsers(List list) {
 		return sqlSession.delete("users.deleteByPrimaryKey", list);

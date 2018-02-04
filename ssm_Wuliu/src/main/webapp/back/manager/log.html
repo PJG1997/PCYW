@@ -1,0 +1,44 @@
+<table id="log_data" data-options="fit:true"></table>
+
+
+<div id="log_search">
+	<a href="javascript:user_deleteLog()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
+	<div class="datagrid-btn-separator"></div>	
+	<label>时间:</label>
+	<input type="text" name="ldate" id="log_search_ldate" onfocus="WdatePicker({lang:'en'})" class="Wdate" />
+	<a href="javascript:log_searchLog()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
+
+</div>
+
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<script>
+var logEditRow=undefined;
+var logOp;
+var logflag;
+
+var logObject=$('#log_data').datagrid({
+	url:'../../findAllLog.action',
+	fitColumns:true,
+	striped:true,
+	loadMsg:'数据加载中...',
+	rownumbers:true,
+	pagination:true,
+	pageNumber:1,
+	pageSize:5,
+	pageList:[5,10,20,30,50],
+	sortName:'lid',
+	remoteSort:false,
+	columns:[[
+			  {field:"lids",checkbox:true},
+	          {field:'lid',title:'日志编号',width:80,align:'center',sortable:true},   
+	          {field:'lusid',title:'用户编号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'luname',title:'用户姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'ldate',title:'操作时间',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+	          {field:'loperation',title:'操作信息',width:80,align:'center',editor:{type:"text",options:{required:true}}}
+	          
+	]],
+	      
+	toolbar:"#log_search"
+		
+});
+</script>

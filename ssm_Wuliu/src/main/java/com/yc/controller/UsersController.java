@@ -1,6 +1,8 @@
 package com.yc.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
+import com.yc.bean.Log;
 import com.yc.bean.Users;
+import com.yc.biz.LogBiz;
 import com.yc.biz.UsersBiz;
 import com.yc.util.MD5Encryption;
 
@@ -26,21 +30,32 @@ import com.yc.util.MD5Encryption;
 public class UsersController {
 	@Resource(name="usersBizImpl")
 	private UsersBiz usersBiz;
+	
+	@Resource(name="logBizImpl")
+	private LogBiz logBiz;
 
 	@RequestMapping(value="back/usersLogin.action")
-	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Users users){
+	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Users users) throws UnsupportedEncodingException{
 		JsonModel jsonModel= new JsonModel();
 		String code = request.getParameter("code");
 		String codes=String.valueOf(session.getAttribute("rand"));
-
+		
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
 			String pwd=MD5Encryption.createPassword(users.getUpwd());
 			users.setUpwd(pwd);
 			Users u=usersBiz.login(users);
+			
 			if(u!=null){
 				jsonModel.setCode(2);
 				session.setAttribute("uname", u.getUname());
+				Log log = new Log();
+				log.setLusid(u.getUsid());
+				log.setLuname(u.getUname());
+				log.setLdate(new Date());
+				log.setLoperation("登录");
+				logBiz.insertLog(log);
+				
 			}else{
 				jsonModel.setCode(3);
 			}
@@ -137,6 +152,7 @@ public class UsersController {
 		return jsonModel;
 	}
 
+
 	//批量删除用户信息
 	@RequestMapping("deleteUsers.action")
 	public @ResponseBody int delDriver(@Param(value = "usid") String usid){
@@ -154,5 +170,6 @@ public class UsersController {
 		}
 		return 1;
 	}
+
 
 }

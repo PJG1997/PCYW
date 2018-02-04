@@ -1,11 +1,11 @@
 td {
-	font-family: "ËÎÌå";
+	font-family: "ï¿½ï¿½ï¿½ï¿½";
 	font-size: 12px;
 	color: #000000;
 }
 
 div {
-	font-family: "ËÎÌå";
+	font-family: "ï¿½ï¿½ï¿½ï¿½";
 	font-size: 12px;
 	font-weight: normal;
 	color: #000000;
@@ -15,15 +15,20 @@ div {
 }
 
 th {
-	font-family: "ËÎÌå";
+	font-family: "ï¿½ï¿½ï¿½ï¿½";
 	font-size: 12px;
 	font-weight: bold;
 	color: #000000;
 }
 
 .priceedittd{
-	font-family: "Á¥Êé";
+	font-family: "ï¿½ï¿½ï¿½ï¿½";
 	font-size: 15px;
 	color: #000000;
 	text-align: left;
+}
+
+td{
+	
+	width:100px;
 }

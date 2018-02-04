@@ -42,6 +42,7 @@ public interface UsersBiz {
 	public int updateUser(Users u);
 	
 	/**
+
 	 * 批量删除用户信息
 	 * @param list
 	 * @return
