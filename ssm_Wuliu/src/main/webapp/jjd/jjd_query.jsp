@@ -15,11 +15,11 @@
 	<link href="css/jgpsdtable.css" rel="stylesheet" type="text/css">
 	<link href="css/wenzi.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="../back/My97DatePicker/WdatePicker.js"></script>
-	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
 	
 	
 	
-<script type="text/javascript">
+<script type="text/javascript" src="js/jjd_query.js">
 
 </script>
 <title>生成交接单</title>

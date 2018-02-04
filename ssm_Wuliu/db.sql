@@ -19,6 +19,8 @@ create table car(
 	remark5 varchar(2000)
 );
 
+insert into car(cid,spid,cnumber,ctype,cbuyDay,crunNum,cvolume,cton,cstatus,cisBox) values(1,1,'1001','c',now(),'1000m',20,30,0,1);
+
 create table driver(
 	did int  primary key auto_increment,
 	spid int,    
@@ -34,7 +36,8 @@ create table driver(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
-
+select * from driver;
+update driver set spid=2,dname='ycs',dnumber='asd',dphone='21316549874',didCard='asdsadasd',ddage=20,dstatus=0 where did=1;
 create table goods(
 	gid int primary key auto_increment,
 	gname varchar(50),
@@ -50,7 +53,8 @@ create table goods(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
-
+select * from goods;
+insert into goods(gname,gcount,gprice,gweight,gvolume,gtype,gremark,remark1,remark2,remark3,remark4,remark5) values('food','1000',1000,200,30,'a','null','null','null','null','null','null');
 create table handover(
 	hid int primary key auto_increment,
 	cid int ,/*   这个字段加外键   */
@@ -69,7 +73,8 @@ create table handover(
 	remark4 varchar(3000),
 	remark5 varchar(3000)
 );
-
+select * from handover;
+insert into handover(cid,did,osid,rid,hfromSpname,htoSpname,hstartTime,hendTime,hstatus) values(1,1,1,1,'cs','sh',now(),now(),0);
 
 
 
@@ -214,6 +219,7 @@ create table users(
 	remark4 varchar(3000), --自动和usid一致
 	remark5 varchar(3000)
 );
+update users set upwd='DF2107E57ED58419' where uname='yc';
 update users set remark4=2;
 insert into users values(2,'yc','aa','jack','beijing','4165468489','489498749','56448@qq.com','2','null','null','null','null','null');
 
