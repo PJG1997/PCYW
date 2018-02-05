@@ -165,9 +165,9 @@
 var adminEditRow=undefined;
 var adminOp;
 var adminflag;
- $(function(){
+$(function(){
 	$.post("../../findAllAdmin2.action",{page:1,rows:5},function(data){ 
-			adminObject=$('#admin_data').datagrid({
+		var adminObject=$('#admin_data').datagrid({
 			url:'../../findAllAdmin.action',
 			fitColumns:true,
 			striped:true,

@@ -9,6 +9,8 @@
 <script type="text/javascript">
 $(function(){
 	$("#sub_btn").click(function() {
+		
+		var users=$.trim($("#login_dstatus").val());
 		var uname=$.trim($("#aname").val());
 		var upwd=$.trim($("#pwd").val());
 		var code=$.trim($("#code").val());
@@ -20,7 +22,8 @@ $(function(){
 			url :"usersLogin.action",
 			data : {uname:uname,
 					upwd:upwd,
-					code:code
+					code:code,
+					users:users
 			},
 			dataType : "JSON",
 			method:"POST",
@@ -52,7 +55,13 @@ $(function(){
 		<div id="login_area">
 			<div id="login_form">
 				<form id="myform" name="myform">
-					<div id="login_tip">&nbsp;&nbsp;ManagerLogin</div>
+					<div id="login_tip">
+						<select name="login_dstatus" id="login_dstatus">
+							<option id="">--请选择--</option>
+							<option id="login_admin"  name="login_admin">管理员登录</option>
+							<option id="login_user" name="login_user">用户登录</option>
+						</select>
+					</div>
 					<div>
 						<input type="text" id="aname" class="username">
 					</div>

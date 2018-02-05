@@ -33,7 +33,7 @@ public class HandoverController {
 	private HandoverBiz handoverBiz;
 	private JsonModel jsonModel=new JsonModel();
 	private Car c=new Car();
-	private Driver d=new Driver();
+	private Driver d=new Driver(); 
 	private Order1 o=new Order1();
 	private Route r=new Route();
 	//查询

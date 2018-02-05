@@ -67,7 +67,7 @@
     from users
     where uname=#{uname} and upwd=#{upwd} and status=1
   </select>
-  
+
   <!-- 删除管理员信息 -->
   <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
     update users set status=0
@@ -76,7 +76,9 @@
     	#{item}
     </foreach>
   </delete>
+
   
+
   <!-- 添加管理员 -->
   <insert id="insert" parameterType="Users" useGeneratedKeys="true" 
  		keyColumn="usid" keyProperty="usid" >
@@ -307,8 +309,9 @@
 		insert into users(uname,upwd,urealname,uaddress,uphone,utel,uemail,status) 
 		values(#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},1);
 	</insert>
+
 	<!-- 修改用户状态  -->
-  <update id="updateStatus" parameterType="com.yc.bean.Users">
+  <update id="updateStatusForUser" parameterType="com.yc.bean.Users">
   	update users set status=2 where usid=#{usid} and status=-1
   </update>
   
@@ -320,4 +323,5 @@
     	#{item}
     </foreach>
   </delete>
+
 </mapper>

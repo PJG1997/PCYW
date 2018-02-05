@@ -5,20 +5,30 @@ import java.util.List;
 import com.yc.bean.Handover;
 
 public interface HandoverDao {
-	/*
-	 * 根据车子的编号查车子的信息*/
+	
+	/**
+	 * 查询交接单
+	 * @param h
+	 * @return
+	 */
 	public List<Handover> getHandoverInfo(Handover h);
 	
-	/*
-	 * 添加车子的信息*/
+	/**
+	 * 添加交接单
+	 * @param h
+	 */
 	public void addHandover(Handover h);
 	
-	/*
-	 * 更新车子的信息*/
+	/**
+	 * 更新交接单
+	 * @param h
+	 */
 	public void updateHandoverInfo(Handover h);
 	
 	
-	/*
-	 * 根据车子id批量删除车辆*/
+	/**
+	 * 删除交接单
+	 * @param list
+	 */
 	public void delmanyHandover(List list);
 }
