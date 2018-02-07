@@ -52,4 +52,10 @@ public class ShippointDaoImpl implements ShippointDao{
 		this.sqlSession.insert("com.yc.bean.ShippointMapper.insert", sp);
 	}
 
+	@Override
+	public Shippoint getShippoint(Shippoint sp) {
+		
+		return sqlSession.selectOne("com.yc.bean.ShippointMapper.selectBySpname", sp);
+	}
+
 }

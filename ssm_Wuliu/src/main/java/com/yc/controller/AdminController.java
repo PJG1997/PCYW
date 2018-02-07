@@ -95,7 +95,7 @@ public class AdminController {
 		//easyui必须接受这样的格式,rows和total是必须的
 		map.put("rows", list);
 		//driverBiz.findDriverNoCondition(driver).size()调用的是带条件,不带分页的查询,这里不能带分页,如果一带分页,total就会等于pageSize
-		map.put("total", adminBiz.searchAllAdminNoPage(users));
+		map.put("total", adminBiz.searchAllAdminNoPage(users).size());
 
 		return map;
 	}

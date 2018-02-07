@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.bean.Driver;
+import com.yc.bean.Handover;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Shippoint;
 import com.yc.biz.DriverBiz;
+import com.yc.biz.HandoverBiz;
+import com.yc.biz.ShippointBiz;
 
 @Controller
 @Scope("prototype")
@@ -26,6 +29,10 @@ public class DriverController {
 
 	@Resource(name="driverBizImpl")
 	private DriverBiz driverBiz;
+	@Resource(name="handoverBizImpl")
+	private HandoverBiz handoverBiz;
+	@Resource(name="shippointBizImpl")
+	private ShippointBiz shippointBiz;
 	Map<String,Object> map=new HashMap<String,Object>();
 	private Shippoint sp=new Shippoint();
 	
@@ -36,6 +43,32 @@ public class DriverController {
 		JsonModel jsonModel=new JsonModel();
 		jsonModel.setObj(driverBiz.findDriverNoCondition(d));
 		return jsonModel;
+	}
+	//根据hid的起始配送点查出该地点的所有司机
+	@RequestMapping("finddriverByhid.action")
+	@ResponseBody
+	public JsonModel finddriverByhid(Driver d,HttpServletRequest request){
+		JsonModel jsonModel=new JsonModel();
+		Integer hid=Integer.parseInt(request.getParameter("hid"));
+		Handover h=new Handover();
+		h.setHid(hid);
+		Handover hand=handoverBiz.gethandover(h);
+		String spname=hand.getHfromspname();
+		sp.setspname(spname);
+		Shippoint shippoint=shippointBiz.getShippoint(sp);
+		Integer spid=shippoint.getSpid();
+		Shippoint Shippoint=new Shippoint();
+		Shippoint.setSpid(spid);
+		d.setShipPoint(Shippoint);
+		System.out.println(Shippoint);
+		List<Driver> list=new ArrayList<Driver>();
+		for(Driver driver:driverBiz.findDriver(d)){
+			list.add(driver);
+		}
+		jsonModel.setCode(1);
+		jsonModel.setObj(list);
+		return jsonModel;
+		
 	}
 	//带条件,带分页查询司机的信息
 	@RequestMapping("findAll.action")

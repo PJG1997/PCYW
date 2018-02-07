@@ -66,4 +66,9 @@ public class UsersDaoImpl implements UsersDao{
 	public int updateStatus(Users u) {
 		return sqlSession.update("users.updateStatusForUser", u);
 	}
+	@Override
+	public Users findUsersByUsid(Users u) {
+		return sqlSession.selectOne("users.selectByusid", u);
+	}
+
 }

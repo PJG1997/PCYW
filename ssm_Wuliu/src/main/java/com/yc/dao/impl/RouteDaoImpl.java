@@ -55,5 +55,14 @@ public class RouteDaoImpl implements RouteDao{
 	public List<Route> selectRouteForPage(Route route) {
 		return this.sqlSession.selectList("route.selectByPrimaryKeyforPage", route);
 	}
+	/*
+	 * 查路线顺序*/
+
+	@Override
+	public Route findRvia(Route route) {
+		
+		return sqlSession.selectOne("route.selectByPrimaryKeyrvia", route);
+	}
+	
 
 }

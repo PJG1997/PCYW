@@ -48,6 +48,9 @@ public interface UsersBiz {
 	 * @return
 	 */
 	public int deleteUsers(List list);
+	/*
+	 * 根据usid查它的所属地*/
+	public Users findUsersByUsid(Users u);
 	
 	//恢复用户
 	public int updateStatus(Users u);

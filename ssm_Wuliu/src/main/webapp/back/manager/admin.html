@@ -167,7 +167,7 @@ var adminOp;
 var adminflag;
 $(function(){
 	$.post("../../findAllAdmin2.action",{page:1,rows:5},function(data){ 
-		var adminObject=$('#admin_data').datagrid({
+		adminObject=$('#admin_data').datagrid({
 			url:'../../findAllAdmin.action',
 			fitColumns:true,
 			striped:true,

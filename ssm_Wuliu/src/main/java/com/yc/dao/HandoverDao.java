@@ -31,4 +31,7 @@ public interface HandoverDao {
 	 * @param list
 	 */
 	public void delmanyHandover(List list);
+	
+	/*根据id来查*/
+	public Handover gethandover(Handover h);
 }

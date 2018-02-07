@@ -25,6 +25,7 @@ import com.yc.biz.GoodsBiz;
 public class GoodsController {
 	@Resource(name="goodsBizImpl")
 	private GoodsBiz goodsBiz;
+	private JsonModel jsonModel=new JsonModel();
 	Map<String,Object> map=new HashMap<String,Object>();
 	
 	//查询
@@ -112,4 +113,22 @@ public class GoodsController {
 			return 1;
 		}
 	
+		
+	/**
+	 * 查询到所有的商品然后赋给前台
+	 * @return
+	 */
+	@RequestMapping("qiantai_findAllGoods.action")
+	public @ResponseBody JsonModel findAllGoods(){
+		Goods goods=new Goods();
+		try {
+			jsonModel.setObj(goodsBiz.selectAllGoodsForPage(goods));
+			jsonModel.setCode(1);
+		} catch (Exception e) {
+			jsonModel.setCode(0);
+			e.printStackTrace();
+		}
+		return jsonModel;
+	}
+		
 }

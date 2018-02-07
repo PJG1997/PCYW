@@ -10,7 +10,9 @@ public interface Order1Biz {
 	 * @param order1
 	 * @return
 	 */
-	public int addOrder1(Order1 order1);
+	public Integer addOrder1(Order1 order1);
 
 	public List<Order1> findAll();
+	
+	public Order1 findRid(Order1 order1);
 }

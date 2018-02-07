@@ -58,7 +58,12 @@
     </where>
   </select>
   
-  
+  <select id="selectByusid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where usid = #{usid,jdbcType=INTEGER}
+  </select>
   
   <!-- 用户登录 -->
   <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
