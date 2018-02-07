@@ -9,7 +9,6 @@
 <script type="text/javascript">
 $(function(){
 	$("#sub_btn").click(function() {
-		
 		var users=$.trim($("#login_dstatus").val());
 		var uname=$.trim($("#aname").val());
 		var upwd=$.trim($("#pwd").val());
@@ -52,7 +51,7 @@ $(function(){
 				method:"POST",
 				success : function(data) {
 					if(data.code==2){
-						window.location.href="manager/index.jsp";
+						window.location.href="../index.jsp";
 					}else if(data.code==3){
 						alert("用户名或密码失败");
 					}else if(data.code==0){

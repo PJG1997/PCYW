@@ -50,8 +50,7 @@ public class AdminController {
 		
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
-			//String pwd=MD5Encryption.createPassword(users.getUpwd());
-			String pwd=request.getParameter("pwd");
+			String pwd=MD5Encryption.createPassword(users.getUpwd());
 			String uname=request.getParameter("uname");
 			
 			users.setUname(uname);

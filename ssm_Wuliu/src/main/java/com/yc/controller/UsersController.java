@@ -39,8 +39,7 @@ public class UsersController {
 		
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
-			//String pwd=MD5Encryption.createPassword(users.getUpwd());
-			String pwd=request.getParameter("pwd");
+			String pwd=MD5Encryption.createPassword(users.getUpwd());
 			String uname=request.getParameter("uname");
 			users.setUpwd(pwd);
 			users.setUname(uname);
@@ -175,5 +174,12 @@ public class UsersController {
 		jsonModel.setCode(1);
 		return jsonModel;
 	}
-
+	@RequestMapping("findAllUser2.action")
+	public @ResponseBody JsonModel findAllUser2(Users users){
+		JsonModel jsonModel=new JsonModel();
+		List<Users> list = usersBiz.searchAllUsers(users);
+		jsonModel.setCode(1);
+		jsonModel.setObj(list);
+		return jsonModel;
+	}
 }
