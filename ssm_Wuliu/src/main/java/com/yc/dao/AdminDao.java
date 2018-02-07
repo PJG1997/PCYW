@@ -38,4 +38,7 @@ public interface AdminDao {
 	//恢复管理员
 	public int updateStatus(Users u);
 	
+	//管理员登录
+	public Users login(Users user);
+	
 }

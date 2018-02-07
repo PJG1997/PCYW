@@ -1,6 +1,5 @@
 package com.yc.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.annotation.Resource;
@@ -52,6 +51,5 @@ public class Order1Controller {
 	public JsonModel findAll(){
 		jsonModel.setObj(order1Biz.findAll());
 		return jsonModel;
-		
 	}
 }

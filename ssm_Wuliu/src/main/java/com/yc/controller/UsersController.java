@@ -31,10 +31,7 @@ public class UsersController {
 	@Resource(name="usersBizImpl")
 	private UsersBiz usersBiz;
 	
-	@Resource(name="logBizImpl")
-	private LogBiz logBiz;
-
-	@RequestMapping(value="back/usersLogin.action")
+	@RequestMapping(value="back/userLogin.action")
 	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Users users) throws UnsupportedEncodingException{
 		JsonModel jsonModel= new JsonModel();
 		String code = request.getParameter("code");
@@ -42,20 +39,15 @@ public class UsersController {
 		
 		if(code.equals(codes)){
 			jsonModel.setCode(1);
-			String pwd=MD5Encryption.createPassword(users.getUpwd());
+			//String pwd=MD5Encryption.createPassword(users.getUpwd());
+			String pwd=request.getParameter("pwd");
+			String uname=request.getParameter("uname");
 			users.setUpwd(pwd);
+			users.setUname(uname);
 			Users u=usersBiz.login(users);
-			
 			if(u!=null){
 				jsonModel.setCode(2);
 				session.setAttribute("uname", u.getUname());
-				Log log = new Log();
-				log.setLusid(u.getUsid());
-				log.setLuname(u.getUname());
-				log.setLdate(new Date());
-				log.setLoperation("登录");
-				logBiz.insertLog(log);
-				
 			}else{
 				jsonModel.setCode(3);
 			}
@@ -170,6 +162,18 @@ public class UsersController {
 		}
 		return 1;
 	}
-
+	@RequestMapping("updateStatusForUser.action")
+	public @ResponseBody JsonModel updateStatus(Users users,@Param(value = "usid") Integer usid){
+		JsonModel jsonModel=new JsonModel();
+		users.setUsid(usid);
+		try {
+			usersBiz.updateStatus(users);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonModel.setCode(0);
+		}
+		jsonModel.setCode(1);
+		return jsonModel;
+	}
 
 }

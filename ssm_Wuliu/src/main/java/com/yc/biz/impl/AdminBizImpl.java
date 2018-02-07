@@ -44,10 +44,16 @@ public class AdminBizImpl implements AdminBiz{
 	public int updateAdmin(Users users) {
 		return adminDao.updateAdmin(users);
 	}
-
+	
+	//管理员恢复
 	@Override
 	public int updateStatus(Users u) {
 		return adminDao.updateStatus(u);
+	}
+	//管理员登录
+	@Override
+	public Users login(Users user) {
+		return adminDao.login(user);
 	}
 
 }
