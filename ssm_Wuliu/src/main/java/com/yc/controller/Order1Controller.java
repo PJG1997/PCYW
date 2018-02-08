@@ -46,7 +46,9 @@ public class Order1Controller {
 			order1.setUsers(user);
 			shipPoint.setSpid(spid);
 			order1.setShipPoint(shipPoint);
-			Integer osid=order1Biz.addOrder1(order1);
+			order1Biz.addOrder1(order1);
+			Integer osid=order1.getOsid();
+			System.out.println("osid:"+osid);
 			jsonModel.setCode(1);
 			jsonModel.setObj(order1);
 			Order1 o=new Order1();
@@ -56,7 +58,11 @@ public class Order1Controller {
 			Integer rid=Integer.parseInt(or.getRemark1());
 			Route r=new Route();
 			r.setRid(rid);
-			String rvia=routeBiz.findRvia(r).getRvia();
+			System.out.println(rid);
+			System.out.println(r);
+			Route route=new Route();
+			route=routeBiz.findRvia(r);
+			String rvia=route.getRvia();
 			String rivaname[]=rvia.split("-");
 			for(int i=0;i<rivaname.length-1;i++){
 				Handover h=new Handover();
