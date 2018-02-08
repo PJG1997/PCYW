@@ -59,7 +59,12 @@ public class UsersDaoImpl implements UsersDao{
 
 	@Override
 	public int deleteUsers(List list) {
-		return sqlSession.delete("users.deleteByPrimaryKey", list);
+		return sqlSession.delete("users.deleteByPrimaryKeyForUsers", list);
+	}
+	
+	@Override
+	public int updateStatus(Users u) {
+		return sqlSession.update("users.updateStatusForUser", u);
 	}
 	@Override
 	public Users findUsersByUsid(Users u) {

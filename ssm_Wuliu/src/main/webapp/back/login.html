@@ -9,8 +9,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#sub_btn").click(function() {
-		
-		
+		var users=$.trim($("#login_dstatus").val());
 		var uname=$.trim($("#aname").val());
 		var upwd=$.trim($("#pwd").val());
 		var code=$.trim($("#code").val());
@@ -18,26 +17,53 @@ $(function(){
 			alert("您输入的信息不完整。。。");
 			return;
 		}
-		$.ajax({
-			url :"usersLogin.action",
-			data : {uname:uname,
-					upwd:upwd,
-					code:code
-			},
-			dataType : "JSON",
-			method:"POST",
-			success : function(data) {
-				if(data.code==2){
-					window.location.href="manager/index.jsp";
-				}else if(data.code==3){
-					alert("用户名或密码失败");
-				}else if(data.code==0){
-					alert("验证码错误");
-				}else{
-					alert("登录失败");
+		if(users=="--请选择--"){
+			alert("请选择要登录的是用户还是管理员");
+		}else if(users=="管理员登录"){
+			$.ajax({
+				url :"adminLogin.action",
+				data : {uname:uname,
+						upwd:upwd,
+						code:code
+				},
+				dataType : "JSON",
+				method:"POST",
+				success : function(data) {
+					if(data.code==2){
+						window.location.href="manager/index.jsp";
+					}else if(data.code==3){
+						alert("用户名或密码失败");
+					}else if(data.code==0){
+						alert("验证码错误");
+					}else{
+						alert("登录失败");
+					}
 				}
-			}
-		});
+			});
+		}else if(users=="用户登录"){
+			$.ajax({
+				url :"userLogin.action",
+				data : {uname:uname,
+						upwd:upwd,
+						code:code
+				},
+				dataType : "JSON",
+				method:"POST",
+				success : function(data) {
+					if(data.code==2){
+						window.location.href="../index.jsp";
+					}else if(data.code==3){
+						alert("用户名或密码失败");
+					}else if(data.code==0){
+						alert("验证码错误");
+					}else{
+						alert("登录失败");
+					}
+				}
+			});
+		}else{
+			alert("登录失败");
+		}
 	});
 })
 	
@@ -54,7 +80,13 @@ $(function(){
 		<div id="login_area">
 			<div id="login_form">
 				<form id="myform" name="myform">
-					<div id="login_tip">管理员登录&nbsp;&nbsp;ManagerLogin</div>
+					<div id="login_tip">
+						<select name="login_dstatus" id="login_dstatus">
+							<option value="--请选择--">--请选择--</option>
+							<option value="管理员登录">管理员登录</option>
+							<option value="用户登录">用户登录</option>
+						</select>
+					</div>
 					<div>
 						<input type="text" id="aname" class="username">
 					</div>

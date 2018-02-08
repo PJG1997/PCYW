@@ -52,4 +52,6 @@ public interface UsersBiz {
 	 * 根据usid查它的所属地*/
 	public Users findUsersByUsid(Users u);
 	
+	//恢复用户
+	public int updateStatus(Users u);
 }

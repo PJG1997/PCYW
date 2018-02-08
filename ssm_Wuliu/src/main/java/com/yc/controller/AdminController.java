@@ -1,6 +1,8 @@
 package com.yc.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yc.bean.Driver;
 import com.yc.bean.JsonModel;
+import com.yc.bean.Log;
 import com.yc.bean.Users;
 import com.yc.biz.AdminBiz;
+import com.yc.biz.LogBiz;
 import com.yc.util.MD5Encryption;
 
 @Controller
@@ -27,7 +30,51 @@ import com.yc.util.MD5Encryption;
 public class AdminController {
 	@Resource(name="adminBizImpl")
 	private AdminBiz adminBiz;
-	private JsonModel jsonModel=new JsonModel();
+	
+	@Resource(name="logBizImpl")
+	private LogBiz logBiz;
+	
+	/**
+	 * 管理员登录
+	 * @param session
+	 * @param request
+	 * @param users
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value="back/adminLogin.action")
+	public @ResponseBody JsonModel UsersLogin(HttpSession session,HttpServletRequest request,Users users) throws UnsupportedEncodingException{
+		JsonModel jsonModel= new JsonModel();
+		String code = request.getParameter("code");
+		String codes=String.valueOf(session.getAttribute("rand"));
+		
+		if(code.equals(codes)){
+			jsonModel.setCode(1);
+			String pwd=MD5Encryption.createPassword(users.getUpwd());
+			String uname=request.getParameter("uname");
+			
+			users.setUname(uname);
+			users.setUpwd(pwd);
+			Users u=adminBiz.login(users);
+			if(u!=null){
+				jsonModel.setCode(2);
+				session.setAttribute("uname", u.getUname());
+				Log log = new Log();
+				log.setLusid(u.getUsid());
+				log.setLuname(u.getUname());
+				log.setLdate(new Date());
+				log.setLoperation("登录");
+				logBiz.insertLog(log);
+			}else{
+				jsonModel.setCode(3);
+			}
+		}else{
+			jsonModel.setCode(0);
+		}
+
+		return jsonModel;
+	}
+
 	
 	@RequestMapping(value="findAllAdmin.action")
 	public @ResponseBody Map<String,Object> findAllAdminInfo(Users users,HttpServletRequest request){
@@ -119,6 +166,20 @@ public class AdminController {
 		List<Users> list = adminBiz.searchAllAdmin(users);
 		jsonModel.setCode(1);
 		jsonModel.setObj(list);
+		return jsonModel;
+	}
+	
+	@RequestMapping("updateStatus.action")
+	public @ResponseBody JsonModel updateStatus(Users users,@Param(value = "usid") Integer usid){
+		JsonModel jsonModel=new JsonModel();
+		users.setUsid(usid);
+		try {
+			adminBiz.updateStatus(users);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonModel.setCode(0);
+		}
+		jsonModel.setCode(1);
 		return jsonModel;
 	}
 }

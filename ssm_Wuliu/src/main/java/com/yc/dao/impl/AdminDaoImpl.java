@@ -56,4 +56,20 @@ public class AdminDaoImpl implements AdminDao{
 		return sqlSession.update("users.updateByPrimaryKeySelective",users);
 	}
 	
+	/**
+	 * 恢复管理员
+	 */
+	@Override
+	public int updateStatus(Users u) {
+		return sqlSession.update("users.updateStatus", u);
+	}
+	
+	/**
+	 * 管理员登录
+	 */
+	@Override
+	public Users login(Users user) {
+		return sqlSession.selectOne("users.loginByPrimaryKeyForAdmin",user);
+	}
+	
 }

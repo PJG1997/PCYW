@@ -6,7 +6,7 @@
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/jgpsdtable.css" rel="stylesheet" type="text/css">
 <link href="css/wenzi.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="back/My97DatePicker/WdatePicker.js"></script>
 </head>
 <!-- 添加商品表单的js -->
@@ -498,10 +498,8 @@ function checkForm(form){
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr> <th colspan="3">
         物 流 配 送 订 单
-       </th>
-       <th>
        	<input type="button" value="路线选择" onclick="routePlay(true)"/>
-       </th>
+     	</th>
       </tr>
       <tr> 
         <td colspan="3">		
@@ -755,7 +753,7 @@ function checkForm(form){
   <form action="" method="post"  name="form1" onSubmit="return checkForm(this)"> 
 	<table border="0">
 		<tr height="60">
-			<!-- 用来暂存路线id -->
+			用来暂存路线id
 			<input type="hidden" id="route_rid"
 				name="route_rid" value="0" />       
 			<td>路线名称：<input name="lxname" id="route_name" type="text" size="16"/></td>

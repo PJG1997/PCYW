@@ -1,3 +1,4 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang = "zh-CN">
 <table id="admin_data" data-options="fit:true"></table>
 
 <div id="admin_search">
@@ -165,7 +166,7 @@
 var adminEditRow=undefined;
 var adminOp;
 var adminflag;
- $(function(){
+$(function(){
 	$.post("../../findAllAdmin2.action",{page:1,rows:5},function(data){ 
 		adminObject=$('#admin_data').datagrid({
 			url:'../../findAllAdmin.action',
@@ -193,7 +194,7 @@ var adminflag;
 								if(row.status==1){
 									return "<a id='operation' href='javascript:detailAdmin("+row.usid+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:updateAdmin("+val+")' style='color:#39f'>修改</a>"
 								}else{
-									return "<a id='operation' href='javascript:detailAdmin("+row.usid+")' style='color:#39f' >恢复</a>"
+									return "<a id='operation' href='javascript:updateAdminStatus("+row.usid+")' style='color:#39f' >恢复</a>"
 								}
 			          }}
 			]],
@@ -310,6 +311,7 @@ function detailAdmin(val){
 	$('#admin_detail').dialog("open");
 }
 
+
 function updateAdmin(val){
 	$.ajax({
 		url:'../../findAdminInfo.action',
@@ -367,6 +369,20 @@ function admin_searchAdmin(){
 	})
 }
 
-
-
+function updateAdminStatus(val){
+	$.ajax({
+		url:'../../updateStatus.action',
+		data:{usid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+				if(data.code==1){	
+					alert("恢复管理员成功...");
+					adminObject.datagrid("reload");
+				}else{
+					alert("恢复管理员失败...");
+				}
+		}
+	});
+}
 </script>
