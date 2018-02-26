@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="order1" >
   <resultMap id="BaseResultMap" type="com.yc.bean.Order1" >
-    <id column="osid" property="osid" jdbcType="INTEGER" />
+     <id column="osid" property="osid" jdbcType="INTEGER" />
     <result column="osendName" property="osendname" jdbcType="VARCHAR" />
     <result column="osendTel" property="osendtel" jdbcType="VARCHAR" />
     <result column="osendAddress" property="osendaddress" jdbcType="VARCHAR" />
