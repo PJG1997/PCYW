@@ -66,7 +66,7 @@ public class Order1Controller {
 			String rivaname[]=rvia.split("-");
 			for(int i=0;i<rivaname.length-1;i++){
 				Handover h=new Handover();
-				h.setHfromspname(rivaname[i]);
+			    h.setHfromspname(rivaname[i]);
 				h.setHtospname(rivaname[i+1]);
 				h.setOrder1(o);
 				h.setRoute(r);
