@@ -14,4 +14,10 @@ public interface Order1Dao {
 	public List<Order1> findAll();
 	
 	public Order1 findRid(Order1 order1);
+	
+	/*
+	 * 带分页的查询订单
+	 * 
+	 * */
+	public List<Order1> findAllOrderToPage(Order1 order1); 
 }

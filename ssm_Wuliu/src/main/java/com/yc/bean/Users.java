@@ -2,6 +2,9 @@ package com.yc.bean;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = {"handler"})
 public class Users implements Serializable{
 	
     /**

@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>ĞÂ¶©µ¥</title>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>æ–°è®¢å•</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/jgpsdtable.css" rel="stylesheet" type="text/css">
 <link href="css/wenzi.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="back/My97DatePicker/WdatePicker.js"></script>
 </head>
-<!-- Ìí¼ÓÉÌÆ·±íµ¥µÄjs -->
+<!-- æ·»åŠ å•†å“è¡¨å•çš„js -->
 <script language="javascript">
 function addOrder(){
 	osendaddress=$("#formAddress").val();
@@ -33,7 +33,7 @@ function addOrder(){
 	oremark=$("#oremark").val();
 	$.ajax({
 		url:"addOrder.action",
-		//remark1ÓÃÀ´´æÂ·Ïßid    remark2ÓÃÀ´´æÖ§¸¶ÈË
+		//remark1ç”¨æ¥å­˜è·¯çº¿id    remark2ç”¨æ¥å­˜æ”¯ä»˜äºº
 		data:{osendname:osendname,osendtel:osendtel,osendaddress:osendaddress,orecname:orecname,orectel:orectel,
 			orecaddress:orecaddress,oreccode:oreccode,orecphone:orecphone,oprice:oprice,oinsureprice:oinsureprice,
 			otype:otype,ostatus:ostatus,ostarttimeString:ostarttimeString,oendtimeString:oendtimeString,orecspname:orecspname,
@@ -43,17 +43,17 @@ function addOrder(){
 		success:function(data){
 			if(data.code==1){
 				$("#order_osid").val(data.obj.osid);
-				//ÏÈ»ñÈ¡¶©µ¥µÄ¶©µ¥±àºÅ
+				//å…ˆè·å–è®¢å•çš„è®¢å•ç¼–å·
 				osid=$("#order_osid").val();
 				
-				//»ñÈ¡×ÜĞĞÊı
+				//è·å–æ€»è¡Œæ•°
 			    var rowsTotal=document.getElementById("mainBody").rows.length-1;
-			    var goodsNames="";      //½«ËùÓĞµÄÉÌÆ·ÃûÆ´½ÓÆğÀ´¸³¸øgoodsName
-			    var goodsCounts="";     //½«ËùÓĞµÄÉÌÆ·ÊıÁ¿Æ´½ÓÆğÀ´¸³¸øgoodsCounts
-			    var goodsPrices="";     //½«ËùÓĞµÄÉÌÆ·Êı¼Û¸ñÆ´½ÓÆğÀ´¸³¸øgoodsPrices
-			    var goodsGweights="";  	//½«ËùÓĞµÄÉÌÆ·ÖØÁ¿Æ´½ÓÆğÀ´¸³¸øgoodsGweights
-			    var goodsGvolumes="";	//½«ËùÓĞµÄÉÌÆ·Ìå»ıÆ´½ÓÆğÀ´¸³¸øgoodsGvolumes
-			    var goodsGremarks="";	//½«ËùÓĞµÄÉÌÆ·±¸×¢Æ´½ÓÆğÀ´¸³¸øgoodsGremarks
+			    var goodsNames="";      //å°†æ‰€æœ‰çš„å•†å“åæ‹¼æ¥èµ·æ¥èµ‹ç»™goodsName
+			    var goodsCounts="";     //å°†æ‰€æœ‰çš„å•†å“æ•°é‡æ‹¼æ¥èµ·æ¥èµ‹ç»™goodsCounts
+			    var goodsPrices="";     //å°†æ‰€æœ‰çš„å•†å“æ•°ä»·æ ¼æ‹¼æ¥èµ·æ¥èµ‹ç»™goodsPrices
+			    var goodsGweights="";  	//å°†æ‰€æœ‰çš„å•†å“é‡é‡æ‹¼æ¥èµ·æ¥èµ‹ç»™goodsGweights
+			    var goodsGvolumes="";	//å°†æ‰€æœ‰çš„å•†å“ä½“ç§¯æ‹¼æ¥èµ·æ¥èµ‹ç»™goodsGvolumes
+			    var goodsGremarks="";	//å°†æ‰€æœ‰çš„å•†å“å¤‡æ³¨æ‹¼æ¥èµ·æ¥èµ‹ç»™goodsGremarks
 			    for(var i=0;i<rowsTotal;i++){
 			    	if(i==rowsTotal-1){
 			    		goodsNames+=$("#select_Goods"+i+" option:selected").text();
@@ -71,7 +71,7 @@ function addOrder(){
 			    		goodsGremarks+=$("#goods_gremark"+i+"").val()+"-";
 			    	}
 			    }
-			    //·¢ËÍÇëÇó½«¶©µ¥ÏêÏ¸±í±£´æÆğÀ´
+			    //å‘é€è¯·æ±‚å°†è®¢å•è¯¦ç»†è¡¨ä¿å­˜èµ·æ¥
 			    $.ajax({
 			    	url:"addOrderInfo.action",
 			    	data:{osid:osid,goodsNames:goodsNames,goodsCounts:goodsCounts,goodsPrices:goodsPrices,
@@ -80,10 +80,10 @@ function addOrder(){
 			    	method:"POST",
 			    	success:function(data){
 			    		if(data.code==1){
-			    			alert("Ìí¼Ó³É¹¦...");
+			    			alert("æ·»åŠ æˆåŠŸ...");
 			    			window.location.href="ddgldel.html"; 
 			    		}else{
-			    			alert("Ìí¼ÓÊ§°Ü...");
+			    			alert("æ·»åŠ å¤±è´¥...");
 			    		}
 			    	}
 			    })
@@ -99,11 +99,11 @@ function reset1(){
 	document.form1.reset();
 }
 
-   // ĞÂÔöĞĞ 
-    var hangshu=-1;           //¿´Õâ¸ö±í¸ñÓĞ¶àÉÙĞĞ
+   // æ–°å¢è¡Œ 
+    var hangshu=-1;           //çœ‹è¿™ä¸ªè¡¨æ ¼æœ‰å¤šå°‘è¡Œ
     function addRow(){   
         //var textNum = document.getElementById("rownum");   
-        // µÃµ½ĞÂÔöĞĞ¼ÇÂ¼µÄĞĞÊı   
+        // å¾—åˆ°æ–°å¢è¡Œè®°å½•çš„è¡Œæ•°   
         //var index = textNum.value;   
         var index = 1;
         hangshu++;
@@ -113,9 +113,9 @@ function reset1(){
             textNum.select();   
         }   
         for(var i = 0; i < index; i++){   
-            // µÃµ½±í¸ñ¶ÔÏó   
+            // å¾—åˆ°è¡¨æ ¼å¯¹è±¡   
             var tableObj = document.getElementById("mainTb");   
-            // µÃµ½tbody¶ÔÏó   
+            // å¾—åˆ°tbodyå¯¹è±¡   
             var tableBodyObj = document.getElementById("mainBody");   
             var newRowObj = document.createElement("tr");   
             var newCheckBox = document.createElement("td");   
@@ -141,7 +141,7 @@ function reset1(){
 			newtext9.innerHTML = "<input type='text' name='goods_gremark"+hangshu+"'id='goods_gremark"+hangshu+"' size='9'>";  
 			
 			
-            // ĞÂÔöµÄtr½ÚµãÏÂÔö¼Ótd½Úµã   
+            // æ–°å¢çš„trèŠ‚ç‚¹ä¸‹å¢åŠ tdèŠ‚ç‚¹   
             newRowObj.appendChild(newCheckBox);     
             newRowObj.appendChild(newtext1);    
             newRowObj.appendChild(newtext2);    
@@ -155,10 +155,10 @@ function reset1(){
 			//newRowObj.getAttribute("id");
 			
 			//newRowObj.setAttribute("bgcolor","red");   
-            // tbody½ÚµãÏÂÔö¼Ótr½Úµã   
+            // tbodyèŠ‚ç‚¹ä¸‹å¢åŠ trèŠ‚ç‚¹   
             tableBodyObj.appendChild(newRowObj);   
             
-          //´ÓÊı¾İ¿âÀïÃæ²éÑ¯µ½¸÷ÖÖÉÌÆ·£¬È»ºó¸³Öµ¸øselect
+          //ä»æ•°æ®åº“é‡Œé¢æŸ¥è¯¢åˆ°å„ç§å•†å“ï¼Œç„¶åèµ‹å€¼ç»™select
 			$.ajax({
 				url:"qiantai_findAllGoods.action",
 				dataType:"JSON",
@@ -175,20 +175,20 @@ function reset1(){
         }   
     }   
     
-    var selectObj;     //selectObj¶ÔÏó
-    var jibenGprice;   //½«»ù±¾µÄ¼Û¸ñ´æÆğÀ´
-    var jibenGweight;	//½«»ù±¾µÄÖØÁ¿´æÆğÀ´
-    var jibenGvolume;	//½«»ù±¾µÄÌå»ı´æÆğÀ´
-    //Ñ¡ÔñÒ»ÖÖÉÌÆ·Ê±´¥·¢ÊÂ¼ş
+    var selectObj;     //selectObjå¯¹è±¡
+    var jibenGprice;   //å°†åŸºæœ¬çš„ä»·æ ¼å­˜èµ·æ¥
+    var jibenGweight;	//å°†åŸºæœ¬çš„é‡é‡å­˜èµ·æ¥
+    var jibenGvolume;	//å°†åŸºæœ¬çš„ä½“ç§¯å­˜èµ·æ¥
+    //é€‰æ‹©ä¸€ç§å•†å“æ—¶è§¦å‘äº‹ä»¶
     function selectGoods(gid){
-    	//Í¨¹ıÉÌÆ·µÄID²éÑ¯µ½¸ÃÉÌÆ·µÄ»ù±¾ĞÅÏ¢
+    	//é€šè¿‡å•†å“çš„IDæŸ¥è¯¢åˆ°è¯¥å•†å“çš„åŸºæœ¬ä¿¡æ¯
     	$.ajax({
     		url:"findGoodsInfo.action",
     		data:{gid:gid},
     		dataType:"JSON",
     		method:"POST",
     		success:function(data){
-    			//ÒÑ¾­²éÑ¯µ½¸ÃÉÌÆ·µÄ»ù±¾ĞÅÏ¢  È»ºó¸³Öµ¸øinputÎÄ±¾¿ò
+    			//å·²ç»æŸ¥è¯¢åˆ°è¯¥å•†å“çš„åŸºæœ¬ä¿¡æ¯  ç„¶åèµ‹å€¼ç»™inputæ–‡æœ¬æ¡†
     			var shuzi=selectObj.substring(12);
     			$('#goods_gid'+shuzi).val(data.obj[0].gid);
     			$('#goods_count'+shuzi).val(data.obj[0].gcount);
@@ -205,12 +205,12 @@ function reset1(){
     	})
     }
     
-    //»ñÈ¡µ½selectµÄ¶ÔÏó
+    //è·å–åˆ°selectçš„å¯¹è±¡
     function huodeSelectdObj(obj){
     	selectObj=obj.id
     }
     
-    //µ±¸Ä±äÊıÁ¿Ê±£¬ÆäËû¼Û¸ñÒ²ÒªËæ×Å¸Ä±ä
+    //å½“æ”¹å˜æ•°é‡æ—¶ï¼Œå…¶ä»–ä»·æ ¼ä¹Ÿè¦éšç€æ”¹å˜
     function setTotal(obj){
     	var shuzi=obj.id.substring(11);
 		$('#goods_gprice'+shuzi).val(jibenGprice*$('#goods_count'+shuzi).val());
@@ -219,7 +219,7 @@ function reset1(){
     }
     
     
-    // ĞÂÔöĞĞÊıÑ¡Ôñ¿ò¼ì²éÊäÈë±ØĞëÊÇÊı×Ö   
+    // æ–°å¢è¡Œæ•°é€‰æ‹©æ¡†æ£€æŸ¥è¾“å…¥å¿…é¡»æ˜¯æ•°å­—   
     function checknum(strVal){   
        /* if (strVal.length != 0){   
             var r = strVal.match(new RegExp(/^[0-9]+$/));   
@@ -231,48 +231,48 @@ function reset1(){
         }   */
         return true;   
     }   
-    // ÅúÁ¿É¾³ıÖ¸¶¨µÄĞĞ   
+    // æ‰¹é‡åˆ é™¤æŒ‡å®šçš„è¡Œ   
     function deleteRow(){   
         var Tblen;   
-        // µÃµ½ËùÓĞ checkbox ¶ÔÏó   
+        // å¾—åˆ°æ‰€æœ‰ checkbox å¯¹è±¡   
         var checkbox = document.getElementsByName("checkbox");   
         //var checkboxlen = document.all.checkbox.length;   
-        // µÃµ½ËùÓĞÌá½»µÄcheckbox¸öÊı   
+        // å¾—åˆ°æ‰€æœ‰æäº¤çš„checkboxä¸ªæ•°   
         var checkboxlen = checkbox.length;   
         var ischecked;   
-        // µÃµ½É¾³ı°´Å¥¶ÔÏó   
+        // å¾—åˆ°åˆ é™¤æŒ‰é’®å¯¹è±¡   
         var delbutton = document.getElementById("delete");   
         for (var i=0; i < checkboxlen; i++){   
-            // µÃµ½±í¸ñĞĞÊı   
+            // å¾—åˆ°è¡¨æ ¼è¡Œæ•°   
         Tblen = this.mainTb.rows.length - 1;   
-        // ×îÖÕ±£ÁôÒ»ĞĞ¼ÇÂ¼   
+        // æœ€ç»ˆä¿ç•™ä¸€è¡Œè®°å½•   
        /* if (Tblen == 1)    
         {   
             document.getElementsByName("checkbox")[0].checked = false;   
             alert("A line have to be saved in the ID of mainTb!");   
-            // É¾³ı°´Å¥²»¿ÉÓÃ   
+            // åˆ é™¤æŒ‰é’®ä¸å¯ç”¨   
             delbutton.disabled = true;   
             return false;   
         }  
 		*/
         ischecked = checkbox[i].checked;   
-        // Èç¹ûµ±Ç°µÄcheckboxÑ¡ÖĞ£ºÉ¾³ıµ±Ç°½Úµã£¬ÓÉÓÚÉ¾³ı½Úµãºó£¬ÏÂÃæµÄ½ÚµãÉÏÒÆ£¬ÓÎ±ê£¨¼ÇÂ¼ĞĞÖ¸Õë£©Ò²Ó¦¸ÃÉÏÒÆ   
+        // å¦‚æœå½“å‰çš„checkboxé€‰ä¸­ï¼šåˆ é™¤å½“å‰èŠ‚ç‚¹ï¼Œç”±äºåˆ é™¤èŠ‚ç‚¹åï¼Œä¸‹é¢çš„èŠ‚ç‚¹ä¸Šç§»ï¼Œæ¸¸æ ‡ï¼ˆè®°å½•è¡ŒæŒ‡é’ˆï¼‰ä¹Ÿåº”è¯¥ä¸Šç§»   
         if (ischecked)   
         {   
             // document.all("mainTb").deleteRow(i);   
             document.getElementById("mainTb").deleteRow(i + 1);   
-            // ÓÎ±ê£¨¼ÇÂ¼ĞĞÖ¸Õë£©ÉÏÒÆ   
+            // æ¸¸æ ‡ï¼ˆè®°å½•è¡ŒæŒ‡é’ˆï¼‰ä¸Šç§»   
             i--;   
         }   
-        // ÖØĞÂÍ³¼Æcheckbox¸öÊı   
+        // é‡æ–°ç»Ÿè®¡checkboxä¸ªæ•°   
         checkboxlen = checkbox.length;   
         }   
-        // É¾³ı²Ù×÷ºó°´Å¥×´Ì¬ÊÇ²»¿ÉÓÃ   
+        // åˆ é™¤æ“ä½œåæŒ‰é’®çŠ¶æ€æ˜¯ä¸å¯ç”¨   
         delbutton.disabled = true;   
     }   
-    // checkbox°´Å¥µ¥»÷ÊÂ¼ş´¦Àíº¯Êı£ºÊÇ·ñÖÁÉÙÑ¡ÖĞÒ»ĞĞ¼ÇÂ¼£¬ÊÇ¿ÉÒÔÉ¾³ı²Ù×÷£»Èç¹ûÃ»ÓĞÑ¡Ôñ£¬É¾³ı°´Å¥²»¿ÉÓÃ   
+    // checkboxæŒ‰é’®å•å‡»äº‹ä»¶å¤„ç†å‡½æ•°ï¼šæ˜¯å¦è‡³å°‘é€‰ä¸­ä¸€è¡Œè®°å½•ï¼Œæ˜¯å¯ä»¥åˆ é™¤æ“ä½œï¼›å¦‚æœæ²¡æœ‰é€‰æ‹©ï¼Œåˆ é™¤æŒ‰é’®ä¸å¯ç”¨   
     function checkBoxSel(){   
-        // µÃµ½É¾³ı°´Å¥¶ÔÏó   
+        // å¾—åˆ°åˆ é™¤æŒ‰é’®å¯¹è±¡   
         var delbutton = document.getElementById("delete");   
         if(checkselect()){   
             delbutton.disabled = false;   
@@ -282,9 +282,9 @@ function reset1(){
     }   
        
     function checkselect(){   
-            // µÃµ½ËùÓĞ checkbox ¶ÔÏó   
+            // å¾—åˆ°æ‰€æœ‰ checkbox å¯¹è±¡   
         var checkbox = document.getElementsByName("checkbox");   
-        // µÃµ½ËùÓĞÌá½»µÄcheckbox¸öÊı   
+        // å¾—åˆ°æ‰€æœ‰æäº¤çš„checkboxä¸ªæ•°   
         var chklength = checkbox.length;   
         var flag = false;   
         for(var i = 0; i < chklength; i++)   
@@ -302,24 +302,24 @@ function reset1(){
             return false;   
         }   
     }   
-    // Ò³Ãæ¼ÓÔØbodyÄÚÈİÊ±Ö´ĞĞ   
+    // é¡µé¢åŠ è½½bodyå†…å®¹æ—¶æ‰§è¡Œ   
    function loadpage(){   
         var delbutton = document.getElementById("delete");   
        // var rownum = document.getElementById("rownum");   
-        // ³õÊ¼¡°É¾³ı¡±°´Å¥²»¿ÉÓÃ   
+        // åˆå§‹â€œåˆ é™¤â€æŒ‰é’®ä¸å¯ç”¨   
         delbutton.disabled = true;   
-        // ³õÊ¼ĞĞÊıÊäÈë¿òÄÚÈİÎª¿Õ   
+        // åˆå§‹è¡Œæ•°è¾“å…¥æ¡†å†…å®¹ä¸ºç©º   
        // rownum.value = "";      
    }   
 
 </script>
-<!-- Ìí¼ÓÂ·ÏßÑ¡ÔñµÄjs -->
+<!-- æ·»åŠ è·¯çº¿é€‰æ‹©çš„js -->
 <script type="text/javascript" language="javascript">
 
 var curOption=new Option(); 
 
-function copyToList(from,to) //from±íÊ¾:°üº¬¿ÉÑ¡ÔñÏîÄ¿µÄselect¶ÔÏóÃû×Ö to±íÊ¾:ÁĞ³ö¿ÉÑ¡ÔñÏîÄ¿µÄselect¶ÔÏóÃû×Ö
-//Äã¿ÉÒÔ¸ù¾İÄãµÄ¾ßÌåÇé¿öĞŞ¸Ä
+function copyToList(from,to) //fromè¡¨ç¤º:åŒ…å«å¯é€‰æ‹©é¡¹ç›®çš„selectå¯¹è±¡åå­— toè¡¨ç¤º:åˆ—å‡ºå¯é€‰æ‹©é¡¹ç›®çš„selectå¯¹è±¡åå­—
+//ä½ å¯ä»¥æ ¹æ®ä½ çš„å…·ä½“æƒ…å†µä¿®æ”¹
 
 {
   fromList = eval('document.forms[1].' + from);
@@ -337,7 +337,7 @@ function copyToList(from,to) //from±íÊ¾:°üº¬¿ÉÑ¡ÔñÏîÄ¿µÄselect¶ÔÏóÃû×Ö to±íÊ¾:ÁĞ
       sel = true;
       if (current.value == 'temp')
       {
-        alert ('Äã²»ÄÜÑ¡ÔñÕâ¸öÏîÄ¿!');
+        alert ('ä½ ä¸èƒ½é€‰æ‹©è¿™ä¸ªé¡¹ç›®!');
         return;
       }
       txt = current.text;
@@ -348,7 +348,7 @@ function copyToList(from,to) //from±íÊ¾:°üº¬¿ÉÑ¡ÔñÏîÄ¿µÄselect¶ÔÏóÃû×Ö to±íÊ¾:ÁĞ
     }
   }
 }
-function allSelect() //ÕâÊÇµ±ÓÃ»§°´ÏÂÌá½»°´Å¥Ê±£¬¶ÔÁĞ³öÑ¡ÔñµÄselect¶ÔÏóÖ´ĞĞÈ«Ñ¡¹¤×÷£¬ÈÃµİ½»ÖÁµÄºóÌ¨³ÌĞòÄÜÈ¡µÃÏà¹ØÊı¾İ
+function allSelect() //è¿™æ˜¯å½“ç”¨æˆ·æŒ‰ä¸‹æäº¤æŒ‰é’®æ—¶ï¼Œå¯¹åˆ—å‡ºé€‰æ‹©çš„selectå¯¹è±¡æ‰§è¡Œå…¨é€‰å·¥ä½œï¼Œè®©é€’äº¤è‡³çš„åå°ç¨‹åºèƒ½å–å¾—ç›¸å…³æ•°æ®
 {
   List = document.forms[1].chosen;
   if (List.length && List.options[1].value == 'temp') return;
@@ -395,11 +395,11 @@ function down(obj){
 function swapOption(obj) {
    if(curOption!=null && curOption!=obj.options[getIndex(obj)] && getIndex(obj)>-1 && getIndex(obj)<obj.size){
 		if(obj.options.length <= getIndex(obj)){
-			curOption.swapNode(obj.options[obj.options.length-1]);¡¡
+			curOption.swapNode(obj.options[obj.options.length-1]);ã€€
 		}else{
-			curOption.swapNode(obj.options[getIndex(obj)]);¡¡
+			curOption.swapNode(obj.options[getIndex(obj)]);ã€€
 		}		
-   }¡¡   
+   }ã€€   
 }
 
 function getIndex(obj) {
@@ -424,11 +424,11 @@ function show(){
 
 function checkForm(form){
 	if(form.lxname==""){
-		alert("Â·ÏßÃû³Æ²»ÄÜÎª¿Õ");
+		alert("è·¯çº¿åç§°ä¸èƒ½ä¸ºç©º");
 		return false;
 	}
 	if(form.chosen.length == 0){
-		alert("Ñ¡ÔñÂ·Ïß²»ÄÜÎª¿Õ");  
+		alert("é€‰æ‹©è·¯çº¿ä¸èƒ½ä¸ºç©º");  
 		return false;
 	}
 	return true;
@@ -436,9 +436,9 @@ function checkForm(form){
 
 </script>
 
-<!-- ·¢ËÍÇëÇóµÄjs -->
+<!-- å‘é€è¯·æ±‚çš„js -->
 <script type="text/javascript" language="javascript">
-	//Ìø³öÑ¡ÔñÂ·ÏßµÄdiv
+	//è·³å‡ºé€‰æ‹©è·¯çº¿çš„div
 	function routePlay(op){
 		route_div=document.getElementById("route_Div");
 		if(op){
@@ -447,25 +447,25 @@ function checkForm(form){
 			route_div.style.display="none";
 		}
 	}
-	//ÏÈ²é³öËùÓĞµÄÅäËÍµã
+	//å…ˆæŸ¥å‡ºæ‰€æœ‰çš„é…é€ç‚¹
 	$(function(){
 		$.ajax({
 			url:"findAllShippoint.action",
 			dataType:"JSON",
 			method:"POST",
 			success:function(data){
-				$.each(data.obj,function(index,item){		//¸øselect¸³ÖµhouseType
+				$.each(data.obj,function(index,item){		//ç»™selectèµ‹å€¼houseType
 					 var optionCity="<option value='"+item.remark1+"'>"+item.remark1+"</option>"
 					 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
-					 $("#firstShippoint").append(option);     //¸øÆğÊ¼ÅäËÍµãselect¸³Öµ
-					 $("#finishShippoint").append(option);    //¸øÄ¿µÄÅäËÍµãselect¸³Öµ
-					 $("#shipPoint_city").append(optionCity);     //¸øÂ·ÏßµÄ³ÇÊĞselect¸³Öµ
+					 $("#firstShippoint").append(option);     //ç»™èµ·å§‹é…é€ç‚¹selectèµ‹å€¼
+					 $("#finishShippoint").append(option);    //ç»™ç›®çš„é…é€ç‚¹selectèµ‹å€¼
+					 $("#shipPoint_city").append(optionCity);     //ç»™è·¯çº¿çš„åŸå¸‚selectèµ‹å€¼
 				 });
 			}
 		})
 	}); 
 	
-	//µãÌá½»·¢ËÍÇëÇó±£´æÂ·Ïß
+	//ç‚¹æäº¤å‘é€è¯·æ±‚ä¿å­˜è·¯çº¿
 	function SubmitRoute(){
 		route_rid=$("#route_rid").val();
 		route_div=document.getElementById("route_Div");
@@ -482,7 +482,7 @@ function checkForm(form){
 					$("#route_name").html(data.obj.rname);
 					route_div.style.display="none";
 				}else{
-					alert("Ìí¼ÓÂ·ÏßÊ§°Ü...");
+					alert("æ·»åŠ è·¯çº¿å¤±è´¥...");
 				}
 			}
 		})
@@ -497,8 +497,8 @@ function checkForm(form){
   <form action="" method="post" name="form1">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr> <th colspan="3">
-        Îï Á÷ Åä ËÍ ¶© µ¥
-       	<input type="button" value="Â·ÏßÑ¡Ôñ" onclick="routePlay(true)"/>
+        ç‰© æµ é… é€ è®¢ å•
+       	<input type="button" value="è·¯çº¿é€‰æ‹©" onclick="routePlay(true)"/>
      	</th>
       </tr>
       <tr> 
@@ -508,41 +508,41 @@ function checkForm(form){
 			  <td >
                  <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
                   <tr bgcolor="#FFFFFF"> 
-				    <td width="8%" height="25">Ê¼·¢µØ</td>
+				    <td width="8%" height="25">å§‹å‘åœ°</td>
                     <td width="10%"><input name="textfield1" id="formAddress" type="text" size="10"></td>
-				   	<td width="8%" height="25">Ä¿µÄµØ</td>
+				   	<td width="8%" height="25">ç›®çš„åœ°</td>
                     <td width="10%"><input name="textfield1" id="mudiAddress" type="text" size="10"></td>
-					<td width="8%">¶©µ¥ÀàĞÍ</td>
+					<td width="8%">è®¢å•ç±»å‹</td>
                     <td width="4%">
                       <select name="selectType" id="selectType">
-					  <option value='0'>¿ì¼ş</option>
-					  <option value='1'>Âı¼ş</option>
-					  <option value='2'>´ó×Ú</option>
+					  <option value='0'>å¿«ä»¶</option>
+					  <option value='1'>æ…¢ä»¶</option>
+					  <option value='2'>å¤§å®—</option>
 					  </select>
 				   </td>
-				   <td width="8%">¶©µ¥×´Ì¬</td>
+				   <td width="8%">è®¢å•çŠ¶æ€</td>
                     <td width="4%">
                       <select name="selectStatus" id="selectStatus">
-					  <option value='0'>Î´·¢¼ş</option>
-					  <option value='1'>ÒÑ·¢¼ş</option>
-					  <option value='2'>ÒÑËÍ´ï</option>
-					  <option value='3'>ÒÑÇ©ÊÕ</option>
-					  <option value='4'>ÒÑÕÙ»Ø</option>
-					  <option value='5'>ÒÑ³·µ¥</option>
+					  <option value='0'>æœªå‘ä»¶</option>
+					  <option value='1'>å·²å‘ä»¶</option>
+					  <option value='2'>å·²é€è¾¾</option>
+					  <option value='3'>å·²ç­¾æ”¶</option>
+					  <option value='4'>å·²å¬å›</option>
+					  <option value='5'>å·²æ’¤å•</option>
 					  </select>
 				   </td>
 			      </tr>
 			      <tr bgcolor="#FFFFFF">
-			      	<td width="8%" height="25">ÒªÇóÆô³ÌÊ±¼ä</td>
+			      	<td width="8%" height="25">è¦æ±‚å¯ç¨‹æ—¶é—´</td>
                     <td width="10%"><input name="textfield1" id="ostarttimeString" type="text" size="10" onfocus="WdatePicker({lang:'en'})"><img src="images/img_date.gif" width="22" ></td>
-					<td width="8%" height="25">ÒªÇóµ½´ïÊ±¼ä</td>
+					<td width="8%" height="25">è¦æ±‚åˆ°è¾¾æ—¶é—´</td>
                     <td width="10%"><input name="textfield1" id="oendtimeString" type="text" size="10" onfocus="WdatePicker({lang:'en'})"><img src="images/img_date.gif" width="22" ></td>
-			      	<td width="12%">ÆğËÍÅäËÍµã</td>
+			      	<td width="12%">èµ·é€é…é€ç‚¹</td>
                     <td >
 	                    <select id="firstShippoint">
 						</select>
                     </td>
-                    <td width="12%">Ä¿µÄÅäËÍµã</td>
+                    <td width="12%">ç›®çš„é…é€ç‚¹</td>
                     <td >
                     	<select id="finishShippoint">
 					  	</select>
@@ -555,7 +555,7 @@ function checkForm(form){
 	 </td>
 	</tr>
    <tr> 
-        <td height="4" background="images/danghangbg5.jpg"><div>¼Ä¼şÈË×ÊÁÏ</div></td>
+        <td height="4" background="images/danghangbg5.jpg"><div>å¯„ä»¶äººèµ„æ–™</div></td>
        
       </tr>
 	  <tr>
@@ -569,14 +569,14 @@ function checkForm(form){
                 </table>
                 <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
                   <tr bgcolor="#FFFFFF"> 
-				    <td width="14%" height="25">ĞÕÃû</td>
+				    <td width="14%" height="25">å§“å</td>
                     <td width="16%"><input name="textfield1" id="osendname" type="text" size="20"></td>
-			        <td width="16%">µç»°</td>
+			        <td width="16%">ç”µè¯</td>
                     <td colspan="3"><input name="textfield6" id="osendtel" type="text" size="20"></td>
 				   </td>
 				 </tr>
 	             <!-- <tr bgcolor="#FFFFFF"> 
-                    <td width="14%" height="25">¼Ä¼şÈËµØÖ·</td>
+                    <td width="14%" height="25">å¯„ä»¶äººåœ°å€</td>
                     <td width="16%"><input name="textfield3" type="text" size="20"></td>
                     <td width="12%"></td>
                     <td ></td>
@@ -590,7 +590,7 @@ function checkForm(form){
         
       </tr>
       <tr> 
-        <td height="4" background="images/danghangbg5.jpg"><div>ÊÕ¼şÈË×ÊÁÏ</div></td>
+        <td height="4" background="images/danghangbg5.jpg"><div>æ”¶ä»¶äººèµ„æ–™</div></td>
        
       </tr>
 	  <tr>
@@ -603,20 +603,20 @@ function checkForm(form){
                 </table>
                 <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
                   <tr bgcolor="#FFFFFF"> 
-				    <td width="14%" height="25">ÊÕ¼şÈËĞÕÃû</td>
+				    <td width="14%" height="25">æ”¶ä»¶äººå§“å</td>
                     <td width="16%"><input name="textfield1" id="orecname" type="text" size="20"></td>
-			         <td width="14%" height="25">ÊÖ»ú</td>
+			         <td width="14%" height="25">æ‰‹æœº</td>
                     <td width="16%"><input name="textfield6" id="orecphone" type="text" size="20"></td>
 				   	<td width="12%"></td>
                     <td width="21%"></td>
 				   </td>
 				 </tr>
 	          <tr bgcolor="#FFFFFF"> 
-                    <!-- <td width="14%" height="25">µØÖ·</td>
+                    <!-- <td width="14%" height="25">åœ°å€</td>
                     <td width="16%"><input name="textfield3" type="text" size="20"></td> -->
-                    <td width="16%">ÓÊ±à</td>
+                    <td width="16%">é‚®ç¼–</td>
                     <td width="21%"><input name="textfield4" id="oreccode" type="text" size="20"></td>
-					<td width="12%">µç»°</td>
+					<td width="12%">ç”µè¯</td>
                     <td width="21%"><input name="textfield5" id="orectel" type="text" size="20"></td>
                   	<td width="12%"></td>
                     <td width="21%"></td>
@@ -628,7 +628,7 @@ function checkForm(form){
           </table></td>
 	  </tr>	 
 	    <tr> 
-        <td height="4" background="images/danghangbg5.jpg"><div>×Ê·ÑÇé¿ö</div></td>
+        <td height="4" background="images/danghangbg5.jpg"><div>èµ„è´¹æƒ…å†µ</div></td>
        
       </tr>
 	  <tr>
@@ -641,15 +641,15 @@ function checkForm(form){
                 </table>
                 <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
                   <tr bgcolor="#FFFFFF"> 
-				    <td width="10%" height="25">×Ü±£¼Û½ğ¶î(£¤Ôª)£º</td>
+				    <td width="10%" height="25">æ€»ä¿ä»·é‡‘é¢(ï¿¥å…ƒ)ï¼š</td>
                     <td width="20%"><input name="textfield1" id="oinsureprice" type="text" size="20"></td>
-			        <td width="10%">×Ü¼Æ·ÑÓÃ(£¤Ôª)£º</td>
+			        <td width="10%">æ€»è®¡è´¹ç”¨(ï¿¥å…ƒ)ï¼š</td>
                     <td width="16%"><input name="textfield1" id="oprice" type="text" size="20"></td>
-				   <td width="5%" height="25">Ö§¸¶ :</td>
-                    <td width="16%"><input name="payment" type="radio" value="¼Ä¼şÈË" checked>¼Ä¼şÈË<input name="payment" type="radio" value="ÊÕ¼şÈË">ÊÕ¼şÈË</td>
+				   <td width="5%" height="25">æ”¯ä»˜ :</td>
+                    <td width="16%"><input name="payment" type="radio" value="å¯„ä»¶äºº" checked>å¯„ä»¶äºº<input name="payment" type="radio" value="æ”¶ä»¶äºº">æ”¶ä»¶äºº</td>
 				 </tr>
 				  <tr bgcolor="#FFFFFF"> 
-				    <td width="10%" height="25">±¸×¢£º</td>
+				    <td width="10%" height="25">å¤‡æ³¨ï¼š</td>
                     <td colspan="6" align="left"><textarea name="remark" id="oremark" rows="3" cols="80"></textarea></td>
 				 </tr>
                 </table> </td>
@@ -660,9 +660,9 @@ function checkForm(form){
         <td height="4" background="images/danghangbg5.jpg">
 		  <table style="height: 32px;" width="100%">
 		     <tr>
-			   <td><div>»õÎïĞÅÏ¢</div></td>
+			   <td><div>è´§ç‰©ä¿¡æ¯</div></td>
 		       <td align="right">
-                  <input type="button" value="Ôö¼Ó" onclick="addRow()"><input type="button" value="É¾³ı" id="delete" onclick="deleteRow()" disabled="true">
+                  <input type="button" value="å¢åŠ " onclick="addRow()"><input type="button" value="åˆ é™¤" id="delete" onclick="deleteRow()" disabled="true">
 		       </td>
 		    </tr>
 		 </table>
@@ -671,7 +671,7 @@ function checkForm(form){
 
 	  <tr><td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
             <tr> 
-            <!-- ÓÃÀ´Ôİ´æ¶©µ¥id -->
+            <!-- ç”¨æ¥æš‚å­˜è®¢å•id -->
             <input type="hidden" id="order_osid"
 				name="order_osid" value="0" />  
               <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
@@ -682,16 +682,16 @@ function checkForm(form){
                 <table id="mainTb" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
                   <tbody id="mainBody" bgcolor="#FFFFFF">  
 				  <tr> 
-				   <td width="35" bgcolor="#E6F2F2"><font color="#0000FF">ĞòºÅ</font></td>
-                   <td width="82" bgcolor="#E6F2F2"><font color="#0000FF">»õÎïÃû³Æ</font></td>
-                   <td width="85" bgcolor="#E6F2F2"><font color="#0000FF">»õÎï±àÂë</font></td>
-                   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">»õÎïÊıÁ¿</font></td>
-				   <!-- <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">µ¥Î»</font></td> -->
-                   <td width="99" bgcolor="#E6F2F2"><font color="#0000FF">»õÎï¼ÛÖµ(£¤Ôª)</font></td>
-                   <td width="84" bgcolor="#E6F2F2"><font color="#0000FF">»õÎïÖØÁ¿(kg)</font></td>
-                   <td width="93" bgcolor="#E6F2F2"><font color="#0000FF">»õÎïÌå»ı(m3)</font></td>
-                   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">»õÎïÀà±ğ</font></td>
-                   <td width="62" bgcolor="#E6F2F2"><font color="#0000FF">±¸×¢</font></td>
+				   <td width="35" bgcolor="#E6F2F2"><font color="#0000FF">åºå·</font></td>
+                   <td width="82" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©åç§°</font></td>
+                   <td width="85" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©ç¼–ç </font></td>
+                   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©æ•°é‡</font></td>
+				   <!-- <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">å•ä½</font></td> -->
+                   <td width="99" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©ä»·å€¼(ï¿¥å…ƒ)</font></td>
+                   <td width="84" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©é‡é‡(kg)</font></td>
+                   <td width="93" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©ä½“ç§¯(m3)</font></td>
+                   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">è´§ç‰©ç±»åˆ«</font></td>
+                   <td width="62" bgcolor="#E6F2F2"><font color="#0000FF">å¤‡æ³¨</font></td>
                  </tr>
 				<!--
 				   <tr bgcolor="#FFFFFF"> 
@@ -703,31 +703,31 @@ function checkForm(form){
                     <td width="99"><input type="text" name="newCarName" size="9"></td>
 					<td width="84" ><input type="text" name="newCarName" size="9"></td>
                     <td width="93" ><input type="text" name="newCarName" size="9"></td>
-                    <td width="74" ><select name="select1"><option>ÒÂÎï</option><option>Éè±¸</option></select></td>
+                    <td width="74" ><select name="select1"><option>è¡£ç‰©</option><option>è®¾å¤‡</option></select></td>
                     <td width="62" ><input type="text" name="newCarName" size="9"></td>
                    </tr>
 				   -->
                  </tbody>
 
                  <!-- <tr bgcolor="#FFFFFF"> 
-				    <td width="14%" height="25">»õÎïÆ·Ãû</td>
+				    <td width="14%" height="25">è´§ç‰©å“å</td>
                     <td width="16%"><input name="textfield1" type="text" size="10"></td>
-			        <td width="16%">Ìå»ı</td>
+			        <td width="16%">ä½“ç§¯</td>
                     <td colspan="3">
-                     ³¤ <input name="textfield3" type="text" size="10">
-                     £¨CM£©*¿í 
+                     é•¿ <input name="textfield3" type="text" size="10">
+                     ï¼ˆCMï¼‰*å®½ 
 					  <input name="textfield3" type="text" size="10">
-					  (CM) *¸ß
+					  (CM) *é«˜
 					  <input name="textfield3" type="text" size="10"> (CM) 
 				   </td>
 				 </tr>
 	          <tr bgcolor="#FFFFFF"> 
-                    <td width="14%" height="25">Ô¤¼ÆÖØÁ¿</td>
+                    <td width="14%" height="25">é¢„è®¡é‡é‡</td>
                     <td width="16%"><input name="textfield3" type="text" size="10" value="0"> 
-                    (¹«½ï) </td>
-                    <td width="16%">Ï£Íûµ½´ïÊ±ÏŞ</td>
-                    <td width="21%"><select name="select1"><option>ÈıÌìµ½¼Ò</option></select></td>
-					<td width="12%">ÊıÁ¿</td>
+                    (å…¬æ–¤) </td>
+                    <td width="16%">å¸Œæœ›åˆ°è¾¾æ—¶é™</td>
+                    <td width="21%"><select name="select1"><option>ä¸‰å¤©åˆ°å®¶</option></select></td>
+					<td width="12%">æ•°é‡</td>
                     <td width="21%"><input name="textfield5" type="text" size="10"></td>
                   </tr>-->
                 </table> </td>
@@ -735,28 +735,28 @@ function checkForm(form){
 	  
     </table>
 	<table width="100%" border="0" cellpadding="0" cellspacing="1"  class="sub">
-	<tr><td style="text-align:center"><input type="button" value="±£´æ" onclick="addOrder()" /></td>
-	<td style="text-align:center"><input type="button" value="È¡Ïû"></td>
+	<tr><td style="text-align:center"><input type="button" value="ä¿å­˜" onclick="addOrder()" /></td>
+	<td style="text-align:center"><input type="button" value="å–æ¶ˆ"></td>
 	  </tr>
 	</table>
           
    
   </form>
 
-  <!-- Â·ÏßÑ¡ÔñµÄdiv -->
+  <!-- è·¯çº¿é€‰æ‹©çš„div -->
   <div class="auto" id="route_Div"
 			style="top: 35px; left: 418px; display: none;">
   	<center>
-<p><font class="wenzi">Â·ÏßÎ¬»¤</font></p>
+<p><font class="wenzi">è·¯çº¿ç»´æŠ¤</font></p>
 <br/>
 	<hr color="FDC31A"/>
   <form action="" method="post"  name="form1" onSubmit="return checkForm(this)"> 
 	<table border="0">
 		<tr height="60">
-			ÓÃÀ´Ôİ´æÂ·Ïßid
+			<!--  ç”¨æ¥æš‚å­˜è·¯çº¿id   -->
 			<input type="hidden" id="route_rid"
 				name="route_rid" value="0" />       
-			<td>Â·ÏßÃû³Æ£º<input name="lxname" id="route_name" type="text" size="16"/></td>
+			<td>è·¯çº¿åç§°ï¼š<input name="lxname" id="route_name" type="text" size="16"/></td>
 		</tr>
 		
       <tr> 
@@ -783,8 +783,8 @@ function checkForm(form){
     </table>
 	<br/><br/>
 	
-   	<input type="button" value="Ìá½»" onclick="SubmitRoute()" />&nbsp;&nbsp;
-	<input type="button" value="È¡Ïû" onclick="routePlay(false)"/>
+   	<input type="button" value="æäº¤" onclick="SubmitRoute()" />&nbsp;&nbsp;
+	<input type="button" value="å–æ¶ˆ" onclick="routePlay(false)"/>
   </form>
  	</center>
   </div>

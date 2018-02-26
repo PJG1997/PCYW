@@ -1,8 +1,16 @@
 package com.yc.bean;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonIgnoreProperties(value = {"handler"})
 public class Order1 implements Serializable{
     /**
 	 * 
@@ -37,16 +45,64 @@ public class Order1 implements Serializable{
     
     private String ostarttimeString;
     private String oendtimeString;
+    private String otimeString;
     
+    private Integer pageNo=0;
+    private Integer pageSize=5;
     
+    public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+	private List<Orderinfo> orderinfoList;
     
+    private Route route;
+    
+	public Route getRoute() {
+		return route;
+	}
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+	public String getOtimeString() {
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		if(this.otime!=null){
+			this.otimeString=df.format(this.otime);
+		}
+		return otimeString;
+	}
+	public void setOtimeString(String otimeString) {
+		this.otimeString = otimeString;
+	}
+	public List<Orderinfo> getOrderinfoList() {
+		return orderinfoList;
+	}
+	public void setOrderinfoList(List<Orderinfo> orderinfoList) {
+		this.orderinfoList = orderinfoList;
+	}
 	public String getOstarttimeString() {
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		if(this.ostarttime!=null){
+			this.ostarttimeString=df.format(this.ostarttime);
+		}
 		return ostarttimeString;
 	}
 	public void setOstarttimeString(String ostarttimeString) {
 		this.ostarttimeString = ostarttimeString;
 	}
 	public String getOendtimeString() {
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		if(this.oendtime!=null){
+			this.oendtimeString=df.format(this.oendtime);
+		}
 		return oendtimeString;
 	}
 	public void setOendtimeString(String oendtimeString) {
@@ -211,6 +267,51 @@ public class Order1 implements Serializable{
 				+ ", ostatus=" + ostatus + ", ostarttime=" + ostarttime + ", oendtime=" + oendtime + ", orecspname="
 				+ orecspname + ", oremark=" + oremark + ", remark1=" + remark1 + ", remark2=" + remark2 + ", remark3="
 				+ remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + ", ostarttimeString=" + ostarttimeString
-				+ ", oendtimeString=" + oendtimeString + "]";
+				+ ", oendtimeString=" + oendtimeString + ", otimeString=" + otimeString + ", orderinfoList="
+				+ orderinfoList + ", route=" + route + "]";
 	}
+	public Order1(Integer osid, Users users, Shippoint shipPoint, String osendname, String osendtel,
+			String osendaddress, String orecname, String orectel, String orecaddress, String oreccode, String orecphone,
+			Date otime, Double oprice, Double oinsureprice, Integer otype, Integer ostatus, Date ostarttime,
+			Date oendtime, String orecspname, String oremark, String remark1, String remark2, String remark3,
+			String remark4, String remark5, String ostarttimeString, String oendtimeString, String otimeString,
+			Integer pageNo, Integer pageSize, List<Orderinfo> orderinfoList, Route route) {
+		super();
+		this.osid = osid;
+		this.users = users;
+		this.shipPoint = shipPoint;
+		this.osendname = osendname;
+		this.osendtel = osendtel;
+		this.osendaddress = osendaddress;
+		this.orecname = orecname;
+		this.orectel = orectel;
+		this.orecaddress = orecaddress;
+		this.oreccode = oreccode;
+		this.orecphone = orecphone;
+		this.otime = otime;
+		this.oprice = oprice;
+		this.oinsureprice = oinsureprice;
+		this.otype = otype;
+		this.ostatus = ostatus;
+		this.ostarttime = ostarttime;
+		this.oendtime = oendtime;
+		this.orecspname = orecspname;
+		this.oremark = oremark;
+		this.remark1 = remark1;
+		this.remark2 = remark2;
+		this.remark3 = remark3;
+		this.remark4 = remark4;
+		this.remark5 = remark5;
+		this.ostarttimeString = ostarttimeString;
+		this.oendtimeString = oendtimeString;
+		this.otimeString = otimeString;
+		this.pageNo = pageNo;
+		this.pageSize = pageSize;
+		this.orderinfoList = orderinfoList;
+		this.route = route;
+	}
+	public Order1() {
+		super();
+	}
+
 }

@@ -29,5 +29,10 @@ public class Order1DaoImpl implements Order1Dao{
 	public Order1 findRid(Order1 order1) {
 		return sqlSession.selectOne("order1.selectByPrimaryKey", order1);
 	}
+
+	@Override
+	public List<Order1> findAllOrderToPage(Order1 order1) {
+		return sqlSession.selectList("order1.findOrderWithPage",order1);
+	}
 	
 }
