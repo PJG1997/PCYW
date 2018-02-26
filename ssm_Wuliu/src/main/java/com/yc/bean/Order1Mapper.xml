@@ -348,4 +348,11 @@
 		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
 	</select>
 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order1
+    where osid = #{osid,jdbcType=INTEGER}
+  </select>
+  
 </mapper>
