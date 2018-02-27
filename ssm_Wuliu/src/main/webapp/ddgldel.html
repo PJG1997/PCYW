@@ -1,9 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="back/My97DatePicker/WdatePicker.js"></script>
 <script language="javascript">
+
+$(function(){
+	findOrder();
+})
+
+function findOrder(){
+	$.ajax({
+		url:"findOrderPages.action",
+		data:$("#orderFrom").serialize(),
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			$("#orderTbody").html("");
+			alert(data.obj.length);
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					var tr="<tr bgcolor='#FFFFFF'><td width='9%' height='25' ><input type='checkbox' name='ordercode' value='0001$8'></td>";
+					tr+="<td width='9%' height='25'><a target='_blank' href='ddglnew.html'>"+item.osid+"</a></td>";
+					tr+="<td width='9%' height='25'>"+item.osendname+"</td>"  
+	                tr+="<td width='6%'>"+item.orecname+"</td>";
+	                tr+="<td width='7%'>"+item.remark3+"</td>";
+	                tr+="<td width='5%'>"+item.remark4+"</td>";
+	                tr+="<td width='7%'>"+item.osendaddress+"</td>";
+	                tr+="<td width='13%'>"+item.orecaddress+"</td>";
+	                tr+="<td width='8%'>"+item.ostatus+"</td>";
+	                tr+="<td width='8%'>"+item.otimeString+"</td></tr>"
+					$(tr).appendTo($("#orderTbody"));
+				});
+			}else{
+				$("#orderTbody").append("æŸ¥æ— æ•°æ®...");
+			}
+		}
+	})
+}
+
+
 function tui(){
-var a = confirm("È·¶¨ÒªÉ¾³ıÂğ?");
+var a = confirm("ç¡®å®šè¦åˆ é™¤å—?");
 if(a){
 
 }else{
@@ -41,7 +80,7 @@ function alertMe(oper, message){
    var ndel = "8,9,3,4,b";
    var nquit = "9,3,4,b,a,c,6,7";
    var key = "0,1,2,8,9,3,4,b,a,c,6,7,d";
-   var value = "ÕıÔÚÉêÇë,Î´´¦Àí,Í¬ÒâËÍ»õ,ÒÑÊÕ»õ,ÒÑ·âµ¥,ÒÑ·¢»õ,ÒÑµ½»õ,ÒÑ½»½ÓÎ´ÑéÊÕ,»õÎ´µ½,ËÍ»õ,ÒÑÍê³É,¿Í»§ÇëÇó³·µ¥,ÒÑ³·µ¥";
+   var value = "æ­£åœ¨ç”³è¯·,æœªå¤„ç†,åŒæ„é€è´§,å·²æ”¶è´§,å·²å°å•,å·²å‘è´§,å·²åˆ°è´§,å·²äº¤æ¥æœªéªŒæ”¶,è´§æœªåˆ°,é€è´§,å·²å®Œæˆ,å®¢æˆ·è¯·æ±‚æ’¤å•,å·²æ’¤å•";
    var arrstate = ordstate.split(",");
    var arrkey = key.split(",");
    var arrvalue = value.split(",");
@@ -57,7 +96,7 @@ function alertMe(oper, message){
 			  }
 			 
 			}
-		    alert("´æÔÚ" + arrvalue[loc] + "¶©µ¥," +  message);
+		    alert("å­˜åœ¨" + arrvalue[loc] + "è®¢å•," +  message);
 		    flag=1;
 		   break;
 		}
@@ -71,7 +110,7 @@ function alertMe(oper, message){
 				  break;
 			  }
 			}
-		   alert("´æÔÚ" + arrvalue[loc] + "¶©µ¥," +  message);
+		   alert("å­˜åœ¨" + arrvalue[loc] + "è®¢å•," +  message);
 		   flag=1;
 		   break;
 		}
@@ -83,9 +122,9 @@ function modifyOrder(){
   location.href="ddglupdate.html";
 }
 function delOrder(){
-   var flag = alertMe("del", "²»ÄÜ½øĞĞÉ¾³ı²Ù×÷!");
+   var flag = alertMe("del", "ä¸èƒ½è¿›è¡Œåˆ é™¤æ“ä½œ!");
    if(flag != 1){
-     alert("É¾³ı¶©µ¥");
+     alert("åˆ é™¤è®¢å•");
    }
    
 }
@@ -93,59 +132,50 @@ function traceOrder(){
   location.href="ddgltrace.html";
 }
 function quitOrder(){
-  var flag = alertMe("quit","²»ÄÜ½øĞĞÍË¶©²Ù×÷!");
+  var flag = alertMe("quit","ä¸èƒ½è¿›è¡Œé€€è®¢æ“ä½œ!");
   if(flag != 1){
-    alert("ÍË¶©³É¹¦!");
+    alert("é€€è®¢æˆåŠŸ!");
   }
 }
 </script>
-<title>ĞÂ¶©µ¥</title>
+<title>æ–°è®¢å•</title>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <link href="css/table.css" rel="stylesheet" type="text/css">
 </head>
 <body leftmargin="0" topmargin="15">
-  <form action="" method="post" enctype="multipart/form-data" name="form1">
-
-
+  <form name="orderFrom" id="orderFrom">
+	<input type="hidden" name="pages" id="pages" value="1" ><input type="hidden" name="pageSize" id="pageSize" value="5" >
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	  <th>¶©µ¥Î¬»¤</th>
+	  <th>è®¢å•ç»´æŠ¤</th>
 	</tr>
       <tr> 
         <td>
 		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
             <tr>
-              <td bgcolor="#FFFFFF">&nbsp;ÊÕ¼ÄµØ:&nbsp;&nbsp;&nbsp;<input type="text" name="text1" size="12"/>
+              <td bgcolor="#FFFFFF">&nbsp;æ”¶å¯„åœ°:&nbsp;&nbsp;&nbsp;<input type="text" id="osendaddress" name="osendaddress" size="12"/>
               </td>
-			    <td bgcolor="#FFFFFF">&nbsp;ÅäËÍµØ:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="text2" size="12"/>
+			    <td bgcolor="#FFFFFF">&nbsp;é…é€åœ°:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="orecaddress" type="text" name="orecaddress" size="12"/>
               </td>
-			    <td bgcolor="#FFFFFF">&nbsp;¿Í»§±àºÅ:<input type="text" name="text3" size="12"/>
+			    <td bgcolor="#FFFFFF">&nbsp;è®¢å•ç¼–å·:<input type="text" id="osid" name="osid" size="12"/>
               </td>
 			    <td bgcolor="#FFFFFF" rowspan="2" style="text-align:center"> <img src="images/chaxun.jpg" width="81" height="22" onclick="sub1()"></td>
             </tr>
 			 <tr> 
-				  <td bgcolor="#FFFFFF">&nbsp;¶©µ¥×´Ì¬:
-				   <select name="ORDERSTATE">
-                    <option value=""></option>
-                    <option value="0">ÕıÔÚÉêÇë </option>
-					<option value="1">Î´´¦Àí </option>
-					<option value="2">Í¬ÒâËÍ»õ </option>
-					<option value="8">ÒÑÊÕ»õ </option>
-					<option value="9">ÒÑ·âµ¥ </option>
-					<option value="3">ÒÑ·¢»õ </option>
-					<option value="4">ÒÑµ½»õ </option>
-					<option value="b">ÒÑ½»½ÓÎ´ÑéÊÕ</option>
-					<option value="a">»õÎ´µ½ </option>
-					<option value="c">ËÍ»õ </option>
-					<option value="6">ÒÑÍê³É </option>
-					<option value="7">¿Í»§ÇëÇó³·µ¥ </option>
-					<option value="d">ÒÑ³·µ¥ </option>
-                   </select>
+				  <td bgcolor="#FFFFFF">&nbsp;è®¢å•çŠ¶æ€:
+				   <select name="ostatus" id="ostatus">
+					  <option value='0'>æœªå‘ä»¶</option>
+					  <option value='1'>å·²å‘ä»¶</option>
+					  <option value='2'>å·²é€è¾¾</option>
+					  <option value='3'>å·²ç­¾æ”¶</option>
+					  <option value='4'>å·²å¬å›</option>
+					  <option value='5'>å·²æ’¤å•</option>
+				   </select>
 				</td>
-                <td bgcolor="#FFFFFF" colspan="2">&nbsp;ÏÂµ¥ÈÕÆÚ:´Ó
-                  <input type="text" name="text4" size="15"/>
-                  <img src="images/img_date.gif" width="21" > &nbsp;µ½ &nbsp;
-			      <input type="text" name="text4" size="15"/><img src="images/img_date.gif" width="22" > 
+                <td bgcolor="#FFFFFF" colspan="2">&nbsp;ä¸‹å•æ—¥æœŸ:ä»
+                  <input type="text" id="ostarttimeString" name="ostarttimeString" size="15" onfocus="WdatePicker({lang:'en'})" />
+                  <img src="images/img_date.gif" width="21" > &nbsp;åˆ° &nbsp;
+			      <input type="text" id="oendtimeString" name="oendtimeString" size="15" onfocus="WdatePicker({lang:'en'})" /><img src="images/img_date.gif" width="22" > 
 				</td>
             </tr>
           </table>
@@ -154,10 +184,10 @@ function quitOrder(){
       </tr>
 	  <tr> 
         <td height="4" align="right">
-		<input type="button" name="modifyit2" value="ĞŞ¸Ä" onclick="modifyOrder()">
-		<input type="button" name="modifyit3" value="É¾³ı" onclick="delOrder()">
-		<input type="button" name="modifyit4" value="ÍË¶©" onclick="quitOrder()">
-		<input type="button" name="modifyit4" value="´¦Àí×´Ì¬" onclick="traceOrder()">
+		<input type="button" name="modifyit2" value="ä¿®æ”¹" onclick="modifyOrder()">
+		<input type="button" name="modifyit3" value="åˆ é™¤" onclick="delOrder()">
+		<input type="button" name="modifyit4" value="é€€è®¢" onclick="quitOrder()">
+		<input type="button" name="modifyit4" value="å¤„ç†çŠ¶æ€" onclick="traceOrder()">
         
 </td>
       </tr>
@@ -173,59 +203,62 @@ function quitOrder(){
                   </tr>
                 </table>
                 <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+	         	<thead>
 	          <tr bgcolor="#FFFFFF"> 
-			        <td width="9%" height="25">ĞòºÅ</td>
-			        <td width="9%" height="25">¶©µ¥±àºÅ</td>
-                    <td width="9%" height="25">¼Ä¼şÈËĞÕÃû</td>
-                    <td width="6%">ÊÕ¼şÈËĞÕÃû</td>
-                    <td width="7%">»õÎïÊıÁ¿</td>
-					<td width="5%">»õÎïÆ·Ãû</td>
-                    <td width="7%">ÓÊ¼ÄµØ</td>
-                    <td width="13%">ÊÕ¼ÄµØ</td>
-                    <td width="8%">¶©µ¥×´Ì¬</td>
-					<td width="8%">ÊÕ¼ÄÊ±¼ä</td>
+			        <td width="9%" height="25">åºå·</td>
+			        <td width="9%" height="25">è®¢å•ç¼–å·</td>
+                    <td width="9%" height="25">å¯„ä»¶äººå§“å</td>
+                    <td width="6%">æ”¶ä»¶äººå§“å</td>
+                    <td width="7%">è´§ç‰©æ•°é‡</td>
+					<td width="5%">è´§ç‰©å“å</td>
+                    <td width="7%">é‚®å¯„åœ°</td>
+                    <td width="13%">æ”¶å¯„åœ°</td>
+                    <td width="8%">è®¢å•çŠ¶æ€</td>
+					<td width="8%">æ”¶å¯„æ—¶é—´</td>
 	          </tr>
-				   <tr bgcolor="#FFFFFF"> 
+	          </thead>
+	          <tbody id="orderTbody">
+				<!-- <tr bgcolor="#FFFFFF"> 
 				   <td width="9%" height="25" ><input type="checkbox" name="ordercode" value="0001$8"></td>
 				   <td width="9%" height="25"><a target="_blank" href="ddglnew.html">0001</a></td>
-                    <td width="9%" height="25">ÀîËÄ</td>
-                    <td width="6%">ÕÔÎå</td>
+                    <td width="9%" height="25">æå››</td>
+                    <td width="6%">èµµäº”</td>
                     <td width="7%">1</td>
-					<td width="5%">µçÄÔ</td>
-                    <td width="7%">±±¾©</td>
-                    <td width="13%">³¤É³</td>
-                    <td width="8%">ÒÑÊÕ»õ</td>
+					<td width="5%">ç”µè„‘</td>
+                    <td width="7%">åŒ—äº¬</td>
+                    <td width="13%">é•¿æ²™</td>
+                    <td width="8%">å·²æ”¶è´§</td>
 					<td width="8%">2008/5/5</td>
-                  
 	          </tr>
 			   <tr bgcolor="#FFFFFF"> 
 			   	    <td width="9%" height="25"><input type="checkbox" name="ordercode" value="0002$9"></td>
 				    <td width="9%" height="25"><a target="_blank" href="ddglnew.html">0002</a></td>
-                    <td width="9%" height="25">ÕÅÈı</td>
-                    <td width="6%">ÕÅÎ´</td>
+                    <td width="9%" height="25">å¼ ä¸‰</td>
+                    <td width="6%">å¼ æœª</td>
                     <td width="7%">3</td>
-					<td width="5%">Êé±¾</td>
-                    <td width="7%">±±¾©</td>
-                    <td width="13%">¹ã¶«</td>
-                    <td width="8%">ÒÑ·âµ¥</td>
+					<td width="5%">ä¹¦æœ¬</td>
+                    <td width="7%">åŒ—äº¬</td>
+                    <td width="13%">å¹¿ä¸œ</td>
+                    <td width="8%">å·²å°å•</td>
 					<td width="8%">2008/5/5</td>
                   
 			</tr>
 			   <tr bgcolor="#FFFFFF"> 
 			   	    <td width="9%" height="25"><input type="checkbox" name="ordercode" value="0003$1"> </td>
 				    <td width="9%" height="25"><a target="_blank" href="ddglnew.html">0003</a></td>
-                    <td width="9%" height="25">ÂíÔÆ</td>
-                    <td width="6%">ÀîËÄ</td>
+                    <td width="9%" height="25">é©¬äº‘</td>
+                    <td width="6%">æå››</td>
                     <td width="7%">4</td>
-					<td width="5%">ÒôÏì</td>
-                    <td width="7%">±±¾©</td>
-                    <td width="13%">ÉÏº£</td>
-                    <td width="8%">Î´´¦Àí</td>
+					<td width="5%">éŸ³å“</td>
+                    <td width="7%">åŒ—äº¬</td>
+                    <td width="13%">ä¸Šæµ·</td>
+                    <td width="8%">æœªå¤„ç†</td>
 					<td width="8%">2008/5/5</td>
                  
-	          </tr>
+	          </tr> -->
+	          </tbody>
 			  	  <tr bgcolor="#FFFFFF">
-	    <td colspan="10" style="text-align:center"><a href="#"> Ê×Ò³</a> &nbsp;&nbsp;&nbsp;&nbsp;   <a href="#">ÉÏ Ò»Ò³</a>  &nbsp;&nbsp;   &nbsp;&nbsp;  <a href="#">ÏÂÒ»Ò³</a>  &nbsp;&nbsp;&nbsp;&nbsp;   <a href="#">Ä©Ò³</a></td>
+	    <td colspan="10" style="text-align:center"><a href="#"> é¦–é¡µ</a> &nbsp;&nbsp;&nbsp;&nbsp;   <a href="#">ä¸Š ä¸€é¡µ</a>  &nbsp;&nbsp;   &nbsp;&nbsp;  <a href="#">ä¸‹ä¸€é¡µ</a>  &nbsp;&nbsp;&nbsp;&nbsp;   <a href="#">æœ«é¡µ</a></td>
 	  </tr>	
                 </table> </td>
             </tr>

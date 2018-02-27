@@ -61,7 +61,7 @@ public class RouteDaoImpl implements RouteDao{
 	@Override
 	public Route findRvia(Route route) {
 		
-		return sqlSession.selectOne("route.selectByPrimaryKeyrvia", route);
+		return sqlSession.selectOne("route.selectByPrimaryKey", route);
 	}
 	
 

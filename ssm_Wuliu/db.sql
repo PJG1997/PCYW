@@ -245,4 +245,7 @@ select * from log;
 drop table log;
 delete from log;
 
- 
+select order1.*,route.*,orderinfo.* from (select * from order1 limit 0,5) order1 left join orderinfo on order1.osid=orderinfo.osid left join route on order1.remark1=route.rid
+		
+		
+

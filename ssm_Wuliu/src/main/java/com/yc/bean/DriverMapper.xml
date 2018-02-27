@@ -30,8 +30,6 @@
     	<result property="sparea" column="sparea"></result>
   </resultMap>
   
-  
-  
   <!-- 需要查询到的字段 -->
   <sql id="Base_Column_List" >
     did,driver.spid, dname, dnumber, dphone, didCard, ddage, dstatus, driver.remark1, driver.remark2, driver.remark3, 

@@ -34,4 +34,9 @@ public class Order1BizImpl implements Order1Biz{
 	public Order1 findRid(Order1 order1) {
 		return order1dao.findRid(order1);
 	}
+
+	@Override
+	public List<Order1> findAllOrderToPage(Order1 order1) {
+		return order1dao.findAllOrderToPage(order1);
+	}
 }
