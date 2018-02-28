@@ -20,4 +20,15 @@
 		(#{order1.osid},#{gname},#{gprice},#{gcount},#{remark1},#{remark2},#{remark3},#{remark4},'1')
   </insert>
   
+  <!-- 删除订单详细表 -->
+  <delete id="deleteOrderInfo" parameterType="java.util.List" >
+    update orderinfo set remark5=0
+    where osid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </delete>
+  
+  
+  
 </mapper>

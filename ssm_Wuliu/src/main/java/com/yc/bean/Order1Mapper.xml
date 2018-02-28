@@ -20,11 +20,11 @@
 		<result column="oendTime" property="oendtime" jdbcType="DATE" />
 		<result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
 		<result column="oremark" property="oremark" jdbcType="VARCHAR" />
-		<result column="order1.remark1" property="remark1" jdbcType="VARCHAR" />
-		<result column="order1.remark2" property="remark2" jdbcType="VARCHAR" />
-		<result column="order1.remark3" property="remark3" jdbcType="VARCHAR" />
-		<result column="order1.remark4" property="remark4" jdbcType="VARCHAR" />
-		<result column="order1.remark5" property="remark5" jdbcType="VARCHAR" />
+		<result column="remark1" property="remark1" jdbcType="VARCHAR" />
+		<result column="remark2" property="remark2" jdbcType="VARCHAR" />
+		<result column="remark3" property="remark3" jdbcType="VARCHAR" />
+		<result column="remark4" property="remark4" jdbcType="VARCHAR" />
+		<result column="remark5" property="remark5" jdbcType="VARCHAR" />
 
 		<association property="route" javaType="com.yc.bean.Route">
 			<id column="rid" property="rid" jdbcType="INTEGER" />
@@ -63,10 +63,14 @@
 		from order1 where remark5=1
 	</select>
 
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from order1
-		where osid = #{osid,jdbcType=INTEGER}
-	</delete>
+	<!-- 删除订单信息 -->
+  <delete id="deleteOrder" parameterType="java.util.List" >
+    update order1 set remark5=0
+    where osid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </delete>
 
 	<insert id="insertSelective" parameterType="com.yc.bean.Order1"
 		useGeneratedKeys="true" keyColumn="osid" keyProperty="osid">
@@ -334,10 +338,10 @@
 				and orecAddress like CONCAT('%',#{orecaddress},'%' )
 			</if>
 			<if test="osid!=null and osid!=''">
-				and osid like CONCAT('%',#{osid},'%' )
+				and osid=#{osid}
 			</if>
 			<if test="ostatus!=null and ostatus!=''">
-				and ostatus like CONCAT('%',#{ostatus},'%' )
+				and ostatus=#{ostatus}
 			</if>
 			<if test="ostarttimeString!=null and ostarttimeString!='' and oendtimeString!='' and oendtimeString!=null">
 				and otime between #{ostarttimeString} and #{oendtimeString} 
@@ -351,8 +355,11 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from order1
-    where osid = #{osid,jdbcType=INTEGER}
+    from order1 left join orderinfo on order1.osid=orderinfo.osid
+		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
+    where order1.osid = #{osid,jdbcType=INTEGER}
   </select>
+  
+  
   
 </mapper>

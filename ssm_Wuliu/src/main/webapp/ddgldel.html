@@ -7,10 +7,11 @@
 <script language="javascript">
 
 $(function(){
-	findOrder();
+	findOrder(1);
 })
 
-function findOrder(){
+function findOrder(pages){
+	$("#pages").val(pages);
 	$.ajax({
 		url:"findOrderPages.action",
 		data:$("#orderFrom").serialize(),
@@ -18,10 +19,9 @@ function findOrder(){
 		method:"POST",
 		success:function(data){
 			$("#orderTbody").html("");
-			alert(data.obj.length);
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
-					var tr="<tr bgcolor='#FFFFFF'><td width='9%' height='25' ><input type='checkbox' name='ordercode' value='0001$8'></td>";
+					var tr="<tr bgcolor='#FFFFFF'><td width='9%' height='25' ><input type='checkbox' name='ordercode"+-item.osid+"' value='"+item.osid+"'></td>";
 					tr+="<td width='9%' height='25'><a target='_blank' href='ddglnew.html'>"+item.osid+"</a></td>";
 					tr+="<td width='9%' height='25'>"+item.osendname+"</td>"  
 	                tr+="<td width='6%'>"+item.orecname+"</td>";
@@ -29,33 +29,57 @@ function findOrder(){
 	                tr+="<td width='5%'>"+item.remark4+"</td>";
 	                tr+="<td width='7%'>"+item.osendaddress+"</td>";
 	                tr+="<td width='13%'>"+item.orecaddress+"</td>";
-	                tr+="<td width='8%'>"+item.ostatus+"</td>";
+	                switch(item.ostatus){
+	                case 1:tr+="<td width='8%'>未发件</td>";break;
+	                case 2:tr+="<td width='8%'>已发件</td>";break;
+	                case 3:tr+="<td width='8%'>已送达</td>";break;
+	                case 4:tr+="<td width='8%'>已签收</td>";break;
+	                case 5:tr+="<td width='8%'>已召回</td>";break;
+	                case 6:tr+="<td width='8%'>已撤单</td>";break;
+	                }
 	                tr+="<td width='8%'>"+item.otimeString+"</td></tr>"
 					$(tr).appendTo($("#orderTbody"));
 				});
 			}else{
 				$("#orderTbody").append("查无数据...");
 			}
+
+			//分页功能
+			var pages=data.pages;
+			var total=data.total;
+			var pagesize=data.pageSize;
+			var countpages;
+			if(total%pagesize==0){
+				countpages=total/pagesize;
+			}else{
+				countpages=(parseInt(total/pagesize)+1);
+			}
+			var prepages=pages;
+			if(pages>1){
+				prepages=pages-1;
+			}
+			var nextpages=countpages;
+			if(countpages==0){
+				countpages+=1;
+			}
+			if(pages<countpages){
+				nextpages=pages+1;
+			}
+			//$("#orderTbody").html("");
+			var temp="<tr bgcolor='#FFFFFF'><td colspan='10' style='text-align:center'><a href='javascript:findOrder(1)'> 首页</a> &nbsp;&nbsp;&nbsp;&nbsp;   <a href='javascript:findOrder("+prepages+")'>上 一页</a>  &nbsp;&nbsp;   &nbsp;&nbsp;  <a href='javascript:findOrder("+nextpages+")'>下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:findOrder("+countpages+")'>末页</a>";
+				temp+="&nbsp;&nbsp;&nbsp;&nbsp;<span>第"+pages+"页/共"+countpages+"页    记录总数:"+total+"条  每页显示"+pagesize+"条</span></td></tr>	";
+			$(temp).appendTo($("#orderTbody"));
 		}
 	})
 }
 
 
-function tui(){
-var a = confirm("确定要删除吗?");
-if(a){
-
-}else{
-
-}
-}
 function sub1(){
 document.form1.action="ddgldel.html";
 document.form1.submit();
 }
 function checkIt(){
-   var chbox = document.getElementsByName("ordercode");
-   var orderstate="";
+  /*  var orderstate="";
    var chkvalue;
    var loc;
    var flag=0;
@@ -73,9 +97,9 @@ function checkIt(){
 		 
 	  }
    }
-   return orderstate;
+   return orderstate; */
 }
-function alertMe(oper, message){
+/* function alertMe(oper, message){
    var ordstate = checkIt();
    var ndel = "8,9,3,4,b";
    var nquit = "9,3,4,b,a,c,6,7";
@@ -119,13 +143,65 @@ function alertMe(oper, message){
    return flag;
 }
 function modifyOrder(){
+<<<<<<< HEAD
   location.href="ddglupdate.html?odrId="+.obj;
+=======
+  location.href="ddglnew.html";
+} */
+
+//先查找表格中的那些行需要删除，先把ID拼接起来
+function pinJieOrderId(){
+	var table=document.getElementById('orderTable');
+	var stringOrderId="";
+	for(var i=table.rows.length - 1; i>0;i--){   
+	    var chkOrder = table.rows[i].cells[0].firstChild;    
+		if(chkOrder){    
+		   if(chkOrder.type = "CHECKBOX"){    
+		      if(chkOrder.checked){    
+		      	if(stringOrderId.length>0){  
+		      		stringOrderId+="-"+table.rows[i].cells[1].innerHTML;   
+		      	}else{
+		      		stringOrderId=table.rows[i].cells[1].innerHTML; 
+		      	}
+		      }    
+		    }    
+		}    
+	}
+	var splitOrderId=stringOrderId.split("-");
+	var finallyOrderId="";
+	for(var i=0;i<splitOrderId.length;i++){
+		if(finallyOrderId.length>0){
+			finallyOrderId+="-"+splitOrderId[i].substring(39,splitOrderId[i].length-4);
+		}else{
+			finallyOrderId=splitOrderId[i].substring(39,splitOrderId[i].length-4);
+		}
+	}
+	return finallyOrderId;
+>>>>>>> branch 'master' of git@github.com:PJG1997/PCYW.git
 }
+
+
 function delOrder(){
-   var flag = alertMe("del", "不能进行删除操作!");
-   if(flag != 1){
-     alert("删除订单");
-   }
+	var a = confirm("确定要删除吗?");
+	if(a){
+		var tableOrderId=pinJieOrderId();
+		$.ajax({
+			url:"delOrder.action",
+			data:{stringOsid:tableOrderId},
+			method:"POST",
+			dataType:"JSON",
+			success:function(data){
+				if(data.code==1){
+					alert("删除成功...");
+					location.reload();
+				}else{
+					alert("删除失败...");
+				}
+			}
+		});
+	}else{
+
+	}
    
 }
 function traceOrder(){
@@ -159,17 +235,18 @@ function quitOrder(){
               </td>
 			    <td bgcolor="#FFFFFF">&nbsp;订单编号:<input type="text" id="osid" name="osid" size="12"/>
               </td>
-			    <td bgcolor="#FFFFFF" rowspan="2" style="text-align:center"> <img src="images/chaxun.jpg" width="81" height="22" onclick="sub1()"></td>
+			    <td bgcolor="#FFFFFF" rowspan="2" style="text-align:center"> <img src="images/chaxun.jpg" width="81" height="22" onclick="findOrder(1)"></td>
             </tr>
 			 <tr> 
 				  <td bgcolor="#FFFFFF">&nbsp;订单状态:
 				   <select name="ostatus" id="ostatus">
-					  <option value='0'>未发件</option>
-					  <option value='1'>已发件</option>
-					  <option value='2'>已送达</option>
-					  <option value='3'>已签收</option>
-					  <option value='4'>已召回</option>
-					  <option value='5'>已撤单</option>
+				      <option value=''>--全部--</option>
+					  <option value='1'>未发件</option>
+					  <option value='2'>已发件</option>
+					  <option value='3'>已送达</option>
+					  <option value='4'>已签收</option>
+					  <option value='5'>已召回</option>
+					  <option value='6'>已撤单</option>
 				   </select>
 				</td>
                 <td bgcolor="#FFFFFF" colspan="2">&nbsp;下单日期:从
@@ -202,7 +279,7 @@ function quitOrder(){
                     <td height="4" bgcolor="FDC31A"><img src="images/a666nniu020.jpg" width="1" height="1"></td>
                   </tr>
                 </table>
-                <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                <table width="100%" border="0" id="orderTable" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
 	         	<thead>
 	          <tr bgcolor="#FFFFFF"> 
 			        <td width="9%" height="25">序号</td>
@@ -256,10 +333,6 @@ function quitOrder(){
 					<td width="8%">2008/5/5</td>
                  
 	          </tr> -->
-	          </tbody>
-			  	  <tr bgcolor="#FFFFFF">
-	    <td colspan="10" style="text-align:center"><a href="#"> 首页</a> &nbsp;&nbsp;&nbsp;&nbsp;   <a href="#">上 一页</a>  &nbsp;&nbsp;   &nbsp;&nbsp;  <a href="#">下一页</a>  &nbsp;&nbsp;&nbsp;&nbsp;   <a href="#">末页</a></td>
-	  </tr>	
                 </table> </td>
             </tr>
           </table></td>
