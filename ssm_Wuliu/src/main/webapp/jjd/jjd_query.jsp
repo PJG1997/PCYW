@@ -11,7 +11,6 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-	<link href="../css/table.css" rel="stylesheet" type="text/css"> 
 	
 	<script type="text/javascript" src="../back/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
@@ -30,11 +29,11 @@
  <div id="content-header">
   <br/>
    <center><h1>交接单查询</h1></center> 
-	<form id="form1" method="post" action="handover_selectHandoversByCondition">
+	<form id="form1" method="post">
 		<table >
             <tr>
               <td bgcolor="#FFFFFF" width="25%">&nbsp;交接单状态:
-						<select name="handover.hstatus">
+						<select name="handover.hstatus" id="hstatus">
 							<option value="0" selected="selected">
 								未发车
 							</option>
@@ -53,17 +52,17 @@
                   <input name="scsj" id="starttime" type="text" size="10" onfocus="WdatePicker({lang:'en'})"><img src="../images/img_date.gif" width="22" >
 				</td>
 			    <td bgcolor="#FFFFFF" rowspan="2" style="text-align:center">
-			     <input type="submit"  size="12" style="background-image: url(../images/chaxun.jpg);border:none;width:81;height:22" value=""  /><!-- <img src="yemian/images/chaxun.jpg" width="81" height="22" onclick="sub1()"> --></td>
+			     <input type="button"  size="12" style="background-image: url(../images/chaxun.jpg);border:none;width:81;height:22" value="" onClick="search()" /><!-- <img src="yemian/images/chaxun.jpg" width="81" height="22" onclick="sub1()"> --></td>
             </tr> 
 			 <tr> 
 				  <td bgcolor="#FFFFFF">&nbsp;起始点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  	<select name="handover.hfromSpname" id="froms">
-				    	
+				    	<option></option>
 					</select>
 				  </td>
 				  <td bgcolor="#FFFFFF">&nbsp;终止点:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  	<select name="handover.htoSpname" id="tos">
-				    	
+				    	<option></option>
 					</select>
 				  </td>
             </tr>
@@ -79,7 +78,7 @@
           	 <h5>交接单列表</h5>
           </div>
     	  <div class="widget-content nopadding">
-		<table width="100%" border="0"  class="table data-table table-bordered" align="center" >
+		<table width="100%" border="0"  class="table data-table table-bordered"  >
 			  <thead>
                 <tr>
                 	<th>序号</th>
@@ -94,8 +93,9 @@
                 	<th>状态</th>
                 </tr>
                 </thead>
-	    		<tbody id="jjdInfo">      
-	          		
+                
+	    		<tbody id="jjdInfo" align="center"> 
+	    			     
 				</tbody>
 		</table>
 		<br /><br /><br />
