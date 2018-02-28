@@ -119,7 +119,7 @@ function alertMe(oper, message){
    return flag;
 }
 function modifyOrder(){
-  location.href="ddglupdate.html";
+  location.href="ddglupdate.html?odrId="+data.obj;
 }
 function delOrder(){
    var flag = alertMe("del", "不能进行删除操作!");

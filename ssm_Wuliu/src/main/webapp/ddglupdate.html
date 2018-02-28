@@ -11,6 +11,44 @@
 </head>
 <!-- 添加商品表单的js -->
 <script language="javascript">
+$(function(){
+	var index=location.href.lastIndexOf("?");
+	var params=location.href.substring(index);
+	initOrderWithLine(params);
+	$.ajax({
+		url:"findOrder.action",
+		data:{ordId:ordId},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#formAddress").html(item.osendaddress);
+					$("#mudiAddress").html(item.orecaddress);
+					$("#selectType").html(item.otype);
+					$("#selectStatus").html(item.ostatus);
+					$("#ostarttimeString").html(item.ostarttimeString);
+					$("#oendtimeString").html(item.oendtimeString);
+					$("#firstShippoint").html(item.spid);
+					$("#finishShippoint").html(item.orecspname);
+					$("#route_rid").html(item.rid);
+					$("#osendname").html(item.osendname);
+					$("#osendtel").html(item.osendtel);
+					$("#orecname").html(item.orecname);
+					$("#orecphone").html(item.orecphone);
+					$("#oreccode").html(item.oreccode);
+					$("#orectel").html(item.orectel);
+					$("#oinsureprice").html(item.oreccode);
+					$("#oprice").html(item.oprice);
+					$("#payment").html(item.remark2);
+					$("#oremark").html(item.oremark);
+				});
+			}
+		}
+	});
+})
+
+
 function addOrder(){
 	osendaddress=$("#formAddress").val();
 	orecaddress=$("#mudiAddress").val();
