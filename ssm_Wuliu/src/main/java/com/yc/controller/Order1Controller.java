@@ -134,17 +134,7 @@ public class Order1Controller {
 		return jsonModel;
 	}
 	
-	@RequestMapping("findOrder.action")
-	public @ResponseBody JsonModel findOrderForOrdId(Order1 order1){
-		try{
-			jsonModel.setObj(order1Biz.findAllOrderToPage(order1));
-			jsonModel.setCode(1);
-		}catch(Exception e){
-			jsonModel.setCode(0);
-		}
-		return jsonModel;
-		
-	}
+
 	@RequestMapping("delOrder.action")
 	@ResponseBody
 	public JsonModel delOrder(@RequestParam(name="stringOsid") String stringOsid){
