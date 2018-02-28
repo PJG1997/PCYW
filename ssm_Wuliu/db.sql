@@ -182,7 +182,7 @@ create table role(
 create table route(
 	rid int primary key auto_increment,
 	rname varchar(50),
-	rvia varchar(50),--配送路线顺序
+	rvia varchar(50),
 	remark1 varchar(3000),
 	remark2 varchar(3000),
 	remark3 varchar(3000),
@@ -223,10 +223,10 @@ create table users(
 	utel varchar(50),
 	uemail varchar(50),
 	status int, /* 0代表用户封禁，删除状态  1.代表管理员权限,2.代表普通用户权限 */
-	remark1 varchar(3000),--pageNo
-	remark2 varchar(3000),--pageSize
-	remark3 varchar(3000),--status
-	remark4 varchar(3000), --自动和usid一致
+	remark1 varchar(3000),
+	remark2 varchar(3000),
+	remark3 varchar(3000),
+	remark4 varchar(3000), 
 	remark5 varchar(3000)
 );
 select * from users;
@@ -245,4 +245,7 @@ select * from log;
 drop table log;
 delete from log;
 
- 
+select order1.*,route.*,orderinfo.* from (select * from order1 limit 0,5) order1 left join orderinfo on order1.osid=orderinfo.osid left join route on order1.remark1=route.rid
+		
+		
+

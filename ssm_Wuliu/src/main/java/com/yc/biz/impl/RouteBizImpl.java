@@ -58,4 +58,9 @@ public class RouteBizImpl implements RouteBiz{
 		return this.routeDao.selectRouteForPage(route);
 	}
 
+	@Override
+	public Route findRvia(Route route) {
+		return routeDao.findRvia(route);
+	}
+
 }

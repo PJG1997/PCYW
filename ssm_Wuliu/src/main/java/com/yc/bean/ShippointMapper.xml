@@ -56,6 +56,18 @@
   			limit #{pageNo},#{pageSize}
   	</if>
   </select>
+  <!-- 只根据spname查询 -->
+  <select id="selectBySpname" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from shippoint
+    where remark5=1
+
+    <if test="spname!=null and spname!=''">
+    	and spname=#{spname}
+    </if>
+    
+  </select>
   <insert id="insert" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" 
   		keyColumn="spid" keyProperty="spid" >
     insert into shippoint (spname, spperson, 

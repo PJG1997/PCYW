@@ -27,4 +27,7 @@ public interface ShippointBiz {
 	/*
 	 * 添加配送点*/
 	public void addShippoint(Shippoint sp);
+	/*
+	 * 根据条件筛查配送点信息只查一个*/
+	public Shippoint getShippoint(Shippoint sp);
 }

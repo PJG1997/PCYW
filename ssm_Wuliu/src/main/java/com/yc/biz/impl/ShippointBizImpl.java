@@ -49,4 +49,10 @@ public class ShippointBizImpl implements ShippointBiz{
 		this.shippointDao.addShippoint(sp);
 	}
 
+	@Override
+	public Shippoint getShippoint(Shippoint sp) {
+		// TODO Auto-generated method stub
+		return shippointDao.getShippoint(sp);
+	}
+
 }

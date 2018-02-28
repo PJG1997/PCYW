@@ -1,3 +1,4 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang = "zh-CN">
 <table id="user_data" data-options="fit:true"></table>
 <div id="user_search">
 	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-add',plain:true" style="float:left">添加</a>
@@ -81,7 +82,7 @@
 	<ul>
 		<li>
 
-			<input type="hidden" name="usid" id="user_update_usid"  readOnly="true" />			
+			<input type="hidden" name="usid" id="user_update_usid" />			
 			<label>用户帐户：</label>
 			<input type="text" name="uname" id="user_update_uname"   />			
 		</li>
@@ -147,37 +148,43 @@
 var userEditRow=undefined;
 var userOp;
 var userflag;
-
-var userObject=$('#user_data').datagrid({
-	url:'../../findAllUser.action',
-	fitColumns:true,
-	striped:true,
-	loadMsg:'数据加载中...',
-	rownumbers:true,
-	pagination:true,
-	pageNumber:1,
-	pageSize:5,
-	pageList:[5,10,20,30,50],
-	sortName:'usid',
-	remoteSort:false,
-	columns:[[
-			  {field:"usids",checkbox:true},
-	          {field:'usid',title:'用户编号',width:80,align:'center',sortable:true},   
-	          {field:'uname',title:'用户帐号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'urealname',title:'用户姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uaddress',title:'用户地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uphone',title:'用户手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'utel',title:'用户电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'uemail',title:'用户邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
-	          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
-	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
-	          }}
-	]],
-	      
-	toolbar:"#user_search"
-		
-});
-
+$(function(){
+	$.post("../../findAllUser2.action",{page:1,rows:5},function(data){ 
+			userObject=$('#user_data').datagrid({
+			url:'../../findAllUser.action',
+			fitColumns:true,
+			striped:true,
+			loadMsg:'数据加载中...',
+			rownumbers:true,
+			pagination:true,
+			pageNumber:1,
+			pageSize:5,
+			pageList:[5,10,20,30,50],
+			sortName:'usid',
+			remoteSort:false,
+			columns:[[
+					  {field:"usids",checkbox:true},
+			          {field:'usid',title:'用户编号',width:80,align:'center',sortable:true},   
+			          {field:'uname',title:'用户帐号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'urealname',title:'用户姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'uaddress',title:'用户地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'uphone',title:'用户手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'utel',title:'用户电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'uemail',title:'用户邮箱',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'remark4',title:'操作',width:80,align:'center',formatter:function(val,row,index){
+			        		if(row.status==2){
+					        	return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
+							}else{
+								return "<a id='operation' href='javascript:updateUserStatus("+row.usid+")' style='color:#39f' >恢复</a>"
+							}
+			          }}
+			]],
+			      
+			toolbar:"#user_search"
+				
+		});
+	});
+})
 function user_deleteUser(){
 	var rows = userObject.datagrid("getChecked");
 	if(rows.length<0){
@@ -330,7 +337,22 @@ function user_searchUser(){
 		queryParams:{uname:uname}
 	})
 }
-
+function updateUserStatus(val){
+	$.ajax({
+		url:'../../updateStatusForUser.action',
+		data:{usid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+				if(data.code==1){	
+					alert("恢复用户成功...");
+					userObject.datagrid("reload");
+				}else{
+					alert("恢复用户失败...");
+				}
+		}
+	});
+}
 
 
 </script>

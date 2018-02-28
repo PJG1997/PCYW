@@ -14,6 +14,13 @@
   <sql id="Base_Column_List" >
     rid, rname, rvia, remark1, remark2, remark3, remark4, remark5
   </sql>
+  <!-- 根据路线的id去查找信息 -->
+    <select id="selectByPrimaryKeyrvia" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
+    select 
+    <include refid="Base_Column_List" />
+    from route
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
    <!-- 分页查询    pageNo:表示pageNo  pageSize:表示pageSize   因为pageSize和pageSize是字符串所以要把它们转为整形 -->
    <sql id="pageSql">
  		<if test="pageNo!=null and pageSize!=null">
@@ -54,7 +61,7 @@
   </select>
   
   <!-- 删除 修改状态 -->
-  <update id="deleteByPrimaryKey" parameterType="com.yc.bean.Route" >
+  <update id="deleteByPrimaryKey" parameterType="java.util.List" >
    update route set remark5=0 
     where rid in
     <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">

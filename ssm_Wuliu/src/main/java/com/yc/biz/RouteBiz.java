@@ -15,4 +15,6 @@ public interface RouteBiz {
 	public void updateRoute(Route route);
 	//带条件 带分页查询
 	public List<Route> selectRouteForPage(Route route);
+	
+	public Route findRvia(Route route);
 }

@@ -19,15 +19,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.bean.Car;
+import com.yc.bean.Handover;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Shippoint;
 import com.yc.biz.CarBiz;
+import com.yc.biz.HandoverBiz;
+import com.yc.biz.ShippointBiz;
 
 @Controller
 @Scope(value="prototype")
 public class CarController {
 	@Resource(name="carBizImpl")
 	private CarBiz carBiz;
+	@Resource(name="handoverBizImpl")
+	private HandoverBiz handoverBiz;
+	@Resource(name="shippointBizImpl")
+	private ShippointBiz shippointBiz;
 	private JsonModel jsonModel=new JsonModel();
 	private Shippoint sp=new Shippoint();
 	@RequestMapping("findAllc.action")
@@ -35,6 +42,30 @@ public class CarController {
 	public JsonModel findAll(Car c){
 		c.setShipPoint(sp);
 		jsonModel.setObj(carBiz.getCarInfo(c));
+		return jsonModel;
+		
+	}
+	//根据hid的起始配送点查出该地点的所有车辆
+	@RequestMapping("findcarByhid.action")
+	@ResponseBody
+	public JsonModel findcarByhid(Car c,HttpServletRequest request){
+		Integer hid=Integer.parseInt(request.getParameter("hid"));
+		Handover h=new Handover();
+		h.setHid(hid);
+		Handover hand=handoverBiz.gethandover(h);
+		String spname=hand.getHfromspname();
+		sp.setspname(spname);
+		Shippoint shippoint=shippointBiz.getShippoint(sp);
+		Integer spid=shippoint.getSpid();
+		Shippoint Shippoint=new Shippoint();
+		Shippoint.setSpid(spid);
+		c.setShipPoint(Shippoint);
+		List<Car> list=new ArrayList<Car>();
+		for(Car car:carBiz.getCarInfo(c)){
+			list.add(car);
+		}
+		jsonModel.setCode(1);
+		jsonModel.setObj(list);
 		return jsonModel;
 		
 	}

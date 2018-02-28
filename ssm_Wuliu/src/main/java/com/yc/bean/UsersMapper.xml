@@ -20,6 +20,13 @@
     usid, uname, urealname, uaddress, uphone, utel, uemail, status, remark1, remark2, 
     remark3, remark4, remark5
   </sql>
+  
+  <!-- 修改管理员状态  -->
+  <update id="updateStatus" parameterType="com.yc.bean.Users">
+  	update users set status=1 where usid=#{usid} and status=0
+  </update>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -51,18 +58,38 @@
     </where>
   </select>
   
+  <select id="selectByusid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where usid = #{usid,jdbcType=INTEGER}
+  </select>
   
+  <!-- 用户登录 -->
+  <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
+    select 
+    *
+    from users
+    where uname=#{uname} and upwd=#{upwd} and status=2
+  </select>
   
   <!-- 管理员登录 -->
-  <select id="loginByPrimaryKey" resultMap="BaseResultMap" parameterType="Users" >
+  <select id="loginByPrimaryKeyForAdmin" resultMap="BaseResultMap" parameterType="Users" >
     select 
     *
     from users
     where uname=#{uname} and upwd=#{upwd} and status=1
   </select>
-  
 
- 
+  <!-- 删除管理员信息 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    update users set status=0
+    where usid in
+    <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+    	#{item}
+    </foreach>
+  </delete>
+
   
 
   <!-- 添加管理员 -->
@@ -296,20 +323,18 @@
 		values(#{uname},#{upwd},#{urealname},#{uaddress},#{uphone},#{utel},#{uemail},1);
 	</insert>
 
-	 <!-- 删除用户信息 -->
-  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
-    update users set status=0
+	<!-- 修改用户状态  -->
+  <update id="updateStatusForUser" parameterType="com.yc.bean.Users">
+  	update users set status=2 where usid=#{usid} and status=-1
+  </update>
+  
+   <!-- 删除用户信息 -->
+  <delete id="deleteByPrimaryKeyForUsers" parameterType="java.util.List" >
+    update users set status=-1
     where usid in
     <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
     	#{item}
     </foreach>
   </delete>
-
-	
-	
-	
-	
-
-  
 
 </mapper>

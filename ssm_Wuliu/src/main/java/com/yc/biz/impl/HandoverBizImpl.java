@@ -19,6 +19,7 @@ public class HandoverBizImpl implements HandoverBiz {
 	@Resource(name="handoverDaoImpl")
 	private HandoverDao handoverDao;
 	@Override
+	@Transactional(readOnly=true)
 	public List<Handover> getHandoverInfo(Handover h) {
 		return handoverDao.getHandoverInfo(h);
 	}
@@ -30,14 +31,18 @@ public class HandoverBizImpl implements HandoverBiz {
 
 	@Override
 	public void updateHandoverInfo(Handover h) {
-		// TODO Auto-generated method stub
 		handoverDao.updateHandoverInfo(h);
 	}
 
 	@Override
 	public void delmanyHandover(List list) {
-		// TODO Auto-generated method stub
 		handoverDao.delmanyHandover(list);
 	}
 
+	@Override
+	public Handover gethandover(Handover h) {
+		return handoverDao.gethandover(h);
+	}
+	
+	
 }

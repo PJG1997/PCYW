@@ -16,6 +16,9 @@ public interface ShippointDao {
 	/*
 	 * 根据条件筛查配送点信息*/
 	public List<Shippoint> getShippointInfo(Shippoint sp);
+	/*
+	 * 根据条件筛查配送点信息只查一个*/
+	public Shippoint getShippoint(Shippoint sp);
 	
 	/*
 	 * 更新配送点信息*/
