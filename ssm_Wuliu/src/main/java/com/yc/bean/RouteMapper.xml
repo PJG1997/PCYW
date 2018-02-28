@@ -15,7 +15,7 @@
     rid, rname, rvia, remark1, remark2, remark3, remark4, remark5
   </sql>
   <!-- 根据路线的id去查找信息 -->
-    <select id="selectByPrimaryKeyrvia" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKeyrvia" resultMap="BaseResultMap" parameterType="com.yc.bean.Route" >
     select 
     <include refid="Base_Column_List" />
     from route
@@ -61,7 +61,7 @@
   </select>
   
   <!-- 删除 修改状态 -->
-  <update id="deleteByPrimaryKey" parameterType="com.yc.bean.Route" >
+  <update id="deleteByPrimaryKey" parameterType="java.util.List" >
    update route set remark5=0 
     where rid in
     <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">

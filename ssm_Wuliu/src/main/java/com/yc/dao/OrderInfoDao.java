@@ -12,4 +12,12 @@ public interface OrderInfoDao {
 	 * @return
 	 */
 	public int addOrderInfoDao(Orderinfo listOrderInfo);
+	
+	
+	/**
+	 * 批量删除订单详细表
+	 * @param list
+	 * @return
+	 */
+	public int delOrderInfo(List<Integer> list);
 }

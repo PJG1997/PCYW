@@ -20,4 +20,12 @@ public interface Order1Dao {
 	 * 
 	 * */
 	public List<Order1> findAllOrderToPage(Order1 order1); 
+	
+	
+	/**
+	 * 批量删除订单
+	 * @param list
+	 * @return
+	 */
+	public int delOrder(List<Integer> list);
 }

@@ -26,6 +26,7 @@ import com.yc.bean.Shippoint;
 import com.yc.bean.Users;
 import com.yc.biz.HandoverBiz;
 import com.yc.biz.Order1Biz;
+import com.yc.biz.OrderInfoBiz;
 import com.yc.biz.RouteBiz;
 
 @Controller
@@ -34,6 +35,8 @@ public class Order1Controller {
 
 	@Resource(name="order1BizImpl")
 	private Order1Biz order1Biz;
+	@Resource(name="orderInfoBizImpl")
+	private OrderInfoBiz orderInfoBiz;
 	@Resource(name="routeBizImpl")
 	private RouteBiz routeBiz;
 	@Resource(name="handoverBizImpl")
@@ -98,6 +101,13 @@ public class Order1Controller {
 
 	@RequestMapping("findOrderPages.action")
 	public @ResponseBody JsonModel findAllToPage(Order1 order1,@RequestParam(name="pages") Integer pages,@RequestParam(name="pageSize") Integer pageSize){
+		Order1 orderCopy=order1;
+		orderCopy.setPageNo(null);
+		orderCopy.setPageSize(null);
+		//算出数据的总数量
+		jsonModel.setTotal(order1Biz.findAllOrderToPage(orderCopy).size());
+		jsonModel.setPages(pages);
+		jsonModel.setPageSize(pageSize);
 		order1.setPageNo((pages-1)*pageSize);	
 		order1.setPageSize(pageSize);
 		List<Order1> orderObj=new ArrayList<Order1>();
@@ -123,4 +133,34 @@ public class Order1Controller {
 		}
 		return jsonModel;
 	}
+	
+	@RequestMapping("delOrder.action")
+	@ResponseBody
+	public JsonModel delOrder(@RequestParam(name="stringOsid") String stringOsid){
+		try {
+			String[] shuzuOsid=stringOsid.split("-");
+			List<Integer> listOrder=new ArrayList<Integer>();
+			List<Integer> listRid=new ArrayList<Integer>();
+			for(String osid:shuzuOsid){
+				Order1 o=new Order1();
+				o.setOsid(Integer.parseInt(osid));
+				Order1 or=new Order1();
+				or=  order1Biz.findRid(o);
+				Integer rid=Integer.parseInt(or.getRemark1());
+				listOrder.add(Integer.parseInt(osid));
+				listRid.add(rid);
+			}
+			order1Biz.delOrder(listOrder);
+			orderInfoBiz.delOrderInfo(listOrder);
+			routeBiz.deleteRoute(listRid);
+			jsonModel.setCode(1);
+		} catch (NumberFormatException e) {
+			jsonModel.setCode(0);
+			e.printStackTrace();
+		}
+		return jsonModel;
+	}
+	
+	
+	
 }

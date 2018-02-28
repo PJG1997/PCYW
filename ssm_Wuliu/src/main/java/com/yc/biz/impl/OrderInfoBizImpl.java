@@ -21,4 +21,9 @@ public class OrderInfoBizImpl implements OrderInfoBiz{
 		return orderInfoDaoImpl.addOrderInfoDao(orderInfo);
 	}
 
+	@Override
+	public int delOrderInfo(List<Integer> list) {
+		return orderInfoDaoImpl.delOrderInfo(list);
+	}
+
 }

@@ -21,4 +21,9 @@ public class OrderInfoDaoImpl implements OrderInfoDao{
 		int result=sqlSession.insert("orderinfo.insertPiLianOrderInfo", orderInfo);
 		return result;
 	}
+
+	@Override
+	public int delOrderInfo(List<Integer> list) {
+		return sqlSession.delete("orderinfo.deleteOrderInfo", list);
+	}
 }

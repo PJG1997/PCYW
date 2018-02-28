@@ -34,5 +34,10 @@ public class Order1DaoImpl implements Order1Dao{
 	public List<Order1> findAllOrderToPage(Order1 order1) {
 		return sqlSession.selectList("order1.findOrderWithPage",order1);
 	}
+
+	@Override
+	public int delOrder(List<Integer> list) {
+		return sqlSession.delete("order1.deleteOrder", list);
+	}
 	
 }

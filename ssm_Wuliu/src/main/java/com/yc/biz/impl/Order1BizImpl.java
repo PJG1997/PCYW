@@ -39,4 +39,9 @@ public class Order1BizImpl implements Order1Biz{
 	public List<Order1> findAllOrderToPage(Order1 order1) {
 		return order1dao.findAllOrderToPage(order1);
 	}
+
+	@Override
+	public int delOrder(List<Integer> list) {
+		return order1dao.delOrder(list);
+	}
 }
