@@ -90,7 +90,7 @@ public class HandoverController {
 	//查询交接单
 	@RequestMapping("selectInfo.action")
 	@ResponseBody
-	public Map<String,Object> searchHandoverInfo(Handover h,HttpServletRequest request) throws ParseException{
+	public Map<String,Object> searchHandoverInfo(HttpServletRequest request) throws ParseException{
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -103,9 +103,11 @@ public class HandoverController {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
+		Handover h=new Handover();
 		h.setHstatus(Integer.parseInt(hstatus));
+		System.out.println(hid);
 		h.setHid(Integer.parseInt(hid));
-		h.setHstarttime(sdf.parse(hstarttime));
+		h.setHstarttimeString(hstarttime);
 		h.setHfromspname(hfromspname);
 		h.setHtospname(htospname);
 		
