@@ -43,8 +43,6 @@
                     <li iconCls="icon-lorry-go"><a href="javascript:void(0)" data-icon="icon-lorry-go" data-link="shippoint.html" iframe="0">管理配送点</a></li>
                     <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="proxy.html" iframe="0">代理点管理</a></li>
                     <li iconCls="icon-user-go"><a href="javascript:void(0)" data-icon="icon-user-go" data-link="driver.html" iframe="0">管理司机</a></li>
-                    <li iconCls="icon-table"><a href="javascript:void(0)" data-icon="icon-table" data-link="order.html" iframe="0">订单管理</a></li>
-                    <li iconCls="icon-table-link"><a href="javascript:void(0)" data-icon="icon-table-link" data-link="handover.html" iframe="0">交接单管理</a></li>
                     <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="goods.html" iframe="0">商品管理</a></li>
                     <li iconCls="icon-package"><a href="javascript:void(0)" data-icon="icon-package" data-link="price.html" iframe="0">价格管理</a></li>
                 </ul>
@@ -52,7 +50,6 @@
             
             <div title="车辆管理" data-options="iconCls:'icon-lorry'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
-    				<li iconCls="icon-page"><a href="javascript:void(0)" data-icon="icon-page" data-link="" iframe="0">交接单查询</a></li>
                     <li iconCls="icon-lorry-flatbed"><a href="javascript:void(0)" data-icon="icon-lorry-flatbed" data-link="car.html" iframe="0">车辆信息</a></li>
                 </ul>
             </div>
