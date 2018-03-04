@@ -11,6 +11,11 @@ public interface Order1Biz {
 	 * @return
 	 */
 	public Integer addOrder1(Order1 order1);
+	
+	/*
+	 * 修改订单信息
+	 * */
+	public Integer updateOrder1(Order1 order1);
 
 	public List<Order1> findAll();
 	

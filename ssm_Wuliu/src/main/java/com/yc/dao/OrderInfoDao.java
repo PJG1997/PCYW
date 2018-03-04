@@ -20,4 +20,10 @@ public interface OrderInfoDao {
 	 * @return
 	 */
 	public int delOrderInfo(List<Integer> list);
+	
+	/**
+	 * 删除订单详细表
+	 * @return
+	 */
+	public int delOrderInfoByOsid(Orderinfo orderinfo);
 }

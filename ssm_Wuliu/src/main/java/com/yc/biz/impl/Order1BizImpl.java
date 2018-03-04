@@ -44,4 +44,9 @@ public class Order1BizImpl implements Order1Biz{
 	public int delOrder(List<Integer> list) {
 		return order1dao.delOrder(list);
 	}
+
+	@Override
+	public Integer updateOrder1(Order1 order1) {
+		return order1dao.updateOrder1(order1);
+	}
 }

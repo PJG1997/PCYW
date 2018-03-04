@@ -26,4 +26,9 @@ public class OrderInfoDaoImpl implements OrderInfoDao{
 	public int delOrderInfo(List<Integer> list) {
 		return sqlSession.delete("orderinfo.deleteOrderInfo", list);
 	}
+
+	@Override
+	public int delOrderInfoByOsid(Orderinfo orderinfo) {
+		return sqlSession.delete("orderinfo.deleteOrderInfoByOsid", orderinfo);
+	}
 }

@@ -18,4 +18,11 @@ public interface OrderInfoBiz {
 	 * @return
 	 */
 	public int delOrderInfo(List<Integer> list);
+	
+	/**
+	 * 删除订单详细表
+	 * @param list
+	 * @return
+	 */
+	public int delOrderInfoByOsid(Orderinfo orderinfo);
 }

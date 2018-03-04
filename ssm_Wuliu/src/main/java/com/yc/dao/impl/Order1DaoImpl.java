@@ -39,5 +39,10 @@ public class Order1DaoImpl implements Order1Dao{
 	public int delOrder(List<Integer> list) {
 		return sqlSession.delete("order1.deleteOrder", list);
 	}
+
+	@Override
+	public Integer updateOrder1(Order1 order1) {
+		return sqlSession.update("order1.updateByPrimaryKeySelective", order1);
+	}
 	
 }
