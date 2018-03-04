@@ -1,0 +1,922 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>新订单</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/table.css" rel="stylesheet" type="text/css">
+<link href="css/jgpsdtable.css" rel="stylesheet" type="text/css">
+<link href="css/wenzi.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="back/My97DatePicker/WdatePicker.js"></script>
+</head>
+<!-- 添加商品表单的js -->
+<script language="javascript">
+
+//初始化函数，显示当前订单   params=   ?odrId=8
+function initOrderWithLine(params){
+	var ordId=params.split("=");
+	$("#order_osid").val(ordId[1]);
+	$.ajax({
+	  type: 'POST',
+	  url: "findOrderByOsid.action",
+	  data:{osid:ordId[1]},
+	  dataType: 'JSON',
+	  success: function( data ){
+		  if(data.obj!=null&&data.obj.length>0){
+			  $.each(data.obj,function(index,item){	
+				  $("#formAddress").val(item.osendaddress);
+				  $("#mudiAddress").val(item.orecaddress);
+				  $("#selectType").val(item.otype);
+				  $("#selectStatus").val(item.ostatus);
+				  $("#ostarttimeString").val(item.ostarttimeString);
+				  $("#oendtimeString").val(item.oendtimeString); 
+				  $("#firstShippoint").val(item.shipPoint.spid);
+				  $("#finishShippoint").val(item.orecspname);
+				  $("#route_rid").val(item.route.rid);
+				  $("#osendname").val(item.osendname);
+				  $("#osendtel").val(item.osendtel);
+				  $("#orecname").val(item.orecname);
+				  $("#orecphone").val(item.orecphone);
+				  $("#oreccode").val(item.oreccode);
+				  $("#orectel").val(item.orectel);
+				  $("#oinsureprice").val(item.oinsureprice);
+				  $("#oprice").val(item.oprice);
+				  $('input[name="payment"]:checked').val(item.remark2);
+				  $("#oremark").val(item.oremark);
+				  
+				  //把每个路线放到路线框里面去
+				  $("#route_name").val(item.route.rname);
+				  var routeNameString=item.route.rvia;
+				  var routeName=routeNameString.split("-");
+				  for(var i=0;i<routeName.length;i++){
+					  var option="<option value="+routeName[i]+">"+routeName[i]+"</option>";
+					  $('#yixuan_Route').append(option);
+					  $("#shipPoint_city option[value="+routeName[i]+"]").remove(); 
+				  }
+				  
+				  //把每个订单的订单详情放到订单详情table中
+				  hangshu=-1;
+				  for(var i=0;i<item.orderinfoList.length;i++){
+					  	hangshu++;
+					  // 得到表格对象   
+			            var tableObj = document.getElementById("mainTb");   
+			            // 得到tbody对象   
+			            var tableBodyObj = document.getElementById("mainBody");   
+			            var newRowObj = document.createElement("tr");   
+			            var newCheckBox = document.createElement("td");   
+			            var newtext1 = document.createElement("td");   
+			            var newtext2 = document.createElement("td");   
+			            var newtext3 = document.createElement("td"); 
+						//var newtext4 = document.createElement("td"); 
+						var newtext5 = document.createElement("td"); 
+						var newtext6 = document.createElement("td"); 
+						var newtext7 = document.createElement("td"); 
+						var newtext8 = document.createElement("td"); 
+						var newtext9 = document.createElement("td"); 
+						
+			            newCheckBox.innerHTML = '<center><input type="Checkbox" name="checkbox" onclick = "checkBoxSel()"></center>';   
+			            newtext1.innerHTML = "<select name='select_Goods"+hangshu+"' id='select_Goods"+hangshu+"' onclick='huodeSelectdObj(this)'></select>";   
+			            newtext2.innerHTML = "<input type='text' name='goods_gid"+hangshu+"'id='goods_gid"+hangshu+"' size='9' disabled>";   
+			            newtext3.innerHTML = "<input type='text' name='goods_count"+hangshu+"'id='goods_count"+hangshu+"' size='9' onBlur='setTotal(this)' >";    
+						//newtext4.innerHTML = "<input type='text' name='goods_remark1"+hangshu+"'id='goods_remark1"+hangshu+"' size='9' disabled>";   
+						newtext5.innerHTML = "<input type='text' name='goods_gprice"+hangshu+"'id='goods_gprice"+hangshu+"' size='9' disabled>";   
+						newtext6.innerHTML = "<input type='text' name='goods_gweight"+hangshu+"'id='goods_gweight"+hangshu+"' size='9' disabled>";   
+						newtext7.innerHTML = "<input type='text' name='goods_gvolume"+hangshu+"'id='goods_gvolume"+hangshu+"' size='9' disabled>";  
+						newtext8.innerHTML = "<input type='text' name='goods_gtype"+hangshu+"'id='goods_gtype"+hangshu+"' size='9' disabled>";   
+						newtext9.innerHTML = "<input type='text' name='goods_gremark"+hangshu+"'id='goods_gremark"+hangshu+"' size='9'>";  
+						
+						
+			            // 新增的tr节点下增加td节点   
+			            newRowObj.appendChild(newCheckBox);     
+			            newRowObj.appendChild(newtext1);    
+			            newRowObj.appendChild(newtext2);    
+			            newRowObj.appendChild(newtext3);   
+						//newRowObj.appendChild(newtext4);  
+						newRowObj.appendChild(newtext5);  
+						newRowObj.appendChild(newtext6); 
+						newRowObj.appendChild(newtext7);  
+						newRowObj.appendChild(newtext8);  
+						newRowObj.appendChild(newtext9); 
+						//newRowObj.getAttribute("id");
+						
+						//newRowObj.setAttribute("bgcolor","red");   
+			            // tbody节点下增加tr节点   
+			            tableBodyObj.appendChild(newRowObj); 
+			            
+			            //给每个订单中的货物赋值
+			            $('#goods_gid'+hangshu).val(item.orderinfoList[i].remark4);
+			            $('#goods_count'+hangshu).val(item.orderinfoList[i].gcount);
+			            $('#goods_gprice'+hangshu).val(item.orderinfoList[i].gprice);
+			            $('#goods_gweight'+hangshu).val(item.orderinfoList[i].remark2);
+			            $('#goods_gvolume'+hangshu).val(item.orderinfoList[i].remark3);
+			            $('#goods_gtype'+hangshu).val(item.orderinfoList[i].remark5);
+			            $('#goods_gremark'+hangshu).val(item.orderinfoList[i].remark1);
+			            
+				  }
+					//从数据库里面查询到各种商品，然后赋值给select
+					$.ajax({
+						url:"qiantai_findAllGoods.action",
+						dataType:"JSON",
+						method:"POST",
+						success:function(data){
+							if(data.code==1){
+								$.each(data.obj,function(index,item){
+									var option="<option value='"+item.gid+"' onclick='selectGoods("+item.gid+")'>"+item.gname+"</option>";
+									for(var i=0;i<=hangshu;i++){
+										$('#select_Goods'+i).append(option);
+										$('#select_Goods'+i).val($('#goods_gid'+i).val());
+									}
+								});
+							}
+						}
+					});
+			  });
+		  }
+	  }
+	});
+}
+
+function addOrder(){
+	var osid=$("#order_osid").val();
+	osendaddress=$("#formAddress").val();
+	orecaddress=$("#mudiAddress").val();
+	otype=$("#selectType").val();
+	ostatus=$("#selectStatus").val();
+	ostarttimeString=$("#ostarttimeString").val();
+	oendtimeString=$("#oendtimeString").val();
+	spid=$("#firstShippoint").val();
+	orecspname=$("#finishShippoint").val();
+	rid=$("#route_rid").val();
+	osendname=$("#osendname").val();
+	osendtel=$("#osendtel").val();
+	orecname=$("#orecname").val();
+	orecphone=$("#orecphone").val();
+	oreccode=$("#oreccode").val();
+	orectel=$("#orectel").val();
+	oinsureprice=$("#oinsureprice").val();
+	oprice=$("#oprice").val();
+	remark2=$('input[name="payment"]:checked').val();
+	oremark=$("#oremark").val();
+	$.ajax({
+		url:"updateOrder.action",
+		//remark1用来存路线id    remark2用来存支付人
+		data:{osid:osid,osendname:osendname,osendtel:osendtel,osendaddress:osendaddress,orecname:orecname,orectel:orectel,
+			orecaddress:orecaddress,oreccode:oreccode,orecphone:orecphone,oprice:oprice,oinsureprice:oinsureprice,
+			otype:otype,ostatus:ostatus,ostarttimeString:ostarttimeString,oendtimeString:oendtimeString,orecspname:orecspname,
+			oremark:oremark,spid:spid,remark1:rid,remark2:remark2},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.code==1){
+				//先获取订单的订单编号
+				osid=$("#order_osid").val();
+				//获取总行数
+			    var rowsTotal=document.getElementById("mainBody").rows.length-1;
+			    var goodsNames="";      //将所有的商品名拼接起来赋给goodsName
+			    var goodsCounts="";     //将所有的商品数量拼接起来赋给goodsCounts
+			    var goodsPrices="";     //将所有的商品数价格拼接起来赋给goodsPrices
+			    var goodsGweights="";  	//将所有的商品重量拼接起来赋给goodsGweights
+			    var goodsGvolumes="";	//将所有的商品体积拼接起来赋给goodsGvolumes
+			    var goodsGremarks="";	//将所有的商品备注拼接起来赋给goodsGremarks
+			    for(var i=0;i<rowsTotal;i++){
+			    	if(i==rowsTotal-1){
+			    		goodsNames+=$("#select_Goods"+i+" option:selected").text();
+			    		goodsCounts+=$("#goods_count"+i+"").val();
+			    		goodsPrices+=$("#goods_gprice"+i+"").val();
+			    		goodsGweights+=$("#goods_gweight"+i+"").val();
+			    		goodsGvolumes+=$("#goods_gvolume"+i+"").val();
+			    		goodsGremarks+=$("#goods_gremark"+i+"").val();
+			    	}else{
+			    		goodsNames+=$("#select_Goods"+i+" option:selected").text()+"-";
+			    		goodsCounts+=$("#goods_count"+i+"").val()+"-";
+			    		goodsPrices+=$("#goods_gprice"+i+"").val()+"-";
+			    		goodsGweights+=$("#goods_gweight"+i+"").val()+"-";
+			    		goodsGvolumes+=$("#goods_gvolume"+i+"").val()+"-";
+			    		goodsGremarks+=$("#goods_gremark"+i+"").val()+"-";
+			    	}
+			    }
+			    //发送请求将订单详细表保存起来
+			    $.ajax({
+			    	url:"addOrderInfo.action",
+			    	data:{osid:osid,goodsNames:goodsNames,goodsCounts:goodsCounts,goodsPrices:goodsPrices,
+			    		goodsGweights:goodsGweights,goodsGvolumes:goodsGvolumes,goodsGremarks:goodsGremarks},
+			    	dataType:"JSON",
+			    	method:"POST",
+			    	success:function(data){
+			    		if(data.code==1){
+			    			alert("修改成功...");
+			    			window.location.href="ddgldel.html"; 
+			    		}else{
+			    			alert("修改失败...");
+			    		}
+			    	}
+			    }); 
+			    
+			}
+		}
+	});
+}
+function tiaozhuangWeb(){
+	location.href="ddgldel.html";
+}
+
+   // 新增行 
+   // var hangshu=-1;           //看这个表格有多少行
+    function addRow(){   
+        //var textNum = document.getElementById("rownum");   
+        // 得到新增行记录的行数   
+        //var index = textNum.value;   
+        var index = 1;
+        hangshu++;
+        if(!checknum(index)){   
+            alert("You can only input number in the TEXT!");   
+            textNum.focus();    
+            textNum.select();   
+        }   
+        for(var i = 0; i < index; i++){   
+            // 得到表格对象   
+            var tableObj = document.getElementById("mainTb");   
+            // 得到tbody对象   
+            var tableBodyObj = document.getElementById("mainBody");   
+            var newRowObj = document.createElement("tr");   
+            var newCheckBox = document.createElement("td");   
+            var newtext1 = document.createElement("td");   
+            var newtext2 = document.createElement("td");   
+            var newtext3 = document.createElement("td"); 
+			//var newtext4 = document.createElement("td"); 
+			var newtext5 = document.createElement("td"); 
+			var newtext6 = document.createElement("td"); 
+			var newtext7 = document.createElement("td"); 
+			var newtext8 = document.createElement("td"); 
+			var newtext9 = document.createElement("td"); 
+			
+            newCheckBox.innerHTML = '<center><input type="Checkbox" name="checkbox" onclick = "checkBoxSel()"></center>';   
+            newtext1.innerHTML = "<select name='select_Goods"+hangshu+"' id='select_Goods"+hangshu+"' onclick='huodeSelectdObj(this)'></select>";   
+            newtext2.innerHTML = "<input type='text' name='goods_gid"+hangshu+"'id='goods_gid"+hangshu+"' size='9' disabled>";   
+            newtext3.innerHTML = "<input type='text' name='goods_count"+hangshu+"'id='goods_count"+hangshu+"' size='9' onBlur='setTotal(this)' >";    
+			//newtext4.innerHTML = "<input type='text' name='goods_remark1"+hangshu+"'id='goods_remark1"+hangshu+"' size='9' disabled>";   
+			newtext5.innerHTML = "<input type='text' name='goods_gprice"+hangshu+"'id='goods_gprice"+hangshu+"' size='9' disabled>";   
+			newtext6.innerHTML = "<input type='text' name='goods_gweight"+hangshu+"'id='goods_gweight"+hangshu+"' size='9' disabled>";   
+			newtext7.innerHTML = "<input type='text' name='goods_gvolume"+hangshu+"'id='goods_gvolume"+hangshu+"' size='9' disabled>";  
+			newtext8.innerHTML = "<input type='text' name='goods_gtype"+hangshu+"'id='goods_gtype"+hangshu+"' size='9' disabled>";   
+			newtext9.innerHTML = "<input type='text' name='goods_gremark"+hangshu+"'id='goods_gremark"+hangshu+"' size='9'>";  
+			
+			
+            // 新增的tr节点下增加td节点   
+            newRowObj.appendChild(newCheckBox);     
+            newRowObj.appendChild(newtext1);    
+            newRowObj.appendChild(newtext2);    
+            newRowObj.appendChild(newtext3);   
+			//newRowObj.appendChild(newtext4);  
+			newRowObj.appendChild(newtext5);  
+			newRowObj.appendChild(newtext6); 
+			newRowObj.appendChild(newtext7);  
+			newRowObj.appendChild(newtext8);  
+			newRowObj.appendChild(newtext9); 
+			//newRowObj.getAttribute("id");
+			
+			//newRowObj.setAttribute("bgcolor","red");   
+            // tbody节点下增加tr节点   
+            tableBodyObj.appendChild(newRowObj);   
+            
+          //从数据库里面查询到各种商品，然后赋值给select
+			$.ajax({
+				url:"qiantai_findAllGoods.action",
+				dataType:"JSON",
+				method:"POST",
+				success:function(data){
+					if(data.code==1){
+						$.each(data.obj,function(index,item){
+							var option="<option value='"+item.gid+"' onclick='selectGoods("+item.gid+")'>"+item.gname+"</option>";
+							$('#select_Goods'+hangshu).append(option);
+						});
+					}
+				}
+			});
+        }   
+    }   
+    
+    var selectObj;     //selectObj对象
+    var jibenGprice;   //将基本的价格存起来
+    var jibenGweight;	//将基本的重量存起来
+    var jibenGvolume;	//将基本的体积存起来
+    //选择一种商品时触发事件
+    function selectGoods(gid){
+    	//通过商品的ID查询到该商品的基本信息
+    	$.ajax({
+    		url:"findGoodsInfo.action",
+    		data:{gid:gid},
+    		dataType:"JSON",
+    		method:"POST",
+    		success:function(data){
+    			//已经查询到该商品的基本信息  然后赋值给input文本框
+    			var shuzi=selectObj.substring(12);
+    			$('#goods_gid'+shuzi).val(data.obj[0].gid);
+    			$('#goods_count'+shuzi).val(data.obj[0].gcount);
+    			//$('#goods_remark1'+shuzi).val(data.obj[0].remark1);
+    			jibenGprice=data.obj[0].gprice/data.obj[0].gcount;
+    			$('#goods_gprice'+shuzi).val(data.obj[0].gprice);
+    			jibenGweight=data.obj[0].gweight/data.obj[0].gcount;
+    			$('#goods_gweight'+shuzi).val(data.obj[0].gweight);
+    			jibenGvolume=data.obj[0].gvolume/data.obj[0].gcount;
+    			$('#goods_gvolume'+shuzi).val(data.obj[0].gvolume);
+    			$('#goods_gtype'+shuzi).val(data.obj[0].gtype);
+    			$('#goods_gremark'+shuzi).val(data.obj[0].gremark);
+    		}
+    	})
+    }
+    
+    //获取到select的对象
+    function huodeSelectdObj(obj){
+    	selectObj=obj.id
+    }
+    
+    //当改变数量时，其他价格也要随着改变
+    function setTotal(obj){
+    	var shuzi=obj.id.substring(11);
+		$('#goods_gprice'+shuzi).val(jibenGprice*$('#goods_count'+shuzi).val());
+		$('#goods_gweight'+shuzi).val(jibenGweight*$('#goods_count'+shuzi).val());
+		$('#goods_gvolume'+shuzi).val(jibenGvolume*$('#goods_count'+shuzi).val()); 
+    }
+    
+    
+    // 新增行数选择框检查输入必须是数字   
+    function checknum(strVal){   
+       /* if (strVal.length != 0){   
+            var r = strVal.match(new RegExp(/^[0-9]+$/));   
+        if (r == null){   
+                return false;   
+        }else{   
+            return true;   
+            }   
+        }   */
+        return true;   
+    }   
+    // 批量删除指定的行   
+    function deleteRow(){   
+        var Tblen;   
+        // 得到所有 checkbox 对象   
+        var checkbox = document.getElementsByName("checkbox");   
+        //var checkboxlen = document.all.checkbox.length;   
+        // 得到所有提交的checkbox个数   
+        var checkboxlen = checkbox.length;   
+        var ischecked;   
+        // 得到删除按钮对象   
+        var delbutton = document.getElementById("delete");   
+        for (var i=0; i < checkboxlen; i++){   
+            // 得到表格行数   
+        Tblen = this.mainTb.rows.length - 1;   
+        // 最终保留一行记录   
+       /* if (Tblen == 1)    
+        {   
+            document.getElementsByName("checkbox")[0].checked = false;   
+            alert("A line have to be saved in the ID of mainTb!");   
+            // 删除按钮不可用   
+            delbutton.disabled = true;   
+            return false;   
+        }  
+		*/
+        ischecked = checkbox[i].checked;   
+        // 如果当前的checkbox选中：删除当前节点，由于删除节点后，下面的节点上移，游标（记录行指针）也应该上移   
+        if (ischecked)   
+        {   
+            // document.all("mainTb").deleteRow(i);   
+            document.getElementById("mainTb").deleteRow(i + 1);   
+            // 游标（记录行指针）上移   
+            i--;   
+        }   
+        // 重新统计checkbox个数   
+        checkboxlen = checkbox.length;   
+        }   
+        // 删除操作后按钮状态是不可用   
+        delbutton.disabled = true;   
+    }   
+    // checkbox按钮单击事件处理函数：是否至少选中一行记录，是可以删除操作；如果没有选择，删除按钮不可用   
+    function checkBoxSel(){   
+        // 得到删除按钮对象   
+        var delbutton = document.getElementById("delete");   
+        if(checkselect()){   
+            delbutton.disabled = false;   
+        }else{   
+            delbutton.disabled = true;   
+      }   
+    }   
+       
+    function checkselect(){   
+            // 得到所有 checkbox 对象   
+        var checkbox = document.getElementsByName("checkbox");   
+        // 得到所有提交的checkbox个数   
+        var chklength = checkbox.length;   
+        var flag = false;   
+        for(var i = 0; i < chklength; i++)   
+        {   
+            if(checkbox[i].checked == true)   
+            {   
+                flag = true;   
+                break;   
+            }   
+        }   
+        if(flag == true)   
+        {   
+            return true;   
+        } else {   
+            return false;   
+        }   
+    }   
+    // 页面加载body内容时执行   
+   function loadpage(){   
+        var delbutton = document.getElementById("delete");   
+       // var rownum = document.getElementById("rownum");   
+        // 初始“删除”按钮不可用   
+        delbutton.disabled = true;   
+        // 初始行数输入框内容为空   
+       // rownum.value = "";      
+   }   
+
+</script>
+<!-- 添加路线选择的js -->
+<script type="text/javascript" language="javascript">
+
+var curOption=new Option(); 
+
+/* function copyToList(from,to) //from表示:包含可选择项目的select对象名字 to表示:列出可选择项目的select对象名字
+//你可以根据你的具体情况修改
+
+{
+  fromList = eval('document.forms[1].' + from);
+  toList = eval('document.forms[1].' + to);
+  if (toList.options.length > 0 && toList.options[0].value == 'temp') 
+  {
+    toList.options.length = 0;
+  }
+  var sel = false;
+  for (i=0;i<fromList.options.length;i++)
+  {
+    var current = fromList.options[i];
+    if (current.selected)
+    {
+      sel = true;
+      if (current.value == 'temp')
+      {
+        alert ('你不能选择这个项目!');
+        return;
+      }
+      txt = current.text;
+      val = current.value;
+      toList.options[toList.length] = new Option(txt,val);
+      fromList.options[i] = null;
+      i--;
+    }
+  }
+}
+function allSelect() //这是当用户按下提交按钮时，对列出选择的select对象执行全选工作，让递交至的后台程序能取得相关数据
+{
+  List = document.forms[1].chosen;
+  if (List.length && List.options[1].value == 'temp') return;
+  for (i=0;i<List.length;i++)
+  {
+     List.options[i].selected = true;
+  }
+}
+function copyAll(from,to){
+
+  var fromList = eval('document.forms[1].' + from);
+  var toList = eval('document.forms[1].' + to);
+  if (toList.options.length > 0 && toList.options[0].value == 'temp')
+  {
+    toList.options.length = 0;
+  }
+  for (i=0;i<fromList.options.length;i++)
+  {
+      var current = fromList.options[i];
+      toList.options[toList.length] = new Option(current.text,current.value);
+      fromList.options[i] = null;
+      i--;
+  }
+}
+
+function up(obj){
+    if(obj.selectedIndex!=-1) {
+        var obj1=obj.options(obj.selectedIndex);
+        if (obj.selectedIndex>0)
+        obj1.swapNode(obj1.previousSibling);
+    }
+}
+
+function down(obj){
+    if(obj.selectedIndex!=-1) {
+	    var obj1=obj.options(obj.selectedIndex);
+	    if (obj.selectedIndex<obj.options.length-1){
+	    	obj1.swapNode(obj1.nextSibling);
+	    }
+    }
+}
+
+
+function swapOption(obj) {
+   if(curOption!=null && curOption!=obj.options[getIndex(obj)] && getIndex(obj)>-1 && getIndex(obj)<obj.size){
+		if(obj.options.length <= getIndex(obj)){
+			curOption.swapNode(obj.options[obj.options.length-1]);　
+		}else{
+			curOption.swapNode(obj.options[getIndex(obj)]);　
+		}		
+   }　   
+}
+
+function getIndex(obj) {
+    var theIndex=Math.floor((event.offsetY+2)/(obj.offsetHeight/obj.size));
+    if(theIndex<0)theIndex=0;
+    else if(theIndex>obj.options.length)theIndex=obj.options.length;
+    return theIndex;
+} 
+
+
+function show(){
+
+    var form = document.forms[1];
+    var myselect = form.chosen;
+    alert(myselect.options.length);
+    //var i = 0;
+    for(var i=0;i<myselect.options.length;i++){ 
+
+        alert(myselect.options[i].value+"\n"+myselect.options[i].text); 
+    }
+}
+
+function checkForm(form){
+	if(form.lxname==""){
+		alert("路线名称不能为空");
+		return false;
+	}
+	if(form.chosen.length == 0){
+		alert("选择路线不能为空");  
+		return false;
+	}
+	return true;
+}
+ */
+</script>
+
+<!-- 发送请求的js -->
+<script type="text/javascript" language="javascript">
+	//跳出选择路线的div
+	function routePlay(op){
+		route_div=document.getElementById("route_Div");
+		if(op){
+			route_div.style.display="block";
+		}else{
+			route_div.style.display="none";
+		}
+	}
+	//先查出所有的配送点
+	$(function(){
+		$.ajax({
+			url:"findAllShippoint.action",
+			dataType:"JSON",
+			method:"POST",
+			success:function(data){
+				$.each(data.obj,function(index,item){		//给select赋值houseType
+					 var optionCity="<option value='"+item.remark1+"'>"+item.remark1+"</option>"
+					 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+					 $("#firstShippoint").append(option);     //给起始配送点select赋值
+					 $("#finishShippoint").append(option);    //给目的配送点select赋值
+					 $("#shipPoint_city").append(optionCity);     //给路线的城市select赋值
+				 });
+			}
+		});
+		
+		//先获取到所需要修改的订单的id
+		var index=location.href.lastIndexOf("?");
+		var params=location.href.substring(   index);
+		
+		initOrderWithLine(params);
+		
+	}); 
+	
+	//点提交发送请求保存路线
+	function SubmitRoute(){
+		route_rid=$("#route_rid").val();
+		route_div=document.getElementById("route_Div");
+		var routeName=$("#route_name").val();
+		var routeShunxu = $("#yixuan_Route option").map(function(){return $(this).val();}).get().join(",");
+		$.ajax({
+			url:"addRoute.action",
+			data:{route_rid:route_rid,routeName:routeName,routeShunxu:routeShunxu},
+			dataType:"JSON",
+			method:"POST",
+			success:function(data){
+				if(data.code==1){
+					$("#route_rid").val(data.obj.rid);
+					$("#route_name").html(data.obj.rname);
+					route_div.style.display="none";
+				}else{
+					alert("修改路线失败...");
+				}
+			}
+		});
+	}
+	
+	
+	
+</script>
+
+
+<body leftmargin="0" topmargin="15">
+  <form action="" method="post" name="form1">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr> <th colspan="3">
+        物 流 配 送 订 单
+       	<input type="button" value="路线选择" onclick="routePlay(true)"/>
+     	</th>
+      </tr>
+      <tr> 
+        <td colspan="3">		
+		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
+            <tr bgcolor="#FFFFFF"> 
+			  <td >
+                 <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                  <tr bgcolor="#FFFFFF"> 
+				    <td width="8%" height="25">始发地</td>
+                    <td width="10%"><input name="textfield1" id="formAddress" type="text" size="10"></td>
+				   	<td width="8%" height="25">目的地</td>
+                    <td width="10%"><input name="textfield1" id="mudiAddress" type="text" size="10"></td>
+					<td width="8%">订单类型</td>
+                    <td width="4%">
+                      <select name="selectType" id="selectType">
+					  <option value='0'>快件</option>
+					  <option value='1'>慢件</option>
+					  <option value='2'>大宗</option>
+					  </select>
+				   </td>
+				   <td width="8%">订单状态</td>
+                    <td width="4%">
+                      <select name="selectStatus" id="selectStatus">
+					  <option value='1'>未发件</option>
+					  <option value='2'>已发件</option>
+					  <option value='3'>已送达</option>
+					  <option value='4'>已签收</option>
+					  <option value='5'>已召回</option>
+					  <option value='6'>已撤单</option>
+					  </select>
+				   </td>
+			      </tr>
+			      <tr bgcolor="#FFFFFF">
+			      	<td width="8%" height="25">要求启程时间</td>
+                    <td width="10%"><input name="textfield1" id="ostarttimeString" type="text" size="10" onfocus="WdatePicker({lang:'en'})"><img src="images/img_date.gif" width="22" ></td>
+					<td width="8%" height="25">要求到达时间</td>
+                    <td width="10%"><input name="textfield1" id="oendtimeString" type="text" size="10" onfocus="WdatePicker({lang:'en'})"><img src="images/img_date.gif" width="22" ></td>
+			      	<td width="12%">起送配送点</td>
+                    <td >
+	                    <select id="firstShippoint">
+						</select>
+                    </td>
+                    <td width="12%">目的配送点</td>
+                    <td >
+                    	<select id="finishShippoint">
+					  	</select>
+                    </td>
+			      </tr>
+				 </table>
+			  </td>
+		   </tr>
+		</table>
+	 </td>
+	</tr>
+   <tr> 
+        <td height="4" background="images/danghangbg5.jpg"><div>寄件人资料</div></td>
+       
+      </tr>
+	  <tr>
+	    <td colspan="3">
+	      <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
+            <tr> 
+              <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+                  <tr> 
+                    <td height="4" bgcolor="FDC31A"><img src="images/a666nniu020.jpg" width="1" height="1"></td>
+                  </tr>
+                </table>
+                <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                  <tr bgcolor="#FFFFFF"> 
+				    <td width="14%" height="25">姓名</td>
+                    <td width="16%"><input name="textfield1" id="osendname" type="text" size="20"></td>
+			        <td width="16%">电话</td>
+                    <td colspan="3"><input name="textfield6" id="osendtel" type="text" size="20"></td>
+				   </td>
+				 </tr>
+	             <!-- <tr bgcolor="#FFFFFF"> 
+                    <td width="14%" height="25">寄件人地址</td>
+                    <td width="16%"><input name="textfield3" type="text" size="20"></td>
+                    <td width="12%"></td>
+                    <td ></td>
+                  </tr> -->
+                </table> </td>
+            </tr>
+          </table></td>
+	  </tr>	 
+	 <tr>
+	 <td><div align="left">
+        
+      </tr>
+      <tr> 
+        <td height="4" background="images/danghangbg5.jpg"><div>收件人资料</div></td>
+       
+      </tr>
+	  <tr>
+	  <td> <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
+            <tr> 
+              <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+                  <tr> 
+                    <td height="4" bgcolor="FDC31A"><img src="images/a666nniu020.jpg" width="1" height="1"></td>
+                  </tr>
+                </table>
+                <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                  <tr bgcolor="#FFFFFF"> 
+				    <td width="14%" height="25">收件人姓名</td>
+                    <td width="16%"><input name="textfield1" id="orecname" type="text" size="20"></td>
+			         <td width="14%" height="25">手机</td>
+                    <td width="16%"><input name="textfield6" id="orecphone" type="text" size="20"></td>
+				   	<td width="12%"></td>
+                    <td width="21%"></td>
+				   </td>
+				 </tr>
+	          <tr bgcolor="#FFFFFF"> 
+                    <!-- <td width="14%" height="25">地址</td>
+                    <td width="16%"><input name="textfield3" type="text" size="20"></td> -->
+                    <td width="16%">邮编</td>
+                    <td width="21%"><input name="textfield4" id="oreccode" type="text" size="20"></td>
+					<td width="12%">电话</td>
+                    <td width="21%"><input name="textfield5" id="orectel" type="text" size="20"></td>
+                  	<td width="12%"></td>
+                    <td width="21%"></td>
+                  </tr>
+				   <tr bgcolor="#FFFFFF"> 
+                  </tr>
+                </table> </td>
+            </tr>
+          </table></td>
+	  </tr>	 
+	    <tr> 
+        <td height="4" background="images/danghangbg5.jpg"><div>资费情况</div></td>
+       
+      </tr>
+	  <tr>
+	  <td> <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
+            <tr> 
+              <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+                  <tr> 
+                    <td height="4" bgcolor="FDC31A"><img src="images/a666nniu020.jpg" width="1" height="1"></td>
+                  </tr>
+                </table>
+                <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                  <tr bgcolor="#FFFFFF"> 
+				    <td width="10%" height="25">总保价金额(￥元)：</td>
+                    <td width="20%"><input name="textfield1" id="oinsureprice" type="text" size="20"></td>
+			        <td width="10%">总计费用(￥元)：</td>
+                    <td width="16%"><input name="textfield1" id="oprice" type="text" size="20"></td>
+				   <td width="5%" height="25">支付 :</td>
+                    <td width="16%"><input name="payment" type="radio" value="寄件人" checked>寄件人<input name="payment" type="radio" value="收件人">收件人</td>
+				 </tr>
+				  <tr bgcolor="#FFFFFF"> 
+				    <td width="10%" height="25">备注：</td>
+                    <td colspan="6" align="left"><textarea name="remark" id="oremark" rows="3" cols="80"></textarea></td>
+				 </tr>
+                </table> </td>
+            </tr>
+          </table></td>
+	  </tr>	
+	  <tr> 
+        <td height="4" background="images/danghangbg5.jpg">
+		  <table style="height: 32px;" width="100%">
+		     <tr>
+			   <td><div>货物信息</div></td>
+		       <td align="right">
+                  <input type="button" value="增加" onclick="addRow()"><input type="button" value="删除" id="delete" onclick="deleteRow()" disabled="true">
+		       </td>
+		    </tr>
+		 </table>
+	    </td>
+      </tr>
+
+	  <tr><td><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
+            <tr> 
+            <!-- 用来暂存订单id -->
+            <input type="hidden" id="order_osid"
+				name="order_osid" value="0" />  
+              <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+                  <tr> 
+                    <td height="5" bgcolor="FDC31A"><img src="images/a666nniu020.jpg" width="1" height="1"></td>
+                  </tr>
+                </table>
+                <table id="mainTb" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                  <tbody id="mainBody" bgcolor="#FFFFFF">  
+				  <tr> 
+				   <td width="35" bgcolor="#E6F2F2"><font color="#0000FF">序号</font></td>
+                   <td width="82" bgcolor="#E6F2F2"><font color="#0000FF">货物名称</font></td>
+                   <td width="85" bgcolor="#E6F2F2"><font color="#0000FF">货物编码</font></td>
+                   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">货物数量</font></td>
+				   <!-- <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">单位</font></td> -->
+                   <td width="99" bgcolor="#E6F2F2"><font color="#0000FF">货物价值(￥元)</font></td>
+                   <td width="84" bgcolor="#E6F2F2"><font color="#0000FF">货物重量(kg)</font></td>
+                   <td width="93" bgcolor="#E6F2F2"><font color="#0000FF">货物体积(m3)</font></td>
+                   <td width="74" bgcolor="#E6F2F2"><font color="#0000FF">货物类别</font></td>
+                   <td width="62" bgcolor="#E6F2F2"><font color="#0000FF">备注</font></td>
+                 </tr>
+				<!--
+				   <tr bgcolor="#FFFFFF"> 
+                    <td width="35"><input type="Checkbox" name="checkbox" onclick = "checkBoxSel()"></td>
+                    <td width="82"><input type="text" name="newCarName" size="9"></td>
+                    <td width="85"><input type="text" name="newCarName" size="9"></td>
+                    <td width="74"><input type="text" name="newCarName" size="9"></td>
+					<td width="74"><input type="text" name="newCarName" size="9"></td>
+                    <td width="99"><input type="text" name="newCarName" size="9"></td>
+					<td width="84" ><input type="text" name="newCarName" size="9"></td>
+                    <td width="93" ><input type="text" name="newCarName" size="9"></td>
+                    <td width="74" ><select name="select1"><option>衣物</option><option>设备</option></select></td>
+                    <td width="62" ><input type="text" name="newCarName" size="9"></td>
+                   </tr>
+				   -->
+                 </tbody>
+
+                 <!-- <tr bgcolor="#FFFFFF"> 
+				    <td width="14%" height="25">货物品名</td>
+                    <td width="16%"><input name="textfield1" type="text" size="10"></td>
+			        <td width="16%">体积</td>
+                    <td colspan="3">
+                     长 <input name="textfield3" type="text" size="10">
+                     （CM）*宽 
+					  <input name="textfield3" type="text" size="10">
+					  (CM) *高
+					  <input name="textfield3" type="text" size="10"> (CM) 
+				   </td>
+				 </tr>
+	          <tr bgcolor="#FFFFFF"> 
+                    <td width="14%" height="25">预计重量</td>
+                    <td width="16%"><input name="textfield3" type="text" size="10" value="0"> 
+                    (公斤) </td>
+                    <td width="16%">希望到达时限</td>
+                    <td width="21%"><select name="select1"><option>三天到家</option></select></td>
+					<td width="12%">数量</td>
+                    <td width="21%"><input name="textfield5" type="text" size="10"></td>
+                  </tr>-->
+                </table> </td>
+            </tr>
+	  
+    </table>
+	<table width="100%" border="0" cellpadding="0" cellspacing="1"  class="sub">
+	<tr><td style="text-align:center"><input type="button" value="保存" onclick="addOrder()" /></td>
+	<td style="text-align:center"><input type="button" onclick="tiaozhuangWeb()" value="取消"></td>
+	  </tr>
+	</table>
+          
+   
+  </form>
+
+  <!-- 路线选择的div -->
+  <div class="auto" id="route_Div"
+			style="top: 35px; left: 418px; display: none;">
+  	<center>
+<p><font class="wenzi">路线维护</font></p>
+<br/>
+	<hr color="FDC31A"/>
+  <form action="" method="post"  name="form1" onSubmit="return checkForm(this)"> 
+	<table border="0">
+		<tr height="60">
+			<!--  用来暂存路线id   -->
+			<input type="hidden" id="route_rid"
+				name="route_rid" value="0" />       
+			<td>路线名称：<input name="lxname" id="route_name" type="text" size="16"/></td>
+		</tr>
+		
+      <tr> 
+        <td>
+			  <select name="possible" id="shipPoint_city" size="10" MULTIPLE width=200 style="width: 200px">					
+                  </select>		</td>
+        <td bgcolor="#999999">
+			<a onclick="copyToList('possible','chosen')" href="javascript:void(0)"><img src="images/right.jpg" border="0"/></a><br/><br/>
+		    <a href="javascript:copyToList('chosen','possible')"><img src="images/left.jpg" border="0"/></a><br>
+			<br>		
+		</td>
+        <td>
+			<select name="chosen" id="yixuan_Route" size="10" width=200 style="width: 200px;" 
+                   onmousedown="this.dragenable=true;this.setCapture();curOption=this.options[getIndex(this)]"                                                 onmousemove="if(this.dragenable==true)swapOption(this)" 
+                   onmouseup="this.dragenable=false;this.releaseCapture();this.releaseCapture();">
+                  </select>		
+		</td>
+        <td bgcolor="#999999">
+			<a href="javascript:up(document.forms[1].chosen)"><img src="images/up.jpg" border="0"/></a><br/><br/>
+		    <a href="javascript:down(document.forms[1].chosen)"><img src="images/down.jpg" border="0"/></a><br>
+			<br>		
+		</td>
+      </tr>
+    </table>
+	<br/><br/>
+	
+   	<!-- <input type="button" value="提交" onclick="SubmitRoute()" />&nbsp;&nbsp; -->
+	<input type="button" value="取消" onclick="routePlay(false)"/>
+  </form>
+ 	</center>
+  </div>
+
+
+</body>
+</html>

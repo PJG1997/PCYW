@@ -17,7 +17,7 @@
 	<form id="user_detail_user">
 	<ul>
 		<li>
-			<label>用户帐户：</label>
+			<label>用户账号：</label>
 			<label  id="user_detail_uname"></label>			
 		</li>
 		<li>
@@ -50,27 +50,27 @@
 	<ul>
 		<li>
 			<label>用户帐户：</label>
-			<input type="text" name="uname" id="user_detail_uname"   />			
+			<input type="text" name="uname" id="user_add_uname"   />			
 		</li>
 		<li>
 			<label>用户姓名：</label>
-			<input type="text" name="urealname" id="user_detail_urealname"  />	
+			<input type="text" name="urealname" id="user_add_urealname"  />	
 		</li>
 		<li>
 			<label>用户地址：</label>
-			<input type="text" name="uaddress" id="user_detail_uaddress"  />
+			<input type="text" name="uaddress" id="user_add_uaddress"  />
 		</li>
 		<li>
 			<label>用户手机：</label>
-			<input type="text" name="uphone" id="user_detail_uphone"  />
+			<input type="text" name="uphone" id="user_add_uphone"  />
 		</li>
 		<li>
 			<label>用户电话：</label>
-			<input type="text" name="utel" id="user_detail_utel" />
+			<input type="text" name="utel" id="user_add_utel" />
 		</li>
 		<li>
 			<label>用户邮箱：</label>
-			<input type="text" name="uemail" id="user_detail_uemail"/>
+			<input type="text" name="uemail" id="user_add_uemail"/>
 		</li>
 	</ul>
 	</form>
@@ -303,6 +303,14 @@ function update(val){
 }
 
 function user_addUser(){
+	
+	$("#user_add_uname").val("");
+	$("#user_add_urealname").val("");
+	$("#user_add_uaddress").val("");
+	$("#user_add_uphone").val("");
+	$("#user_add_utel").val("");
+	$("#user_add_uemail").val("");
+	
 	
 	$('#user_add').dialog({
 		title:"添加用户",
