@@ -29,6 +29,9 @@
     </foreach>
   </delete>
   
-  
+  <!-- 删除订单详细表 -->
+  <delete id="deleteOrderInfoByOsid" parameterType="com.yc.bean.Orderinfo" >
+    delete from orderinfo where osid=#{oiid}
+  </delete>
   
 </mapper>

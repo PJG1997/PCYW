@@ -29,9 +29,13 @@ public class OrderInfoController {
 	public @ResponseBody JsonModel addOrderInfo(@RequestParam Integer osid,@RequestParam String goodsNames,@RequestParam String goodsCounts,
 			@RequestParam String goodsPrices,@RequestParam String goodsGweights,@RequestParam String goodsGvolumes,@RequestParam String goodsGremarks){
 		try {
+			Orderinfo orderinfo1=new Orderinfo();
+			orderinfo1.setOiid(osid);
+			orderInfoBizImpl.delOrderInfoByOsid(orderinfo1);
 			//将osid这个id赋给order1这个对象
 			Order1 order=new Order1();
 			order.setOsid(osid);
+			
 			//将拼接起来的字符串截取
 			String[] goodsName=goodsNames.split("-");
 			String[] goodsCount=goodsCounts.split("-");

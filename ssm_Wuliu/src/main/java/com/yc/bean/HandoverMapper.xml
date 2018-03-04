@@ -122,8 +122,8 @@
   		  <if test="htospname!=null and htospname!=''">
   		      and htoSpname=#{htoSpname}
   		  </if>
-          <if test="hstarttime!=null and hstarttime!=''">
-  		      and hstartTime=#{hstartTime}
+          <if test="hstarttimeString!=null and hstarttimeString!=''">
+  		      and hstartTime=#{hstarttimeString}
   		  </if>
   		  <if test="hstatus!=null">
   		      and hstatus=#{hstatus}

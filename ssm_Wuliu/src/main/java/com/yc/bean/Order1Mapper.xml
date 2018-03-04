@@ -36,21 +36,35 @@
 			<result column="route.remark4" property="remark4" jdbcType="VARCHAR" />
 			<result column="route.remark5" property="remark5" jdbcType="VARCHAR" />
 		</association>
+		
+		<association property="shipPoint" javaType="com.yc.bean.Shippoint">
+			<id column="spid" property="spid" jdbcType="INTEGER" />
+		    <result column="spname" property="spname" jdbcType="VARCHAR" />
+		    <result column="spperson" property="spperson" jdbcType="VARCHAR" />
+		    <result column="sptel" property="sptel" jdbcType="VARCHAR" />
+		    <result column="spemail" property="spemail" jdbcType="VARCHAR" />
+		    <result column="spaddress" property="spaddress" jdbcType="VARCHAR" />
+		    <result column="spType" property="sptype" jdbcType="INTEGER" />
+		    <result column="sppersonTel" property="sppersontel" jdbcType="VARCHAR" />
+		    <result column="spfax" property="spfax" jdbcType="VARCHAR" />
+		    <result column="sparea" property="sparea" jdbcType="VARCHAR" />
+		    <result column="spremark" property="spremark" jdbcType="VARCHAR" />
+		</association>
 
 		<collection property="orderinfoList" ofType="com.yc.bean.Orderinfo">
 			<id column="oiid" property="oiid" jdbcType="INTEGER" />
 			<result column="gname" property="gname" jdbcType="VARCHAR" />
 			<result column="gprice" property="gprice" jdbcType="DOUBLE" />
 			<result column="gcount" property="gcount" jdbcType="INTEGER" />
-			<result column="orderinfo.remark1" property="remark1"
+			<result column="oifremark1" property="remark1"
 				jdbcType="VARCHAR" />
-			<result column="orderinfo.remark2" property="remark2"
+			<result column="oifremark2" property="remark2"
 				jdbcType="VARCHAR" />
-			<result column="orderinfo.remark3" property="remark3"
+			<result column="oifremark3" property="remark3"
 				jdbcType="VARCHAR" />
-			<result column="orderinfo.remark4" property="remark4"
+			<result column="oifremark4" property="remark4"
 				jdbcType="VARCHAR" />
-			<result column="orderinfo.remark5" property="remark5"
+			<result column="oifremark5" property="remark5"
 				jdbcType="VARCHAR" />
 		</collection>
 
@@ -319,7 +333,7 @@
 		oendTime,
 		orecSpname, oremark, order1.remark1, order1.remark2, order1.remark3,
 		order1.remark4, order1.remark5,
-		oiid,gname,gprice,gcount,orderinfo.remark1,orderinfo.remark2,orderinfo.remark3,orderinfo.remark4,orderinfo.remark5,
+		oiid,gname,gprice,gcount,orderinfo.remark1 as oifremark1,orderinfo.remark2 as oifremark2,orderinfo.remark3 as oifremark3,orderinfo.remark4 as oifremark4,orderinfo.remark5 as oifremark5,
 		rid, rname, rvia, route.remark1, route.remark2,
 		route.remark3,route.remark4, route.remark5
 	</sql>

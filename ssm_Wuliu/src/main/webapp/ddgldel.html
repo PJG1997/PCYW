@@ -22,7 +22,7 @@ function findOrder(pages){
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
 					var tr="<tr bgcolor='#FFFFFF'><td width='9%' height='25' ><input type='checkbox' name='ordercode"+-item.osid+"' value='"+item.osid+"'></td>";
-					tr+="<td width='9%' height='25'><a target='_blank' href='ddglnew.html'>"+item.osid+"</a></td>";
+					tr+="<td width='9%' height='25'><a href='javascript:tiaozhuangOrder("+item.osid+")' >"+item.osid+"</a></td>";
 					tr+="<td width='9%' height='25'>"+item.osendname+"</td>"  
 	                tr+="<td width='6%'>"+item.orecname+"</td>";
 	                tr+="<td width='7%'>"+item.remark3+"</td>";
@@ -141,6 +141,7 @@ function checkIt(){
 	 }
    }
    return flag;
+<<<<<<< HEAD
 }
 function modifyOrder(){
 <<<<<<< HEAD
@@ -148,6 +149,9 @@ function modifyOrder(){
 =======
   location.href="ddglnew.html";
 } */
+function tiaozhuangOrder(orderid){
+	location.href="ddglshow.html?odrId="+orderid;
+} 
 
 //先查找表格中的那些行需要删除，先把ID拼接起来
 function pinJieOrderId(){
@@ -171,9 +175,9 @@ function pinJieOrderId(){
 	var finallyOrderId="";
 	for(var i=0;i<splitOrderId.length;i++){
 		if(finallyOrderId.length>0){
-			finallyOrderId+="-"+splitOrderId[i].substring(39,splitOrderId[i].length-4);
+			finallyOrderId+="-"+splitOrderId[i].substring(41,splitOrderId[i].length-4);
 		}else{
-			finallyOrderId=splitOrderId[i].substring(39,splitOrderId[i].length-4);
+			finallyOrderId=splitOrderId[i].substring(41,splitOrderId[i].length-4);
 		}
 	}
 	return finallyOrderId;
@@ -184,20 +188,25 @@ function delOrder(){
 	var a = confirm("确定要删除吗?");
 	if(a){
 		var tableOrderId=pinJieOrderId();
-		$.ajax({
-			url:"delOrder.action",
-			data:{stringOsid:tableOrderId},
-			method:"POST",
-			dataType:"JSON",
-			success:function(data){
-				if(data.code==1){
-					alert("删除成功...");
-					location.reload();
-				}else{
-					alert("删除失败...");
+		var tableOrderIdString=tableOrderId.split("-");
+		if(tableOrderIdString==""){
+			alert("请选择您要删除的订单的信息...");
+		}else{ 
+			/* $.ajax({
+				url:"delOrder.action",
+				data:{stringOsid:tableOrderId},
+				method:"POST",
+				dataType:"JSON",
+				success:function(data){
+					if(data.code==1){
+						alert("删除成功...");
+						location.reload();
+					}else{
+						alert("删除失败...");
+					}
 				}
-			}
-		});
+			}); */
+		}
 	}else{
 
 	}
@@ -216,6 +225,21 @@ function quitOrder(){
     alert("退订成功!");
   }
 }
+
+//修改订单信息
+function updateOrder(){
+   var updateOrderId=pinJieOrderId();
+   var updateOrderIdString=updateOrderId.split("-");
+   if(updateOrderIdString.length>1){
+	   alert("不能同时选择两个订单进行修改...");
+   }else if(updateOrderIdString==""){
+	   alert("请选择您要修改的订单的信息...");
+   }else{
+	   location.href="ddglupdate.html?odrId="+updateOrderId;
+   }
+}
+
+
 </script>
 <title>新订单</title>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
@@ -264,7 +288,7 @@ function quitOrder(){
       </tr>
 	  <tr> 
         <td height="4" align="right">
-		<input type="button" name="modifyit2" value="修改" onclick="modifyOrder()">
+		<input type="button" name="modifyit2" value="修改" onclick="updateOrder()">
 		<input type="button" name="modifyit3" value="删除" onclick="delOrder()">
 		<input type="button" name="modifyit4" value="退订" onclick="quitOrder()">
 		<input type="button" name="modifyit4" value="处理状态" onclick="traceOrder()">

@@ -63,7 +63,7 @@ function addOrder(){
 			    		goodsGvolumes+=$("#goods_gvolume"+i+"").val();
 			    		goodsGremarks+=$("#goods_gremark"+i+"").val();
 			    	}else{
-			    		goodsNames+=$('#select_Goods0 option:selected').text()+"-";
+			    		goodsNames+=$("#select_Goods"+i+" option:selected").text()+"-";
 			    		goodsCounts+=$("#goods_count"+i+"").val()+"-";
 			    		goodsPrices+=$("#goods_gprice"+i+"").val()+"-";
 			    		goodsGweights+=$("#goods_gweight"+i+"").val()+"-";

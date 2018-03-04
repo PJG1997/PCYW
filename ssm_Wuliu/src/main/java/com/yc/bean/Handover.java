@@ -32,6 +32,16 @@ public class Handover implements Serializable{
     private Integer osid;
     private String rname;
     private String status;    //交接单状态
+    
+    private String hstarttimeString;
+    
+    
+	public String getHstarttimeString() {
+		return hstarttimeString;
+	}
+	public void setHstarttimeString(String hstarttimeString) {
+		this.hstarttimeString = hstarttimeString;
+	}
 	public Integer getHid() {
 		return hid;
 	}

@@ -72,7 +72,6 @@ public class HandoverController {
 		}
 		map.put("rows", list);
 		return map;
-		
 	}
 	
 	//后台查看交接单查询
@@ -87,6 +86,41 @@ public class HandoverController {
 		return jsonModel;
 	}
 	
+
+	//查询交接单
+	@RequestMapping("selectInfo.action")
+	@ResponseBody
+	public Map<String,Object> searchHandoverInfo(HttpServletRequest request) throws ParseException{
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		String hstatus = request.getParameter("hstatus");
+		String hid=request.getParameter("hid");
+		String hstarttime = request.getParameter("hstarttime");
+		String hfromspname = request.getParameter("hfromspname");
+		String htospname = request.getParameter("htospname");
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Handover h=new Handover();
+		h.setHstatus(Integer.parseInt(hstatus));
+		System.out.println(hid);
+		h.setHid(Integer.parseInt(hid));
+		h.setHstarttimeString(hstarttime);
+		h.setHfromspname(hfromspname);
+		h.setHtospname(htospname);
+		
+		map.put("total",handoverBiz.getHandoverInfo(h).size());
+		map.put("list", handoverBiz.getHandoverInfo(h));
+		
+		
+		
+		return map;
+		
+	}
+	
+
 	//后台修改交接单
 	@RequestMapping("updatehandover.action")
 	@ResponseBody
