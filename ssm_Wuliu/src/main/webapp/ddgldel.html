@@ -177,7 +177,6 @@ function pinJieOrderId(){
 		}
 	}
 	return finallyOrderId;
->>>>>>> branch 'master' of git@github.com:PJG1997/PCYW.git
 }
 
 
@@ -203,6 +202,10 @@ function delOrder(){
 
 	}
    
+}
+function modifyOrder(){
+	var OrderId=pinJieOrderId();
+	location.href="ddglupdate.html?odrId="+OrderId;
 }
 function traceOrder(){
   location.href="ddgltrace.html";
