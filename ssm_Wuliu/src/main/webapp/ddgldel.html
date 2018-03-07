@@ -142,7 +142,14 @@ function checkIt(){
 	 }
    }
    return flag;
-}*/
+<<<<<<< HEAD
+}
+function modifyOrder(){
+<<<<<<< HEAD
+  location.href="ddglupdate.html?odrId="+.obj;
+=======
+  location.href="ddglnew.html";
+} */
 function tiaozhuangOrder(orderid){
 	location.href="ddglshow.html?odrId="+orderid;
 } 
@@ -213,6 +220,10 @@ function delOrder(){
 
 	}
    
+}
+function modifyOrder(){
+	var OrderId=pinJieOrderId();
+	location.href="ddglupdate.html?odrId="+OrderId;
 }
 function traceOrder(){
   location.href="ddgltrace.html";
