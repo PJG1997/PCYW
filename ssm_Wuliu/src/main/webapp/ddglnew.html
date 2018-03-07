@@ -31,6 +31,12 @@ function addOrder(){
 	oprice=$("#oprice").val();
 	remark2=$('input[name="payment"]:checked').val();
 	oremark=$("#oremark").val();
+	
+	if(rid==0){
+		alert("请先添加路线...");
+		return;
+	}
+	
 	$.ajax({
 		url:"addOrder.action",
 		//remark1用来存路线id    remark2用来存支付人
