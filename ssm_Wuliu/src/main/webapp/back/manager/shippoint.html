@@ -1,4 +1,4 @@
-<!-- 司机 -->
+
 <table id="shippoint_table" data-options="fit:true"></table>
 
 <!-- 条件查询 -->
@@ -20,8 +20,8 @@
 	<a href="javascript:searchshippoint()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
-<!-- 司机详情  -->
-<div id="shippoint_detail" class="easyui-dialog" title="司机详情" style="width:400px;height:410px;"
+<!-- 配送点详情  -->
+<div id="shippoint_detail" class="easyui-dialog" title="配送点详情" style="width:400px;height:410px;"
 	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
 	<form id="shippoint_detail_form">
 	<ul>
@@ -70,8 +70,8 @@
 	</form>
 </div>
 
-<!-- 修改和添加司机信息都用这个div -->
-<div id="update_shippoint" class="easyui-dialog" title="添加司机信息" style="width:400px;height:410px;"
+<!-- 修改和添加配送点信息都用这个div -->
+<div id="update_shippoint" class="easyui-dialog" title="添加配送点信息" style="width:400px;height:410px;"
 	data-options="iconCls:'icon-user-add',resizable:true,modal:true,closed:true">
 	<form id="update_shippoint_form">
 	<ul>
@@ -212,7 +212,7 @@ function detail(val){
 		}
 	});
 	$('#shippoint_detail').dialog({
-		title:"司机详情",
+		title:"配送点详情",
 		iconCls: 'icon-user-add',
 		buttons:[{
 			text: '确认',
@@ -250,7 +250,7 @@ function update(val){
 		}
 	});
 	$('#update_shippoint').dialog({
-		title:"修改司机信息",
+		title:"修改配送点信息",
 		iconCls: 'icon-user-add',
 		buttons:[{
 			text: '确认',
@@ -277,7 +277,7 @@ function update(val){
 }
 
 /**
- * 添加司机信息
+ * 添加配送点信息
  */
 function addshippoint(){
 	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
@@ -292,7 +292,7 @@ function addshippoint(){
 	$("#update_insert_sparea").val("");
 	$("#update_insert_spremark").val("");
 	$('#update_shippoint').dialog({
-		title:"添加司机信息",
+		title:"添加配送点信息",
 		iconCls: 'icon-user-add',
 		buttons:[{
 			text: '确认',
@@ -330,7 +330,7 @@ function addshippoint(){
 }
 
 /*
- * 删除司机信息 
+ * 删除配送点信息 
  */
 function deleteshippoint(){
 	var rows = shippointObject.datagrid("getChecked");
@@ -347,10 +347,10 @@ function deleteshippoint(){
 				$.post("../../delshippoint.action",{spid:aids},function(data){
     				data=parseInt($.trim(data));
     				if(data>0){
-    					$.messager.show({title:'温馨提示',msg:'司机信息删除成功...',timeout:2000,showType:'slide'});
+    					$.messager.show({title:'温馨提示',msg:'配送点信息删除成功...',timeout:2000,showType:'slide'});
     	    			shippointObject.datagrid("reload");
     				}else{
-    					$.messager.alert('失败提示','司机信息删除失败。。。。','error');
+    					$.messager.alert('失败提示','配送点信息删除失败。。。。','error');
     				}
     			},"text");
 			}else{
@@ -361,7 +361,7 @@ function deleteshippoint(){
 }
 
 /*
- *搜索司机信息 
+ *搜索配送点信息 
  */
 function searchshippoint(){
 	spname=$("#search_spname").val();

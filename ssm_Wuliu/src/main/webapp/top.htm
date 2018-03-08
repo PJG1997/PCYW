@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<script>
+function closed(){
+var a = confirm("确定要关闭页面吗?");
+if(a){
+window.top.close();
+}else{}
+}
+
+function orderM(){
+	window.top.location.href="Frameset.html";
+}
+function EIR(){
+	window.top.location.href="jjd/Frameset.jsp";
+}
+</script>
+<title>top</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<link href="css/indexstyle.css" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+<form name="form1" method="post" action="">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td width="22"><img src="images/top001.jpg" width="93" height="26"></td>
+      <td align="right" background="images/top003.jpg">&nbsp;</td>
+      <td width="22"><img src="images/top002.jpg" width="93" height="26"></td>
+    </tr>
+  </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td width="22"><img src="images/logoleft.jpg" width="300" height="62"></td>
+      <td background="images/logoback.jpg">&nbsp;</td>
+      <td width="22"><img src="images/logoright.jpg" width="662" height="62"></td>
+    </tr>
+  </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td width="22"><img src="images/nv01.jpg" width="69" height="47"></td>
+      <td background="images/nvbg.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr align="center"> 
+            <td></td>
+            <td><a href="Frameset.htm" target="mainFrame">公司简介</a></td>
+            <td><a onclick="orderM()">订单管理</a></td>
+			 <td><a onclick="EIR()">交接单管理</a></td>
+			  <td><a href="bbgl/Frameset.htm" target="mainFrame">报表管理</a></td>
+			 <td><a href="jjd/Frameset.htm" target="mainFrame">修改密码</a></td>
+          </tr>
+        </table></td>
+      <td width="22" background="images/nvbg.jpg"><img src="images/nv03.jpg" width="33" height="47" onClick="closed()"></td>
+      <td width="22"><img src="images/nv02.jpg" width="25" height="47"></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
