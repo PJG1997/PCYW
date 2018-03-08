@@ -249,3 +249,5 @@ select order1.*,route.*,orderinfo.* from (select * from order1 limit 0,5) order1
 		
 select * from order1 where otime='2018-01-29'	
 
+
+
