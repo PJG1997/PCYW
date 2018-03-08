@@ -15,6 +15,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 <title>页面左边</title>
 <script language="JavaScript" type="text/JavaScript">
+function ReturnJJD(){
+	window.top.location.href="../index.htm";
+}
 </script>
 
 
@@ -69,6 +72,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					  <td background=""><div align="center"><a href="handover_selectAllOldHandovers?handover.hstatus=1" target="mainFrame1"><img src="../images/dhjjwh.jpg" name="xddcx" width="124" height="24" border="0"></a></div></td>
 					</tr>
 					
+					<tr>
+					  <td background=""><div align="center"><a onclick="ReturnJJD()" style="font-size: 14">回到主页</a></div></td>
+					</tr>
                   </table></td>
               </tr>
             </table></td>
