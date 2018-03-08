@@ -69,6 +69,7 @@ public class Order1Controller {
 			o.setOsid(osid);
 			Order1 or=new Order1();
 			or=  order1Biz.findRid(o);
+			System.out.println(or);
 			Integer rid=Integer.parseInt(or.getRemark1());
 			Route r=new Route();
 			r.setRid(rid);
@@ -146,7 +147,7 @@ public class Order1Controller {
 		String[] shuzuUsid=userid.split("-");
 		boolean bl=false;
 		for(String usid:shuzuUsid){
-			if(session.getAttribute("uname")==usid){
+			if(!String.valueOf(session.getAttribute("uname")).equals(usid)){
 				bl=true;
 				break;
 			}
@@ -220,7 +221,6 @@ public class Order1Controller {
 		try {
 			Shippoint shipPoint=new Shippoint();
 			Users user=new Users();
-			user.setUsid(15);
 			order1.setUsers(user);
 			shipPoint.setSpid(spid);
 			order1.setShipPoint(shipPoint);
@@ -260,5 +260,24 @@ public class Order1Controller {
 		return jsonModel;
 	}
 	
+	
+	@RequestMapping("SureUpdateOrder.action")
+	@ResponseBody
+	public JsonModel sureUpdateOrder(@RequestParam(name="userid") String userid,HttpSession session){
+		String[] shuzuUsid=userid.split("-");
+		boolean bl=false;
+		for(String usid:shuzuUsid){
+			if(!String.valueOf(session.getAttribute("uname")).equals(usid)){
+				bl=true;
+				break;
+			}
+		}
+		if(bl){
+			jsonModel.setCode(-1);
+			return jsonModel;
+		}
+		jsonModel.setCode(1);
+		return jsonModel;
+	}
 	
 }

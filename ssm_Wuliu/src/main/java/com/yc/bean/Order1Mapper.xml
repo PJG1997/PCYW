@@ -373,14 +373,14 @@
 			</if>
 		</where>
 		<include refid="pageSql" />
-		) order1 left join users on order1.usid=users.usid join orderinfo on order1.osid=orderinfo.osid
+		) order1 left join users on order1.usid=users.usid left join orderinfo on order1.osid=orderinfo.osid
 		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
 	</select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from order1 left join orderinfo on order1.osid=orderinfo.osid
+    from order1 left join users on order1.usid=users.usid left join orderinfo on order1.osid=orderinfo.osid
 		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
     where order1.osid = #{osid,jdbcType=INTEGER}
   </select>

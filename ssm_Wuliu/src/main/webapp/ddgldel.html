@@ -199,7 +199,7 @@ function delOrder(){
 		if(tableOrderIdString==""){
 			alert("请选择您要删除的订单的信息...");
 		}else{ 
-			$.ajax({
+			 $.ajax({
 				url:"delOrder.action",
 				data:{stringOsid:tableOrderId,userid:finallyarr[1]},
 				method:"POST",
@@ -214,7 +214,7 @@ function delOrder(){
 						alert("删除失败...");
 					}
 				}
-			});  
+			});   
 		}
 	}else{
 
@@ -245,12 +245,19 @@ function updateOrder(){
    }else if(updateOrderIdString==""){
 	   alert("请选择您要修改的订单的信息...");
    }else{
-	   var myName="<%=session.getAttribute("uname")%>";
-	   if(myName==finallyarr[1]){
-		   alert("该订单不是您所创建的，您不能修改他...");
-		   return;
-	   }
-	   location.href="ddglupdate.html?odrId="+updateOrderId;
+	   $.ajax({
+			url:"SureUpdateOrder.action",
+			data:{userid:finallyarr[1]},
+			method:"POST",
+			dataType:"JSON",
+			success:function(data){
+				if(data.code==-1){
+					alert("该订单不是您所创建的，您不能修改他...");
+				}else{
+					location.href="ddglupdate.html?odrId="+updateOrderId;
+				}
+			}
+		}); 
    }
 }
 

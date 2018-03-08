@@ -249,3 +249,6 @@ select order1.*,route.*,orderinfo.* from (select * from order1 limit 0,5) order1
 		
 select * from order1 where otime='2018-01-29'	
 
+
+select order1.osid, users.usid as uusid,uname, spid, osendName, osendTel, osendAddress, orecName, orecTel, orecAddress, orecCode, orecPhone, otime, oprice, oinsurePrice, otype, ostatus, ostartTime, oendTime, orecSpname, oremark, order1.remark1, order1.remark2, order1.remark3, order1.remark4, order1.remark5, oiid,gname,gprice,gcount,orderinfo.remark1 as oifremark1,orderinfo.remark2 as oifremark2,orderinfo.remark3 as oifremark3,orderinfo.remark4 as oifremark4,orderinfo.remark5 as oifremark5 from order1 left join users on order1.usid=users.usid left join orderinfo on order1.osid=orderinfo.osid  where order1.osid = 34 
+
