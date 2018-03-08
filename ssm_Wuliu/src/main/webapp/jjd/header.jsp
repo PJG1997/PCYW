@@ -10,7 +10,7 @@
 %>
 <base href="<%=basePath %>">
 
-<TITLE>电影信息查询系统</TITLE>
+
 <META http-equiv=Content-Type content="text/html; charset=utf-8">
 <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="back/My97DatePicker/WdatePicker.js"></script>

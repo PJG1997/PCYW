@@ -34,8 +34,8 @@ $(function(){
 				}else{
 					status="已完成";
 				}
-				str+="<td name='status'>"+status+"</td></tr>"
-				
+				str+="<td name='status'>"+status+"</td>"
+				str+="<td><a id='operation' href='javascript:update("+item.hid+")' style='color:#39f'>修改</a></td></tr>"
 				jjdtable.append(str);
 				
 				
@@ -46,17 +46,17 @@ $(function(){
 		}
 	});
 });
-
+function update(val){
+	window.location.href='add.jsp?'+val;
+}
   //获取时间
   function gettime(t){
     var _time=new Date(t);
     var   year=_time.getFullYear();//2017
     var   month=_time.getMonth()+1;//7
     var   date=_time.getDate();//10
-    var   hour=_time.getHours();//10
-    var   minute=_time.getMinutes();//56
-    var   second=_time.getSeconds();//15
-    return   year+"年"+month+"月"+date+"日   "+hour+":"+minute+":"+second;//这里自己按自己需要的格式拼接
+
+    return   year+"年"+month+"月"+date+"日   ";//这里自己按自己需要的格式拼接
 }
 
 function search(){
