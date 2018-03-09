@@ -147,8 +147,16 @@ function nextPage(){
 					str+="<td >"+item.hfromspname+"</td>";
 					str+="<td >"+item.htospname+"</td>";
 					str+="<td >"+gettime(item.hstarttime)+"</td>";
-					str+="<td >"+item.dname+"</td>";
-					str+="<td >"+item.cnumber+"</td>";
+					if(item.dname==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.dname+"</td>";
+					}
+					if(item.cnumber==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.cnumber+"</td>";
+					}
 					str+="<td >"+gettime(item.hendtime)+"</td>";
 					var status='未知';
 					if(item.hstatus==0){
@@ -194,8 +202,16 @@ function lastPage(){
 					str+="<td >"+item.hfromspname+"</td>";
 					str+="<td >"+item.htospname+"</td>";
 					str+="<td >"+gettime(item.hstarttime)+"</td>";
-					str+="<td >"+item.dname+"</td>";
-					str+="<td >"+item.cnumber+"</td>";
+					if(item.dname==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.dname+"</td>";
+					}
+					if(item.cnumber==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.cnumber+"</td>";
+					}
 					str+="<td >"+gettime(item.hendtime)+"</td>";
 					var status='未知';
 					if(item.hstatus==0){
@@ -211,5 +227,11 @@ function lastPage(){
 			}
 		});
 	}
+	
+}
+
+//去掉重复的表格数据
+function clearTable(){
+	var finaljjdTable=$("#jjdInfo"); //获取表格对象
 	
 }

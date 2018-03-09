@@ -118,7 +118,20 @@
   	</if>
   </select>
   
-
+  <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓查询信息最终版，分步方法查询完整交接单信息，并在controller中完善↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+  <select id="searchAllHandoverInfo2" resultMap="BaseResultMap">
+      select * from handover
+      <if test="pageNo!=null and pageSize!=null">
+  			limit #{pageNo},#{pageSize}
+  	</if>
+  </select>
+  <select id="searchCnumberByHandover" resultMap="BaseResultMap">
+      select c.cnumber from handover h join car c on h.cid=c.cid where hid=#{hid}
+  </select>
+  <select id="searchDnameByHandover" resultMap="BaseResultMap">
+      select d.dname from handover h join driver d on h.did=d.did where hid=#{hid}
+  </select>
+  <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑查询信息最终版，分步方法查询完整交接单信息，并在controller中完善 ↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
   
   
   

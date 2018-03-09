@@ -19,14 +19,27 @@ public class HandoverDaoImpl implements HandoverDao {
 	
 	@Override
 	public List<Handover> getHandoverInfo(Handover h) {
-		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.selectHandorderInfo", h);
+		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.searchAllHandoverInfo2", h);
 	}
-	
+	@Override
 	public List<Handover> getMoreHandoverInfo(Handover h){
 		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.searchAllHandoverInfo",h);
 	}
+	//分布式查询
+	@Override
+	public List<Handover> getFirstHandoverInfo(Handover h) {
+		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.searchAllHandoverInfo2",h);
+	}
+	@Override
+	public Handover getCnumberByHandover(Handover h) {
+		return this.sqlSession.selectOne("com.yc.bean.HandoverMapper.searchCnumberByHandover",h);
+	}
+	@Override
+	public Handover getDnameByHandover(Handover h) {
+		return this.sqlSession.selectOne("com.yc.bean.HandoverMapper.searchDnameByHandover",h);
+	}
 	
-
+	//添加交接单
 	@Override
 	public void addHandover(Handover h) {
 		this.sqlSession.insert("com.yc.bean.HandoverMapper.insertSelective", h);
@@ -56,5 +69,8 @@ public class HandoverDaoImpl implements HandoverDao {
 	public Handover gethandover(Handover h) {
 		return sqlSession.selectOne("com.yc.bean.HandoverMapper.selectByPrimaryKey", h);
 	}
+	
+
+	
 	
 }
