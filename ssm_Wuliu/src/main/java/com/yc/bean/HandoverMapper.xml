@@ -106,11 +106,11 @@
   <select id="searchAllHandoverInfo" resultMap="BaseResultMap" parameterType="Handover">
       
       select h.hid,h.osid,h.hfromspname,h.htospname,h.hstarttime,d.dname,c.cnumber,r.rname,h.hendtime,h.hstatus
-       from handover h join  driver d 
-       on h.did=d.did 
-       join car c 
+       from handover h left join  driver d 
+      on h.did=d.did 
+      left join car c 
        on h.cid=c.cid
-       join route r
+      left join route r
        on h.rid=r.rid
       <where>
           <if test="hid!=null and hid!=''">

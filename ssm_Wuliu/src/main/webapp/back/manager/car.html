@@ -11,7 +11,7 @@
 		data-options="iconCls:'icon-user-delete',plain:true"
 		style="float: left">删除</a>
 	<div class="datagrid-btn-separator"></div>
-	<label>配送点名称:</label> <select name="search_spid" id="search_spid">
+	<label>配送点名称:</label> <select name="search_spidCar" id="search_spidCar">
 		<option value="">--全部--</option>
 	</select> <label>车辆状态:</label> <select name="search_cstatus" id="search_cstatus">
 		<option value="">--全部--</option>
@@ -63,8 +63,8 @@
 			<li><input type="hidden" id="update_insert_cid" name="update_insert_cid" />
 			<label>车牌号：</label> <input type="text"
 				name="update_insert_cnumber" id="update_insert_cnumber" /></li>
-			<li><label>配送点名称：</label> <select name="update_insert_spid"
-				id="update_insert_spid">
+			<li><label>配送点名称：</label> <select name="update_insert_spidCar"
+				id="update_insert_spidCar">
 			</select></li>
 			<li><label>汽车类型：</label> <input type="text"
 				name="update_insert_ctype" id="update_insert_ctype" /></li>
@@ -216,7 +216,7 @@ function update(val){
 				$.each(data.obj,function(index,item){
 					$("#update_insert_cid").val(item.cid);
 					$("#update_insert_cnumber").val(item.cnumber);
-					$("#update_insert_spid").val(item.shipPoint.spid);
+					$("#update_insert_spidCar").val(item.shipPoint.spid);
 					$("#update_insert_ctype").val(item.ctype);
 					$("#update_insert_cbuyday").val(item.buyday);
 					$("#update_insert_crunnum").val(item.crunnum);
@@ -261,7 +261,7 @@ function update(val){
 function addcar(){
 	//因为添加和修改用的是用一个div，点了修改的话，div下面的input其实就已经赋了值了,所以清空表单
 	$("#update_insert_cnumber").val("");
-	$("#update_insert_spid option:first").prop("selected", 'selected');
+	$("#update_insert_spidCar option:first").prop("selected", 'selected');
 	$("#update_insert_ctype").val("");
 	$("#update_insert_cbuyday").val("");
 	$("#update_insert_crunnum").val("");
@@ -282,7 +282,7 @@ function addcar(){
 			handler:function(){
 				//得到表单下面的数据
 				cnumber=$("#update_insert_cnumber").val();
-				spid=$("#update_insert_spid").val();
+				spid=$("#update_insert_spidCar").val();
 				ctype=$("#update_insert_ctype").val();
 				cbuyday=$("#update_insert_cbuyday").val();
 				crunnum=$("#update_insert_crunnum").val();
@@ -346,7 +346,7 @@ function deletecar(){
  *搜索司机信息 
  */
 function searchcar(){
-	spid=$("#search_spid").val();
+	spid=$("#search_spidCar").val();
 	cstatus=$("#search_cstatus").val();
 	cnumber=$("#search_cnumber").val();
 	cisbox=$("#search_cisbox").val();
@@ -370,9 +370,9 @@ $(function(){
 		dataType:"JSON",
 		success:function(data){
 			$.each(data.obj,function(index,item){		//给select赋值houseType
-				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
-				 $("#update_insert_spid").append(option);
-				 $("#search_spid").append(option);
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>";
+				 $("#update_insert_spidCar").append(option);
+				 $("#search_spidCar").append(option);
 			 });
 		}
 	})

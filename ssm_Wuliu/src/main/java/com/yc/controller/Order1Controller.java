@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Scope;
@@ -48,7 +49,7 @@ public class Order1Controller {
 	private JsonModel jsonModel=new JsonModel();
 
 	@RequestMapping(value="addOrder.action")
-	public @ResponseBody JsonModel addOrder(Order1 order1,@RequestParam Integer spid) throws Exception{
+	public @ResponseBody JsonModel addOrder(Order1 order1,@RequestParam Integer spid,HttpSession session) throws Exception{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		order1.setOstarttime(sdf.parse(order1.getOstarttimeString()));
 		order1.setOendtime(sdf.parse(order1.getOendtimeString()));
@@ -56,7 +57,7 @@ public class Order1Controller {
 		try {
 			Shippoint shipPoint=new Shippoint();
 			Users user=new Users();
-			user.setUsid(15);
+			user.setUsid((Integer) session.getAttribute("user_usid"));
 			order1.setUsers(user);
 			shipPoint.setSpid(spid);
 			order1.setShipPoint(shipPoint);
@@ -68,6 +69,7 @@ public class Order1Controller {
 			o.setOsid(osid);
 			Order1 or=new Order1();
 			or=  order1Biz.findRid(o);
+			System.out.println(or);
 			Integer rid=Integer.parseInt(or.getRemark1());
 			Route r=new Route();
 			r.setRid(rid);
@@ -141,7 +143,19 @@ public class Order1Controller {
 
 	@RequestMapping("delOrder.action")
 	@ResponseBody
-	public JsonModel delOrder(@RequestParam(name="stringOsid") String stringOsid){
+	public JsonModel delOrder(@RequestParam(name="stringOsid") String stringOsid,@RequestParam(name="userid") String userid,HttpSession session){
+		String[] shuzuUsid=userid.split("-");
+		boolean bl=false;
+		for(String usid:shuzuUsid){
+			if(!String.valueOf(session.getAttribute("uname")).equals(usid)){
+				bl=true;
+				break;
+			}
+		}
+		if(bl){
+			jsonModel.setCode(-1);
+			return jsonModel;
+		}
 		try {
 			String[] shuzuOsid=stringOsid.split("-");
 			List<Integer> listOrder=new ArrayList<Integer>();
@@ -207,7 +221,6 @@ public class Order1Controller {
 		try {
 			Shippoint shipPoint=new Shippoint();
 			Users user=new Users();
-			user.setUsid(15);
 			order1.setUsers(user);
 			shipPoint.setSpid(spid);
 			order1.setShipPoint(shipPoint);
@@ -247,5 +260,24 @@ public class Order1Controller {
 		return jsonModel;
 	}
 	
+	
+	@RequestMapping("SureUpdateOrder.action")
+	@ResponseBody
+	public JsonModel sureUpdateOrder(@RequestParam(name="userid") String userid,HttpSession session){
+		String[] shuzuUsid=userid.split("-");
+		boolean bl=false;
+		for(String usid:shuzuUsid){
+			if(!String.valueOf(session.getAttribute("uname")).equals(usid)){
+				bl=true;
+				break;
+			}
+		}
+		if(bl){
+			jsonModel.setCode(-1);
+			return jsonModel;
+		}
+		jsonModel.setCode(1);
+		return jsonModel;
+	}
 	
 }
