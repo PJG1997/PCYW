@@ -102,34 +102,25 @@
   	</if>
   </select>
   
-  
-  <select id="searchAllHandoverInfo" resultMap="BaseResultMap" parameterType="Handover">
-      
-      select h.hid,h.osid,h.hfromspname,h.htospname,h.hstarttime,d.dname,c.cnumber,r.rname,h.hendtime,h.hstatus
-       from handover h join  driver d 
-       on h.did=d.did 
-       join car c 
-       on h.cid=c.cid
-       join route r
-       on h.rid=r.rid
-      <where>
-          <if test="hid!=null and hid!=''">
-  				hid=#{hid}
-  		  </if>
-  		  <if test="hfromspname!=null and hfromspname!=''">
-  		      and hfromSpname=#{hfromSpname}
-  		  </if>
-  		  <if test="htospname!=null and htospname!=''">
-  		      and htoSpname=#{htoSpname}
-  		  </if>
-          <if test="hstarttimeString!=null and hstarttimeString!=''">
-  		      and hstartTime=#{hstarttimeString}
-  		  </if>
-  		  <if test="hstatus!=null">
-  		      and hstatus=#{hstatus}
-  		  </if>
-      </where>
+  <select id="searchAllHandoverInfo" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+	select h.*,o.osid,r.rname 
+  	from handover h,order1 o,route r
+  	 WHERE h.osid=o.osid and h.rid=r.rid
+  	 and h.remark5=1 and  o.remark5=1 and r.remark5=1
+  	<if test="hfromspname!=null and hfromspname!=''">
+  		and hfromspname like CONCAT('%',#{hfromspname},'%' )
+  	</if>
+  	<if test="htospname!=null and htospname!=''">
+  		and htospname like CONCAT('%',#{htospname},'%' )
+  	</if>
+  	<if test="pageNo!=null and pageSize!=null">
+  			limit #{pageNo},#{pageSize}
+  	</if>
   </select>
+  
+
+  
+  
   
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

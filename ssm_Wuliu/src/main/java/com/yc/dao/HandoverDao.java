@@ -14,6 +14,13 @@ public interface HandoverDao {
 	public List<Handover> getHandoverInfo(Handover h);
 	
 	/**
+	 * 补充查询
+	 * @param h
+	 * @return
+	 */
+	public List<Handover> getMoreHandoverInfo(Handover h);
+	
+	/**
 	 * 添加交接单
 	 * @param h
 	 */

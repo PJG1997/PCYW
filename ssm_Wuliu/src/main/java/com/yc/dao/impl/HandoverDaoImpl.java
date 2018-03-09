@@ -21,6 +21,11 @@ public class HandoverDaoImpl implements HandoverDao {
 	public List<Handover> getHandoverInfo(Handover h) {
 		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.selectHandorderInfo", h);
 	}
+	
+	public List<Handover> getMoreHandoverInfo(Handover h){
+		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.searchAllHandoverInfo",h);
+	}
+	
 
 	@Override
 	public void addHandover(Handover h) {

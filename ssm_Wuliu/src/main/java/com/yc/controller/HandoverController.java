@@ -48,11 +48,12 @@ public class HandoverController {
 		h.setDriver(d);
 		h.setOrder1(o);
 		h.setRoute(r);
-		map.put("total", handoverBiz.getHandoverInfo(h).size());
 		Integer pageNo=Integer.parseInt(request.getParameter("page"));
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
 		h.setPageNo((pageNo-1)*pageSize);
 		h.setPageSize(pageSize);
+		int total = handoverBiz.getHandoverInfo(h).size();
+		//map.put("total", total);
 		List<Handover> list=new ArrayList<Handover>();
 		for(Handover hand:handoverBiz.getHandoverInfo(h))
 		{
@@ -70,6 +71,33 @@ public class HandoverController {
 			hand.setRemark4(String.valueOf(hand.getHid()));
 			list.add(hand);
 		}
+		
+		if(total<5){
+			Handover h2 = new Handover();
+			h2.setPageNo((pageNo-1)*pageSize);
+			h2.setPageSize(pageSize-total);
+			System.out.println(h2.getPageNo()+"============"+h2.getPageSize());
+			int total2 = handoverBiz.getMoreHandoverInfo(h2).size();
+			for(Handover hand2:handoverBiz.getMoreHandoverInfo(h2)){
+				if(hand2.getHstatus()==0){
+					hand2.setStatus("未发车");
+				}else if(hand2.getHstatus()==1){
+					hand2.setStatus("已发车");
+				}else{
+					hand2.setStatus("以完成");
+				}
+				hand2.setOsid(hand2.getOrder1().getOsid());
+				hand2.setRname(hand2.getRoute().getRname());
+				hand2.setRemark4(String.valueOf(hand2.getHid()));
+				list.add(hand2);
+			}
+			map.put("total", total+total2);
+		}else{
+			map.put("total", total);
+		}
+		
+		
+		
 		map.put("rows", list);
 		return map;
 	}
