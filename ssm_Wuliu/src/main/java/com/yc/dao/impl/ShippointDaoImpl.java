@@ -42,13 +42,11 @@ public class ShippointDaoImpl implements ShippointDao{
 
 	@Override
 	public void delmanyShippoint(List list) {
-		// TODO Auto-generated method stub
 		this.sqlSession.update("com.yc.bean.ShippointMapper.delmanyShippoint", list);
 	}
 
 	@Override
 	public void addShippoint(Shippoint sp) {
-		// TODO Auto-generated method stub
 		this.sqlSession.insert("com.yc.bean.ShippointMapper.insert", sp);
 	}
 

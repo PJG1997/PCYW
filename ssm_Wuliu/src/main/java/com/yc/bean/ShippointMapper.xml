@@ -66,6 +66,9 @@
     <if test="spname!=null and spname!=''">
     	and spname=#{spname}
     </if>
+    <if test="spid!=null and spid!=''">
+    	and spid=#{spid}
+    </if>
     
   </select>
   <insert id="insert" parameterType="com.yc.bean.Shippoint" useGeneratedKeys="true" 

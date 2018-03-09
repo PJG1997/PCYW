@@ -106,7 +106,7 @@ public class CarController {
 	@RequestMapping("addcar.action")
 	@ResponseBody
 	public JsonModel addCar(@RequestParam(value="update_insert_cid") Integer cid,
-			@RequestParam(value="update_insert_spid") Integer spid,@RequestParam(value="update_insert_cnumber") String cnumber,
+			@RequestParam(value="update_insert_spidCar") Integer spid,@RequestParam(value="update_insert_cnumber") String cnumber,
 			@RequestParam(value="update_insert_ctype") String ctype,@RequestParam(value="update_insert_cbuyday") Date cbuyday,
 			@RequestParam(value="update_insert_crunnum") String crunnum,@RequestParam(value="update_insert_cvolume") Double cvolume,
 			@RequestParam(value="update_insert_cton") Double cton,@RequestParam(value="update_insert_cstatus") Integer cstatus,

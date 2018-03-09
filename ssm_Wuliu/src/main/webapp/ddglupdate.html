@@ -11,7 +11,133 @@
 </head>
 <!-- 添加商品表单的js -->
 <script language="javascript">
+
+//初始化函数，显示当前订单   params=   ?odrId=8
+function initOrderWithLine(params){
+	var ordId=params.split("=");
+	$("#order_osid").val(ordId[1]);
+	$.ajax({
+	  type: 'POST',
+	  url: "findOrderByOsid.action",
+	  data:{osid:ordId[1]},
+	  dataType: 'JSON',
+	  success: function( data ){
+		  if(data.obj!=null&&data.obj.length>0){
+			  $.each(data.obj,function(index,item){	
+				  $("#formAddress").val(item.osendaddress);
+				  $("#mudiAddress").val(item.orecaddress);
+				  $("#selectType").val(item.otype);
+				  $("#selectStatus").val(item.ostatus);
+				  $("#ostarttimeString").val(item.ostarttimeString);
+				  $("#oendtimeString").val(item.oendtimeString); 
+				  $("#firstShippoint").val(item.shipPoint.spid);
+				  $("#finishShippoint").val(item.orecspname);
+				  $("#route_rid").val(item.route.rid);
+				  $("#osendname").val(item.osendname);
+				  $("#osendtel").val(item.osendtel);
+				  $("#orecname").val(item.orecname);
+				  $("#orecphone").val(item.orecphone);
+				  $("#oreccode").val(item.oreccode);
+				  $("#orectel").val(item.orectel);
+				  $("#oinsureprice").val(item.oinsureprice);
+				  $("#oprice").val(item.oprice);
+				  $('input[name="payment"]:checked').val(item.remark2);
+				  $("#oremark").val(item.oremark);
+				  
+				  //把每个路线放到路线框里面去
+				  $("#route_name").val(item.route.rname);
+				  var routeNameString=item.route.rvia;
+				  var routeName=routeNameString.split("-");
+				  for(var i=0;i<routeName.length;i++){
+					  var option="<option value="+routeName[i]+">"+routeName[i]+"</option>";
+					  $('#yixuan_Route').append(option);
+					  $("#shipPoint_city option[value="+routeName[i]+"]").remove(); 
+				  }
+				  
+				  //把每个订单的订单详情放到订单详情table中
+				  hangshu=-1;
+				  for(var i=0;i<item.orderinfoList.length;i++){
+					  	hangshu++;
+					  // 得到表格对象   
+			            var tableObj = document.getElementById("mainTb");   
+			            // 得到tbody对象   
+			            var tableBodyObj = document.getElementById("mainBody");   
+			            var newRowObj = document.createElement("tr");   
+			            var newCheckBox = document.createElement("td");   
+			            var newtext1 = document.createElement("td");   
+			            var newtext2 = document.createElement("td");   
+			            var newtext3 = document.createElement("td"); 
+						//var newtext4 = document.createElement("td"); 
+						var newtext5 = document.createElement("td"); 
+						var newtext6 = document.createElement("td"); 
+						var newtext7 = document.createElement("td"); 
+						var newtext8 = document.createElement("td"); 
+						var newtext9 = document.createElement("td"); 
+						
+			            newCheckBox.innerHTML = '<center><input type="Checkbox" name="checkbox" onclick = "checkBoxSel()"></center>';   
+			            newtext1.innerHTML = "<select name='select_Goods"+hangshu+"' id='select_Goods"+hangshu+"' onclick='huodeSelectdObj(this)'></select>";   
+			            newtext2.innerHTML = "<input type='text' name='goods_gid"+hangshu+"'id='goods_gid"+hangshu+"' size='9' disabled>";   
+			            newtext3.innerHTML = "<input type='text' name='goods_count"+hangshu+"'id='goods_count"+hangshu+"' size='9' onBlur='setTotal(this)' >";    
+						//newtext4.innerHTML = "<input type='text' name='goods_remark1"+hangshu+"'id='goods_remark1"+hangshu+"' size='9' disabled>";   
+						newtext5.innerHTML = "<input type='text' name='goods_gprice"+hangshu+"'id='goods_gprice"+hangshu+"' size='9' disabled>";   
+						newtext6.innerHTML = "<input type='text' name='goods_gweight"+hangshu+"'id='goods_gweight"+hangshu+"' size='9' disabled>";   
+						newtext7.innerHTML = "<input type='text' name='goods_gvolume"+hangshu+"'id='goods_gvolume"+hangshu+"' size='9' disabled>";  
+						newtext8.innerHTML = "<input type='text' name='goods_gtype"+hangshu+"'id='goods_gtype"+hangshu+"' size='9' disabled>";   
+						newtext9.innerHTML = "<input type='text' name='goods_gremark"+hangshu+"'id='goods_gremark"+hangshu+"' size='9'>";  
+						
+						
+			            // 新增的tr节点下增加td节点   
+			            newRowObj.appendChild(newCheckBox);     
+			            newRowObj.appendChild(newtext1);    
+			            newRowObj.appendChild(newtext2);    
+			            newRowObj.appendChild(newtext3);   
+						//newRowObj.appendChild(newtext4);  
+						newRowObj.appendChild(newtext5);  
+						newRowObj.appendChild(newtext6); 
+						newRowObj.appendChild(newtext7);  
+						newRowObj.appendChild(newtext8);  
+						newRowObj.appendChild(newtext9); 
+						//newRowObj.getAttribute("id");
+						
+						//newRowObj.setAttribute("bgcolor","red");   
+			            // tbody节点下增加tr节点   
+			            tableBodyObj.appendChild(newRowObj); 
+			            
+			            //给每个订单中的货物赋值
+			            $('#goods_gid'+hangshu).val(item.orderinfoList[i].remark4);
+			            $('#goods_count'+hangshu).val(item.orderinfoList[i].gcount);
+			            $('#goods_gprice'+hangshu).val(item.orderinfoList[i].gprice);
+			            $('#goods_gweight'+hangshu).val(item.orderinfoList[i].remark2);
+			            $('#goods_gvolume'+hangshu).val(item.orderinfoList[i].remark3);
+			            $('#goods_gtype'+hangshu).val(item.orderinfoList[i].remark5);
+			            $('#goods_gremark'+hangshu).val(item.orderinfoList[i].remark1);
+			            
+				  }
+					//从数据库里面查询到各种商品，然后赋值给select
+					$.ajax({
+						url:"qiantai_findAllGoods.action",
+						dataType:"JSON",
+						method:"POST",
+						success:function(data){
+							if(data.code==1){
+								$.each(data.obj,function(index,item){
+									var option="<option value='"+item.gid+"' onclick='selectGoods("+item.gid+")'>"+item.gname+"</option>";
+									for(var i=0;i<=hangshu;i++){
+										$('#select_Goods'+i).append(option);
+										$('#select_Goods'+i).val($('#goods_gid'+i).val());
+									}
+								});
+							}
+						}
+					});
+			  });
+		  }
+	  }
+	});
+}
+
 function addOrder(){
+	osid=$("#order_osid").val();
 	osendaddress=$("#formAddress").val();
 	orecaddress=$("#mudiAddress").val();
 	otype=$("#selectType").val();
@@ -32,15 +158,10 @@ function addOrder(){
 	remark2=$('input[name="payment"]:checked').val();
 	oremark=$("#oremark").val();
 	
-	if(rid==0){
-		alert("请先添加路线...");
-		return;
-	}
-	
 	$.ajax({
-		url:"addOrder.action",
+		url:"updateOrder.action",
 		//remark1用来存路线id    remark2用来存支付人
-		data:{osendname:osendname,osendtel:osendtel,osendaddress:osendaddress,orecname:orecname,orectel:orectel,
+		data:{osid:osid,osendname:osendname,osendtel:osendtel,osendaddress:osendaddress,orecname:orecname,orectel:orectel,
 			orecaddress:orecaddress,oreccode:oreccode,orecphone:orecphone,oprice:oprice,oinsureprice:oinsureprice,
 			otype:otype,ostatus:ostatus,ostarttimeString:ostarttimeString,oendtimeString:oendtimeString,orecspname:orecspname,
 			oremark:oremark,spid:spid,remark1:rid,remark2:remark2},
@@ -48,11 +169,11 @@ function addOrder(){
 		method:"POST",
 		success:function(data){
 			if(data.code==1){
-				$("#order_osid").val(data.obj.osid);
 				//先获取订单的订单编号
 				osid=$("#order_osid").val();
 				
 				//获取总行数
+				//var table=document.getElementById('mainTb');
 			    var rowsTotal=document.getElementById("mainBody").rows.length-1;
 			    var goodsNames="";      //将所有的商品名拼接起来赋给goodsName
 			    var goodsCounts="";     //将所有的商品数量拼接起来赋给goodsCounts
@@ -60,6 +181,7 @@ function addOrder(){
 			    var goodsGweights="";  	//将所有的商品重量拼接起来赋给goodsGweights
 			    var goodsGvolumes="";	//将所有的商品体积拼接起来赋给goodsGvolumes
 			    var goodsGremarks="";	//将所有的商品备注拼接起来赋给goodsGremarks
+			   // alert(table.rows[1].cells[1].innerHTML);
 			    for(var i=0;i<rowsTotal;i++){
 			    	if(i==rowsTotal-1){
 			    		goodsNames+=$("#select_Goods"+i+" option:selected").text();
@@ -77,6 +199,7 @@ function addOrder(){
 			    		goodsGremarks+=$("#goods_gremark"+i+"").val()+"-";
 			    	}
 			    }
+			    //alert(goodsNames);
 			    //发送请求将订单详细表保存起来
 			    $.ajax({
 			    	url:"addOrderInfo.action",
@@ -86,16 +209,23 @@ function addOrder(){
 			    	method:"POST",
 			    	success:function(data){
 			    		if(data.code==1){
-			    			alert("添加成功...");
+			    			alert("修改成功...");
 			    			window.location.href="ddgldel.html"; 
 			    		}else{
-			    			alert("添加失败...");
+			    			alert("修改失败...");
 			    		}
 			    	}
 			    })
 			}
 		}
 	});
+}
+
+
+
+
+function tiaozhuangWeb(){
+	location.href="ddgldel.html";
 }
 function reset1(){
 	document.form1.action="ddglnew.html";
@@ -221,7 +351,6 @@ function reset1(){
 		$('#goods_gvolume'+shuzi).val(jibenGvolume*$('#goods_count'+shuzi).val()); 
     }
     
-    
     // 新增行数选择框检查输入必须是数字   
     function checknum(strVal){   
        /* if (strVal.length != 0){   
@@ -316,128 +445,6 @@ function reset1(){
    }   
 
 </script>
-<!-- 添加路线选择的js -->
-<script type="text/javascript" language="javascript">
-
-var curOption=new Option(); 
-
-function copyToList(from,to) //from表示:包含可选择项目的select对象名字 to表示:列出可选择项目的select对象名字
-//你可以根据你的具体情况修改
-
-{
-  fromList = eval('document.forms[1].' + from);
-  toList = eval('document.forms[1].' + to);
-  if (toList.options.length > 0 && toList.options[0].value == 'temp') 
-  {
-    toList.options.length = 0;
-  }
-  var sel = false;
-  for (i=0;i<fromList.options.length;i++)
-  {
-    var current = fromList.options[i];
-    if (current.selected)
-    {
-      sel = true;
-      if (current.value == 'temp')
-      {
-        alert ('你不能选择这个项目!');
-        return;
-      }
-      txt = current.text;
-      val = current.value;
-      toList.options[toList.length] = new Option(txt,val);
-      fromList.options[i] = null;
-      i--;
-    }
-  }
-}
-function allSelect() //这是当用户按下提交按钮时，对列出选择的select对象执行全选工作，让递交至的后台程序能取得相关数据
-{
-  List = document.forms[1].chosen;
-  if (List.length && List.options[1].value == 'temp') return;
-  for (i=0;i<List.length;i++)
-  {
-     List.options[i].selected = true;
-  }
-}
-function copyAll(from,to){
-
-  var fromList = eval('document.forms[1].' + from);
-  var toList = eval('document.forms[1].' + to);
-  if (toList.options.length > 0 && toList.options[0].value == 'temp')
-  {
-    toList.options.length = 0;
-  }
-  for (i=0;i<fromList.options.length;i++)
-  {
-      var current = fromList.options[i];
-      toList.options[toList.length] = new Option(current.text,current.value);
-      fromList.options[i] = null;
-      i--;
-  }
-}
-
-function up(obj){
-    if(obj.selectedIndex!=-1) {
-        var obj1=obj.options(obj.selectedIndex);
-        if (obj.selectedIndex>0)
-        obj1.swapNode(obj1.previousSibling);
-    }
-}
-
-function down(obj){
-    if(obj.selectedIndex!=-1) {
-	    var obj1=obj.options(obj.selectedIndex);
-	    if (obj.selectedIndex<obj.options.length-1){
-	    	obj1.swapNode(obj1.nextSibling);
-	    }
-    }
-}
-
-
-function swapOption(obj) {
-   if(curOption!=null && curOption!=obj.options[getIndex(obj)] && getIndex(obj)>-1 && getIndex(obj)<obj.size){
-		if(obj.options.length <= getIndex(obj)){
-			curOption.swapNode(obj.options[obj.options.length-1]);　
-		}else{
-			curOption.swapNode(obj.options[getIndex(obj)]);　
-		}		
-   }　   
-}
-
-function getIndex(obj) {
-    var theIndex=Math.floor((event.offsetY+2)/(obj.offsetHeight/obj.size));
-    if(theIndex<0)theIndex=0;
-    else if(theIndex>obj.options.length)theIndex=obj.options.length;
-    return theIndex;
-} 
-
-
-function show(){
-
-    var form = document.forms[1];
-    var myselect = form.chosen;
-    alert(myselect.options.length);
-    //var i = 0;
-    for(var i=0;i<myselect.options.length;i++){ 
-
-        alert(myselect.options[i].value+"\n"+myselect.options[i].text); 
-    }
-}
-
-function checkForm(form){
-	if(form.lxname==""){
-		alert("路线名称不能为空");
-		return false;
-	}
-	if(form.chosen.length == 0){
-		alert("选择路线不能为空");  
-		return false;
-	}
-	return true;
-}
-
-</script>
 
 <!-- 发送请求的js -->
 <script type="text/javascript" language="javascript">
@@ -465,31 +472,16 @@ function checkForm(form){
 					 $("#shipPoint_city").append(optionCity);     //给路线的城市select赋值
 				 });
 			}
-		})
+		});
+		
+		//先获取到所需要修改的订单的id
+		var index=location.href.lastIndexOf("?");
+		var params=location.href.substring(   index);
+		
+		initOrderWithLine(params);
+		
 	}); 
 	
-	//点提交发送请求保存路线
-	function SubmitRoute(){
-		route_rid=$("#route_rid").val();
-		route_div=document.getElementById("route_Div");
-		var routeName=$("#route_name").val();
-		var routeShunxu = $("#yixuan_Route option").map(function(){return $(this).val();}).get().join(", ")
-		$.ajax({
-			url:"addRoute.action",
-			data:{route_rid:route_rid,routeName:routeName,routeShunxu:routeShunxu},
-			dataType:"JSON",
-			method:"POST",
-			success:function(data){
-				if(data.code==1){
-					$("#route_rid").val(data.obj.rid);
-					$("#route_name").html(data.obj.rname);
-					route_div.style.display="none";
-				}else{
-					alert("添加路线失败...");
-				}
-			}
-		})
-	}
 	
 	
 	
@@ -739,7 +731,7 @@ function checkForm(form){
     </table>
 	<table width="100%" border="0" cellpadding="0" cellspacing="1"  class="sub">
 	<tr><td style="text-align:center"><input type="button" value="保存" onclick="addOrder()" /></td>
-	<td style="text-align:center"><input type="button" value="取消"></td>
+	<td style="text-align:center"><input type="button" onclick="tiaozhuangWeb()" value="取消"></td>
 	  </tr>
 	</table>
           
@@ -786,7 +778,6 @@ function checkForm(form){
     </table>
 	<br/><br/>
 	
-   	<input type="button" value="提交" onclick="SubmitRoute()" />&nbsp;&nbsp;
 	<input type="button" value="取消" onclick="routePlay(false)"/>
   </form>
  	</center>

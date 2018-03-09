@@ -31,4 +31,6 @@ public interface ShippointDao {
 	/*
 	 * 添加配送点*/
 	public void addShippoint(Shippoint sp);
+	
+
 }

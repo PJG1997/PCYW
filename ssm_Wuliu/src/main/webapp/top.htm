@@ -2,13 +2,19 @@
 <html>
 <head>
 <script>
+function openwin() { 
+	window.open ("page.html", "newwindow", "height=100, width=400, toolbar=no,menubar=no, scrollbars=no, resizable=no, location=no, status=no") 
 function closed(){
 var a = confirm("确定要关闭页面吗?");
 if(a){
-window.top.close();
-}else{}
+	window.top.location.href="back/login.html";
+}else{
+	
 }
-
+}
+function UpdatePwd(){
+	
+}
 function orderM(){
 	window.top.location.href="Frameset.html";
 }
@@ -43,10 +49,10 @@ function EIR(){
           <tr align="center"> 
             <td></td>
             <td><a href="Frameset.htm" target="mainFrame">公司简介</a></td>
-            <td><a onclick="orderM()">订单管理</a></td>
-			 <td><a onclick="EIR()">交接单管理</a></td>
+            <td><a href="javascript:orderM()">订单管理</a></td>
+			 <td><a href="javascript:EIR()">交接单管理</a></td>
 			  <td><a href="bbgl/Frameset.htm" target="mainFrame">报表管理</a></td>
-			 <td><a href="jjd/Frameset.htm" target="mainFrame">修改密码</a></td>
+			 <td><a href="javascript:UpdatePwd()" >修改密码</a></td>
           </tr>
         </table></td>
       <td width="22" background="images/nvbg.jpg"><img src="images/nv03.jpg" width="33" height="47" onClick="closed()"></td>

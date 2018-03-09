@@ -362,7 +362,7 @@ $(function(){
 		dataType:"JSON",
 		success:function(data){
 			$.each(data.obj,function(index,item){		//给select赋值houseType
-				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>"
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>";
 				 $("#update_insert_spid").append(option);
 				 $("#search_spid").append(option);
 			 });

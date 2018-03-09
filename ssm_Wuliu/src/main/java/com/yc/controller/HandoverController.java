@@ -26,11 +26,14 @@ import com.yc.bean.Handover;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Order1;
 import com.yc.bean.Route;
+import com.yc.bean.Shippoint;
+import com.yc.bean.Users;
 import com.yc.biz.CarBiz;
 import com.yc.biz.DriverBiz;
 import com.yc.biz.HandoverBiz;
 import com.yc.biz.Order1Biz;
 import com.yc.biz.RouteBiz;
+import com.yc.biz.ShippointBiz;
 import com.yc.biz.UsersBiz;
 
 @Controller
@@ -48,6 +51,8 @@ public class HandoverController {
 	private RouteBiz routeBiz;
 	@Resource(name="usersBizImpl")
 	private UsersBiz usersBiz;
+	@Resource(name="shippointBizImpl")
+	private ShippointBiz shippointBiz;
 	private JsonModel jsonModel=new JsonModel();
 	private Car c=new Car();
 	private Driver d=new Driver(); 
@@ -353,7 +358,18 @@ public class HandoverController {
 	public JsonModel checkmethod(Handover h,HttpServletRequest resquest){
 		Integer hid =Integer.parseInt(resquest.getParameter("hid"));
 		HttpSession session=resquest.getSession();
-		session.getAttribute("");
+		Integer usid=(Integer) session.getAttribute("user_usid");
+		Users users=new Users();
+		users.setUsid(usid);
+		users=usersBiz.findUsersByUsid(users);
+		h.setHid(hid);
+		h=handoverBiz.gethandover(h);
+		Integer spid=Integer.parseInt(users.getRemark1());
+		Shippoint sp=new Shippoint();
+		sp=shippointBiz.getShippoint(sp);
+		if(sp.getSpaddress()==h.getHfromspname()){
+			jsonModel.setCode(1);
+		}
 		return jsonModel;
 		
 	}

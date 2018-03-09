@@ -47,6 +47,7 @@ public class UsersController {
 			if(u!=null){
 				jsonModel.setCode(2);
 				session.setAttribute("uname", u.getUname());
+				session.setAttribute("user_usid", u.getUsid());
 			}else{
 				jsonModel.setCode(3);
 			}

@@ -37,6 +37,17 @@
 			<result column="route.remark5" property="remark5" jdbcType="VARCHAR" />
 		</association>
 		
+		<association property="users" javaType="com.yc.bean.Users">
+			<id column="uusid" property="usid" jdbcType="INTEGER" />
+		    <result column="uname" property="uname" jdbcType="VARCHAR" />
+		    <result column="urealName" property="urealname" jdbcType="VARCHAR" />
+		    <result column="uaddress" property="uaddress" jdbcType="VARCHAR" />
+		    <result column="uphone" property="uphone" jdbcType="VARCHAR" />
+		    <result column="utel" property="utel" jdbcType="VARCHAR" />
+		    <result column="uemail" property="uemail" jdbcType="VARCHAR" />
+		    <result column="status" property="status" jdbcType="INTEGER" />
+		</association>
+		
 		<association property="shipPoint" javaType="com.yc.bean.Shippoint">
 			<id column="spid" property="spid" jdbcType="INTEGER" />
 		    <result column="spname" property="spname" jdbcType="VARCHAR" />
@@ -327,7 +338,7 @@
 	</sql>
 
 	<sql id="Base_Column_List">
-		order1.osid, usid, spid, osendName, osendTel, osendAddress, orecName, orecTel,
+		order1.osid, users.usid as uusid,uname, spid, osendName, osendTel, osendAddress, orecName, orecTel,
 		orecAddress,
 		orecCode, orecPhone, otime, oprice, oinsurePrice, otype, ostatus, ostartTime,
 		oendTime,
@@ -362,14 +373,14 @@
 			</if>
 		</where>
 		<include refid="pageSql" />
-		) order1 left join orderinfo on order1.osid=orderinfo.osid
+		) order1 left join users on order1.usid=users.usid left join orderinfo on order1.osid=orderinfo.osid
 		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
 	</select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from order1 left join orderinfo on order1.osid=orderinfo.osid
+    from order1 left join users on order1.usid=users.usid left join orderinfo on order1.osid=orderinfo.osid
 		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
     where order1.osid = #{osid,jdbcType=INTEGER}
   </select>

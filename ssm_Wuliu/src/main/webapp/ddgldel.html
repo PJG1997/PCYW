@@ -22,9 +22,10 @@ function findOrder(pages){
 			if(data.obj!=null&&data.obj.length>0){
 				$.each(data.obj,function(index,item){
 					var tr="<tr bgcolor='#FFFFFF'><td width='9%' height='25' ><input type='checkbox' name='ordercode"+-item.osid+"' value='"+item.osid+"'></td>";
-					tr+="<td width='9%' height='25'><a href='javascript:tiaozhuangOrder("+item.osid+")' >"+item.osid+"</a></td>";
-					tr+="<td width='9%' height='25'>"+item.osendname+"</td>"  
-	                tr+="<td width='6%'>"+item.orecname+"</td>";
+					tr+="<td width='5%' height='25'><a href='javascript:tiaozhuangOrder("+item.osid+")' >"+item.osid+"</a></td>";
+					tr+="<td width='5%' height='25'>"+item.users.uname+"</td>";  
+					tr+="<td width='5%' height='25'>"+item.osendname+"</td>";  
+	                tr+="<td width='5%'>"+item.orecname+"</td>";
 	                tr+="<td width='7%'>"+item.remark3+"</td>";
 	                tr+="<td width='5%'>"+item.remark4+"</td>";
 	                tr+="<td width='7%'>"+item.osendaddress+"</td>";
@@ -37,13 +38,12 @@ function findOrder(pages){
 	                case 5:tr+="<td width='8%'>已召回</td>";break;
 	                case 6:tr+="<td width='8%'>已撤单</td>";break;
 	                }
-	                tr+="<td width='8%'>"+item.otimeString+"</td></tr>"
+	                tr+="<td width='8%'>"+item.otimeString+"</td></tr>";
 					$(tr).appendTo($("#orderTbody"));
 				});
 			}else{
 				$("#orderTbody").append("查无数据...");
 			}
-
 			//分页功能
 			var pages=data.pages;
 			var total=data.total;
@@ -66,7 +66,8 @@ function findOrder(pages){
 				nextpages=pages+1;
 			}
 			//$("#orderTbody").html("");
-			var temp="<tr bgcolor='#FFFFFF'><td colspan='10' style='text-align:center'><a href='javascript:findOrder(1)'> 首页</a> &nbsp;&nbsp;&nbsp;&nbsp;   <a href='javascript:findOrder("+prepages+")'>上 一页</a>  &nbsp;&nbsp;   &nbsp;&nbsp;  <a href='javascript:findOrder("+nextpages+")'>下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:findOrder("+countpages+")'>末页</a>";
+			//alert(pages+" "+countpages+" "+total+" "+pagesize+" "+prepages+" "+nextpages);
+			var temp="<tr bgcolor='#FFFFFF'><td colspan='20' style='text-align:center'><a href='javascript:findOrder(1)'> 首页</a> &nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:findOrder("+prepages+")'>上一页</a>  &nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:findOrder("+nextpages+")'>下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:findOrder("+countpages+")'>末页</a>";
 				temp+="&nbsp;&nbsp;&nbsp;&nbsp;<span>第"+pages+"页/共"+countpages+"页    记录总数:"+total+"条  每页显示"+pagesize+"条</span></td></tr>	";
 			$(temp).appendTo($("#orderTbody"));
 		}
@@ -157,15 +158,19 @@ function tiaozhuangOrder(orderid){
 function pinJieOrderId(){
 	var table=document.getElementById('orderTable');
 	var stringOrderId="";
+	var arr = new Array();
+	var stringUserName="";
 	for(var i=table.rows.length - 1; i>0;i--){   
 	    var chkOrder = table.rows[i].cells[0].firstChild;    
 		if(chkOrder){    
 		   if(chkOrder.type = "CHECKBOX"){    
 		      if(chkOrder.checked){    
 		      	if(stringOrderId.length>0){  
-		      		stringOrderId+="-"+table.rows[i].cells[1].innerHTML;   
+		      		stringOrderId+="-"+table.rows[i].cells[1].innerHTML;
+		      		stringUserName+="-"+table.rows[i].cells[2].innerHTML; 
 		      	}else{
 		      		stringOrderId=table.rows[i].cells[1].innerHTML; 
+		      		stringUserName=table.rows[i].cells[2].innerHTML;
 		      	}
 		      }    
 		    }    
@@ -180,32 +185,36 @@ function pinJieOrderId(){
 			finallyOrderId=splitOrderId[i].substring(41,splitOrderId[i].length-4);
 		}
 	}
-	return finallyOrderId;
+	arr[0]=finallyOrderId;
+	arr[1]=stringUserName;
+	return arr;
 }
-
 
 function delOrder(){
 	var a = confirm("确定要删除吗?");
 	if(a){
-		var tableOrderId=pinJieOrderId();
+		var finallyarr=pinJieOrderId();
+		var tableOrderId=finallyarr[0];
 		var tableOrderIdString=tableOrderId.split("-");
 		if(tableOrderIdString==""){
 			alert("请选择您要删除的订单的信息...");
 		}else{ 
-			/* $.ajax({
+			 $.ajax({
 				url:"delOrder.action",
-				data:{stringOsid:tableOrderId},
+				data:{stringOsid:tableOrderId,userid:finallyarr[1]},
 				method:"POST",
 				dataType:"JSON",
 				success:function(data){
 					if(data.code==1){
 						alert("删除成功...");
 						location.reload();
+					}else if(data.code==-1){
+						alert("该订单不是您所创建的，您不能删除他...");
 					}else{
 						alert("删除失败...");
 					}
 				}
-			}); */
+			});   
 		}
 	}else{
 
@@ -228,14 +237,27 @@ function quitOrder(){
 
 //修改订单信息
 function updateOrder(){
-   var updateOrderId=pinJieOrderId();
+   var finallyarr=pinJieOrderId();
+   var updateOrderId=finallyarr[0];
    var updateOrderIdString=updateOrderId.split("-");
    if(updateOrderIdString.length>1){
 	   alert("不能同时选择两个订单进行修改...");
    }else if(updateOrderIdString==""){
 	   alert("请选择您要修改的订单的信息...");
    }else{
-	   location.href="ddglupdate.html?odrId="+updateOrderId;
+	   $.ajax({
+			url:"SureUpdateOrder.action",
+			data:{userid:finallyarr[1]},
+			method:"POST",
+			dataType:"JSON",
+			success:function(data){
+				if(data.code==-1){
+					alert("该订单不是您所创建的，您不能修改他...");
+				}else{
+					location.href="ddglupdate.html?odrId="+updateOrderId;
+				}
+			}
+		}); 
    }
 }
 
@@ -311,6 +333,7 @@ function updateOrder(){
 	          <tr bgcolor="#FFFFFF"> 
 			        <td width="9%" height="25">序号</td>
 			        <td width="9%" height="25">订单编号</td>
+			        <td width="9%" height="25">创建该订单的用户</td>
                     <td width="9%" height="25">寄件人姓名</td>
                     <td width="6%">收件人姓名</td>
                     <td width="7%">货物数量</td>
@@ -360,7 +383,7 @@ function updateOrder(){
 					<td width="8%">2008/5/5</td>
                  
 	          </tr> -->
-                </table> </td>
+                </table></td>
             </tr>
           </table></td>
 	  </tr>	 
