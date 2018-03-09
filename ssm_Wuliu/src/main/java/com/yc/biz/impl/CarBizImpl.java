@@ -39,15 +39,24 @@ public class CarBizImpl implements CarBiz {
 	}
 
 	@Override
-	public void updateCarStatus(Car c) {
+	public void updateCarStatus0(Car c) {
 
-		this.carDao.updateCarStatus(c);
+		this.carDao.updateCarStatus0(c);
 	}
+	
+	public void updateCarStatus1(Car c) {
 
+		this.carDao.updateCarStatus1(c);
+	}
 
 	@Override
 	public void delmanyCar(List list) {
 		this.carDao.delmanyCar(list);
+	}
+
+	@Override
+	public List<Car> getCarNomission(Car c) {
+		return carDao.getCarNomission(c);
 	}
 
 

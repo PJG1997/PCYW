@@ -41,16 +41,24 @@ public class CarDaoImpl implements CarDao {
 	}
 
 	@Override
-	public void updateCarStatus(Car c) {
+	public void updateCarStatus0(Car c) {
 
-		this.sqlSession.update("com.yc.bean.CarMapper.updateCarStatus", c);
+		this.sqlSession.update("com.yc.bean.CarMapper.updateCarStatus0", c);
 	}
 
+	public void updateCarStatus1(Car c) {
 
+		this.sqlSession.update("com.yc.bean.CarMapper.updateCarStatus1", c);
+	}
 	@Override
 	public void delmanyCar(List list) {
 
 		this.sqlSession.update("com.yc.bean.CarMapper.delmanyCar", list);
+	}
+
+	@Override
+	public List<Car> getCarNomission(Car c) {
+		return this.sqlSession.selectList("com.yc.bean.CarMapper.getCarNomission", c);
 	}
 
 }

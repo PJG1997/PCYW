@@ -48,6 +48,23 @@ $(function(){
 });
 function update(val){
 	window.location.href='add.jsp?'+val;
+	$.ajax({
+		url:'../../checkmethod.action',
+		data:{hid:val},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.obj!=null&&data.obj.length>0){
+				$.each(data.obj,function(index,item){
+					$("#proxy_prname_label").html(item.prname);
+					$("#proxy_spname_label").html(item.shippoint.spname);
+					$("#proxy_prprice_label").html(item.prprice);
+					$("#proxy_prtime_label").html(item.prtime);
+					$("#proxy_prremark_label").html(item.prremark);
+				});
+			}
+		}
+	});
 }
   //获取时间
   function gettime(t){

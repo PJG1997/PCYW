@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.yc.bean.Car;
 import com.yc.bean.Driver;
 import com.yc.dao.DriverDao;
 
@@ -64,5 +65,20 @@ public class DriverDaoImpl implements DriverDao{
 	@Override
 	public List<Driver> findDriverNoCondition(Driver driver) {
 		return sqlSession.selectList("driver.selectDriverNoCondition",driver);
+	}
+
+	@Override
+	public List<Driver> findDriverNomission(Driver driver) {
+		return sqlSession.selectList("driver.selectDriverNomission",driver);
+	}
+
+	@Override
+	public void updateDriverStatus0(Driver d) {
+		this.sqlSession.update("com.yc.bean.CarMapper.updateDriverStatus0", d);
+	}
+
+	@Override
+	public void updateDriverStatus1(Driver d) {
+		this.sqlSession.update("com.yc.bean.CarMapper.updateDriverStatus1", d);
 	}
 }

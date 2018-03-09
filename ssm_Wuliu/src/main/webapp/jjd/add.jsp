@@ -86,7 +86,6 @@ $(function(){
 
 </script>
 
-<a href="find.jsp">查询</a>
 <center>
 	<form id="myform" name="myform">
 		<h1>修改交接单</h1>

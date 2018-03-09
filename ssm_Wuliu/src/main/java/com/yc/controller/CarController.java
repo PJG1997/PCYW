@@ -61,7 +61,7 @@ public class CarController {
 		Shippoint.setSpid(spid);
 		c.setShipPoint(Shippoint);
 		List<Car> list=new ArrayList<Car>();
-		for(Car car:carBiz.getCarInfo(c)){
+		for(Car car:carBiz.getCarNomission(c)){
 			list.add(car);
 		}
 		jsonModel.setCode(1);

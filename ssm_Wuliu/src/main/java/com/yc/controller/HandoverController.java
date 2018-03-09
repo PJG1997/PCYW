@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Scope;
@@ -24,8 +26,12 @@ import com.yc.bean.Handover;
 import com.yc.bean.JsonModel;
 import com.yc.bean.Order1;
 import com.yc.bean.Route;
+import com.yc.biz.CarBiz;
+import com.yc.biz.DriverBiz;
 import com.yc.biz.HandoverBiz;
 import com.yc.biz.Order1Biz;
+import com.yc.biz.RouteBiz;
+import com.yc.biz.UsersBiz;
 
 @Controller
 @Scope(value="prototype")
@@ -34,6 +40,14 @@ public class HandoverController {
 	private HandoverBiz handoverBiz;
 	@Resource(name="order1BizImpl")
 	private Order1Biz order1Biz;
+	@Resource(name="carBizImpl")
+	private CarBiz carBiz;
+	@Resource(name="driverBizImpl")
+	private DriverBiz driverBiz;
+	@Resource(name="routeBizImpl")
+	private RouteBiz routeBiz;
+	@Resource(name="usersBizImpl")
+	private UsersBiz usersBiz;
 	private JsonModel jsonModel=new JsonModel();
 	private Car c=new Car();
 	private Driver d=new Driver(); 
@@ -148,6 +162,43 @@ public class HandoverController {
 			h.setHremark(hremark);
 			try {
 				handoverBiz.updateHandoverInfo(h);
+				if(hstatus==1){
+					carBiz.updateCarStatus1(c);
+					driverBiz.updateDriverStatus1(d);
+					Order1 o=new Order1();
+					o.setOsid(osid);
+					Order1 or=new Order1();
+					or=  order1Biz.findRid(o);
+					Integer handrid=Integer.parseInt(or.getRemark1());
+					Route r=new Route();
+					r.setRid(handrid);
+					Route route=new Route();
+					route=routeBiz.findRvia(r);
+					String rvia=route.getRvia();
+					String rivaname[]=rvia.split("-");
+					if(hfromspname==rivaname[0]){
+						or.setOstatus(1);
+						order1Biz.updateOrder1(or);
+					}
+				}else if(hstatus==2){
+					carBiz.updateCarStatus0(c);
+					driverBiz.updateDriverStatus0(d);
+					Order1 o=new Order1();
+					o.setOsid(osid);
+					Order1 or=new Order1();
+					or=  order1Biz.findRid(o);
+					Integer handrid=Integer.parseInt(or.getRemark1());
+					Route r=new Route();
+					r.setRid(handrid);
+					Route route=new Route();
+					route=routeBiz.findRvia(r);
+					String rvia=route.getRvia();
+					String rivaname[]=rvia.split("-");
+					if(hfromspname==rivaname[rivaname.length-1]){
+						or.setOstatus(2);
+						order1Biz.updateOrder1(or);
+					}
+				}
 			} catch (Exception e) {
 				jsonModel.setCode(0);
 				e.printStackTrace();
@@ -294,6 +345,15 @@ public class HandoverController {
 			return jsonModel;
 		}
 		jsonModel.setCode(1);
+		return jsonModel;
+		
+	}
+	@RequestMapping("checkmethod.action")
+	@ResponseBody
+	public JsonModel checkmethod(Handover h,HttpServletRequest resquest){
+		Integer hid =Integer.parseInt(resquest.getParameter("hid"));
+		HttpSession session=resquest.getSession();
+		session.getAttribute("");
 		return jsonModel;
 		
 	}

@@ -72,8 +72,21 @@
   			limit #{pageNo},#{pageSize}
   		</if>
   </select>
-  
-  
+ <!-- 查询未有任务的车子 --> 
+    <select id="getCarNomission" resultMap="carMap" >
+  	select cid,car.spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake,
+  			shipPoint.spid,spname,spperson,sptel,spemail,spaddress,sptype,sppersontel,spfax,sparea
+  	from car
+  	left join shipPoint
+  	on 	car.spid=shipPoint.spid
+  	where car.remark5=1 and shipPoint.remark5=1 and car.cstatus=0
+  		<if test="cid!=null and cid!=''">
+  			and cid=#{cid}
+  		</if>
+  		<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  			and shippoint.spid=#{shipPoint.spid}
+  		</if>
+  </select>
   <!-- 添加车子的信息 -->
   <insert id="addCar" parameterType="Car" useGeneratedKeys="true" 
  		keyColumn="cid" keyProperty="cid">
@@ -87,8 +100,11 @@
   	where cid=#{cid}
   </update>  
   <!-- 修改这个车子的状态  主要是这个车子是否为空闲的或者为在途中 -->
-  <update id="updateCarStatus" parameterType="Car">
-  	update car set cstatus=#{cstatus} where cid=#{cid}
+  <update id="updateCarStatus0" parameterType="Car">
+  	update car set cstatus=0 where cid=#{cid}
+  </update>
+  <update id="updateCarStatus1" parameterType="Car">
+  	update car set cstatus=1 where cid=#{cid}
   </update>
   <!-- 删除车子 -->
   <update id="delCar" parameterType="Car">

@@ -10,6 +10,9 @@ public interface CarBiz {
 	public List<Car> getCarInfo(Car c);
 	
 	/*
+	 * 查没有任务的司机*/
+	public List<Car> getCarNomission(Car c);
+	/*
 	 * 添加车子的信息*/
 	public void addCar(Car c);
 	
@@ -19,9 +22,9 @@ public interface CarBiz {
 	
 	/*
 	 * 更新车子的空闲状态*/
-	public void updateCarStatus(Car c);
+	public void updateCarStatus0(Car c);
 	
-	
+	public void updateCarStatus1(Car c);
 	/*根据车子id批量删除*/
 	public void delmanyCar(List list);
 }

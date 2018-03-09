@@ -91,6 +91,21 @@
     	</where>
   </select>
   
+    <!-- 查询没任务的司机 -->
+  <select id="selectDriverNomission" resultMap="BaseResultMap">
+  	select * from driver left join shipPoint
+  	on 	driver.spid=shipPoint.spid
+  		<where>
+  			 driver.remark5=1 and shipPoint.remark5=1 and dstatus=0
+  			<if test="did!=null and did!=''">
+    			and did=#{did}
+    		</if>
+    		<if test="shipPoint.spid!=null and shipPoint.spid!=''">
+  				and shipPoint.spid=#{shipPoint.spid}
+  			</if>
+    	</where>
+  </select>
+  
   <!-- 删除价格信息 -->
   <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
     update driver set remark5=0
@@ -224,4 +239,10 @@
     where did = #{did,jdbcType=INTEGER} and remark5=1
   </update>
   
+  <update id="updateDriverStatus0" parameterType="Driver">
+  	update driver set dstatus=0 where did=#{did}
+  </update>
+  <update id="updateDriverStatus1" parameterType="Driver">
+  	update driver set dstatus=1 where did=#{did}
+  </update>
 </mapper>

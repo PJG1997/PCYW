@@ -62,7 +62,7 @@ public class DriverController {
 		d.setShipPoint(Shippoint);
 		System.out.println(Shippoint);
 		List<Driver> list=new ArrayList<Driver>();
-		for(Driver driver:driverBiz.findDriver(d)){
+		for(Driver driver:driverBiz.findDriverNomission(d)){
 			list.add(driver);
 		}
 		jsonModel.setCode(1);

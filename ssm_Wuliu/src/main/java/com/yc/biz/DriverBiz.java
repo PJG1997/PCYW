@@ -43,4 +43,12 @@ public interface DriverBiz {
 	 * @return
 	 */
 	public List<Driver> findDriverNoCondition(Driver driver);
+	
+	/*
+	 * 查询没有任务的司机*/
+	public List<Driver> findDriverNomission(Driver driver);
+	
+	//改变状态
+	public void updateDriverStatus0(Driver driver);
+	public void updateDriverStatus1(Driver driver);
 }

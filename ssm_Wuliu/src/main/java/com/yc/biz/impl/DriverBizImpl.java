@@ -72,4 +72,22 @@ public class DriverBizImpl implements DriverBiz{
 		return driverDao.findDriverNoCondition(driver);
 	}
 
+
+	@Override
+	public List<Driver> findDriverNomission(Driver driver) {
+		return driverDao.findDriverNomission(driver);
+	}
+
+
+	@Override
+	public void updateDriverStatus0(Driver driver) {
+		this.driverDao.updateDriverStatus0(driver);
+	}
+
+
+	@Override
+	public void updateDriverStatus1(Driver driver) {
+		this.driverDao.updateDriverStatus1(driver);
+	}
+
 }
