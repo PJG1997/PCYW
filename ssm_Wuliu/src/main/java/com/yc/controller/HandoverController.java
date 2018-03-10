@@ -537,6 +537,20 @@ public class HandoverController {
 			jsonModel.setCode(0);
 		}
 		return jsonModel;
+	}
 		
+	
+	/**
+	 * 通过osid查询
+	 */
+	@RequestMapping("selectJJDForOsid.action")
+	@ResponseBody
+	public JsonModel findhandoverForOsid(Handover h,HttpServletRequest request){
+		Integer osid=Integer.parseInt(request.getParameter("osid"));
+		h.setOsid(osid);
+		List<Handover> list=handoverBiz.selectForOsid(h);
+		jsonModel.setCode(1);
+		jsonModel.setObj(list);
+		return jsonModel;
 	}
 }

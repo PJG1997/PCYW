@@ -104,6 +104,10 @@
   
 
  <!--  <select id="searchAllHandoverInfo" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+=======
+  
+  <select id="searchAllHandoverInfo" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+>>>>>>> branch 'master' of git@github.com:PJG1997/PCYW.git
 	select h.*,o.osid,r.rname 
   	from handover h,order1 o,route r
   	 WHERE h.osid=o.osid and h.rid=r.rid
@@ -118,6 +122,7 @@
   			limit #{pageNo},#{pageSize}
   	</if>
   </select>
+<<<<<<< HEAD
   
   <select id="searchAllHandoverInfo" resultMap="BaseResultMap" parameterType="Handover">
       
@@ -181,7 +186,9 @@
   <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑查询信息最终版，分步方法查询完整交接单信息，并在controller中完善 ↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
   
   
-  
+  <select id="searchHandoverForOrderId" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+  		select * from handover where osid=#{osid} and hstatus=2
+  </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

@@ -68,6 +68,11 @@ public class HandoverBizImpl implements HandoverBiz {
 		return handoverDao.gethandover(h);
 	}
 
+	@Override
+	public List<Handover> selectForOsid(Handover h) {
+		return handoverDao.selectForOsid(h);
+	}
+
 	
 
 	

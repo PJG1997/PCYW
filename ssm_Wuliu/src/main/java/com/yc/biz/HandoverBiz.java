@@ -34,4 +34,9 @@ public interface HandoverBiz {
 	
 	/*根据id来查*/
 	public Handover gethandover(Handover h);
+	
+	/**
+	 * 通过订单id查询
+	 */
+	public List<Handover> selectForOsid(Handover h);
 }

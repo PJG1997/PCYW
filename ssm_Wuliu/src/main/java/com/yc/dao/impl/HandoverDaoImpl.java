@@ -20,7 +20,6 @@ public class HandoverDaoImpl implements HandoverDao {
 	@Override
 	public List<Handover> getHandoverInfo(Handover h) {
 		return this.sqlSession.selectList("com.yc.bean.HandoverMapper.searchAllHandoverInfo2", h);
-		//return this.sqlSession.selectList("com.yc.bean.HandoverMapper.searchAllHandoverInfo", h);
 	}
 	@Override
 	public List<Handover> getMoreHandoverInfo(Handover h){
@@ -70,8 +69,10 @@ public class HandoverDaoImpl implements HandoverDao {
 	public Handover gethandover(Handover h) {
 		return sqlSession.selectOne("com.yc.bean.HandoverMapper.selectByPrimaryKey", h);
 	}
-	
-
+	@Override
+	public List<Handover> selectForOsid(Handover h) {
+		return sqlSession.selectList("com.yc.bean.HandoverMapper.searchHandoverForOrderId",h);
+	}
 	
 	
 }
