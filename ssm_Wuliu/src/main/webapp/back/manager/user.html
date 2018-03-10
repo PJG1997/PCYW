@@ -4,9 +4,13 @@
 	<a href="javascript:user_addUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-add',plain:true" style="float:left">添加</a>
 	<a href="javascript:user_deleteUser()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	
-	<div class="datagrid-btn-separator"></div>	
+	<div class="datagrid-btn-separator"></div>
+	<label>所属配送点名称:</label>
+	<select name="user_search_spid" id="user_search_spid">
+		<option value="">--全部--</option>
+	</select>	
 	<label>用户姓名</label>
-	<input type="text" name="sname" id="user_search_uname" class="song_input">
+	<input type="text" name="urealname" id="user_search_uname" class="song_input">
 	<a href="javascript:user_searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-cdr_magnify'">查询</a>
 </div>
 
@@ -67,6 +71,11 @@
 		<li>
 			<label>用户电话：</label>
 			<input type="text" name="utel" id="user_add_utel" />
+		</li>
+		<li>
+			<label>所属配送点：</label>
+			<select name="user_add_spname" id="user_add_spname">
+	        </select>
 		</li>
 		<li>
 			<label>用户邮箱：</label>
@@ -167,6 +176,7 @@ $(function(){
 			          {field:'usid',title:'用户编号',width:80,align:'center',sortable:true},   
 			          {field:'uname',title:'用户帐号',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 			          {field:'urealname',title:'用户姓名',width:80,align:'center',editor:{type:"text",options:{required:true}}},
+			          {field:'remark1',title:'所属配送点',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 			          {field:'uaddress',title:'用户地址',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 			          {field:'uphone',title:'用户手机',width:80,align:'center',editor:{type:"text",options:{required:true}}},
 			          {field:'utel',title:'用户电话',width:80,align:'center',editor:{type:"text",options:{required:true}}},
@@ -339,10 +349,12 @@ function user_addUser(){
 }
 
 function user_searchUser(){
-	uname=$("#user_search_uname").val();
+	urealname=$("#user_search_uname").val();
+	//暂时用remark1存配送点的id
+	spid=$("#user_search_spid").val();
 	$('#user_data').datagrid({
 		url:"../../findAllUser.action",
-		queryParams:{uname:uname}
+		queryParams:{remark1:spid,urealname:urealname}
 	})
 }
 function updateUserStatus(val){
@@ -361,6 +373,24 @@ function updateUserStatus(val){
 		}
 	});
 }
+
+/*
+ * 先查询到所有的配送点,赋给select
+ */
+$(function(){
+	$.ajax({
+		url:'../../findAllShippoint.action',
+		method:"POST",
+		dataType:"JSON",
+		success:function(data){
+			$.each(data.obj,function(index,item){		//给select赋值houseType
+				 var option="<option value='"+item.spid+"'>"+item.spname+"</option>";
+				 $("#user_add_spname").append(option);
+				 $("#user_search_spid").append(option);
+			 });
+		}
+	})
+});
 
 
 </script>

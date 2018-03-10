@@ -15,10 +15,16 @@
     <result column="remark3" property="remark3" jdbcType="VARCHAR" />
     <result column="remark4" property="remark4" jdbcType="VARCHAR" />
     <result column="remark5" property="remark5" jdbcType="VARCHAR" />
+    
+    <association property="shippoint" javaType="com.yc.bean.Shippoint">
+		<id column="spid" property="spid" jdbcType="INTEGER" />
+    	<result column="spname" property="spname" jdbcType="VARCHAR" />
+	</association>
+    
   </resultMap>
   <sql id="Base_Column_List" >
-    usid, uname, urealname, uaddress, uphone, utel, uemail, status, remark1, remark2, 
-    remark3, remark4, remark5
+    usid, uname, urealname, uaddress, uphone, utel, uemail, status, users.remark1, users.remark2, 
+    users.remark3,users.remark4, users.remark5
   </sql>
   
   <!-- 修改管理员状态  -->
@@ -30,7 +36,7 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from users
+    from users 
     <where>
     	(status=1 or status=0)
     	<if test="usid!=null and usid!=''">
@@ -265,7 +271,7 @@
 	
 	<!-- 需要查询到的字段 -->
   <sql id="Base_Column_List2" >
-    usid,uname,urealname,uaddress,uphone,utel,uemail,status
+    usid,uname,urealname,uaddress,uphone,utel,uemail,status,spid,spname
   </sql>
   
   <!-- 分页查询     remark1:表示pageNo  remark2:表示pageSize   因为remake1和ramark2是字符串所以要把它们转为整形 -->
@@ -279,14 +285,17 @@
  <select id="searchAllUsers" resultMap="BaseResultMap" parameterType="com.yc.bean.Users" >
     select 
     <include refid="Base_Column_List2" />
-    from users 
+    from users join shippoint on users.remark1=shippoint.spid
     	<where>
     		(status=2 or status=-1)
     		<if test="usid!=null">
     			and usid=#{usid}
     		</if>
-    		<if test="uname!=null and uname!=''">
-  				and uname like CONCAT('%',#{uname},'%' )
+    		<if test="urealname!=null and urealname!=''">
+  				and urealName like CONCAT('%',#{urealname},'%' )
+  			</if>
+  			<if test="remark1!=null and remark1!=''">
+  				and users.remark1=#{remark1}
   			</if>
     	</where>
     	<include refid="pageSql" />
