@@ -14,6 +14,12 @@ public interface HandoverBiz {
 	public List<Handover> getMoreHandoverInfo(Handover h);
 	
 	/*
+	 * 分布式查询
+	 */
+	public List<Handover> getFirstHandoverInfo(Handover h);
+	public Handover getCnumberByHandover(Handover h);
+	public Handover getDnameByHandover(Handover h);
+	/*
 	 * 添加车子的信息*/
 	public void addHandover(Handover h);
 	

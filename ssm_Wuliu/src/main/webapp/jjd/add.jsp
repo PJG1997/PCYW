@@ -60,21 +60,24 @@ $(function(){
 		}
 	})
 	$("#btn").click(function(){
+		osid=$("#osid").val();
 		cnumber=$("#cnumber").val();
 		dname=$("#dname").val();
 		starttime=$("#starttime").val();
 		endtime=$("#endtime").val();
 		hstatus=$("#hstatus").val();
 		hremark=$("#remark").val();
+		hfromspname=$("#fromspname").val();
+		htospname=$("#tospname").val();
 		$.ajax({
-			url:"updatehand.action",
+			url:"updatehandover.action",
 			method:"POST",
-			data:{cnumber:cnumber,dname:dname,starttime:starttime
+			data:{osid:osid,hfromspname:hfromspname,htospname:htospname,cnumber:cnumber,dname:dname,starttime:starttime
 				,endtime:endtime,hstatus:hstatus,hremark:hremark,hid:hid},
 			dataType:"json",
 			success:function(data){
 				if(data.code==1){
-					window.location.href='find.jsp';
+					location.href='jjd/jjd_query.jsp';
 					$("#msg").html("添加成功...");
 				}else{
 					$("#msg").html("添加失败..."+data.msg);

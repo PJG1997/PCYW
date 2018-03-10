@@ -58,7 +58,7 @@ public class HandoverController {
 	private Driver d=new Driver(); 
 	private Order1 o=new Order1();
 	private Route r=new Route();
-	//后台查询
+	//后台查询:分步式查询，一步一步来完善信息达到查询所有交接单的目的
 	@RequestMapping("findAllhandover.action")
 	@ResponseBody
 	public Map<String,Object> findAllhandover(Handover h,HttpServletRequest request){
@@ -71,11 +71,12 @@ public class HandoverController {
 		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
 		h.setPageNo((pageNo-1)*pageSize);
 		h.setPageSize(pageSize);
-		int total = handoverBiz.getHandoverInfo(h).size();
-		//map.put("total", total);
+		int total = handoverBiz.getFirstHandoverInfo(h).size();
+		map.put("total", total);
 		List<Handover> list=new ArrayList<Handover>();
-		for(Handover hand:handoverBiz.getHandoverInfo(h))
-		{
+		for(Handover hand:handoverBiz.getFirstHandoverInfo(h))//getFirstHandoverInfo:查询初步需要的交接单信息里面只含有cid,did等列
+		{	
+			
 			if(hand.getHstatus()==0){
 				hand.setStatus("未发车");
 			}else if(hand.getHstatus()==1){
@@ -83,104 +84,96 @@ public class HandoverController {
 			}else{
 				hand.setStatus("以完成");
 			}
-			hand.setCnumber(hand.getCar().getCnumber());
-			hand.setDname(hand.getDriver().getDname());
-			hand.setOsid(hand.getOrder1().getOsid());
-			hand.setRname(hand.getRoute().getRname());
-			hand.setRemark4(String.valueOf(hand.getHid()));
-			list.add(hand);
-		}
-		
-		if(total<5){
-			Handover h2 = new Handover();
-			h2.setPageNo((pageNo-1)*pageSize);
-			h2.setPageSize(pageSize-total);
-			System.out.println(h2.getPageNo()+"============"+h2.getPageSize());
-			int total2 = handoverBiz.getMoreHandoverInfo(h2).size();
-			for(Handover hand2:handoverBiz.getMoreHandoverInfo(h2)){
-				if(hand2.getHstatus()==0){
-					hand2.setStatus("未发车");
-				}else if(hand2.getHstatus()==1){
-					hand2.setStatus("已发车");
+			if(hand.getCar()!=null){//判断该交接单有无车辆属性
+				if(hand.getCar().getCid()!=null){//如果该交接单已经分配了车辆
+					Handover h2 = handoverBiz.getCnumberByHandover(hand);//则通过交接单的cid来查询车辆车牌号
+					hand.setCnumber(h2.getCar().getCnumber());//完善交接单车辆车牌号信息
 				}else{
-					hand2.setStatus("以完成");
+					hand.setCnumber(null);
 				}
-				hand2.setOsid(hand2.getOrder1().getOsid());
-				hand2.setRname(hand2.getRoute().getRname());
-				hand2.setRemark4(String.valueOf(hand2.getHid()));
-				list.add(hand2);
-			}
-			map.put("total", total+total2);
-		}else{
-			map.put("total", total);
-		}
-		
-		
-		
-		map.put("rows", list);
-		return map;
-	}
-	
-	//后台查询
-	@RequestMapping("findAllhandover1.action")
-	@ResponseBody
-	public Map<String,Object> findAllhandover1(Handover h,HttpServletRequest request){
-		Map<String,Object> map=new HashMap<String, Object>();
-		h.setCar(c);
-		h.setDriver(d);
-		h.setOrder1(o);
-		h.setRoute(r);
-		Integer pageNo=Integer.parseInt(request.getParameter("page"));
-		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
-		h.setPageNo((pageNo-1)*pageSize);
-		h.setPageSize(pageSize);
-		int total = handoverBiz.getHandoverInfo(h).size();
-		//map.put("total", total);
-		List<Handover> list=new ArrayList<Handover>();
-		for(Handover hand:handoverBiz.getHandoverInfo(h))
-		{
-			if(hand.getHstatus()==0){
-				hand.setStatus("未发车");
-			}else if(hand.getHstatus()==1){
-				hand.setStatus("已发车");
 			}else{
-				hand.setStatus("以完成");
+				hand.setCar(c);//没有车辆属性就赋予它一个null的车辆属性
+			}
+			
+			if(hand.getDriver()!=null){//判断是否分配了司机
+				if(hand.getDriver().getDid()!=null){
+					Handover h2 = handoverBiz.getDnameByHandover(hand);//如果有司机分配，则通过交接单的did来查询司机名称
+					hand.setDname(h2.getDriver().getDname());//完善交接单司机信息
+				}else{
+					hand.setDname(null);
+				}
+			}else{
+				hand.setDriver(d);//没有司机就给它一个空的司机
 			}
 			hand.setOsid(hand.getOrder1().getOsid());
 			hand.setRname(hand.getRoute().getRname());
 			hand.setRemark4(String.valueOf(hand.getHid()));
 			list.add(hand);
 		}
-		
-		if(total<5){
-			Handover h2 = new Handover();
-			h2.setPageNo((pageNo-1)*pageSize);
-			h2.setPageSize(pageSize-total);
-			System.out.println(h2.getPageNo()+"============"+h2.getPageSize());
-			int total2 = handoverBiz.getMoreHandoverInfo(h2).size();
-			for(Handover hand2:handoverBiz.getMoreHandoverInfo(h2)){
-				if(hand2.getHstatus()==0){
-					hand2.setStatus("未发车");
-				}else if(hand2.getHstatus()==1){
-					hand2.setStatus("已发车");
-				}else{
-					hand2.setStatus("以完成");
-				}
-				hand2.setOsid(hand2.getOrder1().getOsid());
-				hand2.setRname(hand2.getRoute().getRname());
-				hand2.setRemark4(String.valueOf(hand2.getHid()));
-				list.add(hand2);
-			}
-			map.put("total", total+total2);
-		}else{
-			map.put("total", total);
-		}
-		
-		
-		
 		map.put("rows", list);
 		return map;
 	}
+//	
+//	//后台查询
+//	@RequestMapping("findAllhandover1.action")
+//	@ResponseBody
+//	public Map<String,Object> findAllhandover1(Handover h,HttpServletRequest request){
+//		Map<String,Object> map=new HashMap<String, Object>();
+//		h.setCar(c);
+//		h.setDriver(d);
+//		h.setOrder1(o);
+//		h.setRoute(r);
+//		Integer pageNo=Integer.parseInt(request.getParameter("page"));
+//		Integer pageSize=Integer.parseInt(request.getParameter("rows"));
+//		h.setPageNo((pageNo-1)*pageSize);
+//		h.setPageSize(pageSize);
+//		int total = handoverBiz.getHandoverInfo(h).size();
+//		//map.put("total", total);
+//		List<Handover> list=new ArrayList<Handover>();
+//		for(Handover hand:handoverBiz.getHandoverInfo(h))
+//		{
+//			if(hand.getHstatus()==0){
+//				hand.setStatus("未发车");
+//			}else if(hand.getHstatus()==1){
+//				hand.setStatus("已发车");
+//			}else{
+//				hand.setStatus("以完成");
+//			}
+//			hand.setOsid(hand.getOrder1().getOsid());
+//			hand.setRname(hand.getRoute().getRname());
+//			hand.setRemark4(String.valueOf(hand.getHid()));
+//			list.add(hand);
+//		}
+//		
+//		if(total<5){
+//			Handover h2 = new Handover();
+//			h2.setPageNo((pageNo-1)*pageSize);
+//			h2.setPageSize(pageSize-total);
+//			System.out.println(h2.getPageNo()+"============"+h2.getPageSize());
+//			int total2 = handoverBiz.getMoreHandoverInfo(h2).size();
+//			for(Handover hand2:handoverBiz.getMoreHandoverInfo(h2)){
+//				if(hand2.getHstatus()==0){
+//					hand2.setStatus("未发车");
+//				}else if(hand2.getHstatus()==1){
+//					hand2.setStatus("已发车");
+//				}else{
+//					hand2.setStatus("以完成");
+//				}
+//				hand2.setOsid(hand2.getOrder1().getOsid());
+//				hand2.setRname(hand2.getRoute().getRname());
+//				hand2.setRemark4(String.valueOf(hand2.getHid()));
+//				list.add(hand2);
+//			}
+//			map.put("total", total+total2);
+//		}else{
+//			map.put("total", total);
+//		}
+//		
+//		
+//		
+//		map.put("rows", list);
+//		return map;
+//	}
 	//后台查看交接单查询
 	@RequestMapping("findhandoverInfo.action")
 	@ResponseBody
@@ -212,7 +205,6 @@ public class HandoverController {
 		
 		Handover h=new Handover();
 		h.setHstatus(Integer.parseInt(hstatus));
-		System.out.println(hid);
 		h.setHid(Integer.parseInt(hid));
 		h.setHstarttimeString(hstarttime);
 		h.setHfromspname(hfromspname);
@@ -231,13 +223,14 @@ public class HandoverController {
 	//后台修改交接单
 	@RequestMapping("updatehandover.action")
 	@ResponseBody
-	public JsonModel updatehandover(@RequestParam(value="update_insert_hid") Integer hid,
-			@RequestParam(value="update_insert_hfromspname") String hfromspname,@RequestParam(value="update_insert_cnumber") Integer cid,
-			@RequestParam(value="update_insert_dname") Integer did,@RequestParam(value="update_insert_osid") Integer osid,
-			@RequestParam(value="update_insert_rname") Integer rid,@RequestParam(value="update_insert_htospname") String htospname,
-			@RequestParam(value="update_insert_hstarttime") String starttime,@RequestParam(value="update_insert_hendtime") String endtime,
-			@RequestParam(value="update_insert_hstatus") Integer hstatus,@RequestParam(value="update_insert_hremark") String hremark) throws ParseException{
+	public JsonModel updatehandover(@RequestParam(value="hid") Integer hid,
+			@RequestParam(value="hfromspname") String hfromspname,@RequestParam(value="cnumber") Integer cid,
+			@RequestParam(value="dname") Integer did,@RequestParam(value="osid") Integer osid,
+			@RequestParam(value="rname") Integer rid,@RequestParam(value="htospname") String htospname,
+			@RequestParam(value="hstarttime") String starttime,@RequestParam(value="hendtime") String endtime,
+			@RequestParam(value="hstatus") Integer hstatus,@RequestParam(value="hremark") String hremark) throws ParseException{
 			Handover h=new Handover();
+			System.out.println("213");
 			c.setCid(cid);
 			o.setOsid(osid);
 			d.setDid(did);
@@ -246,8 +239,6 @@ public class HandoverController {
 			h.setDriver(d);
 			h.setOrder1(o);
 			h.setRoute(r);
-			h.setHfromspname(hfromspname);
-			h.setHtospname(htospname);
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			h.setHstarttime(sdf.parse(starttime));
 			h.setHendtime(sdf.parse(endtime));
