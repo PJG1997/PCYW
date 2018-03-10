@@ -31,12 +31,12 @@ function findOrder(pages){
 	                tr+="<td width='7%'>"+item.osendaddress+"</td>";
 	                tr+="<td width='13%'>"+item.orecaddress+"</td>";
 	                switch(item.ostatus){
-	                case 1:tr+="<td width='8%'>未发件</td>";break;
-	                case 2:tr+="<td width='8%'>已发件</td>";break;
-	                case 3:tr+="<td width='8%'>已送达</td>";break;
-	                case 4:tr+="<td width='8%'>已签收</td>";break;
-	                case 5:tr+="<td width='8%'>已召回</td>";break;
-	                case 6:tr+="<td width='8%'>已撤单</td>";break;
+	                case 0:tr+="<td width='8%'>未发件</td>";break;
+	                case 1:tr+="<td width='8%'>已发件</td>";break;
+	                case 2:tr+="<td width='8%'>已送达</td>";break;
+	                case 3:tr+="<td width='8%'>已签收</td>";break;
+	                case 4:tr+="<td width='8%'>已召回</td>";break;
+	                case 5:tr+="<td width='8%'>已撤单</td>";break;
 	                }
 	                tr+="<td width='8%'>"+item.otimeString+"</td></tr>";
 					$(tr).appendTo($("#orderTbody"));
@@ -278,9 +278,9 @@ function updateOrder(){
         <td>
 		<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="B1BCEC">
             <tr>
-              <td bgcolor="#FFFFFF">&nbsp;收寄地:&nbsp;&nbsp;&nbsp;<input type="text" id="osendaddress" name="osendaddress" size="12"/>
+              <td bgcolor="#FFFFFF">&nbsp;邮寄地:&nbsp;&nbsp;&nbsp;<input type="text" id="osendaddress" name="osendaddress" size="12"/>
               </td>
-			    <td bgcolor="#FFFFFF">&nbsp;配送地:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="orecaddress" type="text" name="orecaddress" size="12"/>
+			    <td bgcolor="#FFFFFF">&nbsp;收寄地:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="orecaddress" type="text" name="orecaddress" size="12"/>
               </td>
 			    <td bgcolor="#FFFFFF">&nbsp;订单编号:<input type="text" id="osid" name="osid" size="12"/>
               </td>
