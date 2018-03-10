@@ -1,7 +1,7 @@
 $(function(){
 	
-	var page=1;
-	var rows=5;
+	 page=1;
+	 rows=5;
 	
 	$.ajax({
 		url:"../findAllhandover.action",
@@ -13,19 +13,27 @@ $(function(){
 			var ep = $("#tos"); //获取终止点对象
 			var jjdtable=$("#jjdInfo"); //获取表格对象
 			$.each(data.rows,function(index,item){
-				var i =0;
-				sp.append("<option value='"+i+"'>"+item.hfromspname+"</option>");
-				ep.append("<option value='"+i+"'>"+item.htospname+"</option>");
-				i++;
-				var j=1;
-				var str="<tr><td>"+j+"</td>";
+				
+				sp.append("<option >"+item.hfromspname+"</option>");
+				ep.append("<option >"+item.htospname+"</option>");
+				
+				var str="<tr><td>"+(index+1)+"</td>";
 				str+="<td >"+item.hid+"</td>";
 				str+="<td >"+item.osid+"</td>";
 				str+="<td >"+item.hfromspname+"</td>";
 				str+="<td >"+item.htospname+"</td>";
 				str+="<td >"+gettime(item.hstarttime)+"</td>";
-				str+="<td >"+item.dname+"</td>";
-				str+="<td >"+item.cnumber+"</td>";
+				if(item.dname==null){
+					str+="<td >无</td>";
+				}else{
+					str+="<td >"+item.dname+"</td>";
+				}
+				if(item.cnumber==null){
+					str+="<td >无</td>";
+				}else{
+					str+="<td >"+item.cnumber+"</td>";
+				}
+				
 				str+="<td >"+gettime(item.hendtime)+"</td>";
 				var status='未知';
 				if(item.hstatus==0){
@@ -36,14 +44,24 @@ $(function(){
 					status="已完成";
 				}
 				str+="<td name='status'>"+status+"</td></tr>"
+				
 				jjdtable.append(str);
-				j++;
+				
+				
 			});
 			
 			
 			
 		}
 	});
+	
+	$("#froms option").each(function(){
+		var text= $(this).text();
+		
+		
+		
+	});
+	
 });
 
   //获取时间
@@ -100,5 +118,121 @@ function search(){
 	});
 		
 		
+	
+}
+
+function nextPage(){
+	
+	page=page+1;
+	rows=5;
+	
+	$.ajax({
+		url:"../findAllhandover.action",
+		data:{page:page,rows:rows},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			console.info(data.total);
+			if(data.total==0){
+				alert("当前已经是最后一页");
+				page=page-1;
+			}else{
+				var jjdtable=$("#jjdInfo"); //获取表格对象
+				jjdtable.html("");
+				$.each(data.rows,function(index,item){
+					
+					var str="<tr><td>"+(index+1)+"</td>";
+					str+="<td >"+item.hid+"</td>";
+					str+="<td >"+item.osid+"</td>";
+					str+="<td >"+item.hfromspname+"</td>";
+					str+="<td >"+item.htospname+"</td>";
+					str+="<td >"+gettime(item.hstarttime)+"</td>";
+					if(item.dname==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.dname+"</td>";
+					}
+					if(item.cnumber==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.cnumber+"</td>";
+					}
+					str+="<td >"+gettime(item.hendtime)+"</td>";
+					var status='未知';
+					if(item.hstatus==0){
+						status="未发车";
+					}else if(item.hstatus==1){
+						status="已发车";
+					}else{
+						status="已完成";
+					}
+					str+="<td name='status'>"+status+"</td></tr>"
+					
+					jjdtable.append(str);
+				});
+			}
+		}
+	});
+	
+	
+}
+
+
+function lastPage(){
+	page=page-1;
+	rows=5;
+	
+	if(page<=0){
+		alert("当前已经是首页");
+		page=1;
+	}else{
+		$.ajax({
+			url:"../findAllhandover.action",
+			data:{page:page,rows:rows},
+			dataType:"JSON",
+			method:"POST",
+			success:function(data){
+				
+				var jjdtable=$("#jjdInfo"); //获取表格对象
+				jjdtable.html("");
+				$.each(data.rows,function(index,item){
+					
+					var str="<tr><td>"+(index+1)+"</td>";
+					str+="<td >"+item.hid+"</td>";
+					str+="<td >"+item.osid+"</td>";
+					str+="<td >"+item.hfromspname+"</td>";
+					str+="<td >"+item.htospname+"</td>";
+					str+="<td >"+gettime(item.hstarttime)+"</td>";
+					if(item.dname==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.dname+"</td>";
+					}
+					if(item.cnumber==null){
+						str+="<td >无</td>";
+					}else{
+						str+="<td >"+item.cnumber+"</td>";
+					}
+					str+="<td >"+gettime(item.hendtime)+"</td>";
+					var status='未知';
+					if(item.hstatus==0){
+						status="未发车";
+					}else if(item.hstatus==1){
+						status="已发车";
+					}else{
+						status="已完成";
+					}
+					str+="<td name='status'>"+status+"</td></tr>"
+					jjdtable.append(str);
+				});
+			}
+		});
+	}
+	
+}
+
+//去掉重复的表格数据
+function clearTable(){
+	var finaljjdTable=$("#jjdInfo"); //获取表格对象
 	
 }
