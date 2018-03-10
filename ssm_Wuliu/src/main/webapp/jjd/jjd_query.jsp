@@ -91,6 +91,7 @@
                 	<th>车牌号</th>
                 	<th>交接时间</th>
                 	<th>状态</th>
+                	<th>操作</th>
                 </tr>
                 </thead>
                 

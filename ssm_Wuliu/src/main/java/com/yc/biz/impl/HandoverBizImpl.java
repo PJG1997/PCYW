@@ -23,7 +23,31 @@ public class HandoverBizImpl implements HandoverBiz {
 	public List<Handover> getHandoverInfo(Handover h) {
 		return handoverDao.getHandoverInfo(h);
 	}
+	
+	@Override
+	public List<Handover> getMoreHandoverInfo(Handover h) {
+		return handoverDao.getMoreHandoverInfo(h);
+	}
+	
+	
+	//==========分步式查询========================================//
+	@Override
+	public List<Handover> getFirstHandoverInfo(Handover h) {
+		return handoverDao.getFirstHandoverInfo(h);
+	}
+	@Override
+	public Handover getCnumberByHandover(Handover h) {
+		return handoverDao.getCnumberByHandover(h);
+	}
 
+	@Override
+	public Handover getDnameByHandover(Handover h) {
+		return handoverDao.getDnameByHandover(h);
+	}
+	//==========分步式查询========================================//
+	
+	
+	
 	@Override
 	public void addHandover(Handover h) {
 		handoverDao.addHandover(h);
@@ -43,6 +67,17 @@ public class HandoverBizImpl implements HandoverBiz {
 	public Handover gethandover(Handover h) {
 		return handoverDao.gethandover(h);
 	}
+
+	@Override
+	public List<Handover> selectForOsid(Handover h) {
+		return handoverDao.selectForOsid(h);
+	}
+
+	
+
+	
+
+	
 	
 	
 }

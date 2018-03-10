@@ -28,29 +28,21 @@ function initOrderWithLine(params){
 	
 	$.ajax({
 	  type: 'POST',
-	  url: "findhandover.action",
+	  url: "selectForOsid.action",
 	  data:{osid:osid},
 	  dataType: 'JSON',
 	  success: function( data ){
+		  var option;
 		  if(data.code==1){
-			  alert(123);
 				$.each(data.obj,function(index,item){
-					 for(var i=0;i<routeName.length;i++){
-						 if(item.hstatus==2){
-							 var option;
-							 var hSpname=item.hfromSpname
-								for(var j=0;j<hSpname.length;j++){
-									if(hSpname==routeName){
-										 option="<p value="+routeName[i]+">"+routeName[i](已送达)+"</p>";
-									}
-								}
-						}else{
-							   option="<p value="+routeName[i]+">"+routeName[i]+"</p>";
-						}
-						 $('#route').append(option);
-					  }
+					 	 option="<p>"+item.hfromspname+"---"+item.htospname+"(已完成)"+"</p>"
 				});
+			}else{
+				 for(var i=0;i<routeName.length;i++){
+					 	option="<option value="+routeName[i]+">"+routeName[i]+"</option>";
+				  }
 			}
+		  $('#route').append(option);
 	  }
 	})
 }
