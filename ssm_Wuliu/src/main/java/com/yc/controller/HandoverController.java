@@ -245,27 +245,59 @@ public class HandoverController {
 			h.setHremark(hremark);
 			try {
 				handoverBiz.updateHandoverInfo(h);
-				if(hstatus==1){
-					carBiz.updateCarStatus1(c);
-					driverBiz.updateDriverStatus1(d);
-					Order1 o=new Order1();
-					o.setOsid(osid);
-					Order1 or=new Order1();
-					System.out.println(o);
-					or=  order1Biz.findRid(o);
-					System.out.println(or);
-					Integer handrid=Integer.parseInt(or.getRemark1());
-					Route r=new Route();
-					r.setRid(handrid);
-					Route route=new Route();
-					route=routeBiz.findRvia(r);
-					String rvia=route.getRvia();
-					String rivaname[]=rvia.split("-");
-					if(hfromspname.equals(rivaname[0])){
-						or.setOstatus(1);
-						order1Biz.updateOrder1(or);
-					}
-				}else if(hstatus==2){
+				carBiz.updateCarStatus1(c);
+				driverBiz.updateDriverStatus1(d);
+				Order1 o=new Order1();
+				o.setOsid(osid);
+				Order1 or=new Order1();
+				System.out.println(o);
+				or=  order1Biz.findRid(o);
+				System.out.println(or);
+				Integer handrid=Integer.parseInt(or.getRemark1());
+				Route r=new Route();
+				r.setRid(handrid);
+				Route route=new Route();
+				route=routeBiz.findRvia(r);
+				String rvia=route.getRvia();
+				String rivaname[]=rvia.split("-");
+				if(hfromspname.equals(rivaname[0])){
+					or.setOstatus(1);
+					order1Biz.updateOrder1(or);
+				}
+
+			} catch (Exception e) {
+				jsonModel.setCode(0);
+				e.printStackTrace();
+				return jsonModel;
+			}
+			jsonModel.setCode(1);
+			return jsonModel;
+	}
+	//只能将交接单变成已完成
+		@RequestMapping("Onlyupdatehandover.action")
+		@ResponseBody
+		public JsonModel Noupdatehandover(@RequestParam(value="hid") Integer hid,
+				@RequestParam(value="hfromspname") String hfromspname,@RequestParam(value="cnumber") Integer cid,
+				@RequestParam(value="dname") Integer did,@RequestParam(value="osid") Integer osid,
+				@RequestParam(value="htospname") String htospname,
+				@RequestParam(value="hstarttime") String starttime,@RequestParam(value="hendtime") String endtime,
+				@RequestParam(value="hstatus") Integer hstatus,@RequestParam(value="hremark") String hremark) throws ParseException{
+				Handover h=new Handover();
+				c.setCid(cid);
+				o.setOsid(osid);
+				d.setDid(did);
+				h.setCar(c);
+				h.setDriver(d);
+				h.setOrder1(o);
+				h.setRoute(r);
+				h.setHid(hid);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+				h.setHstarttime(sdf.parse(starttime));
+				h.setHendtime(sdf.parse(endtime));
+				h.setHstatus(hstatus);
+				h.setHremark(hremark);
+				try {
+					handoverBiz.updateHandoverInfo(h);
 					carBiz.updateCarStatus0(c);
 					driverBiz.updateDriverStatus0(d);
 					Order1 o=new Order1();
@@ -283,15 +315,14 @@ public class HandoverController {
 						or.setOstatus(2);
 						order1Biz.updateOrder1(or);
 					}
+				} catch (Exception e) {
+					jsonModel.setCode(0);
+					e.printStackTrace();
+					return jsonModel;
 				}
-			} catch (Exception e) {
-				jsonModel.setCode(0);
-				e.printStackTrace();
+				jsonModel.setCode(1);
 				return jsonModel;
-			}
-			jsonModel.setCode(1);
-			return jsonModel;
-	}
+		}
 	//后台添加
 	@RequestMapping("addhandover.action")
 	@ResponseBody
@@ -448,8 +479,6 @@ public class HandoverController {
 		Shippoint sp=new Shippoint();
 		sp.setSpid(spid);
 		sp=shippointBiz.getShippoint(sp);
-		System.out.println(sp.getRemark1());
-		System.out.println(h.getHfromspname());
 		if(sp.getRemark1().equals(h.getHfromspname())){
 			jsonModel.setCode(1);
 		}else{

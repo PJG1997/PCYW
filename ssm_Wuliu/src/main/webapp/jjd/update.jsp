@@ -28,6 +28,8 @@ $(function(){
 					$("#osid").html(data.obj.order1.osid);
 					$("#cnumber").html(data.obj.car.cnumber);
 					$("#dname").html(data.obj.driver.dname);
+					$("#cid").val(data.obj.car.cid);
+					$("#did").val(data.obj.driver.did);
 					$("#starttime").val(data.obj.starttime);
 					$("#endtime").val(data.obj.endtime);
 					$("#hstatus").val(data.obj.hstatus);
@@ -37,6 +39,8 @@ $(function(){
 	})
 	$("#btn").click(function(){
 		osid=$("#osid").html();
+		cnumber=$("#cid").val();
+		dname=$("#did").val();
 		hstarttime=$("#starttime").val();
 		hendtime=$("#endtime").val();
 		hstatus=$("#hstatus").val();
@@ -44,9 +48,9 @@ $(function(){
 		hfromspname=$("#fromspname").val();
 		htospname=$("#tospname").val();
 		$.ajax({
-			url:"updatehandover.action",
+			url:"Onlyupdatehandover.action",
 			method:"POST",
-			data:{osid:osid,hfromspname:hfromspname,htospname:htospname,hstarttime:hstarttime
+			data:{osid:osid,hfromspname:hfromspname,htospname:htospname,cnumber:cnumber,dname:dname,hstarttime:hstarttime
 				,hendtime:hendtime,hstatus:hstatus,hremark:hremark,hid:hid},
 			dataType:"json",
 			success:function(data){
@@ -72,9 +76,11 @@ $(function(){
 		司机姓名:<label id="dname" name="dname">
 		
 			  </label><br />
+			  <input id="did" name="did" type="hidden"></input>
 	  	车  牌  号:<label id="cnumber" name="cnumber">
 		
 			  </label><br />
+			  <input id="cid" name="cid" type="hidden"></input>
 		<label>起始配送点名称:</label><label id="fromspname"></label><br />
 		<label>到达配送点名称:</label><label id="tospname"></label><br />
 		起始时间:<input type="text"
