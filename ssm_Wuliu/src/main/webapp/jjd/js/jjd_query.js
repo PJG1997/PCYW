@@ -179,8 +179,8 @@ function nextPage(){
 					}else{
 						status="已完成";
 					}
-					str+="<td name='status'>"+status+"</td></tr>"
-					
+					str+="<td name='status'>"+status+"</td>"
+					str+="<td><a id='operation' href='javascript:update("+item.hid+")' style='color:#39f'>修改</a></td></tr>";
 					jjdtable.append(str);
 				});
 			}
@@ -235,7 +235,8 @@ function lastPage(){
 					}else{
 						status="已完成";
 					}
-					str+="<td name='status'>"+status+"</td></tr>"
+					str+="<td name='status'>"+status+"</td>";
+					str+="<td><a id='operation' href='javascript:update("+item.hid+")' style='color:#39f'>修改</a></td></tr>";
 					jjdtable.append(str);
 				});
 			}
