@@ -13,6 +13,7 @@ public class Users implements Serializable{
 	private static final long serialVersionUID = 2518213748331195249L;
 	
 	private Integer usid;		//用户ID
+	private Shippoint shippoint;  //配送点对象
     private String uname;		//用户账号
     private String upwd;		//用户密码
     private String urealname;  	//用户真实姓名
@@ -127,12 +128,19 @@ public class Users implements Serializable{
 	public void setRemark5(String remark5) {
 		this.remark5 = remark5;
 	}
+	public Shippoint getShippoint() {
+		return shippoint;
+	}
+	public void setShippoint(Shippoint shippoint) {
+		this.shippoint = shippoint;
+	}
 	@Override
 	public String toString() {
-		return "Users [usid=" + usid + ", uname=" + uname + ", upwd=" + upwd + ", urealname=" + urealname
-				+ ", uaddress=" + uaddress + ", uphone=" + uphone + ", utel=" + utel + ", uemail=" + uemail
-				+ ", status=" + status + ", remark1=" + remark1 + ", remark2=" + remark2 + ", remark3=" + remark3
-				+ ", remark4=" + remark4 + ", remark5=" + remark5 + "]";
+		return "Users [usid=" + usid + ", shippoint=" + shippoint + ", uname=" + uname + ", upwd=" + upwd
+				+ ", urealname=" + urealname + ", uaddress=" + uaddress + ", uphone=" + uphone + ", utel=" + utel
+				+ ", uemail=" + uemail + ", status=" + status + ", remark1=" + remark1 + ", remark2=" + remark2
+				+ ", remark3=" + remark3 + ", remark4=" + remark4 + ", remark5=" + remark5 + ", pageNo=" + pageNo
+				+ ", pageSize=" + pageSize + "]";
 	}
-
+	
 }

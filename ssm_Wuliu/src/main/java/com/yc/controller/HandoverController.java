@@ -115,25 +115,76 @@ public class HandoverController {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
+		String osid =request.getParameter("osid");
 		String hstatus = request.getParameter("hstatus");
-		String hid=request.getParameter("hid");
 		String hstarttime = request.getParameter("hstarttime");
 		String hfromspname = request.getParameter("hfromspname");
 		String htospname = request.getParameter("htospname");
-		
-		
+		System.out.println(osid+"=="+hstatus+"==="+hstarttime+"==="+hfromspname+"===="+htospname);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
 		Handover h=new Handover();
 		h.setHstatus(Integer.parseInt(hstatus));
-		System.out.println(hid);
-		h.setHid(Integer.parseInt(hid));
-		h.setHstarttimeString(hstarttime);
-		h.setHfromspname(hfromspname);
-		h.setHtospname(htospname);
+		System.out.println(osid);
+		if(osid.equals("")){
+			h.setOsid(null);
+		}else{
+			h.setOsid(Integer.parseInt(osid));
+		}
+		if(hstarttime.equals("")){
+			h.setHstarttimeString(null);
+		}else{
+			h.setHstarttimeString(hstarttime);
+		}
+		if(hfromspname.equals("")){
+			h.setHfromspname(null);
+		}else{
+			h.setHfromspname(hfromspname);
+		}
+		if(htospname.equals("")){
+			h.setHtospname(null);
+		}else{
+			h.setHtospname(htospname);
+		}
+		List<Handover> list = new ArrayList<Handover>();
+		for(Handover hand:handoverBiz.getFirstHandoverInfo(h))//getFirstHandoverInfo:查询初步需要的交接单信息里面只含有cid,did等列
+		{	
+			
+			if(hand.getHstatus()==0){
+				hand.setStatus("未发车");
+			}else if(hand.getHstatus()==1){
+				hand.setStatus("已发车");
+			}else{
+				hand.setStatus("以完成");
+			}
+			if(hand.getCar()!=null){//判断该交接单有无车辆属性
+				if(hand.getCar().getCid()!=null){//如果该交接单已经分配了车辆
+					Handover h2 = handoverBiz.getCnumberByHandover(hand);//则通过交接单的cid来查询车辆车牌号
+					hand.setCnumber(h2.getCar().getCnumber());//完善交接单车辆车牌号信息
+				}else{
+					hand.setCnumber(null);
+				}
+			}else{
+				hand.setCar(c);//没有车辆属性就赋予它一个null的车辆属性
+			}
+			
+			if(hand.getDriver()!=null){//判断是否分配了司机
+				if(hand.getDriver().getDid()!=null){
+					Handover h2 = handoverBiz.getDnameByHandover(hand);//如果有司机分配，则通过交接单的did来查询司机名称
+					hand.setDname(h2.getDriver().getDname());//完善交接单司机信息
+				}else{
+					hand.setDname(null);
+				}
+			}else{
+				hand.setDriver(d);//没有司机就给它一个空的司机
+			}
+			hand.setOsid(hand.getOrder1().getOsid());
+			hand.setRname(hand.getRoute().getRname());
+			hand.setRemark4(String.valueOf(hand.getHid()));
+			list.add(hand);
+		}
 		
-		map.put("total",handoverBiz.getHandoverInfo(h).size());
-		map.put("list", handoverBiz.getHandoverInfo(h));
+		map.put("total",handoverBiz.getFirstHandoverInfo(h).size());
+		map.put("rows", list);
 		
 		
 		

@@ -78,29 +78,37 @@ $(function(){
 
 function search(){
 	var hstatus = $("#hstatus").val();
-	var hid=$("#osid").val();
+	var osid=$("#osid").val();
 	var hstarttime=$("#starttime").val();
 	var hfromspname=$("#froms").find("option:selected").text();
 	var htospname=$("#tos").find("option:selected").text();
 	
-	
 	$.ajax({
 		url:"../selectInfo.action",
-		data:{hstatus:hstatus,hid:hid,hstarttime:hstarttime,hfromspname:hfromspname,htospname:htospname},
+		data:{hstatus:hstatus,osid:osid,hstarttime:hstarttime,hfromspname:hfromspname,htospname:htospname},
 		dataType:"JSON",
 		method:"POST",
 		success:function(data){
+			console.info(data);
 			var jjdtable=$("#jjdInfo"); //获取表格对象
+			jjdtable.html("");
 			$.each(data.rows,function(index,item){
-				var j=1;
-				var str="<tr><td>"+j+"</td>";
-				str+="<td >"+item.hid+"</td>";
-				str+="<td >"+item.osid+"</td>";
-				str+="<td >"+item.hfromspname+"</td>";
-				str+="<td >"+item.htospname+"</td>";
-				str+="<td >"+gettime(item.hstarttime)+"</td>";
-				str+="<td >"+item.dname+"</td>";
-				str+="<td >"+item.cnumber+"</td>";
+				var str="<tr><td>"+(index+1)+"</td>";
+				str+="<td>"+item.hid+"</td>";
+				str+="<td>"+item.osid+"</td>";
+				str+="<td>"+item.hfromspname+"</td>";
+				str+="<td>"+item.htospname+"</td>";
+				str+="<td>"+gettime(item.hstarttime)+"</td>";
+				if(item.dname==null){
+					str+="<td >无</td>";
+				}else{
+					str+="<td >"+item.dname+"</td>";
+				}
+				if(item.cnumber==null){
+					str+="<td >无</td>";
+				}else{
+					str+="<td >"+item.cnumber+"</td>";
+				}
 				str+="<td >"+gettime(item.hendtime)+"</td>";
 				var status='未知';
 				if(item.hstatus==0){
@@ -111,8 +119,9 @@ function search(){
 					status="已完成";
 				}
 				str+="<td name='status'>"+status+"</td></tr>"
+				
 				jjdtable.append(str);
-				j++;
+				
 			});
 		}
 	});

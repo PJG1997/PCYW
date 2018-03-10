@@ -2,7 +2,7 @@
 <table id="price_table" data-options="fit:true"></table>
 
 <!-- 条件查询 -->
-<div id="driver_search">
+<div id="price_search">
 	<a href="javascript:addPrice()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">添加</a>
 	<a href="javascript:deletePrice()" class="easyui-linkbutton" data-options="iconCls:'icon-user-delete',plain:true" style="float:left">删除</a>
 	<div class="datagrid-btn-separator"></div>	
@@ -154,7 +154,7 @@ var priceObject=$('#price_table').datagrid({
 	        	  return "<a id='operation' href='javascript:detail("+val+")' style='color:#39f' >详情</a>&nbsp;&nbsp;<a id='operation' href='javascript:update("+val+")' style='color:#39f'>修改</a>"
 	          }}
 	]],
-	toolbar:"#driver_search"
+	toolbar:"#price_search"
 		
 });
 

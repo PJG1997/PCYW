@@ -73,7 +73,7 @@ function ReturnJJD(){
 					</tr>
 					
 					<tr>
-					  <td background=""><div align="center"><a onclick="ReturnJJD()" style="font-size: 14">回到主页</a></div></td>
+					  <td background=""><div align="center"><a href="javascript:ReturnJJD()" style="font-size: 14">回到主页</a></div></td>
 					</tr>
                   </table></td>
               </tr>
