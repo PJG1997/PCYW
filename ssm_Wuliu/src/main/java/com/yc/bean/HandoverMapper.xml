@@ -150,17 +150,18 @@
   		</if> 
   		<if test="hstarttime!=null and hstarttime!='' ">
   		       and hstarttime=#{hstarttime}
-  		</if>  
+  		</if>
+  		and remark5=1  
       </where>
       <if test="pageNo!=null and pageSize!=null">
   			limit #{pageNo},#{pageSize}
   	  </if>
   </select>
   <select id="searchCnumberByHandover" resultMap="BaseResultMap">
-      select c.cnumber from handover h join car c on h.cid=c.cid where hid=#{hid}
+      select c.cnumber from handover h join car c on h.cid=c.cid where c.remark5=1 and hid=#{hid}
   </select>
   <select id="searchDnameByHandover" resultMap="BaseResultMap">
-      select d.dname from handover h join driver d on h.did=d.did where hid=#{hid}
+      select d.dname from handover h join driver d on h.did=d.did where d.remark5=1 and hid=#{hid}
   </select>
   <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑查询信息最终版，分步方法查询完整交接单信息，并在controller中完善 ↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
   
