@@ -20,7 +20,7 @@
 		<result column="oendTime" property="oendtime" jdbcType="DATE" />
 		<result column="orecSpname" property="orecspname" jdbcType="VARCHAR" />
 		<result column="oremark" property="oremark" jdbcType="VARCHAR" />
-		<result column="remark1" property="remark1" jdbcType="VARCHAR" />
+		<result column="oremark1" property="remark1" jdbcType="VARCHAR" />
 		<result column="remark2" property="remark2" jdbcType="VARCHAR" />
 		<result column="remark3" property="remark3" jdbcType="VARCHAR" />
 		<result column="remark4" property="remark4" jdbcType="VARCHAR" />
@@ -342,7 +342,7 @@
 		orecAddress,
 		orecCode, orecPhone, otime, oprice, oinsurePrice, otype, ostatus, ostartTime,
 		oendTime,
-		orecSpname, oremark, order1.remark1, order1.remark2, order1.remark3,
+		orecSpname, oremark, order1.remark1 as oremark1, order1.remark2, order1.remark3,
 		order1.remark4, order1.remark5,
 		oiid,gname,gprice,gcount,orderinfo.remark1 as oifremark1,orderinfo.remark2 as oifremark2,orderinfo.remark3 as oifremark3,orderinfo.remark4 as oifremark4,orderinfo.remark5 as oifremark5,
 		rid, rname, rvia, route.remark1, route.remark2,
@@ -377,7 +377,7 @@
 		left join route on order1.remark1=route.rid and orderinfo.remark5=1 and route.remark5=1
 	</select>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.yc.bean.Order1" >
     select 
     <include refid="Base_Column_List" />
     from order1 left join users on order1.usid=users.usid left join orderinfo on order1.osid=orderinfo.osid

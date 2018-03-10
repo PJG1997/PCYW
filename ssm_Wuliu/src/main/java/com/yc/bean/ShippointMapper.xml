@@ -63,8 +63,8 @@
     from shippoint
     where remark5=1
 
-    <if test="spname!=null and spname!=''">
-    	and spname=#{spname}
+    <if test="remark1!=null and remark1!=''">
+    	and remark1=#{remark1}
     </if>
     <if test="spid!=null and spid!=''">
     	and spid=#{spid}

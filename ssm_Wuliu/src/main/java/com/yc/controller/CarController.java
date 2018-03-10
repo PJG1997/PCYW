@@ -54,7 +54,7 @@ public class CarController {
 		h.setHid(hid);
 		Handover hand=handoverBiz.gethandover(h);
 		String spname=hand.getHfromspname();
-		sp.setspname(spname);
+		sp.setRemark1(spname);
 		Shippoint shippoint=shippointBiz.getShippoint(sp);
 		Integer spid=shippoint.getSpid();
 		Shippoint Shippoint=new Shippoint();

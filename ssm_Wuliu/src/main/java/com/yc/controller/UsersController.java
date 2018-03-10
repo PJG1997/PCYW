@@ -71,6 +71,7 @@ public class UsersController {
 		u.setStatus(2);
 		List<Users> list=new ArrayList<Users>();
 		for(Users user:usersBiz.searchAllUsers(u)){
+			user.setRemark1(user.getShippoint().getspname());
 			user.setRemark4(String.valueOf(user.getUsid()));
 			list.add(user);
 		}
@@ -109,6 +110,7 @@ public class UsersController {
 		u.setUphone(request.getParameter("uphone"));
 		u.setUtel(request.getParameter("utel"));
 		u.setUemail(request.getParameter("uemail"));
+		u.setRemark1(request.getParameter("user_add_spname"));
 		u.setStatus(2);
 
 		int result = usersBiz.insertUser(u);

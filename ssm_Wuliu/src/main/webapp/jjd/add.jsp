@@ -40,7 +40,7 @@ $(function(){
 				 $("#dname").append(option);
 			 });
 		}
-	})
+	});
 	$.ajax({
 		url:'getspname.action',
 		method:"POST",
@@ -60,11 +60,11 @@ $(function(){
 		}
 	})
 	$("#btn").click(function(){
-		osid=$("#osid").val();
+		osid=$("#osid").html();
 		cnumber=$("#cnumber").val();
 		dname=$("#dname").val();
-		starttime=$("#starttime").val();
-		endtime=$("#endtime").val();
+		hstarttime=$("#starttime").val();
+		hendtime=$("#endtime").val();
 		hstatus=$("#hstatus").val();
 		hremark=$("#remark").val();
 		hfromspname=$("#fromspname").val();
@@ -72,8 +72,8 @@ $(function(){
 		$.ajax({
 			url:"updatehandover.action",
 			method:"POST",
-			data:{osid:osid,hfromspname:hfromspname,htospname:htospname,cnumber:cnumber,dname:dname,starttime:starttime
-				,endtime:endtime,hstatus:hstatus,hremark:hremark,hid:hid},
+			data:{osid:osid,hfromspname:hfromspname,htospname:htospname,cnumber:cnumber,dname:dname,hstarttime:hstarttime
+				,hendtime:hendtime,hstatus:hstatus,hremark:hremark,hid:hid},
 			dataType:"json",
 			success:function(data){
 				if(data.code==1){

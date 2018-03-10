@@ -74,7 +74,7 @@ function update(val){
 //			if(data.code==1){
 //				window.location.href='add.jsp?'+val;
 //			}else{
-//				alert(您没有对此交接单修改的权限);
+//				alert("您没有对此交接单修改的权限...");
 //			}
 //		}
 //	});

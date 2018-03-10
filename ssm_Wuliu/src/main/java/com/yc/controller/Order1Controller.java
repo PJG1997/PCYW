@@ -76,7 +76,7 @@ public class Order1Controller {
 			Route route=new Route();
 			route=routeBiz.findRvia(r);
 			String rvia=route.getRvia();
-			String rivaname[]=rvia.split("-");
+			String rivaname[]=rvia.split("- ");
 			for(int i=0;i<rivaname.length-1;i++){
 				Handover h=new Handover();
 			    h.setHfromspname(rivaname[i]);

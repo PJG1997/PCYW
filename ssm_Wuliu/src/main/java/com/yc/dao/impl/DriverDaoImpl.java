@@ -74,11 +74,11 @@ public class DriverDaoImpl implements DriverDao{
 
 	@Override
 	public void updateDriverStatus0(Driver d) {
-		this.sqlSession.update("com.yc.bean.CarMapper.updateDriverStatus0", d);
+		this.sqlSession.update("driver.updateDriverStatus0", d);
 	}
 
 	@Override
 	public void updateDriverStatus1(Driver d) {
-		this.sqlSession.update("com.yc.bean.CarMapper.updateDriverStatus1", d);
+		this.sqlSession.update("driver.updateDriverStatus1", d);
 	}
 }

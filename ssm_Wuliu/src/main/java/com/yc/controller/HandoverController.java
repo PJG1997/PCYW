@@ -226,19 +226,18 @@ public class HandoverController {
 	public JsonModel updatehandover(@RequestParam(value="hid") Integer hid,
 			@RequestParam(value="hfromspname") String hfromspname,@RequestParam(value="cnumber") Integer cid,
 			@RequestParam(value="dname") Integer did,@RequestParam(value="osid") Integer osid,
-			@RequestParam(value="rname") Integer rid,@RequestParam(value="htospname") String htospname,
+			@RequestParam(value="htospname") String htospname,
 			@RequestParam(value="hstarttime") String starttime,@RequestParam(value="hendtime") String endtime,
 			@RequestParam(value="hstatus") Integer hstatus,@RequestParam(value="hremark") String hremark) throws ParseException{
 			Handover h=new Handover();
-			System.out.println("213");
 			c.setCid(cid);
 			o.setOsid(osid);
 			d.setDid(did);
-			r.setRid(rid);
 			h.setCar(c);
 			h.setDriver(d);
 			h.setOrder1(o);
 			h.setRoute(r);
+			h.setHid(hid);
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			h.setHstarttime(sdf.parse(starttime));
 			h.setHendtime(sdf.parse(endtime));
@@ -252,7 +251,9 @@ public class HandoverController {
 					Order1 o=new Order1();
 					o.setOsid(osid);
 					Order1 or=new Order1();
+					System.out.println(o);
 					or=  order1Biz.findRid(o);
+					System.out.println(or);
 					Integer handrid=Integer.parseInt(or.getRemark1());
 					Route r=new Route();
 					r.setRid(handrid);
@@ -260,7 +261,7 @@ public class HandoverController {
 					route=routeBiz.findRvia(r);
 					String rvia=route.getRvia();
 					String rivaname[]=rvia.split("-");
-					if(hfromspname==rivaname[0]){
+					if(hfromspname.equals(rivaname[0])){
 						or.setOstatus(1);
 						order1Biz.updateOrder1(or);
 					}
@@ -278,7 +279,7 @@ public class HandoverController {
 					route=routeBiz.findRvia(r);
 					String rvia=route.getRvia();
 					String rivaname[]=rvia.split("-");
-					if(hfromspname==rivaname[rivaname.length-1]){
+					if(hfromspname.equals(rivaname[rivaname.length-1])){
 						or.setOstatus(2);
 						order1Biz.updateOrder1(or);
 					}
@@ -445,9 +446,14 @@ public class HandoverController {
 		h=handoverBiz.gethandover(h);
 		Integer spid=Integer.parseInt(users.getRemark1());
 		Shippoint sp=new Shippoint();
+		sp.setSpid(spid);
 		sp=shippointBiz.getShippoint(sp);
-		if(sp.getSpaddress()==h.getHfromspname()){
+		System.out.println(sp.getRemark1());
+		System.out.println(h.getHfromspname());
+		if(sp.getRemark1().equals(h.getHfromspname())){
 			jsonModel.setCode(1);
+		}else{
+			jsonModel.setCode(0);
 		}
 		return jsonModel;
 		

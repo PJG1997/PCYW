@@ -54,17 +54,17 @@ public class DriverController {
 		h.setHid(hid);
 		Handover hand=handoverBiz.gethandover(h);
 		String spname=hand.getHfromspname();
-		sp.setspname(spname);
+		sp.setRemark1(spname);
 		Shippoint shippoint=shippointBiz.getShippoint(sp);
 		Integer spid=shippoint.getSpid();
 		Shippoint Shippoint=new Shippoint();
 		Shippoint.setSpid(spid);
 		d.setShipPoint(Shippoint);
-		System.out.println(Shippoint);
 		List<Driver> list=new ArrayList<Driver>();
 		for(Driver driver:driverBiz.findDriverNomission(d)){
 			list.add(driver);
 		}
+		System.out.println(list);
 		jsonModel.setCode(1);
 		jsonModel.setObj(list);
 		return jsonModel;
