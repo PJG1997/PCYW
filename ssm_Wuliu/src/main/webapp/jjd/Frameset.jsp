@@ -16,5 +16,7 @@
 <frameset rows="*" cols="164,*" framespacing="0" frameborder="NO" border="2">
   <frame src="left1.jsp" name="leftFrame" scrolling="NO" noresize>
   <frame src="jjd_query.jsp" name="mainFrame1">
+  
+  
 </frameset>
 </html>
