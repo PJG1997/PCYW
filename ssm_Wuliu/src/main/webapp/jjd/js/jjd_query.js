@@ -43,8 +43,8 @@ $(function(){
 				}else{
 					status="已完成";
 				}
-				str+="<td name='status'>"+status+"</td></tr>"
-				
+				str+="<td name='status'>"+status+"</td>"
+				str+="<td><a href=''>修改</a></td></tr>";
 				jjdtable.append(str);
 				
 				
@@ -118,8 +118,8 @@ function search(){
 				}else{
 					status="已完成";
 				}
-				str+="<td name='status'>"+status+"</td></tr>"
-				
+				str+="<td name='status'>"+status+"</td>"
+				str+="<td><a href=''>修改</a></td></tr>";
 				jjdtable.append(str);
 				
 			});
@@ -175,8 +175,8 @@ function nextPage(){
 					}else{
 						status="已完成";
 					}
-					str+="<td name='status'>"+status+"</td></tr>"
-					
+					str+="<td name='status'>"+status+"</td>"
+					str+="<td><a href=''>修改</a></td></tr>";
 					jjdtable.append(str);
 				});
 			}
@@ -231,7 +231,8 @@ function lastPage(){
 					}else{
 						status="已完成";
 					}
-					str+="<td name='status'>"+status+"</td></tr>"
+					str+="<td name='status'>"+status+"</td>"
+					str+="<td><a href=''>修改</a></td></tr>";
 					jjdtable.append(str);
 				});
 			}
