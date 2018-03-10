@@ -103,7 +103,7 @@
   </select>
   
 
-  <select id="searchAllHandoverInfo" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
+ <!--  <select id="searchAllHandoverInfo" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
 	select h.*,o.osid,r.rname 
   	from handover h,order1 o,route r
   	 WHERE h.osid=o.osid and h.rid=r.rid
@@ -145,7 +145,7 @@
   		      and hstatus=#{hstatus}
   		  </if>
       </where>
-  </select>
+  </select> -->
   
   <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓查询信息最终版，分步方法查询完整交接单信息，并在controller中完善↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
   <select id="searchAllHandoverInfo2" resultMap="BaseResultMap">
