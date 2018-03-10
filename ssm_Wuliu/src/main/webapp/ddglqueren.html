@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>订单追踪</title>
+</head>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+function initOrderWithLine(params){
+	var ordId=params.split("=");
+	$("#order_osid").val(ordId[1]);
+	var osid=ordId[1];
+	$.ajax({
+	  type: 'POST',
+	  url: "findOrderByOsid.action",
+	  data:{osid:ordId[1]},
+	  dataType: 'JSON',
+	  success: function( data ){
+		  if(data.obj!=null&&data.obj.length>0){
+			  $.each(data.obj,function(index,item){	
+				  $("#route").val(item.route.rvia);
+				   routeNameString=item.route.rvia;
+				   routeName=routeNameString.split("-");
+			  })
+		  }
+	  }
+	})
+	
+	$.ajax({
+	  type: 'POST',
+	  url: "findhandover.action",
+	  data:{osid:osid},
+	  dataType: 'JSON',
+	  success: function( data ){
+		  if(data.code==1){
+			  alert(123);
+				$.each(data.obj,function(index,item){
+					 for(var i=0;i<routeName.length;i++){
+						 if(item.hstatus==2){
+							 var option;
+							 var hSpname=item.hfromSpname
+								for(var j=0;j<hSpname.length;j++){
+									if(hSpname==routeName){
+										 option="<p value="+routeName[i]+">"+routeName[i](已送达)+"</p>";
+									}
+								}
+						}else{
+							   option="<p value="+routeName[i]+">"+routeName[i]+"</p>";
+						}
+						 $('#route').append(option);
+					  }
+				});
+			}
+	  }
+	})
+}
+$(function(){
+	//先获取到所需要修改的订单的id
+	var index=location.href.lastIndexOf("?");
+	var params=location.href.substring(   index);
+	initOrderWithLine(params);
+})
+</script>
+<body>
+	<p>订单路线追踪:</p>
+	<div id="route" style="width:500px;height:500px;text-align:center;">
+		<input type="hidden" id="order_osid"
+					name="order_osid" value="0" />
+	</div>
+		<input type="button" id="queren" value="确认收货" >
+</body>
+</html>

@@ -228,11 +228,29 @@ function modifyOrder(){
 function traceOrder(){
   location.href="ddgltrace.html";
 }
-function quitOrder(){
-  var flag = alertMe("quit","不能进行退订操作!");
-  if(flag != 1){
-    alert("退订成功!");
-  }
+function routeOrder(){
+	 var finallyarr=pinJieOrderId();
+	   var updateOrderId=finallyarr[0];
+	   var updateOrderIdString=updateOrderId.split("-");
+	   if(updateOrderIdString.length>1){
+		   alert("不能同时选择两个订单进行追踪...");
+	   }else if(updateOrderIdString==""){
+		   alert("请选择您要追踪的订单的信息...");
+	   }else{
+		   $.ajax({
+				url:"SureUpdateOrder.action",
+				data:{userid:finallyarr[1]},
+				method:"POST",
+				dataType:"JSON",
+				success:function(data){
+					if(data.code==-1){
+						alert("该订单不是您所创建的，您不能追踪它...");
+					}else{
+						location.href="ddglqueren.html?odrId="+updateOrderId;
+					}
+				}
+			}); 
+	   }
 }
 
 //修改订单信息
@@ -312,7 +330,7 @@ function updateOrder(){
         <td height="4" align="right">
 		<input type="button" name="modifyit2" value="修改" onclick="updateOrder()">
 		<input type="button" name="modifyit3" value="删除" onclick="delOrder()">
-		<input type="button" name="modifyit4" value="退订" onclick="quitOrder()">
+		<input type="button" name="modifyit4" value="订单追踪" onclick="routeOrder()">
 		<input type="button" name="modifyit4" value="处理状态" onclick="traceOrder()">
         
 </td>
