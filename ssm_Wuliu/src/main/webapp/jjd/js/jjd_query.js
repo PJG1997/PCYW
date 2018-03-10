@@ -4,7 +4,7 @@ $(function(){
 	 rows=5;
 	
 	$.ajax({
-		url:"../findAllhandover.action",
+		url:"../findAllhandover1.action",
 		data:{page:page,rows:rows},
 		dataType:"JSON",
 		method:"POST",
@@ -23,8 +23,17 @@ $(function(){
 				str+="<td >"+item.hfromspname+"</td>";
 				str+="<td >"+item.htospname+"</td>";
 				str+="<td >"+gettime(item.hstarttime)+"</td>";
-				str+="<td >"+item.dname+"</td>";
-				str+="<td >"+item.cnumber+"</td>";
+				if(item.dname==null){
+					str+="<td >无</td>";
+				}else{
+					str+="<td >"+item.dname+"</td>";
+				}
+				if(item.cnumber==null){
+					str+="<td >无</td>";
+				}else{
+					str+="<td >"+item.cnumber+"</td>";
+				}
+				
 				str+="<td >"+gettime(item.hendtime)+"</td>";
 				var status='未知';
 				if(item.hstatus==0){
@@ -45,22 +54,30 @@ $(function(){
 			
 		}
 	});
+	
+	$("#froms option").each(function(){
+		var text= $(this).text();
+		
+		
+		
+	});
+	
 });
 function update(val){
-	
-	$.ajax({
-		url:'../../checkmethod.action',
-		data:{hid:val},
-		dataType:"JSON",
-		method:"POST",
-		success:function(data){
-			if(data.code==1){
-				window.location.href='add.jsp?'+val;
-			}else{
-				alert(您没有对此交接单修改的权限);
-			}
-		}
-	});
+	window.location.href='add.jsp?'+val;
+//	$.ajax({
+//		url:'../checkmethod.action',
+//		data:{hid:val},
+//		dataType:"JSON",
+//		method:"POST",
+//		success:function(data){
+//			if(data.code==1){
+//				window.location.href='add.jsp?'+val;
+//			}else{
+//				alert(您没有对此交接单修改的权限);
+//			}
+//		}
+//	});
 }
   //获取时间
   function gettime(t){
@@ -123,38 +140,41 @@ function nextPage(){
 	rows=5;
 	
 	$.ajax({
-		url:"../findAllhandover.action",
+		url:"../findAllhandover1.action",
 		data:{page:page,rows:rows},
 		dataType:"JSON",
 		method:"POST",
 		success:function(data){
-			var sp = $("#froms"); //获取起始点对象
-			var ep = $("#tos"); //获取终止点对象
-			var jjdtable=$("#jjdInfo"); //获取表格对象
-			jjdtable.html("");
-			$.each(data.rows,function(index,item){
-				sp.append("<option >"+item.hfromspname+"</option>");
-				ep.append("<option >"+item.htospname+"</option>");
-				var str="<tr><td>"+(index+1)+"</td>";
-				str+="<td >"+item.hid+"</td>";
-				str+="<td >"+item.osid+"</td>";
-				str+="<td >"+item.hfromspname+"</td>";
-				str+="<td >"+item.htospname+"</td>";
-				str+="<td >"+gettime(item.hstarttime)+"</td>";
-				str+="<td >"+item.dname+"</td>";
-				str+="<td >"+item.cnumber+"</td>";
-				str+="<td >"+gettime(item.hendtime)+"</td>";
-				var status='未知';
-				if(item.hstatus==0){
-					status="未发车";
-				}else if(item.hstatus==1){
-					status="已发车";
-				}else{
-					status="已完成";
-				}
-				str+="<td name='status'>"+status+"</td></tr>"
-				jjdtable.append(str);
-			});
+			console.info(data.total);
+			if(data.total==0){
+				alert("当前已经是最后一页");
+				page=page-1;
+			}else{
+				var jjdtable=$("#jjdInfo"); //获取表格对象
+				jjdtable.html("");
+				$.each(data.rows,function(index,item){
+					
+					var str="<tr><td>"+(index+1)+"</td>";
+					str+="<td >"+item.hid+"</td>";
+					str+="<td >"+item.osid+"</td>";
+					str+="<td >"+item.hfromspname+"</td>";
+					str+="<td >"+item.htospname+"</td>";
+					str+="<td >"+gettime(item.hstarttime)+"</td>";
+					str+="<td >"+item.dname+"</td>";
+					str+="<td >"+item.cnumber+"</td>";
+					str+="<td >"+gettime(item.hendtime)+"</td>";
+					var status='未知';
+					if(item.hstatus==0){
+						status="未发车";
+					}else if(item.hstatus==1){
+						status="已发车";
+					}else{
+						status="已完成";
+					}
+					str+="<td name='status'>"+status+"</td></tr>"
+					jjdtable.append(str);
+				});
+			}
 		}
 	});
 	
@@ -171,18 +191,16 @@ function lastPage(){
 		page=1;
 	}else{
 		$.ajax({
-			url:"../findAllhandover.action",
+			url:"../findAllhandover1.action",
 			data:{page:page,rows:rows},
 			dataType:"JSON",
 			method:"POST",
 			success:function(data){
-				var sp = $("#froms"); //获取起始点对象
-				var ep = $("#tos"); //获取终止点对象
+				
 				var jjdtable=$("#jjdInfo"); //获取表格对象
 				jjdtable.html("");
 				$.each(data.rows,function(index,item){
-					sp.append("<option >"+item.hfromspname+"</option>");
-					ep.append("<option >"+item.htospname+"</option>");
+					
 					var str="<tr><td>"+(index+1)+"</td>";
 					str+="<td >"+item.hid+"</td>";
 					str+="<td >"+item.osid+"</td>";

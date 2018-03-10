@@ -23,6 +23,11 @@ public class HandoverBizImpl implements HandoverBiz {
 	public List<Handover> getHandoverInfo(Handover h) {
 		return handoverDao.getHandoverInfo(h);
 	}
+	
+	@Override
+	public List<Handover> getMoreHandoverInfo(Handover h) {
+		return handoverDao.getMoreHandoverInfo(h);
+	}
 
 	@Override
 	public void addHandover(Handover h) {
@@ -43,6 +48,8 @@ public class HandoverBizImpl implements HandoverBiz {
 	public Handover gethandover(Handover h) {
 		return handoverDao.gethandover(h);
 	}
+
+	
 	
 	
 }

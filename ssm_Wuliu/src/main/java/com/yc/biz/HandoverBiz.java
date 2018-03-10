@@ -8,6 +8,10 @@ public interface HandoverBiz {
 	/*
 	 * 根据车子的编号查车子的信息*/
 	public List<Handover> getHandoverInfo(Handover h);
+	/*
+	 *补充查询 
+	 */
+	public List<Handover> getMoreHandoverInfo(Handover h);
 	
 	/*
 	 * 添加车子的信息*/
