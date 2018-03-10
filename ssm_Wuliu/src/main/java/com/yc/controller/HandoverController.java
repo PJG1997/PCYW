@@ -322,25 +322,12 @@ public class HandoverController {
 	/**
 	 * 通过osid查询
 	 */
-	@RequestMapping("selectForOsid.action")
+	@RequestMapping("selectJJDForOsid.action")
 	@ResponseBody
 	public JsonModel findhandoverForOsid(Handover h,HttpServletRequest request){
 		Integer osid=Integer.parseInt(request.getParameter("osid"));
 		h.setOsid(osid);
-		h.setRoute(r);
-		List<Handover> list=new ArrayList<Handover>();
-		List<Handover> list1=handoverBiz.selectForOsid(h);
-		String rvia=r.getRvia();
-		String rivaname[]=rvia.split("-");
-		for(int i=0;i<rivaname.length-1;i++){
-		    String rivaname1= rivaname[i];
-			String rivaname2=rivaname[i+1];
-			for(Handover hand:list1){
-				if(hand.getHfromspname().equals(rivaname1)||hand.getHtospname().equals(rivaname2)){
-					list.add(hand);
-				}
-			}
-		}
+		List<Handover> list=handoverBiz.selectForOsid(h);
 		jsonModel.setCode(1);
 		jsonModel.setObj(list);
 		return jsonModel;

@@ -8,7 +8,6 @@
 <script type="text/javascript">
 function initOrderWithLine(params){
 	var ordId=params.split("=");
-	$("#order_osid").val(ordId[1]);
 	var osid=ordId[1];
 	$.ajax({
 	  type: 'POST',
@@ -21,31 +20,46 @@ function initOrderWithLine(params){
 				  $("#route").val(item.route.rvia);
 				   routeNameString=item.route.rvia;
 				   routeName=routeNameString.split("-");
-			  })
+				
+					$("#route1").append(routeNameString);
+				   $("#city").val(routeNameString);
+			  });
+			  
 		  }
 	  }
-	})
+	});
 	
 	$.ajax({
 	  type: 'POST',
-	  url: "selectForOsid.action",
+	  url: "selectJJDForOsid.action",
 	  data:{osid:osid},
 	  dataType: 'JSON',
 	  success: function( data ){
-		  var option;
+		  var option="";
+		  var cityarr;
+		  var cityString= $("#city").val();
+		  cityarr=cityString.split("-");
 		  if(data.code==1){
+			  console.info(cityString);
 				$.each(data.obj,function(index,item){
-					 	 option="<p>"+item.hfromspname+"---"+item.htospname+"(已完成)"+"</p>"
+					for(var i=0;i<cityarr.length;i++){
+						console.info(item.hfromspname);
+						console.info(cityarr[i]==item.hfromspname);
+						if(cityarr[i]==item.hfromspname){
+							option+="<p value="+item.hfromspname+"---"+item.htospname+">"+item.hfromspname+"---"+item.htospname+"(已完成)"+"</p>"
+						}
+					 }
 				});
 			}else{
-				 for(var i=0;i<routeName.length;i++){
-					 	option="<option value="+routeName[i]+">"+routeName[i]+"</option>";
-				  }
+				option="<p value="+cityarr[i]+">"+cityarr[i]+"</p>";
 			}
 		  $('#route').append(option);
 	  }
 	})
 }
+
+
+
 $(function(){
 	//先获取到所需要修改的订单的id
 	var index=location.href.lastIndexOf("?");
@@ -54,10 +68,14 @@ $(function(){
 })
 </script>
 <body>
+	<p>快递经过的路线:</p>
+	<div id="route1" style="width:300px;height:100px;text-align:center;">
+		
+	</div>
 	<p>订单路线追踪:</p>
-	<div id="route" style="width:500px;height:500px;text-align:center;">
-		<input type="hidden" id="order_osid"
-					name="order_osid" value="0" />
+	<div id="route" style="width:300px;height:100px;text-align:center;">
+		<input type="text" id="city"
+					name="city"  style="display:none"/>
 	</div>
 		<input type="button" id="queren" value="确认收货" >
 </body>

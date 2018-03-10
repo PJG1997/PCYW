@@ -135,7 +135,7 @@
   
   
   <select id="searchHandoverForOrderId" parameterType="com.yc.bean.Handover" resultMap="BaseResultMap">
-  		select h.*,r.* from handover h left join route r on h.rid=r.rid where osid=#{osid} and hstatus=2
+  		select * from handover where osid=#{osid} and hstatus=2
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
