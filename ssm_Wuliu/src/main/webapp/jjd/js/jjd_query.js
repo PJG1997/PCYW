@@ -167,6 +167,7 @@ function nextPage(){
 						status="已完成";
 					}
 					str+="<td name='status'>"+status+"</td></tr>"
+					
 					jjdtable.append(str);
 				});
 			}
