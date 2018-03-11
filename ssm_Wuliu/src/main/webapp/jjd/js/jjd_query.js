@@ -44,7 +44,7 @@ $(function(){
 					status="已完成";
 				}
 				str+="<td name='status'>"+status+"</td>"
-				str+="<td><a id='operation' href='javascript:update("+item.hid+")' style='color:#39f'>修改</a></td></tr>"
+				str+="<td><a id='operation' href='javascript:update("+item.hid+","+item.hstatus+")' style='color:#39f'>修改</a></td></tr>"
 				jjdtable.append(str);
 			});
 		}
@@ -55,21 +55,27 @@ $(function(){
 	});
 	
 });
-function update(val){
-	window.location.href='add.jsp?'+val;
-//	$.ajax({
-//		url:'../checkmethod.action',
-//		data:{hid:val},
-//		dataType:"JSON",
-//		method:"POST",
-//		success:function(data){
-//			if(data.code==1){
-//				window.location.href='add.jsp?'+val;
-//			}else{
-//				alert("您没有对此交接单修改的权限...");
-//			}
-//		}
-//	});
+function update(hid,hstatus){
+	alert(hstatus);
+	$.ajax({
+		url:'../checkmethod.action',
+		data:{hid:hid},
+		dataType:"JSON",
+		method:"POST",
+		success:function(data){
+			if(data.code==1){
+				if(hstatus==0){
+					window.location.href='add.jsp?'+hid;
+				}else if(hstatus==1){
+					window.location.href='update.jsp?'+hid;
+				}else{
+					alert("该交接单已完成无需修改...");
+				}
+			}else{
+				alert("您没有对此交接单修改的权限...");
+			}
+		}
+	});
 }
   //获取时间
   function gettime(t){
@@ -124,7 +130,7 @@ function search(){
 					status="已完成";
 				}
 				str+="<td name='status'>"+status+"</td>"
-				str+="<td><a href=''>修改</a></td></tr>";
+				str+="<td><a id='operation' href='javascript:update("+item.hid+","+item.hstatus+")' style='color:#39f'>修改</a></td></tr>";
 				jjdtable.append(str);
 				
 			});
@@ -181,7 +187,7 @@ function nextPage(){
 						status="已完成";
 					}
 					str+="<td name='status'>"+status+"</td>"
-					str+="<td><a id='operation' href='javascript:update("+item.hid+")' style='color:#39f'>修改</a></td></tr>";
+					str+="<td><a id='operation' href='javascript:update("+item.hid+","+item.hstatus+")' style='color:#39f'>修改</a></td></tr>";
 					jjdtable.append(str);
 				});
 			}

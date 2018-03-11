@@ -9,6 +9,7 @@
 function initOrderWithLine(params){
 	var ordId=params.split("=");
 	var osid=ordId[1];
+	var cityString="";
 	$.ajax({
 	  type: 'POST',
 	  url: "findOrderByOsid.action",
@@ -17,18 +18,15 @@ function initOrderWithLine(params){
 	  success: function( data ){
 		  if(data.obj!=null&&data.obj.length>0){
 			  $.each(data.obj,function(index,item){	
-				  $("#route").val(item.route.rvia);
+				   $("#route").val(item.route.rvia);
 				   routeNameString=item.route.rvia;
-				   routeName=routeNameString.split("-");
-				
-					$("#route1").append(routeNameString);
+				   $("#route1").append(routeNameString);
 				   $("#city").val(routeNameString);
 			  });
-			  
 		  }
 	  }
 	});
-	
+	alert("欢迎您...");
 	$.ajax({
 	  type: 'POST',
 	  url: "selectJJDForOsid.action",
@@ -36,28 +34,46 @@ function initOrderWithLine(params){
 	  dataType: 'JSON',
 	  success: function( data ){
 		  var option="";
-		  var cityarr;
 		  var cityString= $("#city").val();
-		  cityarr=cityString.split("-");
+		  var cityarr;
+		  cityarr=cityString.split("- ");
 		  if(data.code==1){
-			  console.info(cityString);
 				$.each(data.obj,function(index,item){
 					for(var i=0;i<cityarr.length;i++){
-						console.info(item.hfromspname);
-						console.info(cityarr[i]==item.hfromspname);
 						if(cityarr[i]==item.hfromspname){
 							option+="<p value="+item.hfromspname+"---"+item.htospname+">"+item.hfromspname+"---"+item.htospname+"(已完成)"+"</p>"
 						}
 					 }
 				});
-			}else{
-				option="<p value="+cityarr[i]+">"+cityarr[i]+"</p>";
 			}
 		  $('#route').append(option);
 	  }
-	})
+	});
+
 }
 
+function SureShouhuo(){
+	var index=location.href.lastIndexOf("?");
+	var params=location.href.substring(   index);
+	var ordId=params.split("=");
+	var osid=ordId[1];
+	$.ajax({
+		  type: 'POST',
+		  url: "SureShuohuo.action",
+		  data:{osid:osid},
+		  dataType: 'JSON',
+		  success: function( data ){
+			  if(data.code==1){
+				  alert("收货完成...");
+				  window.location.href="ddgldel.html"; 
+			  }else if(data.code==-1){
+				  alert("对不起,您没有权利对该订单进行收货处理...");				  
+			  }else{
+				  alert("该订单的交接单还未完成,不能确认收货...");
+			  }
+		  }
+	});
+}
 
 
 $(function(){
@@ -77,6 +93,6 @@ $(function(){
 		<input type="text" id="city"
 					name="city"  style="display:none"/>
 	</div>
-		<input type="button" id="queren" value="确认收货" >
+		<input type="button" id="queren" value="确认收货" onclick="SureShouhuo()">
 </body>
 </html>

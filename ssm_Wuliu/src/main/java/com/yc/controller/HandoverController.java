@@ -302,9 +302,7 @@ public class HandoverController {
 				Order1 o=new Order1();
 				o.setOsid(osid);
 				Order1 or=new Order1();
-				System.out.println(o);
 				or=  order1Biz.findRid(o);
-				System.out.println(or);
 				Integer handrid=Integer.parseInt(or.getRemark1());
 				Route r=new Route();
 				r.setRid(handrid);
@@ -314,6 +312,7 @@ public class HandoverController {
 				String rivaname[]=rvia.split("-");
 				if(hfromspname.equals(rivaname[0])){
 					or.setOstatus(1);
+					System.out.println(or);
 					order1Biz.updateOrder1(or);
 				}
 
@@ -481,8 +480,20 @@ public class HandoverController {
 		jsonModel.setCode(1);
 		jsonModel.setObj(hand);
 		return jsonModel;
-		
 	}
+	
+	@RequestMapping("getspnameByupdate.action")
+	@ResponseBody
+	public JsonModel getspnameByupdate(Handover  h,HttpServletRequest request){
+		Integer hid =Integer.parseInt(request.getParameter("hid"));
+		h.setHid(hid);
+		Handover hand=handoverBiz.gethandoverByupdate(h);
+		jsonModel.setCode(1);
+		jsonModel.setObj(hand);
+		return jsonModel;
+	}
+	
+	
 	@RequestMapping("updatehand.action")
 	@ResponseBody
 	public JsonModel updatehand(Handover h,HttpServletRequest request) throws ParseException{

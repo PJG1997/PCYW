@@ -73,11 +73,9 @@ public class HandoverBizImpl implements HandoverBiz {
 		return handoverDao.selectForOsid(h);
 	}
 
-	
+	@Override
+	public Handover gethandoverByupdate(Handover h) {
+		return handoverDao.gethandoverByupdate(h);
+	}
 
-	
-
-	
-	
-	
 }

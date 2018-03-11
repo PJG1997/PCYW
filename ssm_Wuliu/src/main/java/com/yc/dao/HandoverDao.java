@@ -54,6 +54,8 @@ public interface HandoverDao {
 	/*根据id来查*/
 	public Handover gethandover(Handover h);
 	
+	public Handover gethandoverByupdate(Handover h);
+	
 	/**
 	 * 通过订单id查询
 	 */

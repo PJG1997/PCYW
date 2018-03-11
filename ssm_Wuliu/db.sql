@@ -254,4 +254,3 @@ select order1.osid, users.usid as uusid,uname, spid, osendName, osendTel, osendA
 
 select cid,car.spid,cnumber,ctype,cbuyday,crunnum,cvolume,cton,cstatus,cisbox,cremake, shipPoint.spid,spname,spperson,sptel,spemail,spaddress,sptype,sppersontel,spfax,sparea from car join shipPoint on car.spid=shipPoint.spid where car.remark5=1 and shipPoint.remark5=1 and car.cstatus=0 and shippoint.spid=10
 
-select h.*,c.cnumber,d.dname,o.osid,r.rname from handover h,car c,driver d,order1 o,route r WHERE h.cid=c.cid AND h.did=d.did and h.osid=o.osid and h.rid=r.rid and h.remark5=1 and c.remark5=1 and d.remark5=1 and o.remark5=1 and r.remark5=1 and hid =16

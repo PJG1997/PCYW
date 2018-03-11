@@ -69,10 +69,17 @@ public class HandoverDaoImpl implements HandoverDao {
 	public Handover gethandover(Handover h) {
 		return sqlSession.selectOne("com.yc.bean.HandoverMapper.selectByPrimaryKey", h);
 	}
+	
+	//只根据hid查信息
+	@Override
+	public Handover gethandoverByupdate(Handover h) {
+		return sqlSession.selectOne("com.yc.bean.HandoverMapper.selectByPrimaryKeyByupdate", h);
+	}
+	
+	
 	@Override
 	public List<Handover> selectForOsid(Handover h) {
 		return sqlSession.selectList("com.yc.bean.HandoverMapper.searchHandoverForOrderId",h);
 	}
-	
 	
 }

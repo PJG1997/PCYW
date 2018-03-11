@@ -192,12 +192,23 @@
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
-    h.*,c.cnumber,d.dname,o.osid,r.rname 
-  	from handover h,car c,driver d,order1 o,route r
-  	 WHERE h.cid=c.cid AND h.did=d.did and h.osid=o.osid and h.rid=r.rid
-  	 and h.remark5=1 and c.remark5=1 and d.remark5=1 and o.remark5=1 and r.remark5=1
+    h.*,o.osid,r.rname 
+  	from handover h,order1 o,route r
+  	 WHERE h.osid=o.osid and h.rid=r.rid
+  	 and h.remark5=1 and o.remark5=1 and r.remark5=1
     and hid = #{hid,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectByPrimaryKeyByupdate" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    h.*,c.cid,c.cnumber,d.did,d.dname,o.osid,r.rname 
+  	from handover h,car c,driver d,order1 o,route r
+  	 WHERE h.cid=c.cid and h.did=d.did and h.osid=o.osid and h.rid=r.rid
+  	 and h.remark5=1 and o.remark5=1 and r.remark5=1
+    and hid = #{hid,jdbcType=INTEGER}
+  </select>
+  
+  
   <insert id="insert" parameterType="com.yc.bean.Handover" >
     insert into handover (hid, cid, did, 
       osid, rid, hfromSpname, 

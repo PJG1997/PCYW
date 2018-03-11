@@ -365,7 +365,7 @@
 			<if test="osid!=null and osid!=''">
 				and osid=#{osid}
 			</if>
-			<if test="ostatus!=null and ostatus!=''">
+			<if test="ostatus!=null">
 				and ostatus=#{ostatus}
 			</if>
 			<if test="ostarttimeString!=null and ostarttimeString!='' and oendtimeString!='' and oendtimeString!=null">

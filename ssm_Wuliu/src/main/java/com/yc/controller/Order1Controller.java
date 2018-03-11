@@ -31,6 +31,8 @@ import com.yc.biz.HandoverBiz;
 import com.yc.biz.Order1Biz;
 import com.yc.biz.OrderInfoBiz;
 import com.yc.biz.RouteBiz;
+import com.yc.biz.ShippointBiz;
+import com.yc.biz.UsersBiz;
 
 @Controller
 @Scope(value="prototype")
@@ -46,6 +48,10 @@ public class Order1Controller {
 	private HandoverBiz handoverBiz;
 	@Resource(name="goodsBizImpl")
 	private GoodsBiz goodsBiz;
+	@Resource(name="usersBizImpl")
+	private UsersBiz usersBiz;
+	@Resource(name="shippointBizImpl")
+	private ShippointBiz shippointBiz;
 	private JsonModel jsonModel=new JsonModel();
 
 	@RequestMapping(value="addOrder.action")
@@ -280,4 +286,39 @@ public class Order1Controller {
 		return jsonModel;
 	}
 	
+	
+	@RequestMapping("SureShuohuo.action")
+	@ResponseBody
+	public JsonModel sureShuohuo(Order1 order,HttpSession session){
+		order=order1Biz.findRid(order);
+		Users u=new Users();
+		u.setUsid((Integer)session.getAttribute("user_usid"));
+		Users ridUsers=usersBiz.findUsersByUsid(u);
+		String rvia=order.getRoute().getRvia();
+		Shippoint sp=new Shippoint();
+		sp.setSpid(Integer.parseInt(ridUsers.getRemark1()));
+		Shippoint ridShip=shippointBiz.getShippoint(sp);
+		String[] shuzuRid=rvia.split("- ");
+		if(!ridShip.getRemark1().equals(shuzuRid[shuzuRid.length-1])){
+			jsonModel.setCode(-1);
+			return jsonModel;
+		}
+		Handover h=new Handover();
+		h.setOsid(order.getOsid());
+		List<Handover> listHandover=handoverBiz.getHandoverInfo(h);
+		for(Handover handover:listHandover){
+			if(handover.getHstatus()==0||handover.getHstatus()==1){
+				jsonModel.setCode(0);
+				return jsonModel;
+			}
+		}
+		Users user=new Users();
+		order.setUsers(user);
+		Shippoint shippoint=new Shippoint();
+		order.setShipPoint(shippoint);
+		order.setOstatus(3);
+		order1Biz.updateOrder1(order);
+		jsonModel.setCode(1);
+		return jsonModel;
+	}
 }

@@ -243,11 +243,7 @@ function routeOrder(){
 				method:"POST",
 				dataType:"JSON",
 				success:function(data){
-					if(data.code==-1){
-						alert("该订单不是您所创建的，您不能追踪它...");
-					}else{
-						location.href="ddglqueren.html?odrId="+updateOrderId;
-					}
+					location.href="ddglqueren.html?odrId="+updateOrderId;
 				}
 			}); 
 	   }
@@ -308,12 +304,12 @@ function updateOrder(){
 				  <td bgcolor="#FFFFFF">&nbsp;订单状态:
 				   <select name="ostatus" id="ostatus">
 				      <option value=''>--全部--</option>
-					  <option value='1'>未发件</option>
-					  <option value='2'>已发件</option>
-					  <option value='3'>已送达</option>
-					  <option value='4'>已签收</option>
-					  <option value='5'>已召回</option>
-					  <option value='6'>已撤单</option>
+					  <option value='0'>未发件</option>
+					  <option value='1'>已发件</option>
+					  <option value='2'>已送达</option>
+					  <option value='3'>已签收</option>
+					  <option value='4'>已召回</option>
+					  <option value='5'>已撤单</option>
 				   </select>
 				</td>
                 <td bgcolor="#FFFFFF" colspan="2">&nbsp;下单日期:从

@@ -16,9 +16,8 @@
 $(function(){
 	$("#msg").html("");
 	var hid=window.location.href.split('?')[1];
-	
 	$.ajax({
-		url:'getspname.action',
+		url:'getspnameByupdate.action',
 		method:"POST",
 		dataType:"JSON",
 		data:{hid:hid},
@@ -34,7 +33,6 @@ $(function(){
 					$("#endtime").val(data.obj.endtime);
 					$("#hstatus").val(data.obj.hstatus);
 					$("#remark").val(data.obj.hremark);
-			
 		}
 	})
 	$("#btn").click(function(){
@@ -74,7 +72,6 @@ $(function(){
 
 		订单编号:<label id="osid"></label><br />
 		司机姓名:<label id="dname" name="dname">
-		
 			  </label><br />
 			  <input id="did" name="did" type="hidden"></input>
 	  	车  牌  号:<label id="cnumber" name="cnumber">
