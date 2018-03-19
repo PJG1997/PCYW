@@ -43,8 +43,8 @@ $(function(){
 		hendtime=$("#endtime").val();
 		hstatus=$("#hstatus").val();
 		hremark=$("#remark").val();
-		hfromspname=$("#fromspname").val();
-		htospname=$("#tospname").val();
+		hfromspname=$("#fromspname").html();
+		htospname=$("#tospname").html();
 		$.ajax({
 			url:"Onlyupdatehandover.action",
 			method:"POST",

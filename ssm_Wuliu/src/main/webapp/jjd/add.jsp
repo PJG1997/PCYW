@@ -47,16 +47,15 @@ $(function(){
 		dataType:"JSON",
 		data:{hid:hid},
 		success:function(data){
-					$("#fromspname").html(data.obj.hfromspname);
-					$("#tospname").html(data.obj.htospname);
-					$("#osid").html(data.obj.order1.osid);
-					$("#cnumber").val(data.obj.car.cid);
-					$("#dname").val(data.obj.driver.did);
-					$("#starttime").val(data.obj.starttime);
-					$("#endtime").val(data.obj.endtime);
-					$("#hstatus").val(data.obj.hstatus);
-					$("#remark").val(data.obj.hremark);
-			
+			$("#fromspname").html(data.obj.hfromspname);
+			$("#tospname").html(data.obj.htospname);
+			$("#osid").html(data.obj.order1.osid);
+			$("#cnumber").val(data.obj.car.cid);
+			$("#dname").val(data.obj.driver.did);
+			$("#starttime").val(data.obj.starttime);
+			$("#endtime").val(data.obj.endtime);
+			$("#hstatus").val(data.obj.hstatus);
+			$("#remark").val(data.obj.hremark);
 		}
 	})
 	$("#btn").click(function(){
@@ -67,8 +66,8 @@ $(function(){
 		hendtime=$("#endtime").val();
 		hstatus=$("#hstatus").val();
 		hremark=$("#remark").val();
-		hfromspname=$("#fromspname").val();
-		htospname=$("#tospname").val();
+		hfromspname=$("#fromspname").html();
+		htospname=$("#tospname").html();
 		$.ajax({
 			url:"updatehandover.action",
 			method:"POST",

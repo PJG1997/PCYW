@@ -6,7 +6,7 @@ function openwin() {
 	window.open ("page.html", "newwindow", "height=100, width=400, toolbar=no,menubar=no, scrollbars=no, resizable=no, location=no, status=no") 
 }
 function closed(){
-var a = confirm("È·¶¨Òª¹Ø±ÕÒ³ÃæÂğ?");
+var a = confirm("ç¡®å®šè¦å…³é—­é¡µé¢å—?");
 if(a){
 	window.top.location.href="back/login.html";
 }else{
@@ -19,9 +19,14 @@ function orderM(){
 function EIR(){
 	window.top.location.href="jjd/Frameset.jsp";
 }
+
+function baobiao(){
+	alert('è¿˜æ²¡åšæŠ¥è¡¨ç®¡ç†ã€‚ã€‚ã€‚')
+}
+
 </script>
 <title>top</title>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/indexstyle.css" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
@@ -46,11 +51,11 @@ function EIR(){
       <td background="images/nvbg.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr align="center"> 
             <td></td>
-            <td><a href="Frameset.htm" target="mainFrame">¹«Ë¾¼ò½é</a></td>
-            <td><a href="javascript:orderM()">¶©µ¥¹ÜÀí</a></td>
-			 <td><a href="javascript:EIR()">½»½Óµ¥¹ÜÀí</a></td>
-			  <td><a href="bbgl/Frameset.htm" target="mainFrame">±¨±í¹ÜÀí</a></td>
-			 <td><a href="javascript:UpdatePwd()" >ĞŞ¸ÄÃÜÂë</a></td>
+            <td><a href="Frameset.htm" target="mainFrame">å…¬å¸ç®€ä»‹</a></td>
+            <td><a href="javascript:orderM()">è®¢å•ç®¡ç†</a></td>
+			 <td><a href="javascript:EIR()">äº¤æ¥å•ç®¡ç†</a></td>
+			  <td><a href="javascript:baobiao()" >æŠ¥è¡¨ç®¡ç†</a></td>
+			 <td><a href="javascript:UpdatePwd()" >ä¿®æ”¹å¯†ç </a></td>
           </tr>
         </table></td>
       <td width="22" background="images/nvbg.jpg"><img src="images/nv03.jpg" width="33" height="47" onClick="closed()"></td>

@@ -309,7 +309,8 @@ public class HandoverController {
 				Route route=new Route();
 				route=routeBiz.findRvia(r);
 				String rvia=route.getRvia();
-				String rivaname[]=rvia.split("-");
+				String rivaname[]=rvia.split("- ");
+				System.out.println(rivaname[0]+" "+hfromspname);
 				if(hfromspname.equals(rivaname[0])){
 					or.setOstatus(1);
 					System.out.println(or);
@@ -361,8 +362,9 @@ public class HandoverController {
 					Route route=new Route();
 					route=routeBiz.findRvia(r);
 					String rvia=route.getRvia();
-					String rivaname[]=rvia.split("-");
-					if(hfromspname.equals(rivaname[rivaname.length-1])){
+					String rivaname[]=rvia.split("- ");
+					System.out.println(htospname+" "+rivaname[rivaname.length-1]);
+					if(htospname.equals(rivaname[rivaname.length-1])){
 						or.setOstatus(2);
 						order1Biz.updateOrder1(or);
 					}

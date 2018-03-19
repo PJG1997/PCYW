@@ -56,7 +56,6 @@ $(function(){
 	
 });
 function update(hid,hstatus){
-	alert(hstatus);
 	$.ajax({
 		url:'../checkmethod.action',
 		data:{hid:hid},
